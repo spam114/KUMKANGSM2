@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:weightSum="20">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="3"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewName"
+            android:onClick="mOnClick"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:text="작업요청현황을 조회하세요"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="5"
+        android:weightSum="10"
+        >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="20sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="mOnClick"
+                android:clickable="true"
+                android:text="조회기준"
+                android:textSize="17sp"
+                android:gravity="center_vertical"
+                />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20sp">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="요청일"
+                    android:checked="true"
+                    android:id="@+id/radioButton"
+                    android:textSize="15sp"
+                    />
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15sp"
+                    android:text="희망일"
+                    android:textSize="15sp"
+                    android:id="@+id/radioButton2"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15sp"
+                    android:text="작업일"
+                    android:textSize="15sp"
+                    android:id="@+id/radioButton3"/>
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:id="@+id/textViewDate1"
+            android:onClick="mOnClick"
+            android:clickable="true"
+            android:text="일자 선택"
+            android:textSize="20sp"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="~"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="20sp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewDate2"
+            android:onClick="mOnClick"
+            android:clickable="true"
+            android:text="일자 선택"
+            android:textSize="20sp"
+            android:gravity="center"
+            />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="12"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:layout_marginTop="30sp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_gravity="center_horizontal"
+            android:weightSum="3"
+            android:id="@+id/layoutassign">
+
+            <TextView style="?android:textAppearanceSmall"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="담당자 배정현황"
+                android:id="@+id/buttonAssgin2"
+                android:onClick="mOnClick"
+                android:layout_below="@+id/spin"/>
+
+            <TextView style="?android:textAppearanceSmall"
+                android:layout_marginLeft="20sp"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="담당자 배정"
+                android:id="@+id/buttonAssgin"
+                android:onClick="mOnClick"/>
+
+            <TextView style="?android:textAppearanceSmall"
+                android:layout_marginLeft="20sp"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="일보 확인"
+                android:id="@+id/buttonConfirm"
+                android:onClick="mOnClick"/>
+        </LinearLayout>
+
+        <TextView style="?android:textAppearanceSmall"
+            android:layout_marginTop="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="50sp"
+            android:id="@+id/btnSale"
+            android:text="작업요청 관리"
+            android:onClick="mOnClick"/>
+
+
+        <TextView style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:text="작업요청내역 조회"
+            android:id="@+id/buttonSearch"
+            android:onClick="mOnClick"
+            android:layout_marginTop="20sp"
+        />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3.1">
+
+            <TextView style="?android:textAppearanceSmall"
+                android:layout_marginTop="20sp"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:id="@+id/btndailycostactivity"
+                android:paddingLeft="10sp"
+                android:paddingRight="10sp"
+                android:text="경비 등록"
+                android:onClick="mOnClick"
+                android:layout_weight="1"/>
+
+            <TextView style="?android:textAppearanceSmall"
+                android:layout_marginTop="20sp"
+                android:layout_width="0px"
+                android:layout_marginLeft="20sp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnMessageHistory"
+                android:paddingLeft="10sp"
+                android:paddingRight="10sp"
+                android:text="알림메시지"
+                android:onClick="mOnClick"
+                android:layout_weight="1"/>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="2"
+        android:gravity="right">
+        />
+
+        <TextView
+            android:layout_marginLeft="150sp"
+            android:layout_width="30sp"
+            android:layout_height="30sp"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="center_vertical|right"
+            android:background="@drawable/img_kumkang2"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30sp"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="center_vertical|right"
+            android:text="kumkangkind   version : 1.0"
+            android:layout_marginRight="20sp"
+            android:id="@+id/textViewVersion"/>
+
+        </LinearLayout>
+    </LinearLayout>

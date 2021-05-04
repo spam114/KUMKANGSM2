@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight= "1">
+
+        <TextView
+            android:layout_height="1px"
+            android:layout_weight="7"
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:background="#7b98ff"
+            android:text="작업일보"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            />
+        <TextView
+            android:id="@+id/textViewManageNo"
+            android:layout_height="1px"
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:background="#7b98ff"
+            android:text="관리번호"
+            android:textColor="#ffffff"
+
+            android:gravity="center"
+            />
+
+    </LinearLayout>
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="5"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:divider="?android:dividerHorizontal"
+            android:showDividers="middle">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right"
+                    android:textColor="#0008ff"
+                    android:textSize="15sp"
+                    android:paddingTop="10sp"
+                    android:paddingBottom="10sp"
+                    android:text="거래처/현장"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewLocation"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="match_parent"
+                    android:minHeight="45sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="15sp"
+                    android:paddingTop="10sp"
+                    android:paddingBottom="10sp"
+                    android:text="로딩중...."
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="45sp"
+                    android:textColor="#0008ff"
+                    android:gravity="center_vertical|right"
+                    android:textSize="15sp"
+                    android:text="작업일자"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewWorkDate"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="45sp"
+                    android:gravity="center_vertical|right"
+                    android:textColor="#0008ff"
+                    android:textSize="15sp"
+                    android:text="작업시간"/>
+
+                <TextView
+                    android:id="@+id/textViewWorkTime"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="15sp"
+                    android:text=""
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="45sp"
+                    android:textColor="#0008ff"
+                    android:textSize="15sp"
+                    android:gravity="center_vertical|right"
+                    android:text="숙박여부"/>
+
+                <TextView
+                    android:id="@+id/textViewStay"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textSize="15sp"
+                    android:text=""
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#0008ff"
+                    android:gravity="center_vertical|right"
+                    android:textSize="15sp"
+                    android:text="작업내용"
+                    android:paddingTop="10sp"
+                    android:paddingBottom="10sp"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewWork1"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:minHeight="45sp"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="15sp"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:paddingTop="10sp"
+                    android:paddingBottom="10sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#0008ff"
+                    android:gravity="center_vertical|right"
+                    android:textSize="15sp"
+                    android:text="특이사항"
+                    android:paddingTop="10sp"
+                    android:paddingBottom="10sp"/>
+
+                <TextView
+                    android:id="@+id/textViewWork2"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="wrap_content"
+                    android:minHeight="45sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="15sp"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:paddingTop="10sp"
+                    android:paddingBottom="10sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="80sp"
+                    android:layout_height="wrap_content"
+                    android:textColor="#0008ff"
+                    android:gravity="center_vertical|right"
+                    android:textSize="15sp"
+                    android:text="차량운행"
+                    android:paddingTop="10sp"
+                    android:paddingBottom="10sp"/>
+
+                <TextView
+                    android:id="@+id/textViewWork3"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="wrap_content"
+                    android:minHeight="45sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="15sp"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:paddingTop="10sp"
+                    android:paddingBottom="10sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="0px"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg"
+            android:textColor="#ffffff"
+            android:text="품목관리"
+            android:onClick="mOnClick"
+            android:id="@+id/btnItemControl"
+            />
+        <Button
+            android:layout_width="0px"
+            android:layout_weight="2"
+            android:layout_marginLeft="20sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg"
+            android:textColor="#ffffff"
+            android:text="사진관리"
+            android:textStyle="bold"
+            android:onClick="mOnClick"
+            android:id="@+id/btnImageControl"
+
+            />
+
+    </LinearLayout>
+</LinearLayout>

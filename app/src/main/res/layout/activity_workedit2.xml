@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.8"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="4"
+            android:background="#009688"
+            android:gravity="center"
+            android:text="현장 작업일보"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewManageNo"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="2"
+            android:background="#009688"
+            android:gravity="center"
+            android:text="관리번호"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewCustomer"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="4"
+            android:background="#009688"
+            android:gravity="center"
+            android:text="거래처(현장)"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6.6">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="?android:dividerHorizontal"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="60sp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:text="작업일자"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/textViewRealDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="13dp"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:hint="작업일자"
+                    android:onClick="mOnClick"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="60sp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:text="시     간"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/textViewTime1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="13dp"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:hint="시작시간"
+                    android:onClick="mOnClick"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical"
+                    android:text="~"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textViewTime2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:hint="종료시간"
+                    android:onClick="mOnClick"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:layout_width="60sp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:text="숙     박"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="13dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioButton"
+                        android:layout_width="90sp"
+                        android:layout_height="wrap_content"
+                        android:text="Yes" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton2"
+                        android:layout_width="100sp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20sp"
+                        android:checked="true"
+                        android:text="No" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:text="작업구분"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerWorkType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="13dp"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="60sp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|right"
+                        android:text="동 정보"
+                        android:textColor="#0800ff"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/textViewDong"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13dp"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:hint="터치하여 입력하세요"
+                        android:minHeight="50dp"
+                        android:onClick="mOnClick"
+                        android:text=""
+                        android:textColor="#000000" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="60sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right"
+                    android:text="작업내용"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:hint="터치하여 입력하세요"
+                    android:onClick="mOnClick"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="13dp"
+                    android:paddingBottom="13dp"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="60sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right"
+                    android:text="특이사항"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:hint="터치하여 입력하세요"
+                    android:onClick="mOnClick"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="13dp"
+                    android:paddingBottom="13dp"
+                    android:text=""
+                    android:textColor="#000000" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="60sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right"
+                    android:text="차량운행"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:hint="터치하여 입력하세요"
+                    android:onClick="mOnClick"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:text=""
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+
+        <Button
+            android:id="@+id/btnAddItem"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:onClick="mOnClick"
+            android:text="추가분관리"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/btnASItem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:onClick="mOnClick"
+            android:text="A/S관리"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/btnImageControl"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg"
+            android:onClick="mOnClick"
+            android:text="사진관리"
+            android:textColor="#ffffff" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_gray_bg"
+            android:onClick="mOnClick"
+            android:text="작업일보 삭제" />
+
+        <Button
+            android:id="@+id/btnCommon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_gray_bg"
+            android:onClick="mOnClick"
+            android:text="공통작성란" />
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/fbutton_color_carrot"
+            android:onClick="mOnClick"
+            android:text="저장하기"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

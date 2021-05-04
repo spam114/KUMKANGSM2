@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight= "1"
+        android:weightSum="4">
+
+        <TextView
+            android:layout_height="0px"
+            android:layout_weight="4"
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="작업요청서 등록"
+            android:textColor="#ffffff"
+            android:background="#ff4c4f"
+            android:gravity="center"
+            />
+
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="5"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:divider="?android:dividerHorizontal"
+            android:showDividers="middle">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                >
+                <TextView
+                    android:layout_width="90sp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp"
+                    android:text="관리번호"/>
+                <TextView
+                    android:id="@+id/textViewWorderNo"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="40sp"
+                    android:gravity="center_vertical"
+                    android:hint=""
+                    android:onClick="mOnClick"
+                    android:textSize="20sp"
+                    android:clickable="true"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                >
+
+                <TextView
+                    android:layout_width="90sp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp"
+                    android:text="거래처현장"/>
+
+                <TextView
+                    android:id="@+id/textViewCustomer"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="40sp"
+                    android:gravity="center_vertical"
+                    android:hint="거래처 현장"
+                    android:onClick="mOnClick"
+                    android:textSize="20sp"
+                    android:clickable="true"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                >
+
+                <TextView
+                    android:layout_width="90sp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp"
+                    android:text="프로젝트"/>
+
+                <TextView
+                    android:id="@+id/textViewRealDate"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:hint=""
+                    android:onClick="mOnClick"
+                    android:textSize="20sp"
+                    android:clickable="true"
+                    android:textColor="#000000"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                >
+
+                <TextView
+                    android:layout_width="90sp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp"
+                    android:text="희망일"/>
+
+                <TextView
+                    android:id="@+id/textViewWorkDate"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:hint="작업희망일자"
+                    android:onClick="mOnClick"
+                    android:textSize="20sp"
+                    android:clickable="true"
+                    android:textColor="#000000"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45sp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="90sp"
+                    android:layout_height="match_parent"
+                    android:textColor="#ff0011"
+                    android:gravity="center_vertical|right"
+                    android:textSize="15sp"
+                    android:text="슈퍼바이저"/>
+
+                <Spinner
+                    android:id="@+id/spinnerSupervisor"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:textSize="15sp"
+                    android:text=""/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40sp"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                >
+
+                <TextView
+                    android:layout_width="90sp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp"
+                    android:text="작업구분"/>
+
+                <Spinner
+                    android:id="@+id/spinnerWorkType"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="#000000"
+                    android:gravity="center_vertical"
+                    android:textSize="15sp"
+                    android:text=""/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="top">
+
+                <TextView
+                    android:layout_width="90sp"
+                    android:layout_height="match_parent"
+                    android:textColor="#0800ff"
+                    android:textSize="15sp"
+                    android:text="특이사항"
+                    android:gravity="top|right"/>
+
+                <EditText
+                    android:id="@+id/textViewRemark"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_width="match_parent"
+                    android:minHeight="120sp"
+                    android:textSize="15sp"
+                    android:layout_height="wrap_content"
+                    android:hint="작업요청내용을 입력하세요."
+                    android:background="@drawable/iconbackground"
+                    android:padding="10sp"
+                    android:onClick="mOnClick"
+                    android:text=""
+                    android:clickable="true"
+                    android:textColor="#000000"
+                    android:gravity="top"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="time"
+                    android:ems="10"
+                    android:id="@+id/editText"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+    <LinearLayout
+
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="0px"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_gray_bg"
+            android:text="이전화면"
+            android:onClick="mOnClick"
+            android:id="@+id/btnCancel"
+            />
+
+        <Button
+            android:layout_width="0px"
+            android:layout_weight="2"
+            android:layout_marginLeft="20sp"
+            android:layout_height="wrap_content"
+            android:text="저장하기"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:onClick="mOnClick"
+            android:id="@+id/btnOK"
+            android:background="@drawable/button_red_bg"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvCustomerLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:text="info"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/textViewWorkDate"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="동/담당"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewWorkType"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="전월"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="전월    진행층"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewStatus"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="2.5"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="진행월"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:id="@+id/textViewLocation2"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:background="#000000"
+            android:gravity="center"
+            android:text="진행층"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7.4"
+        android:choiceMode="singleChoice"
+        android:listSelector="#DEB887" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#00ff0000"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:onClick="mOnClick"
+            android:text="진행  월/층 삭제" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:onClick="mOnClick"
+            android:text="진행  월/층 추가" />
+
+    </LinearLayout>
+
+</LinearLayout>

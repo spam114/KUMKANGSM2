@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="10">
+
+    <TextView
+        android:id="@+id/textViewDong"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="동"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewSupervisor"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="등록자"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewLocation"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="세대/위치"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewDivision"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="구분"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewPartName"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="품명"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewPartSpec"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="규격"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewQty"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="수량"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewCause"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="원인"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewASDivision"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="A/S구분"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewComplain"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="불만내용"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewMeasure"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="조치사항"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewMeasurer"
+        android:layout_width="110dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:text="조치자"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="10">
+
+    <TextView
+        android:id="@+id/textViewWorkDate"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="#000000"
+        android:gravity="center"
+        android:text="동"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewWorkType"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="2.5"
+        android:background="#000000"
+        android:gravity="center"
+        android:text="전월"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewLocation"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5"
+        android:background="#000000"
+        android:gravity="center"
+        android:text="전월    진행층"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewStatus"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="2.5"
+        android:background="#000000"
+        android:gravity="center"
+        android:text="진행월"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:textStyle="bold"
+
+        />
+
+    <TextView
+        android:id="@+id/textViewLocation2"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5"
+        android:background="#000000"
+        android:gravity="center"
+        android:text="진행층"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

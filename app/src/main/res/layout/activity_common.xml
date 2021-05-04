@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="7dp"
+    android:layout_marginTop="7dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="7dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvCustomerLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/fbutton_color_wet_asphalt"
+            android:gravity="center_vertical|center"
+            android:text="TextView"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fbutton_color_wisteria"
+            android:onClick="mOnClick"
+            android:text="취소"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/fbutton_color_green_sea"
+            android:onClick="mOnClick"
+            android:text="저장"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="right"
+                android:tag="동명"
+                android:text="동"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/progressFloor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="21dp"
+                android:gravity="right"
+                android:onClick="mOnClick"
+                android:tag="현재층수"
+                android:text="현재층"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/wall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="right"
+                android:onClick="mOnClick"
+                android:tag="WALL공정"
+                android:text="WALL"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/slab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="right"
+                android:onClick="mOnClick"
+                android:tag="SLAB공정"
+                android:text="SLAB"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/steel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="right"
+                android:onClick="mOnClick"
+                android:tag="STEEL공정"
+                android:text="스틸"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/gangFormSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="right"
+                android:onClick="mOnClick"
+                android:tag="갱폼시공일"
+                android:text="갱폼셋팅"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/settingStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="right"
+                android:onClick="mOnClick"
+                android:singleLine="false"
+                android:tag="셋팅시작일"
+                android:text="기준셋팅"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/settingEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="right"
+                android:onClick="mOnClick"
+                android:tag="셋팅종료일"
+                android:text="기준종료"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/settingStart2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="right"
+                android:onClick="mOnClick"
+                android:tag="셋팅시작일(계단피로티)"
+                android:text="계단셋팅"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/settingEnd2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="right"
+                android:onClick="mOnClick"
+                android:tag="셋팅종료일(계단피로티)"
+                android:text="계단종료"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+
+        <HorizontalScrollView
+            android:id="@+id/hsView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbarSize="2dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/dynamicLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+</LinearLayout>

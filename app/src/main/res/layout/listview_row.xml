@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewWorkDate"
+            android:text="일자"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:textColor="#0022ff"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewWorkDate2"
+            android:text="현장"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_weight="3"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewSupervisorName"
+            android:text="이름"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewWorkTypeName"
+            android:text="작업구분"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_weight="5"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewCustomer"
+            android:text="거래처"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:textColor="#0022ff"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewLocation"
+            android:text="현장"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="0px"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:id="@+id/textViewStatus"
+        android:text="상태"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:textSize="15sp"
+        android:textStyle="bold"/>
+
+</LinearLayout>

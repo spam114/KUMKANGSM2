@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="costDate" />
+    <item type="id" name="costType" />
+    <item type="id" name="amount" />
+</resources>

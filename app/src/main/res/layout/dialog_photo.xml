@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center">
+
+
+    <LinearLayout
+        android:layout_marginTop="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+
+        <TextView
+            android:layout_width="70sp"
+            android:layout_height="wrap_content"
+            android:text="사진 설명"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="right"
+            />
+
+        <EditText
+            android:id="@+id/editTextPhotoName"
+            android:layout_width="250sp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:weightSum="2">
+
+        <Button
+            android:layout_marginTop="50sp"
+            android:id="@+id/btnItemCancel"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="60sp"
+            android:textSize="15sp"
+            android:text="취 소"/>
+
+        <Button
+            android:layout_marginTop="50sp"
+            android:id="@+id/btnItemOK"
+            android:layout_width="0px"
+            android:layout_weight="1"
+            android:layout_height="60sp"
+            android:textSize="15sp"
+
+            android:text="추 가"/>
+
+    </LinearLayout>
+
+</LinearLayout>

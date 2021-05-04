@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#009688"
+        android:gravity="center"
+        android:text="현장별 진행 기준정보"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/textVdiew10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="세대수: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/houseHold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:onClick="mOnClick"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="입력시 클릭"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="셋팅시작일: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/settingStart"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:onClick="mOnClick"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="입력시 클릭"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="셋팅종료일: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/settingEnd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:onClick="mOnClick"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="입력시 클릭"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="셋팅시작일(계단,피로티): "
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/settingStartStair"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:onClick="mOnClick"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="입력시 클릭"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="셋팅종료일(계단,피로티): "
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/settingEndStair"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:onClick="mOnClick"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="입력시 클릭"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="세대별최상층: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/houseHoldFloor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:onClick="mOnClick"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="입력시 클릭"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="최상층: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/highestFloor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:onClick="mOnClick"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="입력시 클릭"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="생산일: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/makeDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:onClick="mOnClick"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="입력시 클릭"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="갱폼시공일: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/gangFormDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:onClick="mOnClick"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="입력시 클릭"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="출고시작일: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/outDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:onClick="mOnClick"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="입력시 클릭"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="셋팅 층: "
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/settingFloor"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:onClick="mOnClick"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="입력시 클릭"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

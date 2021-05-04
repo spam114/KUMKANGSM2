@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:id="@+id/textViewItemSeqNo"
+        android:text="순번"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/textViewItemName"
+        android:layout_width="0px"
+        android:layout_weight="5"
+        android:layout_height="match_parent"
+        android:text="품목"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#0022ff"/>
+
+    <TextView
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/textViewPersonCount"
+        android:layout_width="0px"
+        android:layout_weight="3"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="인원"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#0022ff"/>
+
+    <TextView
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/textViewQuantity"
+        android:layout_width="0px"
+        android:layout_weight="3"
+        android:layout_height="match_parent"
+        android:text="수량"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:textColor="#0022ff"/>
+
+
+    <Button
+        android:layout_width="0px"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_weight="3"
+        android:layout_height="match_parent"
+        android:id="@+id/buttonDelete"
+        android:text="지우기"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+        android:background="@drawable/button_red_bg"
+        android:textStyle="bold"
+        android:onClick="mOnClick"/>
+
+
+</LinearLayout>

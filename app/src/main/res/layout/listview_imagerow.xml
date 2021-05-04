@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="0px"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:id="@+id/textViewImageSeqNo"
+        android:text="순번"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        />
+
+    <ImageView
+        android:layout_width="50sp"
+        android:layout_height="50sp"
+        android:id="@+id/imageViewSmall"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        />
+
+        <TextView
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/textViewImageName"
+            android:layout_width="0px"
+            android:layout_weight="5"
+            android:layout_height="match_parent"
+            android:text="이미지이름"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#0022ff"/>
+
+
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="2"
+        android:background="@color/fbutton_color_carrot"
+        android:gravity="center_vertical"
+        android:onClick="mOnClick"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:text="지우기"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

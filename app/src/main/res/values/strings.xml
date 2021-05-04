@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">금강공업 현장관리</string>
+    <string name="gcm_send_message">토큰이 검색되어 서버로 전송되었습니다! 이제 gcmsender를 사용하여 이 응용 프로그램에 다운 스트림 메시지를 보내십시오.</string>
+    <string name="token_error_message">InstanceID 토큰을 가져 오는 동안 오류가 발생했습니다. 가져온 토큰을 서버로 보내거나 PubSub 주제에 등록하십시오. 시도해보십시오. 샘플을 다시 실행하십시오.</string>>
+    <string name="clear_string">입력시 클릭</string>
+    <string name="default_notification_channel_id">체널 ID</string>
+    <string name="default_notification_channel_name">금강</string>
+    <string name="service_address">http://211.245.239.53:2221/Service/json/</string>
+    <string name="app_code">2</string>
+    <!--<string name="service_address">http://211.245.239.36:2222/Service/json/</string>-->
+  </resources>

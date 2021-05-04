@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+
+        <Button
+            android:id="@+id/btnTakePicture"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:onClick="mOnClick"
+            android:text="촬영"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+
+        <Button
+            android:id="@+id/btnLoad"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/fbutton_color_green_sea"
+            android:onClick="mOnClick"
+            android:text="불러오기"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listViewImage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8">
+
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.8"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnExit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/fbutton_default_shadow_color"
+            android:text="닫기"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</LinearLayout>

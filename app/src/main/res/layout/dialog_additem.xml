@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:text="품목"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="right"/>
+
+        <EditText
+            android:id="@+id/edittextItemName"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:text="인원 수"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="right"/>
+        <EditText
+            android:id="@+id/edittextPersonCount"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="50sp"
+            android:layout_height="wrap_content"
+            android:text="수량"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="right"/>
+        <EditText
+            android:id="@+id/edittextQuantity"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnItemCancel"
+            android:layout_width="0px"
+            android:layout_height="60sp"
+            android:layout_marginTop="50sp"
+            android:layout_weight="1"
+            android:background="@color/fbutton_color_amethyst"
+            android:text="취소"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnItemOK"
+            android:layout_width="0px"
+            android:layout_height="60sp"
+            android:layout_marginTop="50sp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="추가"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+</LinearLayout>
