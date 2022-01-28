@@ -1,5 +1,6 @@
 package com.kumkangkind.kumkangsm2;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
@@ -17,8 +18,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,7 +39,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ActivityDownload extends BaseActivity {
 
@@ -48,10 +49,6 @@ public class ActivityDownload extends BaseActivity {
     String serverVersion;
     String downloadUrl;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -256,7 +253,7 @@ public class ActivityDownload extends BaseActivity {
                 //String fileName = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_FILENAME));
                 //int uriIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
                 if(status == DownloadManager.STATUS_SUCCESSFUL){
-                    String fileUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                    @SuppressLint("Range") String fileUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
                     openFile(fileUri);
                 }
             }

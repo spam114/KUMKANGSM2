@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 /**
@@ -67,10 +66,6 @@ public class AssignUserActivity extends BaseActivity {
 
     ProgressDialog mProgressDialog;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

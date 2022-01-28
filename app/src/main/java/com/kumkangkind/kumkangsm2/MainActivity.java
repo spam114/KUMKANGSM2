@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * App을 실행할 경우 처음 실행되는 액티비티이다.
@@ -30,10 +29,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

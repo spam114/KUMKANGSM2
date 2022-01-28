@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AddItemDetailListActivity extends BaseActivity {
     private ListView listView1;
@@ -119,10 +118,6 @@ public class AddItemDetailListActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

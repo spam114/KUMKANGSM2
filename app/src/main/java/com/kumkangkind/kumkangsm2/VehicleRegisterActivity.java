@@ -15,8 +15,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 public class VehicleRegisterActivity extends BaseActivity {
 
 
@@ -42,10 +40,6 @@ public class VehicleRegisterActivity extends BaseActivity {
     private String contentBackup;
     private String content;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

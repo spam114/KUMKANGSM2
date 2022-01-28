@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none"
+        android:id="@+id/group"
+        >
+        <item
+            android:id="@+id/edit_menu"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/edit_menu" />
+        <item
+            android:id="@+id/work_request_management"
+            android:icon="@drawable/round_note_alt_white_48"
+            android:title="@string/work_request_management"/>
+        <item
+            android:id="@+id/work_request_search"
+            android:icon="@drawable/round_search_white_48"
+            android:title="@string/work_request_search" />
+        <item
+            android:id="@+id/my_work"
+            android:icon="@drawable/round_search_white_48"
+            android:title="@string/my_work" />
+        <item
+            android:id="@+id/daily_report"
+            android:icon="@drawable/round_menu_book_white_48"
+            android:title="@string/daily_report" />
+        <item
+            android:id="@+id/assignment_status"
+            android:icon="@drawable/round_checklist_white_48"
+            android:title="@string/assignment_status" />
+        <item
+            android:id="@+id/register_expense"
+            android:icon="@drawable/round_receipt_long_white_48"
+            android:title="@string/register_expense" />
+        <item
+            android:id="@+id/assignment"
+            android:icon="@drawable/round_check_circle_outline_white_48"
+            android:title="@string/assignment" />
+        <item
+            android:id="@+id/problem"
+            android:icon="@drawable/round_edit_location_alt_white_48"
+            android:title="@string/problem" />
+        <item
+            android:id="@+id/progress_information"
+            android:icon="@drawable/round_cached_white_48"
+            android:title="@string/progress_information" />
+        <item
+            android:id="@+id/progress_floor"
+            android:icon="@drawable/round_stairs_white_48"
+            android:title="@string/progress_floor" />
+        <item
+            android:id="@+id/support"
+            android:icon="@drawable/round_support_agent_white_48"
+            android:title="@string/support" />
+        <item
+            android:id="@+id/product"
+            android:icon="@drawable/round_precision_manufacturing_white_48"
+            android:title="@string/product"/>
+        <item
+            android:id="@+id/message"
+            android:icon="@drawable/round_sms_white_48"
+            android:title="@string/message"/>
+    </group>
+
+    <item
+        android:title="@string/menu_group_communicate"
+        android:visible="false">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/menu_item_share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/menu_item_send" />
+        </menu>
+    </item>
+
+</menu>

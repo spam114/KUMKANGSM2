@@ -4,6 +4,8 @@
 
     <!--권한설정-->
     <!--사진같은거 업로드 (외부저장소 접근)-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!--쓰기권한-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -22,7 +24,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/><!--핸드폰정보 이름 설정값을 알아오기위한 블루투스 권한-->
 
     <application
-        android:name="com.kumkangkind.kumkangsm2.ApplicationClass"
+        android:name="com.kumkangkind.kumkangsm2.Application.ApplicationClass"
         android:allowBackup="true"
         android:icon="@drawable/logo2"
         android:label="@string/app_name"
@@ -86,6 +88,8 @@
         <activity android:name="com.kumkangkind.kumkangsm2.AssignmentStatusActivity"/>
         <activity android:name="com.kumkangkind.kumkangsm2.DongPersonListViewActivity"/>
         <activity android:name="com.kumkangkind.kumkangsm2.SuListViewActivity2"/>
+        <activity android:name="com.kumkangkind.kumkangsm2.SaleOrderActivity"/>
+        <activity android:name="com.kumkangkind.kumkangsm2.ProductionProgressActivity"/>
         <activity android:name="com.kumkangkind.kumkangsm2.RegisterActivity2"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity android:name="com.kumkangkind.kumkangsm2.CommonActivity"/>
@@ -119,7 +123,7 @@
         <service android:name="com.kumkangkind.kumkangsm2.fcm.RegistrationIntentService" android:exported="false"> </service>
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">

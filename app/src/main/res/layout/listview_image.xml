@@ -12,27 +12,26 @@
 
 
         <Button
+            android:id="@+id/btnAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnAdd"
-            android:text="+ 추가  "
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
+            android:background="#5C5C5C"
+            android:gravity="center"
             android:onClick="mOnClick"
-            android:background="@drawable/button_blue_bg"
-            />
+            android:text="+ 추가  "
+            android:textColor="#ffffff"
+            android:textSize="13sp" />
 
         <TextView
+            android:id="@+id/textViewUserName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/textViewUserName"
+            android:gravity="start|center_horizontal|center_vertical"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="현장"
-            android:gravity="center"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:textColor="#0022ff"
-            android:textSize="15sp"
-            />
+            android:textColor="#000000"
+            android:textSize="14sp" />
 
 
 

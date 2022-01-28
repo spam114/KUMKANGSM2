@@ -12,12 +12,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -36,7 +37,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  *
@@ -50,10 +50,7 @@ public class SplashView extends BaseActivity {
     Handler handelr;
     DownloadManager mDm;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
 
     private void startProgress() {
 
@@ -187,7 +184,8 @@ public class SplashView extends BaseActivity {
 
         //region 요청 코드가 PERMISSIONS_REQUEST_CODE 이고,
         // 요청한 퍼미션 개수만큼 수신되었다면
-        if ( requestCode == PermissionUtil.MY_PERMISSIONS_REQUEST_READ_PHONE_STATE &&
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PermissionUtil.MY_PERMISSIONS_REQUEST_READ_PHONE_STATE &&
                 grantResults.length == PermissionUtil.permissionList.length) {
 
             boolean check_result = true;
@@ -201,13 +199,13 @@ public class SplashView extends BaseActivity {
             }
 
             //허용
-            if ( check_result ) {
+            if (check_result) {
                 //허용했을때 로직
                 CheckUser();
             }
             //거부 ,재거부
             else {
-                if (PermissionUtil.recheckPermission(this,PermissionUtil.permissionList)){
+                if (PermissionUtil.recheckPermission(this, PermissionUtil.permissionList)) {
                     //거부 눌렀을 때 로직
                     Toast.makeText(this, "앱에 로그인하기 위해 반드시 필요합니다.", Toast.LENGTH_LONG).show();
 
@@ -215,8 +213,7 @@ public class SplashView extends BaseActivity {
                     setResult(RESULT_CANCELED, intent);
                     finish();
 
-                }
-                else{
+                } else {
                     //재거부 눌렀을 때 로직
                     Toast.makeText(this, "앱에 로그인하기 위해 반드시 필요합니다.", Toast.LENGTH_LONG).show();
 
@@ -330,6 +327,7 @@ public class SplashView extends BaseActivity {
                     Users.LeaderType = child.getString("LeaderType");
                     Users.DeptName = child.getString("DeptName");
                     Users.BusinessClassCode = child.getInt("BusinessClassCode");
+                    Users.EmployeeNo = child.getString("EmployeeNo");
                 }
 
                 if (Users.LeaderType.equals("1") || Users.LeaderType.equals("2") || Users.BusinessClassCode==9) {//음성은 슈퍼바이저 리스트 구분상관없이 받음

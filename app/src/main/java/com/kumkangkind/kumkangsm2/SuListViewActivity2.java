@@ -2,7 +2,6 @@ package com.kumkangkind.kumkangsm2;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -32,7 +31,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * 1. 해당 클래스는 작업지시 목록을 보인다.
@@ -44,7 +42,6 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
     final int REQUEST_CODE_CREATE_ILBO = 3;
     private ListView listView1;
     //private SuWorder[] items;
-
     TextView textViewUserName;
     String type = "";
     String restURL = "";
@@ -58,10 +55,6 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
 
     int clickPosition = -1;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     private void startProgress() {
 
@@ -84,7 +77,7 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
 
         textViewUserName = (TextView) findViewById(R.id.textViewUserName);
         btnIlbo = findViewById(R.id.btnIlbo);
-        btnHelp= findViewById(R.id.btnHelp);
+        btnHelp = findViewById(R.id.btnHelp);
         textViewUserName.setText(Users.UserName);
         type = getIntent().getStringExtra("type");
         restURL = getIntent().getStringExtra("url");
@@ -117,20 +110,17 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
             case R.id.btnHelp:
                 new AlertDialog.Builder(this).setMessage("작업일보가 보이지 않을시, \n메인화면의 날짜를 확인한 후,\n변경하시기 바랍니다.").setCancelable(true).
                         setNegativeButton("닫기", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                }).show();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();
                 break;
 
         }
     }
 
     private void MakeDailyReport() {
-
-        new GetCustomerLocationByGet("내현장").execute(getString(R.string.service_address)+"getCustomerLocation/" + Users.USER_ID);
-
-
+        new GetCustomerLocationByGet("내현장").execute(getString(R.string.service_address) + "getCustomerLocation/" + Users.USER_ID);
     }
 
 
@@ -300,12 +290,12 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
                 String LocationName = "";
                 String SupervisorWoNo = "";
                 String WorkDate = "";
-                String StartTime="";
+                String StartTime = "";
                 String StatusFlag = "";
                 String CustomerName = "";
                 String Supervisor = "";
                 String WorkTypeName = "";
-                String Dong="";
+                String Dong = "";
 
                 suWorders.clear();
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -316,12 +306,12 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
                     LocationName = child.getString("LocationName");
                     SupervisorWoNo = child.getString("SupervisorWoNo");
                     WorkDate = child.getString("WorkDate");
-                    StartTime= child.getString("StartTime");
+                    StartTime = child.getString("StartTime");
                     StatusFlag = child.getString("StatusFlag");
                     CustomerName = child.getString("CustomerName");
                     Supervisor = child.getString("SupervisorName");
                     WorkTypeName = child.getString("WorkTypeName");
-                    Dong=child.getString("Dong");
+                    Dong = child.getString("Dong");
 
                     suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StartTime, StatusFlag, CustomerName, Supervisor, WorkTypeName, Dong));
                 }
@@ -339,12 +329,12 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
             suWorder.WorkNo = woNo;
             suWorder.LocationName = locationName;
             suWorder.WorkDate = workDate;
-            suWorder.StartTime=startTime;
+            suWorder.StartTime = startTime;
             suWorder.Status = statusFlag;
             suWorder.CustomerName = customerName;
             suWorder.Supervisor = supervisor;
             suWorder.WorkTypeName = workTypeName;
-            suWorder.Dong=dong;
+            suWorder.Dong = dong;
             return suWorder;
         }
     }

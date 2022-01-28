@@ -44,8 +44,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 public class ActivityDailyCost2 extends BaseActivity {
 
     private int mYear = 0;
@@ -83,10 +81,6 @@ public class ActivityDailyCost2 extends BaseActivity {
 
     TextView currentTextView;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +130,7 @@ public class ActivityDailyCost2 extends BaseActivity {
             case R.id.btnSearchBudget:
                 GetBudget();
                 break;
-                //예산을 Dialog로 보인다.
+            //예산을 Dialog로 보인다.
         }
     }
 
@@ -215,7 +209,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         TableRow tr_title = new TableRow(this);
         TextView tv = new TextView(this);
-        tv.setWidth(85 * dip);
+        tv.setWidth(95 * dip);
         tv.setText("일자");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setTextColor(Color.BLUE);
@@ -227,7 +221,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85 * dip);
+        tv.setWidth(95 * dip);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         tv.setText("시내출장");
         tv.setBackgroundResource(R.drawable.background_tableheader);
@@ -238,7 +232,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85 * dip);
+        tv.setWidth(95 * dip);
         tv.setText("시외숙박");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -249,7 +243,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85 * dip);
+        tv.setWidth(95 * dip);
         tv.setText("시외일비");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -260,7 +254,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85 * dip);
+        tv.setWidth(95 * dip);
         tv.setText("시외주차");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -271,7 +265,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85 * dip);
+        tv.setWidth(95 * dip);
         tv.setText("시외통행");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -282,7 +276,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85 * dip);
+        tv.setWidth(95 * dip);
         tv.setText("유류대");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -293,7 +287,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85 * dip);
+        tv.setWidth(95 * dip);
         tv.setText("차량유지");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -304,7 +298,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85 * dip);
+        tv.setWidth(95 * dip);
         tv.setText("회식대");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -315,7 +309,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85 * dip);
+        tv.setWidth(95 * dip);
         tv.setText("소모품");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -326,7 +320,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85*dip);
+        tv.setWidth(95*dip);
         tv.setText("통신비");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -338,7 +332,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85*dip);
+        tv.setWidth(95*dip);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         tv.setText("합계");
         tv.setBackgroundResource(R.drawable.background_tableheader);
@@ -357,7 +351,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70 * dip);
+            tvNo.setWidth(95 * dip);
             tvNo.setText(monthList.get(i).WeekDay);
             tvNo.setTextColor(Color.BLUE);
             tvNo.setBackgroundResource(R.drawable.background_tableheader);
@@ -373,7 +367,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //Cost1 시내출장
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70 * dip);
+            tvNo.setWidth(95 * dip);
             tvNo.setText(monthList.get(i).Cost1);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -393,7 +387,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //Cost2 시외숙박
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70 * dip);
+            tvNo.setWidth(95 * dip);
             tvNo.setText(monthList.get(i).Cost2);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -413,7 +407,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //Cost3 시외일비
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(95*dip);
             tvNo.setText(monthList.get(i).Cost3);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -433,7 +427,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(95*dip);
             tvNo.setText(monthList.get(i).Cost4);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -453,7 +447,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(95*dip);
             tvNo.setText(monthList.get(i).Cost5);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -472,7 +466,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(95*dip);
             tvNo.setText(monthList.get(i).Cost6);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -491,7 +485,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(95*dip);
             tvNo.setText(monthList.get(i).Cost7);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -510,7 +504,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(95*dip);
             tvNo.setText(monthList.get(i).Cost8);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -529,7 +523,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(95*dip);
             tvNo.setText(monthList.get(i).Cost9);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -548,7 +542,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70 * dip);
+            tvNo.setWidth(95 * dip);
             tvNo.setText(monthList.get(i).Cost10);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -568,7 +562,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70 * dip);
+            tvNo.setWidth(95 * dip);
             tvNo.setText(monthList.get(i).TotalCost);
             tvNo.setTextColor(Color.BLUE);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -776,7 +770,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         TableRow th_Row = new TableRow(this);
         TextView row_Header1 = new TextView(this);
-        row_Header1.setWidth(70 * dip);
+        row_Header1.setWidth(95 * dip);
         row_Header1.setText("/");
         row_Header1.setTextColor(Color.BLUE);
         row_Header1.setBackgroundResource(R.drawable.background_tableheader);
@@ -786,7 +780,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         //예산
         TextView row_Header2 = new TextView(this);
-        row_Header2.setWidth(70 * dip);
+        row_Header2.setWidth(95 * dip);
         row_Header2.setText("예산");
         row_Header2.setTextColor(Color.BLUE);
         row_Header2.setBackgroundResource(R.drawable.background_tableheader);
@@ -796,7 +790,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         //사용
         TextView row_Header3 = new TextView(this);
-        row_Header3.setWidth(70 * dip);
+        row_Header3.setWidth(95 * dip);
         row_Header3.setText("사용");
         row_Header3.setTextColor(Color.BLUE);
         row_Header3.setBackgroundResource(R.drawable.background_tableheader);
@@ -806,7 +800,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         //잔고
         TextView row_Header4 = new TextView(this);
-        row_Header4.setWidth(70 * dip);
+        row_Header4.setWidth(95 * dip);
         row_Header4.setText("잔고");
         row_Header4.setTextColor(Color.BLUE);
         row_Header4.setBackgroundResource(R.drawable.background_tableheader);
@@ -821,7 +815,7 @@ public class ActivityDailyCost2 extends BaseActivity {
             TableRow tr_date = new TableRow(this);
             //계정명
             TextView tvNo1 = new TextView(this);
-            tvNo1.setWidth(70 * dip);
+            tvNo1.setWidth(95 * dip);
             tvNo1.setText(budgetList.get(i).AccountName);
             tvNo1.setTextColor(Color.BLACK);
             tvNo1.setBackgroundResource(R.drawable.background_tableheader);
@@ -831,7 +825,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //예산
             TextView tvNo2 = new TextView(this);
-            tvNo2.setWidth(70 * dip);
+            tvNo2.setWidth(95 * dip);
             tvNo2.setText(df.format(budgetList.get(i).Budget));
             tvNo2.setTextColor(Color.BLACK);
             tvNo2.setBackgroundResource(R.drawable.background_tableheader);
@@ -841,7 +835,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //사용
             TextView tvNo3 = new TextView(this);
-            tvNo3.setWidth(70 * dip);
+            tvNo3.setWidth(95 * dip);
             tvNo3.setText(df.format(budgetList.get(i).Cost));
             tvNo3.setTextColor(Color.BLUE);
             tvNo3.setBackgroundResource(R.drawable.background_tableheader);
@@ -851,7 +845,7 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             //잔고
             TextView tvNo4 = new TextView(this);
-            tvNo4.setWidth(70 * dip);
+            tvNo4.setWidth(95 * dip);
             tvNo4.setText(df.format(budgetList.get(i).Balance));
             tvNo4.setTextColor(Color.RED);
             tvNo4.setBackgroundResource(R.drawable.background_tableheader);
@@ -1334,8 +1328,8 @@ public class ActivityDailyCost2 extends BaseActivity {
 
             int totalCost =
                     Integer.valueOf(textViewAmountA.getText().toString().replace(",", ""))
-                    + Integer.valueOf(textViewAmountB.getText().toString().replace(",",""))
-                    + Integer.valueOf(textViewAmountC.getText().toString().replace(",",""));
+                            + Integer.valueOf(textViewAmountB.getText().toString().replace(",",""))
+                            + Integer.valueOf(textViewAmountC.getText().toString().replace(",",""));
 
             currentTextView.setText(String.valueOf(totalCost));
             String costType = currentTextView.getTag(R.id.costType).toString();

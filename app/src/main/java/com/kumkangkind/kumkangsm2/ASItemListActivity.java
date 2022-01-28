@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ASItemListActivity extends BaseActivity {
 
@@ -88,11 +87,6 @@ public class ASItemListActivity extends BaseActivity {
             }
         }, 3500);
 
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override

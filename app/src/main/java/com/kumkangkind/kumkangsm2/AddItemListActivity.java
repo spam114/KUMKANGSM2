@@ -10,7 +10,6 @@ import android.os.AsyncTask;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +18,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -38,7 +39,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AddItemListActivity extends BaseActivity {//추가분 리스트 액티비티
 
@@ -64,10 +64,6 @@ public class AddItemListActivity extends BaseActivity {//추가분 리스트 액
     String type;//수정용 확인
     String statusFlag;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     private void startProgress() {
 

@@ -16,7 +16,6 @@ import com.kumkangkind.kumkangsm2.R;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CustomerListActivity extends BaseActivity {
 
@@ -27,10 +26,6 @@ public class CustomerListActivity extends BaseActivity {
     Customers currentItem;
     EditText editTextSearch;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

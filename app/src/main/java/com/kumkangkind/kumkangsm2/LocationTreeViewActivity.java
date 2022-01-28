@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -40,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LocationTreeViewActivity extends BaseActivity {//트리뷰 엑티비티, 검색 X(기본)
     //진행층수 등록, 진행기준 정보관리, 일보작성, 현장불만사례
@@ -63,10 +61,6 @@ public class LocationTreeViewActivity extends BaseActivity {//트리뷰 엑티�
 
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +85,8 @@ public class LocationTreeViewActivity extends BaseActivity {//트리뷰 엑티�
         textView = findViewById(R.id.textView);
         if (programType.equals("현장지원요청")) {
             textView.setText("지원받을 현장을 선택하세요");
-        } else
+        }
+        else
             textView.setText(programType);
 
         HashMap<String, Customer> customerHashMap;
@@ -193,8 +188,6 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
                     ShowComplainDialog();
                 else if (programType.equals("현장지원요청"))
                     ShowSupportDialog();
-
-
             }
         });
         return view;

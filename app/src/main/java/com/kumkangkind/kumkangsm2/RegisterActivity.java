@@ -23,7 +23,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -50,6 +49,8 @@ import java.util.TimeZone;
 import android.location.LocationListener;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -61,7 +62,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class RegisterActivity extends Activity {
@@ -113,10 +113,6 @@ public class RegisterActivity extends Activity {
     DispLocListener locListenD;
     Uri uri;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

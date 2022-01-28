@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ActivityMessageHistory extends BaseActivity{
 
@@ -22,10 +21,6 @@ public class ActivityMessageHistory extends BaseActivity{
     Cursor mCursor;
     SimpleCursorAdapter Adapter;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

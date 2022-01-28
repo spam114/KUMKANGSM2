@@ -39,47 +39,41 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LocationTreeViewActivitySearch extends BaseActivity {//+검색
     //담당자 배정에서 사용
     EditText edtCustomerName;
     Button searchButton;
-    boolean refreshToken=false;
+    boolean refreshToken = false;
     AndroidTreeView treeView;
     List<Customer> customerList;
-    String type="";
+    String type = "";
     TextView textView;
     int leftComplainDateArr[];
     int rightcomplainDateArr[];
-    String programType="";
-
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+    String programType = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        refreshToken=false;
+        refreshToken = false;
         setContentView(R.layout.activity_location_tree_search);
 
         Calendar cal = new GregorianCalendar();
-        leftComplainDateArr= new int[3];
-        leftComplainDateArr[0]=cal.get(Calendar.YEAR);
-        leftComplainDateArr[1]=cal.get(Calendar.MONTH);
-        leftComplainDateArr[2]=cal.get(Calendar.DATE);
+        leftComplainDateArr = new int[3];
+        leftComplainDateArr[0] = cal.get(Calendar.YEAR);
+        leftComplainDateArr[1] = cal.get(Calendar.MONTH);
+        leftComplainDateArr[2] = cal.get(Calendar.DATE);
 
-        rightcomplainDateArr= new int[3];
-        rightcomplainDateArr[0]=cal.get(Calendar.YEAR);
-        rightcomplainDateArr[1]=cal.get(Calendar.MONTH);
-        rightcomplainDateArr[2]=cal.get(Calendar.DATE);
+        rightcomplainDateArr = new int[3];
+        rightcomplainDateArr[0] = cal.get(Calendar.YEAR);
+        rightcomplainDateArr[1] = cal.get(Calendar.MONTH);
+        rightcomplainDateArr[2] = cal.get(Calendar.DATE);
 
-        programType= getIntent().getStringExtra("programType");
-        textView=findViewById(R.id.textView);
+        programType = getIntent().getStringExtra("programType");
+        textView = findViewById(R.id.textView);
         textView.setText(programType);
-        type= getIntent().getStringExtra("type");
+        type = getIntent().getStringExtra("type");
         RefreshTreeView(refreshToken);
 
         progressOFF();//앞단에서 불러온 progress 로딩완료후 끄기
@@ -87,8 +81,8 @@ public class LocationTreeViewActivitySearch extends BaseActivity {//+검색
 
     }
 
-    private void SetListener(){
-        edtCustomerName= findViewById(R.id.edtCustomerName);
+    private void SetListener() {
+        edtCustomerName = findViewById(R.id.edtCustomerName);
 
         edtCustomerName.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -104,67 +98,63 @@ public class LocationTreeViewActivitySearch extends BaseActivity {//+검색
         searchButton.setOnClickListener(new View.OnClickListener() {//검색 버튼 클릭
             @Override
             public void onClick(View v) {
-                refreshToken=true;
+                refreshToken = true;
                 RefreshTreeView(refreshToken);
 
             }
         });
 
 
-
     }
 
     /*
-    * 트리뷰를 갱신한다.
-    * */
-    private void RefreshTreeView(boolean token){
+     * 트리뷰를 갱신한다.
+     * */
+    private void RefreshTreeView(boolean token) {
 
-        if(token==false) {//처음 불러올때
+        if (token == false) {//처음 불러올때
             HashMap<String, Customer> customerHashMap = (HashMap<String, Customer>) (getIntent().getSerializableExtra("hashMap"));
 
             customerList = new ArrayList<>(customerHashMap.values());
             Collections.sort(customerList);//정렬
 
             ViewTree(token);
-        }
+        } else {//검색 할때
 
-        else {//검색 할때
-
-            new GetCustomerLocationForSearchByPost().execute(getString(R.string.service_address)+"getCustomerLocationForSearch");
+            new GetCustomerLocationForSearchByPost().execute(getString(R.string.service_address) + "getCustomerLocationForSearch");
             //customerHashMap = (HashMap<String, Customer>) (getIntent().getSerializableExtra("hashMap"));
         }
 
     }
 
 
-    private void ViewTree(boolean refreshToken){
-        LinearLayout treeLayout= findViewById(R.id.treeLayout);
+    private void ViewTree(boolean refreshToken) {
+        LinearLayout treeLayout = findViewById(R.id.treeLayout);
         TreeNode root = TreeNode.root();//root
-        Customer customer=null;
+        Customer customer = null;
 
-        searchButton =findViewById(R.id.searchBtn);
+        searchButton = findViewById(R.id.searchBtn);
         SetListener();
 
 
-
-        for (Customer _customer:customerList) {
-            customer=_customer;
-            String customerName=customer.CustomerName;
-            HashMap<String, Location> locationHashMap=customer.locationHashMap;
+        for (Customer _customer : customerList) {
+            customer = _customer;
+            String customerName = customer.CustomerName;
+            HashMap<String, Location> locationHashMap = customer.locationHashMap;
 
             ParentNode2.IconTreeItem parentItem = new ParentNode2.IconTreeItem();//부모 노드설정
-            TreeNode parent = new TreeNode(parentItem).setViewHolder(new ParentNode2(this,customerName));//부모노드설정
+            TreeNode parent = new TreeNode(parentItem).setViewHolder(new ParentNode2(this, customerName));//부모노드설정
 
-            Location location=null;
-            for (Map.Entry<String,Location> locationEntry:locationHashMap.entrySet()) {
-                if(programType.equals("현장불만사례"))
-                    type="현장불만사례";
-                location=locationEntry.getValue();
-                String locationNo=location.LocationNo;
-                String locationName=location.LocationName;
-                String contractNo=location.ContractNo;
+            Location location = null;
+            for (Map.Entry<String, Location> locationEntry : locationHashMap.entrySet()) {
+                if (programType.equals("현장불만사례"))
+                    type = "현장불만사례";
+                location = locationEntry.getValue();
+                String locationNo = location.LocationNo;
+                String locationName = location.LocationName;
+                String contractNo = location.ContractNo;
                 MyHolder2.IconTreeItem nodeItem = new MyHolder2.IconTreeItem();//자식노드 설정
-                TreeNode child1 = new TreeNode(nodeItem).setViewHolder(new MyHolder2(this,locationNo,locationName,contractNo, customerName, type,leftComplainDateArr,rightcomplainDateArr));//자식 노드설정
+                TreeNode child1 = new TreeNode(nodeItem).setViewHolder(new MyHolder2(this, locationNo, locationName, contractNo, customerName, type, leftComplainDateArr, rightcomplainDateArr));//자식 노드설정
                 parent.addChildren(child1);//parent 하위에 child 붙이기
 
             }
@@ -173,7 +163,7 @@ public class LocationTreeViewActivitySearch extends BaseActivity {//+검색
         }
 
         treeView = new AndroidTreeView(this, root);
-        if(refreshToken==true) {//검색후 초기화 부분
+        if (refreshToken == true) {//검색후 초기화 부분
             treeLayout.removeAllViews();
             treeView.setDefaultAnimation(true);
             treeView.setDefaultViewHolder(MyHolder2.class);
@@ -195,27 +185,26 @@ public class LocationTreeViewActivitySearch extends BaseActivity {//+검색
                 HashMap<String, Customer> customerHashMap;
                 JSONArray jsonArray = new JSONArray(result);
 
-                customerHashMap= new HashMap<>();
-                Customer customer=null;
-                String key=null;
+                customerHashMap = new HashMap<>();
+                Customer customer = null;
+                String key = null;
 
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject child = jsonArray.getJSONObject(i);
 
-                    key=child.getString("CustomerCode");
+                    key = child.getString("CustomerCode");
 
-                    if(!customerHashMap.containsKey(key)){//없으면
+                    if (!customerHashMap.containsKey(key)) {//없으면
                         customer = new Customer(child.getString("CustomerCode"),
                                 child.getString("CustomerName"));
-                        customerHashMap.put(key,customer);
+                        customerHashMap.put(key, customer);
+                    } else {//있으면
+                        customer = customerHashMap.get(key);
                     }
-                    else{//있으면
-                        customer=customerHashMap.get(key);
-                    }
-                    customer.addData(child.getString("LocationNo"),child.getString("LocationName"),child.getString("ContractNo"));
+                    customer.addData(child.getString("LocationNo"), child.getString("LocationName"), child.getString("ContractNo"));
                 }
 
-                customerList= new ArrayList<>(customerHashMap.values());
+                customerList = new ArrayList<>(customerHashMap.values());
                 Collections.sort(customerList);
 
                 //Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
@@ -227,19 +216,18 @@ public class LocationTreeViewActivitySearch extends BaseActivity {//+검색
         }
     }
 
-    public String POST2(String url){
+    public String POST2(String url) {
 
 
-        String customerName=edtCustomerName.getText().toString();
-        if(customerName.equals(""))
-            customerName="-1";
+        String customerName = edtCustomerName.getText().toString();
+        if (customerName.equals(""))
+            customerName = "-1";
 
-        String userCode="";
-        if(type.equals("담당자배정")){
-            userCode=Users.USER_ID;
-        }
-        else{
-            userCode="모든현장";
+        String userCode = "";
+        if (type.equals("담당자배정")) {
+            userCode = Users.USER_ID;
+        } else {
+            userCode = "모든현장";
         }
 
         //todo
@@ -256,7 +244,7 @@ public class LocationTreeViewActivitySearch extends BaseActivity {//+검색
             JSONObject jsonObject = new JSONObject();
 
             //Delete & Insert
-            jsonObject.put("SupervisorCode",userCode);
+            jsonObject.put("SupervisorCode", userCode);
             jsonObject.put("CustomerName", customerName);
 
             json = jsonObject.toString();
@@ -312,7 +300,7 @@ public class LocationTreeViewActivitySearch extends BaseActivity {//+검색
         }
 
         inputStream.close();
-        return  result;
+        return result;
     }
 }
 
@@ -330,16 +318,16 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
     int rightcomplainDateArr[];
     // ProgressDialog mProgressDialog;
 
-    public MyHolder2(Context context, String locationNo,String locationName, String contractNo, String customerName, String type,int leftComplainDateArr[],  int rightcomplainDateArr[]) {
+    public MyHolder2(Context context, String locationNo, String locationName, String contractNo, String customerName, String type, int leftComplainDateArr[], int rightcomplainDateArr[]) {
         super(context);
-        this.context=context;
-        this.locationNo=locationNo;
-        this.locationName=locationName;
-        this.contractNo=contractNo;
-        this.customerName=customerName;
-        this.type=type;
-        this.leftComplainDateArr=leftComplainDateArr;
-        this.rightcomplainDateArr=rightcomplainDateArr;
+        this.context = context;
+        this.locationNo = locationNo;
+        this.locationName = locationName;
+        this.contractNo = contractNo;
+        this.customerName = customerName;
+        this.type = type;
+        this.leftComplainDateArr = leftComplainDateArr;
+        this.rightcomplainDateArr = rightcomplainDateArr;
     }
 
 
@@ -354,8 +342,8 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
             public void onClick(View v) {
                 //contractNo 보내기
                 //new GetDongProgessFloorByPost().execute(getString(R.string.service_address)+"getDongProgressFloor");
-                if(type.equals("현장불만사례")){
-                    ComplainDialog complainDialog = new ComplainDialog(context, locationNo,customerName,locationName,leftComplainDateArr, rightcomplainDateArr);
+                if (type.equals("현장불만사례")) {
+                    ComplainDialog complainDialog = new ComplainDialog(context, locationNo, customerName, locationName, leftComplainDateArr, rightcomplainDateArr);
 
                     //window.setLayout( WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
@@ -372,7 +360,7 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
                         @Override
                         public void finish(int[] dateArr) {
                             //left 날짜 저장 갱신
-                            leftComplainDateArr=dateArr;
+                            leftComplainDateArr = dateArr;
                         }
                     });
 
@@ -381,17 +369,24 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
                         @Override
                         public void finish(int[] dateArr) {
                             //right 날짜 저장 갱신
-                            rightcomplainDateArr=dateArr;
+                            rightcomplainDateArr = dateArr;
 
                         }
                     });
+                } else if (type.equals("생산내역조회")) {
+                    //주문내역 Activity
+
+                    Intent i;
+                    i = new Intent(context, SaleOrderActivity.class);
+                    i.putExtra("customerName", customerName);
+                    i.putExtra("locationNo", locationNo);
+                    i.putExtra("locationName", locationName);
+
+                    context.startActivity(i);
+
+                } else {//담당자배정, 담당자배정현황
+                    new GetDongByPost(customerName, locationName).execute(context.getString(R.string.service_address) + "getDong");
                 }
-
-
-                else{//담당자배정, 담당자배정현황
-                    new GetDongByPost(customerName, locationName).execute(context.getString(R.string.service_address)+"getDong");
-                }
-
             }
         });
         return view;
@@ -403,14 +398,12 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
     }
 
 
-
-
     private class GetDongByPost extends AsyncTask<String, Void, String> {//todo
 
-        String customerLocation="";
+        String customerLocation = "";
 
-        public GetDongByPost(String customerName,String locationName){
-            customerLocation=customerName+"-"+locationName;
+        public GetDongByPost(String customerName, String locationName) {
+            customerLocation = customerName + "-" + locationName;
         }
 
         @Override
@@ -425,7 +418,7 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
 
             try {
 
-                HashMap<String, String> dongHashMap= new HashMap<>();
+                HashMap<String, String> dongHashMap = new HashMap<>();
                 JSONArray jsonArray = new JSONArray(result);
 
                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -437,10 +430,9 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
 
                 Intent i;
 
-                if(type.equals("담당자배정")){
+                if (type.equals("담당자배정")) {
                     i = new Intent(context, AssignmentActivity.class);
-                }
-                else{//담당자배정현황
+                } else {//담당자배정현황
                     i = new Intent(context, AssignmentStatusActivity.class);
                 }
 
@@ -458,7 +450,6 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
     }
 
 
-
     public String POST(String url) {
 
         InputStream inputStream = null;
@@ -473,8 +464,8 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
             JSONObject jsonObject = new JSONObject();
 
             //Delete & Insert
-            jsonObject.put("ContractNo",contractNo);//계약번호
-            jsonObject.put("Type1","전체");
+            jsonObject.put("ContractNo", contractNo);//계약번호
+            jsonObject.put("Type1", "전체");
 
             json = jsonObject.toString();
             // ** Alternative way to convert Person object to JSON string using Jackson Lib
@@ -528,10 +519,9 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
         }
 
         inputStream.close();
-        return  result;
+        return result;
     }
 }
-
 
 
 class ParentNode2 extends TreeNode.BaseNodeViewHolder<ParentNode2.IconTreeItem> {
@@ -540,7 +530,7 @@ class ParentNode2 extends TreeNode.BaseNodeViewHolder<ParentNode2.IconTreeItem> 
 
     public ParentNode2(Context context, String customerName) {
         super(context);
-        this.customerName=customerName;
+        this.customerName = customerName;
     }
 
     @Override

@@ -38,7 +38,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * 1. 해당 클래스는 데이터를 조회하기 위한 검색조건을 입력 받는다.
@@ -72,10 +71,7 @@ public class ActivitySales extends BaseActivity {
     String supervisorCode;
     String type1;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

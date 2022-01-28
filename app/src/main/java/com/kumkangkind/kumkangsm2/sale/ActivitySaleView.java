@@ -37,9 +37,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-
 /**
  * 1. 해당 클래스는 작업지시를 보는 화면을 정의한다.
  * 2. 화면을 보고 작업 지시를 입력 할 경우, 입력하기 버튼을 클릭하여 입력 화면으로 전환한다.
@@ -68,10 +65,6 @@ public class ActivitySaleView extends BaseActivity {
     private String message = "";
     private String resultCode = "";
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,4 +8,67 @@
     <string name="service_address">http://211.245.239.53:2221/Service/json/</string>
     <string name="app_code">2</string>
     <!--<string name="service_address">http://211.245.239.36:2222/Service/json/</string>-->
+
+
+    <string name="developer">André Mion</string>
+    <string name="website">https://github.com/andremion</string>
+    <string name="menu_item_import">Import</string>
+    <string name="menu_item_gallery">Gallery</string>
+    <string name="menu_item_slideshow">Slideshow</string>
+    <string name="menu_item_tools">Tools</string>
+    <string name="menu_group_communicate">Communicate</string>
+    <string name="menu_item_share">Share</string>
+    <string name="menu_item_send">Send</string>
+    <string name="simple_circle_button_example">Simple Circle Button Example</string>
+    <string name="text_inside_circle_button_example">Text Inside Circle Button Example</string>
+    <string name="text_outside_circle_button_example">Text Outside Circle Button Example</string>
+    <string name="ham_button_example">Ham Button Example</string>
+    <string name="square_and_piece_corner_radius_example">Square And Piece Corner Radius Example</string>
+    <string name="boom_example">Boom Example</string>
+    <string name="button_place_alignment_example">Button Place Alignment Example</string>
+    <string name="order_example">Order Example</string>
+    <string name="actionbar_example">ActionBar Example</string>
+    <string name="tool_bar_example">ToolBar Example</string>
+    <string name="draggable_example">Draggable Example</string>
+    <string name="ease_example">Ease Example</string>
+    <string name="listener_example">Listener Example</string>
+    <string name="control_example">Control Example</string>
+    <string name="share_example">Share Example</string>
+    <string name="list_example">List Example</string>
+    <string name="recycler_view_example">Recycler View Example</string>
+    <string name="fragment_example">Fragment Example</string>
+    <string name="change_boom_button_example">Change Boom Button Example</string>
+    <string name="three_d_animation_example">3D Animation Example</string>
+    <string name="custom_position_example">Custom Position Example</string>
+    <string name="fade_views_example">Fade Views Example</string>
+    <string name="orientation_example">Orientation Example</string>
+
+    <string name="text_inside_circle_button_text_normal">Text Inside Circle Button(Normal)</string>
+    <string name="text_inside_circle_button_text_highlighted">Text Inside Circle Button(Highlighted)</string>
+    <string name="text_inside_circle_button_text_unable">Text Inside Circle Button(Unable)</string>
+
+    <string name="text_outside_circle_button_text_normal">Text Outside Circle Button(Normal)</string>
+    <string name="text_outside_circle_button_text_highlighted">Text Outside Circle Button(Highlighted)</string>
+    <string name="text_outside_circle_button_text_unable">Text Outside Circle Button(Unable)</string>
+
+    <string name="text_ham_button_text_normal">Ham Button Text(Normal)</string>
+    <string name="text_ham_button_text_highlighted">Ham Button Text(Highlighted)</string>
+    <string name="text_ham_button_text_unable">Ham Button Text(Unable)</string>
+    <string name="text_ham_button_sub_text_normal">Ham Button Sub Text(Normal)</string>
+    <string name="text_ham_button_sub_text_highlighted">Ham Button Sub Text(Highlighted)</string>
+    <string name="text_ham_button_sub_text_unable">Ham Button Sub Text(Unable)</string>
+    <string name="work_request_management">작업요청 관리</string>
+    <string name="work_request_search">작업요청내역 조회</string>
+    <string name="my_work">나의 작업보기</string>
+    <string name="daily_report">일보확인</string>
+    <string name="assignment_status">담당자 배정현황</string>
+    <string name="register_expense">경비등록</string>
+    <string name="assignment">담당자 배정</string>
+    <string name="message">알림 메시지</string>
+    <string name="problem">현장 불만사례</string>
+    <string name="progress_information">진행기준정보 관리</string>
+    <string name="progress_floor">진행층수 등록</string>
+    <string name="product">생산내역 조회</string>
+    <string name="support">현장 지원요청</string>
+    <string name="edit_menu">메뉴 편집</string>
   </resources>

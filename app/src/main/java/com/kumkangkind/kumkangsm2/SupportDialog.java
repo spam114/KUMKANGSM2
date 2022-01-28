@@ -1,5 +1,6 @@
 package com.kumkangkind.kumkangsm2;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kumkangkind.kumkangsm2.Application.ApplicationClass;
 import com.kumkangkind.kumkangsm2.sale.WorkType;
 
 import org.apache.http.HttpEntity;
@@ -79,6 +81,22 @@ public class SupportDialog extends Dialog implements BaseActivityInterface{
     @Override
     public void progressOFF() {
         ApplicationClass.getInstance().progressOFF();
+    }
+
+    @Override
+    public void progressON(String message, Handler handler) {
+        ApplicationClass.getInstance().progressON((Activity) getOwnerActivity(), message, handler);
+    }
+
+    @Override
+    public void progressOFF(String className) {
+        ApplicationClass.getInstance().progressOFF(className);
+    }
+
+
+    @Override
+    public void progressOFF2(String className) {
+        ApplicationClass.getInstance().progressOFF2(className);
     }
 
 

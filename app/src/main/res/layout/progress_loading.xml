@@ -24,7 +24,8 @@
             android:layout_marginTop="16dp"
             android:text="Loading..."
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:visibility="gone" />
     </LinearLayout>
 </RelativeLayout>
 

@@ -24,7 +24,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.support.v4.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +35,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
 
 import com.kumkangkind.kumkangsm2.sale.WorkType;
 
@@ -63,8 +64,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 /**
@@ -124,10 +123,6 @@ public class RegisterActivity2 extends BaseActivity {
 
 
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     private void startProgress() {
 
@@ -423,7 +418,7 @@ public class RegisterActivity2 extends BaseActivity {
                         return;
                     }
 
-                    new android.support.v7.app.AlertDialog.Builder(this)
+                    new AlertDialog.Builder(this)
                             .setTitle("작업일보 생성")
                             .setMessage("작업일보를 생성하시겠습니까? ")
                             //.setIcon(R.drawable.ninja)
@@ -952,7 +947,7 @@ public class RegisterActivity2 extends BaseActivity {
         ArrayList<String> inputedDongList = new ArrayList<>();
         inputedDongList = (ArrayList<String>) textViewDong.getTag();
 
-        final android.support.v7.app.AlertDialog.Builder build = new android.support.v7.app.AlertDialog.Builder(this);
+        final AlertDialog.Builder build = new AlertDialog.Builder(this);
         build.create();
         build.setTitle("동 정보");
 

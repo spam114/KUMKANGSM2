@@ -1,35 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <TextView
-        android:layout_width="0px"
-        android:layout_weight="2"
-        android:layout_height="match_parent"
         android:id="@+id/textViewWorkDate"
-        android:text="순번"
-        android:textSize="15sp"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="#5B85FA"
         android:gravity="center"
-        android:background="#000000"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:text="순번"
         android:textColor="#ffffff"
-        android:textStyle="bold"
-        />
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:layout_width="0px"
-        android:layout_weight="5"
-        android:layout_height="match_parent"
         android:id="@+id/textViewLocation"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
 
-        android:textSize="15sp"
-        android:text="파일이름"
+        android:background="#5B85FA"
         android:gravity="center"
-        android:background="#000000"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:text="파일이름"
         android:textColor="#ffffff"
-        android:textStyle="bold"
-        />
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

@@ -3,12 +3,15 @@ package com.kumkangkind.kumkangsm2;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -49,7 +52,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * 1. 해당 클래스는 작업지시 목록을 보인다.
@@ -57,12 +59,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class PhotoListActivity extends BaseActivity {
 
-
     WoImage currentImage=  null;
     private ListView listView1;
     private WoImage[] items;
     TextView textViewUserName;
     int RESULT_GALLERY2 = 0;
+    int RESULT_MULTI_PICTURE = 3;
     int intent2, GALLERY_KITKAT_INTENT = 1;
     ArrayList<WoImage> imageList;
     ImageAdapter adapter;
@@ -78,10 +80,6 @@ public class PhotoListActivity extends BaseActivity {
     Dialog dialog;
     EditText textViewphotoName;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +98,7 @@ public class PhotoListActivity extends BaseActivity {
         textViewUserName = (TextView) findViewById(R.id.textViewUserName);
         textViewUserName.setText(customer);
         addButton = (Button)findViewById(R.id.btnAdd);
-        addButton.setText("+ 사진추가");
+        addButton.setText("+사진추가");
 
         makeImageList();
 
@@ -150,14 +148,20 @@ public class PhotoListActivity extends BaseActivity {
                     startActivityForResult(Intent.createChooser(intent2, "Select Picture"), RESULT_GALLERY2);
                 }
                 else {
-                    Intent intent2 = new Intent();
+                    /*Intent intent2 = new Intent();
                     intent2.setType("image/*");
                     intent2.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent2, "Select Picture"), GALLERY_KITKAT_INTENT);
+                    startActivityForResult(Intent.createChooser(intent2, "Select Picture"), GALLERY_KITKAT_INTENT);*/
+
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                    intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                    intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, RESULT_MULTI_PICTURE);
                 }
                 break;
 
-            case R.id.buttonDelete:
+            /*case R.id.buttonDelete:
 
                 final View v2 = v;
                 new AlertDialog.Builder(this).setMessage("삭제할까요?").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -205,7 +209,7 @@ public class PhotoListActivity extends BaseActivity {
 
                     }
                 }).show();
-                break;
+                break;*/
         }
     }
 
@@ -249,9 +253,9 @@ public class PhotoListActivity extends BaseActivity {
             //파일이름설정
             MakePhotoSettingDialog(uri);
             //UpdateImage(uri);
-        } else if (requestCode == GALLERY_KITKAT_INTENT && resultCode == RESULT_OK && null != data) {
+        } else if (requestCode == RESULT_MULTI_PICTURE && resultCode == RESULT_OK && null != data) {
 
-            String[] proj = {MediaStore.Images.Media.DATA};
+           /* String[] proj = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(data.getData(), proj, null, null, null);
             int column_index = cursor.getColumnIndex(proj[0]);
             cursor.moveToFirst();
@@ -262,9 +266,156 @@ public class PhotoListActivity extends BaseActivity {
 
             //파일이름설정
             MakePhotoSettingDialog(uri);
-           // UpdateImage(uri);
+           // UpdateImage(uri);*/
+
+            ArrayList<Uri> uriList = new ArrayList<>();     // 이미지의 uri를 담을 ArrayList 객체
+
+            if(data.getClipData() == null){     // 이미지를 하나만 선택한 경우
+                Log.e("single choice: ", String.valueOf(data.getData()));
+                Uri imageUri = data.getData();
+                uriList.add(imageUri);
+
+                //adapter = new MultiImageAdapter(uriList, getApplicationContext());
+                //recyclerView.setAdapter(adapter);
+                //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
+            }
+            else{      // 이미지를 여러장 선택한 경우
+                ClipData clipData = data.getClipData();
+
+                if(clipData.getItemCount() > 10){   // 선택한 이미지가 11장 이상인 경우
+                    Toast.makeText(getApplicationContext(), "사진은 10장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
+                }
+                else{   // 선택한 이미지가 1장 이상 10장 이하인 경우
+
+                    for (int i = 0; i < clipData.getItemCount(); i++){
+                        Uri imageUri = clipData.getItemAt(i).getUri();  // 선택한 이미지들의 uri를 가져온다.
+                        try {
+                            uriList.add(imageUri);  //uri를 list에 담는다.
+
+                        } catch (Exception e) {
+                        }
+                    }
+                    //adapter = new MultiImageAdapter(uriList, getApplicationContext());
+                    //recyclerView.setAdapter(adapter);   // 리사이클러뷰에 어댑터 세팅
+                    //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));     // 리사이클러뷰 수평 스크롤 적용
+                }
+            }
+            updateImageMulti(uriList);
         }
     }
+
+    private void updateImageMulti(ArrayList<Uri> uriList) {
+
+        String url = getString(R.string.service_address) + "updateImageMulti";
+        ContentValues values = new ContentValues();
+        values.put("SupervisorWoNo", key);
+
+        UpdateImageMulti gsod = new UpdateImageMulti(url, values, uriList);
+        gsod.execute();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public class UpdateImageMulti extends AsyncTask<Void, Void, String> {
+        String url;
+        ContentValues values;
+        ArrayList<Uri> list;
+
+        UpdateImageMulti(String url, ContentValues values, ArrayList<Uri> list) {
+            this.url = url;
+            this.values = values;
+            this.list = list;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            startProgress();
+            //progress bar를 보여주는 등등의 행위
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String result;
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            result = requestHttpURLConnection.request2(url, values, list, PhotoListActivity.this);
+            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // 통신이 완료되면 호출됩니다.
+            // 결과에 따른 UI 수정 등은 여기서 합니다
+            try {
+                JSONArray jsonArray = new JSONArray(result);
+                String ErrorCheck = "";
+                //String tempSaleOrderNo = "";
+                //partNameDic = new ArrayList<>();
+                //partSpecNameDic = new ArrayList<>();
+                imageList = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject child = jsonArray.getJSONObject(i);
+                    if (!child.getString("ErrorCheck").equals("null")) {//문제가 있을 시, 에러 메시지 호출 후 종료
+                        ErrorCheck = child.getString("ErrorCheck");
+                        Toast.makeText(PhotoListActivity.this, ErrorCheck, Toast.LENGTH_SHORT).show();
+                        //showErrorDialog(SaleOrderActivity.this, ErrorCheck, 2);
+                        return;
+                    }
+
+                    imageList.add(new WoImage(child.getString("SupervisorWoNo"),
+                            child.getString("SeqNo"),
+                            child.getString("ImageName"),
+                            "",
+                            child.getString("Imagefile")));
+
+                    //tempSaleOrderNo = child.getString("SaleOrderNo");
+                    //fixDivision = child.getString("FixDivision");
+                }
+
+                remakeImageList();
+                adapter = new ImageAdapter(PhotoListActivity.this, R.layout.listview_imagerow, imageList);
+
+                //ListView
+                //listView1 = (ListView) findViewById(R.id.listViewImage);
+                //View header = (View) getLayoutInflater().inflate(R.layout.listview_imageheader, null);
+                //listView1.addHeaderView(header);
+                listView1.setAdapter(adapter);
+                listView1.setOnItemClickListener(mItemClickListener);
+                listView1.setFocusable(false);
+
+
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            } finally {
+                progressOFF2(this.getClass().getName());
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void MakePhotoSettingDialog(final Uri uri){
 
@@ -690,7 +841,17 @@ public class PhotoListActivity extends BaseActivity {
                     imageList.get(i).SmallImageFile);
         }
     }
+    private void remakeImageList() {
 
+        items = new WoImage[imageList.size()];
+        for (int i = 0; i < imageList.size(); i++) {
+            items[i] = new WoImage(imageList.get(i).WoNo,
+                    imageList.get(i).SeqNo,
+                    imageList.get(i).ImageName,
+                    imageList.get(i).ImageFile,
+                    imageList.get(i).SmallImageFile);
+        }
+    }
 
     /**
      * Image SDCard Save (input Bitmap -> saved file JPEG)

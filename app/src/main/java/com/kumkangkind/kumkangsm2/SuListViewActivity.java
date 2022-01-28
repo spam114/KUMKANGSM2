@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * 1. 해당 클래스는 작업지시 목록을 보인다.
@@ -31,10 +30,6 @@ public class SuListViewActivity extends BaseActivity {
     ArrayList<SuWorder> suWorders;
     SwListVIewAdapter adapter;
 
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     private void startProgress() {
 

@@ -1,6 +1,7 @@
 package com.kumkangkind.kumkangsm2;
 
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -16,6 +17,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.kumkangkind.kumkangsm2.Application.ApplicationClass;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -96,6 +99,21 @@ public class ComplainDialog extends Dialog implements BaseActivityInterface{
         ApplicationClass.getInstance().progressOFF();
     }
 
+    @Override
+    public void progressON(String message, Handler handler) {
+        ApplicationClass.getInstance().progressON((Activity) getOwnerActivity(), message, handler);
+    }
+
+    @Override
+    public void progressOFF(String className) {
+        ApplicationClass.getInstance().progressOFF(className);
+    }
+
+
+    @Override
+    public void progressOFF2(String className) {
+        ApplicationClass.getInstance().progressOFF2(className);
+    }
 
     public interface OnDialogResult {
         void finish(int[] dateArr);

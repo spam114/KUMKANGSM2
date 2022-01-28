@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -34,7 +35,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class DongPersonListViewActivity extends Activity {
     private ListView listView1;
@@ -59,11 +59,6 @@ public class DongPersonListViewActivity extends Activity {
     View clickView=null;
     long clickId=0;
     String constructionEmployee="";
-
-    @Override
-    protected void attachBaseContext(Context newBase) {//글씨체 적용
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
