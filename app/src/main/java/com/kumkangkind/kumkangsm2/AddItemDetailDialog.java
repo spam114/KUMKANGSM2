@@ -84,6 +84,10 @@ public class AddItemDetailDialog extends Dialog implements BaseActivityInterface
         }, 3500);
 
     }
+    @Override
+    public void HideKeyBoard(Context context) {
+        ApplicationClass.getInstance().HideKeyBoard((Activity) context);
+    }
 
     @Override
     public void progressON() {

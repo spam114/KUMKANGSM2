@@ -156,6 +156,11 @@ public class ImageAdapter extends ArrayAdapter<WoImage> implements BaseActivityI
     }
 
     @Override
+    public void HideKeyBoard(Context context) {
+        ApplicationClass.getInstance().HideKeyBoard((Activity) context);
+    }
+
+    @Override
     public void progressOFF() {
         ApplicationClass.getInstance().progressOFF();
     }

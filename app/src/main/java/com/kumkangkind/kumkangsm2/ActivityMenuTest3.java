@@ -92,18 +92,21 @@ public class ActivityMenuTest3 extends BaseActivity {
     MenuItem item12;
     MenuItem item13;
     MenuItem item14;
+    MenuItem item15;
 
+
+    //여기리스트들은 어플 최초 메인 버튼 셋팅을 의미한다.
     ArrayList<String> eumSungTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "나의 작업보기", "일보확인", "진행기준정보 관리", "진행층수 등록",
             "경비등록", "현장 불만사례", "현장 지원요청", "알림 메시지", "생산내역 조회", ""));
     ArrayList<String> eumSungSale = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "나의 작업보기", "일보확인", "진행기준정보 관리", "진행층수 등록",
             "경비등록", "현장 불만사례", "현장 지원요청", "알림 메시지", "생산내역 조회", ""));
     ArrayList<String> eumSungSuper = new ArrayList<>(Arrays.asList("담당자 배정", "나의 작업보기", "진행기준정보 관리", "진행층수 등록", "경비등록", "현장 불만사례",
             "현장 지원요청", "생산내역 조회", ""));
-
     ArrayList<String> ChangTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", ""));
     ArrayList<String> ChangSale = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", ""));
     ArrayList<String> ChangSuper = new ArrayList<>(Arrays.asList("작업요청내역 조회", "경비등록", "알림 메시지", ""));
 
+    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("진행층수 등록(회수)", "알림 메시지"));
     ArrayList<String> myDefaultButtonList = new ArrayList<>();
 
     int fromYear = 0;
@@ -191,6 +194,9 @@ public class ActivityMenuTest3 extends BaseActivity {
         } else if (Users.LeaderType.equals("2")) {
             txtAuthorityName.setText("영업");
         }
+        else{
+            txtAuthorityName.setText("회수");
+        }
 
         mFloatingNavigationView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -227,6 +233,8 @@ public class ActivityMenuTest3 extends BaseActivity {
                     GoProgressInformation();
                 } else if (item.getTitle().equals(getString(R.string.progress_floor))) {
                     GoProgressFloor();
+                } else if (item.getTitle().equals(getString(R.string.progress_floor_return))) {
+                    GoProgressFloorReturn();
                 } else if (item.getTitle().equals(getString(R.string.product))) {
                     GoProduct();
                 } else if (item.getTitle().equals(getString(R.string.support))) {
@@ -442,6 +450,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         item12 = menu.findItem(R.id.support);
         item13 = menu.findItem(R.id.product);
         item14 = menu.findItem(R.id.message);
+        item15 = menu.findItem(R.id.progress_floor_return);
         item1.setVisible(false);
         item2.setVisible(false);
         item3.setVisible(false);
@@ -456,6 +465,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         item12.setVisible(false);
         item13.setVisible(false);
         item14.setVisible(false);
+        item15.setVisible(false);
     }
 
     //POST
@@ -851,6 +861,12 @@ public class ActivityMenuTest3 extends BaseActivity {
             btn7.setVisibility(View.INVISIBLE);
         }
 
+        if(Users.LeaderType.equals("3")){
+            btn5.setVisibility(View.INVISIBLE);
+            btn6.setVisibility(View.INVISIBLE);
+            btn7.setVisibility(View.INVISIBLE);
+        }
+
         if (strButton3 == "")
             btn3.setVisibility(View.INVISIBLE);
         else
@@ -965,6 +981,10 @@ public class ActivityMenuTest3 extends BaseActivity {
 
             case "진행층수 등록":
                 programType = "진행층수등록";
+                ClickProgressFloor();
+                break;
+            case "진행층수 등록(회수)":
+                programType = "진행층수등록회수";
                 ClickProgressFloor();
                 break;
 
@@ -1148,8 +1168,26 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn7.setTag("현장 지원요청");
                 btn7.setVisibility(View.VISIBLE);
             }
+            else if(Users.BusinessClassCode == 9 && Users.LeaderType.equals("3")){
+                txt3.setText(getString(R.string.progress_floor_return));
+                btn3.setTag(getString(R.string.progress_floor_return));
+                btn3.setVisibility(View.VISIBLE);
 
-            if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("0")) {//창녕 슈퍼바이저일때,1.작업요청내역 조회 2. 경비등록
+                //getString(R.string.progress_floor)
+
+                txt4.setText(getString(R.string.message));
+                btn4.setTag(getString(R.string.message));
+                btn4.setVisibility(View.VISIBLE);
+
+                btn5.setTag(getString(R.string.message));
+                btn6.setTag(getString(R.string.message));
+                btn7.setTag(getString(R.string.message));
+                btn5.setVisibility(View.INVISIBLE);
+                btn6.setVisibility(View.INVISIBLE);
+                btn7.setVisibility(View.INVISIBLE);
+            }
+
+            else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("0")) {//창녕 슈퍼바이저일때,1.작업요청내역 조회 2. 경비등록
 
                 txt3.setText("작업요청내역 조회");
                 btn3.setTag("작업요청내역 조회");
@@ -1162,13 +1200,12 @@ public class ActivityMenuTest3 extends BaseActivity {
                 txt5.setText("알림 메시지");
                 btn5.setTag("알림 메시지");
                 btn5.setVisibility(View.VISIBLE);
-
                 btn6.setVisibility(View.INVISIBLE);
                 btn7.setVisibility(View.INVISIBLE);
 
             }
 
-            if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("1")) {//창녕 팀장일때,1.담당자배정 현황 2.담당자배정 3.일보확인 4.작업요청 관리
+            else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("1")) {//창녕 팀장일때,1.담당자배정 현황 2.담당자배정 3.일보확인 4.작업요청 관리
 
                 txt3.setText("담당자 배정현황");
                 btn3.setTag("담당자 배정현황");
@@ -1191,7 +1228,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn7.setVisibility(View.VISIBLE);
             }
 
-            if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("2")) {//창녕 영업담당자 일때,1.일보확인 2.작업요청 관리 3.작업요청내역 조회 4.경비등록
+           else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("2")) {//창녕 영업담당자 일때,1.일보확인 2.작업요청 관리 3.작업요청내역 조회 4.경비등록
 
                 txt3.setText("일보확인");
                 btn3.setTag("일보확인");
@@ -1212,6 +1249,26 @@ public class ActivityMenuTest3 extends BaseActivity {
                 txt7.setText("알림 메시지");
                 btn7.setTag("알림 메시지");
                 btn7.setVisibility(View.VISIBLE);
+            }
+
+            else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("3")) {//창녕 영업담당자 일때,1.일보확인 2.작업요청 관리 3.작업요청내역 조회 4.경비등록
+
+                txt3.setText(getString(R.string.progress_floor_return));
+                btn3.setTag(getString(R.string.progress_floor_return));
+                btn3.setVisibility(View.VISIBLE);
+
+                //getString(R.string.progress_floor)
+
+                txt4.setText(getString(R.string.message));
+                btn4.setTag(getString(R.string.message));
+                btn4.setVisibility(View.VISIBLE);
+
+                btn5.setTag(getString(R.string.message));
+                btn6.setTag(getString(R.string.message));
+                btn7.setTag(getString(R.string.message));
+                btn5.setVisibility(View.INVISIBLE);
+                btn6.setVisibility(View.INVISIBLE);
+                btn7.setVisibility(View.INVISIBLE);
             }
 
             Drawable img3 = FindImage(btn3.getTag().toString());
@@ -1281,6 +1338,12 @@ public class ActivityMenuTest3 extends BaseActivity {
             btn7.setTag(strButton7);
             Drawable img7 = FindImage(btn7.getTag().toString());
             imv7.setImageDrawable(img7);
+
+            if(Users.LeaderType.equals("3")){//회수담당
+                btn5.setVisibility(View.INVISIBLE);
+                btn6.setVisibility(View.INVISIBLE);
+                btn7.setVisibility(View.INVISIBLE);
+            }
             //btn7.setCompoundDrawablesWithIntrinsicBounds(img7, null, null, null);
         }
 
@@ -1313,7 +1376,13 @@ public class ActivityMenuTest3 extends BaseActivity {
 
     private void SetFloatingButton() {
         setMenuItem();
-        if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("1")) { //창녕 팀장권한, 메뉴갯수 8개
+        if(Users.LeaderType.equals("3")){//회수담당
+            //11.진행층수 관리
+            //14.알림 메시지
+            item15.setVisible(true);
+            item14.setVisible(true);
+        }
+        else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("1")) { //창녕 팀장권한, 메뉴갯수 8개
             //1.메뉴 편집
             //2.작업요청 관리
             //3.작업요청내역 조회
@@ -1440,8 +1509,29 @@ public class ActivityMenuTest3 extends BaseActivity {
      * */
     private boolean CheckCustomButton(String strButton3, String strButton4, String strButton5, String strButton6, String strButton7) {
 
+        if(Users.LeaderType.equals("3")){//회수담당
+            myDefaultButtonList = returnUser;
+            for (String str : returnUser) {
+                if (!returnUser.contains(strButton3)) {//포함하지않는다. -> Problem
+                    return false;
+                }
+                if (!returnUser.contains(strButton4)) {//포함하지않는다. -> Problem
+                    return false;
+                }
+                if (!returnUser.contains(strButton5)) {//포함하지않는다. -> Problem
+                    return false;
+                }
+                if (!returnUser.contains(strButton6)) {//포함하지않는다. -> Problem
+                    return false;
+                }
+                if (!returnUser.contains(strButton7)) {//포함하지않는다. -> Problem
+                    return false;
+                }
+            }
+            return true;
+        }
 
-        if (Users.BusinessClassCode == 9) {//음성
+        else if (Users.BusinessClassCode == 9) {//음성
             switch (Users.LeaderType) {
                 case "0"://슈퍼바이저
                     myDefaultButtonList = eumSungSuper;
@@ -1505,7 +1595,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                     }
                     return true;
             }
-        } else {//창녕
+        } else if (Users.BusinessClassCode == 11) {//창녕
             switch (Users.LeaderType) {
                 case "0"://슈퍼바이저
                     myDefaultButtonList = ChangSuper;
@@ -1634,6 +1724,8 @@ public class ActivityMenuTest3 extends BaseActivity {
             return getBaseContext().getResources().getDrawable(R.drawable.round_cached_white_48);
         } else if (str.equals(getString(R.string.progress_floor))) {//진행층수 등록
             return getBaseContext().getResources().getDrawable(R.drawable.round_stairs_white_48);
+        } else if (str.equals(getString(R.string.progress_floor_return))) {//진행층수 등록(회수)
+            return getBaseContext().getResources().getDrawable(R.drawable.round_stairs_white_48);
         } else if (str.equals(getString(R.string.register_expense))) {//경비등록
             return getBaseContext().getResources().getDrawable(R.drawable.round_receipt_long_white_48);
         } else if (str.equals(getString(R.string.problem))) {//현장 불만사례
@@ -1719,6 +1811,12 @@ public class ActivityMenuTest3 extends BaseActivity {
    */
     private void GoProgressFloor() {
         programType = "진행층수등록";
+        startProgress();
+        ClickProgressFloor();
+    }
+
+    private void GoProgressFloorReturn() {
+        programType = "진행층수등록회수";
         startProgress();
         ClickProgressFloor();
     }
@@ -1988,7 +2086,7 @@ public class ActivityMenuTest3 extends BaseActivity {
 
 
                 Intent i;
-                if (this.type.equals("내현장")) {//진행층수 등록, 진행기준 정보관리, 현장 지원요청
+                if (this.type.equals("내현장")) {//진행층수 등록, 진행기준 정보관리, 현장 지원요청, 진행층수 등록(회수)
                     i = new Intent(getBaseContext(), LocationTreeViewActivity.class);//todo
                 } else {//담당자배정 or 담당자 배정현황
                     i = new Intent(getBaseContext(), LocationTreeViewActivitySearch.class);//todo

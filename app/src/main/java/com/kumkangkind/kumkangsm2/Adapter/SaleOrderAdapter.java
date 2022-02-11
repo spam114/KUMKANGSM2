@@ -159,6 +159,11 @@ public class SaleOrderAdapter extends ArrayAdapter<SaleOrder> implements BaseAct
     }
 
     @Override
+    public void HideKeyBoard(Context context) {
+        ApplicationClass.getInstance().HideKeyBoard((Activity) context);
+    }
+
+    @Override
     public int getCount() {
         return filteredItemList.size() ;
     }

@@ -282,6 +282,11 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
     }
 
     @Override
+    public void HideKeyBoard(Context context) {
+        ApplicationClass.getInstance().HideKeyBoard((Activity) context);
+    }
+
+    @Override
     public void progressOFF() {
         ApplicationClass.getInstance().progressOFF();
     }

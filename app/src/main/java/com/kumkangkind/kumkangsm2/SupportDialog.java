@@ -100,7 +100,10 @@ public class SupportDialog extends Dialog implements BaseActivityInterface{
     }
 
 
-
+    @Override
+    public void HideKeyBoard(Context context) {
+        ApplicationClass.getInstance().HideKeyBoard((Activity) context);
+    }
 
     public SupportDialog(Context context, String contractNo, String customerName, String locationName) {
         super(context);

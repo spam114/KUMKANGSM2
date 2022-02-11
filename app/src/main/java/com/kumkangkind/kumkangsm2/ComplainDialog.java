@@ -115,6 +115,11 @@ public class ComplainDialog extends Dialog implements BaseActivityInterface{
         ApplicationClass.getInstance().progressOFF2(className);
     }
 
+    @Override
+    public void HideKeyBoard(Context context) {
+        ApplicationClass.getInstance().HideKeyBoard((Activity) context);
+    }
+
     public interface OnDialogResult {
         void finish(int[] dateArr);
     }

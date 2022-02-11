@@ -60,6 +60,10 @@
             android:id="@+id/message"
             android:icon="@drawable/round_sms_white_48"
             android:title="@string/message"/>
+        <item
+            android:id="@+id/progress_floor_return"
+            android:icon="@drawable/round_stairs_white_48"
+            android:title="@string/progress_floor_return" />
     </group>
 
     <item

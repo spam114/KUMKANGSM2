@@ -1,5 +1,6 @@
 package com.kumkangkind.kumkangsm2;
 
+import android.content.Context;
 import android.os.Handler;
 
 public interface BaseActivityInterface{
@@ -15,5 +16,5 @@ public interface BaseActivityInterface{
 
     void progressOFF();
 
-
+    public void HideKeyBoard(Context context);
 }

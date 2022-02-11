@@ -80,7 +80,8 @@
         <activity android:name="com.kumkangkind.kumkangsm2.sale.ActivityWorderListView"/>
         <activity android:name="com.kumkangkind.kumkangsm2.sale.ActivitySaleView"/>
         <activity android:name="com.kumkangkind.kumkangsm2.sqlite.ActivityMessageHistory"/>
-        <activity android:name="com.kumkangkind.kumkangsm2.ActivityMenuTest3"/>
+        <activity android:name="com.kumkangkind.kumkangsm2.ActivityMenuTest3"
+            android:theme="@style/AppTheme2"/>
         <activity android:name="com.kumkangkind.kumkangsm2.LocationTreeViewActivity"/>
         <activity android:name="com.kumkangkind.kumkangsm2.LocationTreeViewActivitySearch"/>
         <activity android:name="com.kumkangkind.kumkangsm2.ProgressFloorActivity"/>
@@ -99,6 +100,7 @@
         <activity android:name="com.kumkangkind.kumkangsm2.ActivityDailyCostEumsung"/>
         <activity android:name="com.kumkangkind.kumkangsm2.ComplaintImageActivity"
             android:theme="@style/Theme.ComplaintImageActivity"/>
+        <activity android:name="com.kumkangkind.kumkangsm2.ProgressFloorReturnActivity"/>
 
         <service android:name="com.kumkangkind.kumkangsm2.fcm.MyFcmListenerService" android:exported="false">
             <intent-filter>

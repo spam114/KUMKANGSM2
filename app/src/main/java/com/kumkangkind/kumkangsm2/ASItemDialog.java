@@ -135,6 +135,10 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
         ApplicationClass.getInstance().progressOFF(className);
     }
 
+    @Override
+    public void HideKeyBoard(Context context) {
+        ApplicationClass.getInstance().HideKeyBoard((Activity) context);
+    }
 
     @Override
     public void progressOFF2(String className) {

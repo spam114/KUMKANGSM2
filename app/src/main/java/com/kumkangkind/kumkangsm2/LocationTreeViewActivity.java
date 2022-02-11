@@ -1,5 +1,6 @@
 package com.kumkangkind.kumkangsm2;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -48,18 +50,7 @@ public class LocationTreeViewActivity extends BaseActivity {//트리뷰 엑티�
     int leftComplainDateArr[];
     int rightcomplainDateArr[];
 
-    private void startProgress() {
 
-        progressON("Loading...");
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                progressOFF();
-            }
-        }, 3500);
-
-    }
 
 
     @Override
@@ -147,6 +138,7 @@ public class LocationTreeViewActivity extends BaseActivity {//트리뷰 엑티�
 
 class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
 
+
     String locationNo;
     String locationName;
     String contractNo;
@@ -188,10 +180,20 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
                     ShowComplainDialog();
                 else if (programType.equals("현장지원요청"))
                     ShowSupportDialog();
+                else if (programType.equals("진행층수등록회수")){
+                    Intent i = new Intent(context, ProgressFloorReturnActivity.class);
+                    i.putExtra("customerLocation", customerName + "-" + locationName);
+                    i.putExtra("contractNo", contractNo);
+                    //i.putExtra("dongHashMap", dongHashMap);
+                    context.startActivity(i);
+                }
+
             }
         });
         return view;
     }
+
+
 
     private void ShowSupportDialog() {
 
@@ -223,8 +225,9 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
 
             }
         });
-
     }
+
+
 
     private void ShowRequestDailyReport() {
 

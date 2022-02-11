@@ -1,6 +1,7 @@
 package com.kumkangkind.kumkangsm2;
 
 import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,14 +9,17 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.kumkangkind.kumkangsm2.ProgressFloor.ProgressFloorReturnViewAdapter;
 import com.kumkangkind.kumkangsm2.ProgressFloor.ProgressFloorViewAdapter;
 import com.kumkangkind.kumkangsm2.ProgressFloor.YearMonthPickerDialog;
 
@@ -33,11 +37,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-
-public class ProgressFloorActivity extends BaseActivity {
+public class ProgressFloorReturnActivity extends BaseActivity {
 
     private ListView listView1;
     //private SuWorder[] items;
@@ -50,73 +54,207 @@ public class ProgressFloorActivity extends BaseActivity {
     String customerLocation = "";
     public HashMap<String, Dong> dongHashMap;
     TreeMap<String, Dong> dongTreeMap;
-    ProgressFloorViewAdapter adapter;
+    ProgressFloorReturnViewAdapter adapter;
     ArrayList<Dong> dongArrayList;
+    TextView txtFromDate;
+    public int tyear;
+    public int tmonth;
+    public int tdate;
 
     String dong = "";
-    String yearMonth = "";
+    //String yearMonth = "";
     String floor = "";
-    String inputYearMonth = "";
+    //String inputYearMonth = "";
     String inputFloor = "";
-    int clickPosition = -1;//다이얼로그 종료시, 복귀 포지션을 위함
+    //int clickPosition = -1;//다이얼로그 종료시, 복귀 포지션을 위함
     View clickView = null;
     long clickId = 0;
+    LinearLayout layoutTop;
 
-    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            Log.d("YearMonthPickerTest", "year = " + year + ", month = " + monthOfYear + ", day = " + dayOfMonth);
-        }
-    };
+    private void startProgress() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressOFF2(this.getClass().getName());
+            }
+        }, 5000);
+        progressON("Loading...", handler);
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.progress_floor_listview);
+        setContentView(R.layout.progress_floor_return_listview);
 
         tvCustomerLocation = (TextView) findViewById(R.id.tvCustomerLocation);
         contractNo = getIntent().getStringExtra("contractNo");
         customerLocation = getIntent().getStringExtra("customerLocation");
         tvCustomerLocation.setText(customerLocation);
-        dongHashMap = (HashMap<String, Dong>) (getIntent().getSerializableExtra("dongHashMap"));//todo
+        this.txtFromDate=findViewById(R.id.txtFromDate);
+        final Calendar calendar = Calendar.getInstance();
+        tyear = calendar.get(Calendar.YEAR);
+        tmonth = calendar.get(Calendar.MONTH);
+        tdate = calendar.get(Calendar.DATE);
+        this.layoutTop=findViewById(R.id.layoutTop);
 
-        dongTreeMap = new TreeMap<>(dongHashMap);
+        this.txtFromDate.setText("[ "+tyear + "-" + (tmonth + 1) + "-" + tdate+" ]");
+        this.txtFromDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateTimePicker(tyear, tmonth, tdate);
+            }
+        });
+        //dongHashMap = (HashMap<String, Dong>) (getIntent().getSerializableExtra("dongHashMap"));//todo
+
+
         // Set<String> keyset = dongHashMap.keySet();//TreeMap 을 이용한 Key값으로 정렬
         // Iterator<String> keyIterator = dongTreeMap.keySet().iterator();
-
         listView1 = (ListView) findViewById(R.id.listView1);
-        dongArrayList = new ArrayList<>();
+        String fromDate=tyear+"-"+(tmonth+1)+"-"+tdate;
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getDongProgressFloorReturn(fromDate);
+    }
 
-        for (Dong dong : dongTreeMap.values()) {
-            dongArrayList.add(dong);
+    private void showDateTimePicker(int year, int month, int date) {
+        DatePickerDialog dpd = new DatePickerDialog
+                (this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            public void onDateSet(DatePicker view,
+                                                  int year, int monthOfYear, int dayOfMonth) {
+                                txtFromDate.setText("[ "+year + "-" + (monthOfYear + 1) + "-" + dayOfMonth+" ]");
+                                tyear=year;
+                                tmonth=monthOfYear;
+                                tdate=dayOfMonth;
+                                String fromDate=tyear+"-"+(tmonth+1)+"-"+tdate;
+                                //DATA가져오기
+                                //getViewSaleOrderData(fromDate);
+                                getDongProgressFloorReturn(fromDate);
+                            }
+                        }
+                        , // 사용자가 날짜설정 후 다이얼로그 빠져나올때
+                        //    호출할 리스너 등록
+                        year, month, date); // 기본값 연월일
+        dpd.show();
+    }
+
+    public void getDongProgressFloorReturn(String fromDate) {
+        String url = getString(R.string.service_address) + "getDongProgressFloorReturn";
+        ContentValues values = new ContentValues();
+        values.put("ContractNo", contractNo);
+        values.put("FromDate", fromDate);
+        GetDongProgressFloorReturn gsod = new GetDongProgressFloorReturn(url, values);
+        gsod.execute();
+    }
+
+    public class GetDongProgressFloorReturn extends AsyncTask<Void, Void, String> {
+        String url;
+        ContentValues values;
+
+        GetDongProgressFloorReturn(String url, ContentValues values) {
+            this.url = url;
+            this.values = values;
         }
 
-        adapter = new ProgressFloorViewAdapter(ProgressFloorActivity.this, R.layout.progress_floor_row, dongArrayList);
-        //adapter = new SwListVIewAdapter(SuListViewActivity.this, R.layout.listview_row, items);
-        listView1.setAdapter(adapter);
-        listView1.setOnItemClickListener(mItemClickListener);
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            startProgress();
+            //Log.i("순서확인", "미납/재고시작");
+            //progress bar를 보여주는 등등의 행위
+        }
 
-        progressOFF();
+        @Override
+        protected String doInBackground(Void... params) {
+            String result;
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            result = requestHttpURLConnection.request(url, values);
+            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
+        }
 
+        @Override
+        protected void onPostExecute(String result) {
+            // 통신이 완료되면 호출됩니다.
+            // 결과에 따른 UI 수정 등은 여기서 합니다
+            try {
+
+                HashMap<String, Dong> dongHashMap = new HashMap<>();
+                JSONArray jsonArray = new JSONArray(result);
+                String ErrorCheck = "";
+                Dong dong = null;
+                String key = "";
+                String Dong = "";
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject child = jsonArray.getJSONObject(i);
+                    if (!child.getString("ErrorCheck").equals("null")) {//문제가 있을 시, 에러 메시지 호출 후 종료
+                        ErrorCheck = child.getString("ErrorCheck");
+                        Toast.makeText(ProgressFloorReturnActivity.this, ErrorCheck, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    Dong = child.getString("Dong");
+                    key = Dong;
+
+                    if (!dongHashMap.containsKey(key)) {//없으면
+                        dong =  new Dong();
+                        dong.Dong = child.getString("Dong");
+                        dong.ProgressDate = child.getString("ProgressDate");
+                        dong.ProgressFloor=child.getString("ProgressFloor");
+                        dong.CollectEmployee = child.getString("CollectEmployee");
+                        dongHashMap.put(key, dong);
+                    } else {//있으면: 전 달 데이터 setting
+                        dong = dongHashMap.get(key);
+                        dong.ExProgressDate = child.getString("ProgressDate");
+                        dong.ExProgressFloor = child.getString("ProgressFloor");
+                    }
+                }
+
+
+                dongTreeMap = new TreeMap<>(dongHashMap);
+                dongArrayList = new ArrayList<>();
+
+                for (Dong _dong : dongTreeMap.values()) {
+                    dongArrayList.add(_dong);
+                }
+
+                adapter = new ProgressFloorReturnViewAdapter(ProgressFloorReturnActivity.this, R.layout.progress_floor_return_row, dongArrayList,layoutTop, listView1);
+                //adapter = new SwListVIewAdapter(SuListViewActivity.this, R.layout.listview_row, items);
+                listView1.setAdapter(adapter);
+                //listView1.setOnItemClickListener(mItemClickListener);
+
+                /*Intent i = new Intent(context, ProgressFloorReturnActivity.class);
+
+                i.putExtra("customerLocation", customerName + "-" + locationName);
+                i.putExtra("contractNo", contractNo);
+                i.putExtra("dongHashMap", dongHashMap);
+                context.startActivity(i);*/
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            } finally {
+                //Log.i("순서확인", "미납/재고종료");
+                progressOFF2(this.getClass().getName());
+            }
+        }
     }
 
     public void mOnClick(View v) {
 
         switch (v.getId()) {
             case R.id.btnDelete://삭제
-                ShowDeleteDialog();
+                //ShowDeleteDialog();
                 break;
 
 
             case R.id.btnAdd://추가
-                ShowAddDialog();
+                //ShowAddDialog();
                 break;
         }
     }
 
-    private void ShowDeleteDialog() {
+   /* private void ShowDeleteDialog() {
 
 
         if (clickPosition == -1) {
@@ -135,7 +273,7 @@ public class ProgressFloorActivity extends BaseActivity {
         }
 
 
-        new AlertDialog.Builder(ProgressFloorActivity.this)
+        new AlertDialog.Builder(ProgressFloorReturnActivity.this)
 
 
                 .setTitle("진행 월/층 삭제")
@@ -156,31 +294,11 @@ public class ProgressFloorActivity extends BaseActivity {
                     }
                 }).show();
 
-    }
+    }*/
 
 
-    private void ShowAddDialog() {
 
-        if (dong.equals("")) {
-            Toast.makeText(getApplicationContext(), "동을 선택한 후, 진행하시기 바랍니다.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (!dongArrayList.get(clickPosition).ConstructionEmployee.equals(Users.UserName)) {
-            Toast.makeText(getApplicationContext(), "본인의 진행정보만 수정할 수 있습니다.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        inputYearMonth = "";
-        inputFloor = "";
-        YearMonthPickerDialog pd = new YearMonthPickerDialog(mHandler, contractNo, dong, yearMonth, floor);
-        pd.setListener(d);
-        pd.show(getFragmentManager(), "YearMonthPickerTest");
-
-    }
-
-
-    AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
+    /*AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             //String mes = items[position -1].WorkNo;
             //이동한다
@@ -196,28 +314,28 @@ public class ProgressFloorActivity extends BaseActivity {
 
             //  view.setBackgroundColor(Color.parseColor("#DEB887"));
 
- /*           Intent intent = new Intent(getBaseContext(), ViewActivity.class);
+ *//*           Intent intent = new Intent(getBaseContext(), ViewActivity.class);
             intent.putExtra("key", key);
-            startActivity(intent);*/
+            startActivity(intent);*//*
 
         }
-    };
+    };*/
 
 
     //진행 월/층 추가
-    public Handler mHandler = new Handler() { //다이얼로그 종료시 액티비티 데이터 전송을 위함
+    /*public Handler mHandler = new Handler() { //다이얼로그 종료시 액티비티 데이터 전송을 위함
         @Override
         public void handleMessage(Message msg) {
             inputYearMonth = msg.getData().getString("yearMonth");
             if (inputYearMonth.equals("취소")) {
-                Toast.makeText(ProgressFloorActivity.this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProgressFloorReturnActivity.this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
             inputFloor = msg.getData().getString("floor");
             new SetDongProgressFloorByPost().execute(getString(R.string.service_address) + "setDongProgressFloor");
 
         }
-    };
+    };*/
 
     private class SetDongProgressFloorByPost extends AsyncTask<String, Void, String> {//todo
 
@@ -249,12 +367,12 @@ public class ProgressFloorActivity extends BaseActivity {
             }
 
             if (ResultCode.equals("false")) {
-                Toast.makeText(ProgressFloorActivity.this, Message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProgressFloorReturnActivity.this, Message, Toast.LENGTH_SHORT).show();
                 return;
             }
 
 
-            Toast.makeText(ProgressFloorActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProgressFloorReturnActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
 
             new GetDongProgessFloorByPost().execute(getString(R.string.service_address) + "getDongProgressFloor");
 
@@ -313,10 +431,10 @@ public class ProgressFloorActivity extends BaseActivity {
                     dongArrayList.add(_dong);
                 }
 
-                adapter = new ProgressFloorViewAdapter(ProgressFloorActivity.this, R.layout.progress_floor_row, dongArrayList);
-                adapter.notifyDataSetChanged();
-                listView1.setAdapter(adapter);
-                clickPosition = -1;
+                //adapter = new ProgressFloorReturnViewAdapter(ProgressFloorReturnActivity.this, R.layout.progress_floor_row, dongArrayList);
+                //adapter.notifyDataSetChanged();
+                //listView1.setAdapter(adapter);
+                //clickPosition = -1;
                 //listView1.performItemClick(clickView,clickPosition,clickId);// 다이얼로그, 종료후 클릭이벤트 실행할려는데, 실행이 안됌: check
 
 
@@ -343,7 +461,7 @@ public class ProgressFloorActivity extends BaseActivity {
 
             jsonObject.put("ContractNo", contractNo);//계약번호
             jsonObject.put("Dong", dong);//동
-            jsonObject.put("YearMonth", inputYearMonth);//계약번호
+            //jsonObject.put("YearMonth", inputYearMonth);//계약번호
             jsonObject.put("Floor", inputFloor);//계약번호
 
             json = jsonObject.toString();
@@ -408,7 +526,7 @@ public class ProgressFloorActivity extends BaseActivity {
 
 
     //진행 월/층 삭제
-    public Handler mHandler2 = new Handler() { //다이얼로그 종료시 액티비티에 재반영 작업을 위함
+  /*  public Handler mHandler2 = new Handler() { //다이얼로그 종료시 액티비티에 재반영 작업을 위함
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {//확인
@@ -416,10 +534,10 @@ public class ProgressFloorActivity extends BaseActivity {
                 new DeleteDongProgressFloorByPost().execute(getString(R.string.service_address) + "deleteDongProgressFloor");
 
             } else {//취소
-                Toast.makeText(ProgressFloorActivity.this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProgressFloorReturnActivity.this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
             }
         }
-    };
+    };*/
 
 
     private class DeleteDongProgressFloorByPost extends AsyncTask<String, Void, String> {//todo
@@ -453,10 +571,10 @@ public class ProgressFloorActivity extends BaseActivity {
             }
 
             if (ResultCode.equals("false")) {
-                Toast.makeText(ProgressFloorActivity.this, Message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProgressFloorReturnActivity.this, Message, Toast.LENGTH_SHORT).show();
                 return;
             } else {
-                Toast.makeText(ProgressFloorActivity.this, "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProgressFloorReturnActivity.this, "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
                 new GetDongProgessFloorByPost().execute(getString(R.string.service_address) + "getDongProgressFloor");
             }
 
@@ -486,3 +604,4 @@ public class ProgressFloorActivity extends BaseActivity {
         }
     }*/
 }
+
