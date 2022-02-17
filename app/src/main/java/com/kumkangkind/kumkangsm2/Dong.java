@@ -12,6 +12,8 @@ public class Dong implements Serializable {
     public String ExProgressFloor="";//전 달 진행층수
     public String ConstructionEmployee="";//시공담당자(슈퍼바이저)
     public String CollectEmployee="";//회수담당
+    public String Type="";//회수담당
+    public boolean isChanged=false;
 
     public Dong() {
         super();

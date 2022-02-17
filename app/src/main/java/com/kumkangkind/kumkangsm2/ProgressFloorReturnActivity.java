@@ -2,26 +2,18 @@ package com.kumkangkind.kumkangsm2;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-
 import com.kumkangkind.kumkangsm2.ProgressFloor.ProgressFloorReturnViewAdapter;
-import com.kumkangkind.kumkangsm2.ProgressFloor.ProgressFloorViewAdapter;
-import com.kumkangkind.kumkangsm2.ProgressFloor.YearMonthPickerDialog;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -93,14 +85,14 @@ public class ProgressFloorReturnActivity extends BaseActivity {
         contractNo = getIntent().getStringExtra("contractNo");
         customerLocation = getIntent().getStringExtra("customerLocation");
         tvCustomerLocation.setText(customerLocation);
-        this.txtFromDate=findViewById(R.id.txtFromDate);
+        this.txtFromDate = findViewById(R.id.txtFromDate);
         final Calendar calendar = Calendar.getInstance();
         tyear = calendar.get(Calendar.YEAR);
         tmonth = calendar.get(Calendar.MONTH);
         tdate = calendar.get(Calendar.DATE);
-        this.layoutTop=findViewById(R.id.layoutTop);
+        this.layoutTop = findViewById(R.id.layoutTop);
 
-        this.txtFromDate.setText("[ "+tyear + "-" + (tmonth + 1) + "-" + tdate+" ]");
+        this.txtFromDate.setText("[ " + tyear + "-" + (tmonth + 1) + "-" + tdate + " ]");
         this.txtFromDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +105,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
         // Set<String> keyset = dongHashMap.keySet();//TreeMap 을 이용한 Key값으로 정렬
         // Iterator<String> keyIterator = dongTreeMap.keySet().iterator();
         listView1 = (ListView) findViewById(R.id.listView1);
-        String fromDate=tyear+"-"+(tmonth+1)+"-"+tdate;
+        String fromDate = tyear + "-" + (tmonth + 1) + "-" + tdate;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         getDongProgressFloorReturn(fromDate);
     }
@@ -124,11 +116,11 @@ public class ProgressFloorReturnActivity extends BaseActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             public void onDateSet(DatePicker view,
                                                   int year, int monthOfYear, int dayOfMonth) {
-                                txtFromDate.setText("[ "+year + "-" + (monthOfYear + 1) + "-" + dayOfMonth+" ]");
-                                tyear=year;
-                                tmonth=monthOfYear;
-                                tdate=dayOfMonth;
-                                String fromDate=tyear+"-"+(tmonth+1)+"-"+tdate;
+                                txtFromDate.setText("[ " + year + "-" + (monthOfYear + 1) + "-" + dayOfMonth + " ]");
+                                tyear = year;
+                                tmonth = monthOfYear;
+                                tdate = dayOfMonth;
+                                String fromDate = tyear + "-" + (tmonth + 1) + "-" + tdate;
                                 //DATA가져오기
                                 //getViewSaleOrderData(fromDate);
                                 getDongProgressFloorReturn(fromDate);
@@ -145,17 +137,19 @@ public class ProgressFloorReturnActivity extends BaseActivity {
         ContentValues values = new ContentValues();
         values.put("ContractNo", contractNo);
         values.put("FromDate", fromDate);
-        GetDongProgressFloorReturn gsod = new GetDongProgressFloorReturn(url, values);
+        GetDongProgressFloorReturn gsod = new GetDongProgressFloorReturn(url, values, fromDate);
         gsod.execute();
     }
 
     public class GetDongProgressFloorReturn extends AsyncTask<Void, Void, String> {
         String url;
         ContentValues values;
+        String fromDate;
 
-        GetDongProgressFloorReturn(String url, ContentValues values) {
+        GetDongProgressFloorReturn(String url, ContentValues values, String fromDate) {
             this.url = url;
             this.values = values;
+            this.fromDate = fromDate;
         }
 
         @Override
@@ -197,16 +191,26 @@ public class ProgressFloorReturnActivity extends BaseActivity {
                     key = Dong;
 
                     if (!dongHashMap.containsKey(key)) {//없으면
-                        dong =  new Dong();
+                        dong = new Dong();
                         dong.Dong = child.getString("Dong");
-                        dong.ProgressDate = child.getString("ProgressDate");
-                        dong.ProgressFloor=child.getString("ProgressFloor");
+                        if (child.getString("Type").equals("당일")) {
+                            dong.ProgressDate = child.getString("ProgressDate");
+                            dong.ProgressFloor = child.getString("ProgressFloor");
+                        } else {
+                            dong.ExProgressDate = child.getString("ProgressDate");
+                            dong.ExProgressFloor = child.getString("ProgressFloor");
+                        }
                         dong.CollectEmployee = child.getString("CollectEmployee");
                         dongHashMap.put(key, dong);
                     } else {//있으면: 전 달 데이터 setting
                         dong = dongHashMap.get(key);
-                        dong.ExProgressDate = child.getString("ProgressDate");
-                        dong.ExProgressFloor = child.getString("ProgressFloor");
+                        if (child.getString("Type").equals("당일")) {
+                            dong.ProgressDate = child.getString("ProgressDate");
+                            dong.ProgressFloor = child.getString("ProgressFloor");
+                        } else {
+                            dong.ExProgressDate = child.getString("ProgressDate");
+                            dong.ExProgressFloor = child.getString("ProgressFloor");
+                        }
                     }
                 }
 
@@ -218,7 +222,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
                     dongArrayList.add(_dong);
                 }
 
-                adapter = new ProgressFloorReturnViewAdapter(ProgressFloorReturnActivity.this, R.layout.progress_floor_return_row, dongArrayList,layoutTop, listView1);
+                adapter = new ProgressFloorReturnViewAdapter(ProgressFloorReturnActivity.this, R.layout.progress_floor_return_row, dongArrayList, layoutTop, listView1, contractNo, this.fromDate);
                 //adapter = new SwListVIewAdapter(SuListViewActivity.this, R.layout.listview_row, items);
                 listView1.setAdapter(adapter);
                 //listView1.setOnItemClickListener(mItemClickListener);

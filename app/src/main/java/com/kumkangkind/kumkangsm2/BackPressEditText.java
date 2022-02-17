@@ -1,6 +1,7 @@
 package com.kumkangkind.kumkangsm2;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 
@@ -28,7 +29,6 @@ public class BackPressEditText extends TextInputEditText {
         super(context, attrs, defStyle);
     }
 
-
     @Override
     public boolean onKeyPreIme(int keyCode, KeyEvent event)
     {
@@ -39,7 +39,6 @@ public class BackPressEditText extends TextInputEditText {
 
         return super.onKeyPreIme(keyCode, event);
     }
-
 
     public void setOnBackPressListener(OnBackPressListener $listener)
     {
