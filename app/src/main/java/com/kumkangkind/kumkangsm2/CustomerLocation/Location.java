@@ -20,4 +20,11 @@ public class Location implements Serializable  {
         this.LocationName=LocationName;
         this.ContractNo=ContractNo;
     }
+
+    public Location(String LocationNo, String LocationName) {
+
+        super();
+        this.LocationNo=LocationNo;
+        this.LocationName=LocationName;
+    }
 }

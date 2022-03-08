@@ -173,13 +173,13 @@ public class ApplicationClass extends Application {
 
     public void progressOFF(String className) {
         if (progressDialog != null && progressDialog.isShowing()) {
-            //Log.i("로딩바OFF", className);
+            Log.i("로딩바OFF", className);
             progressDialog.dismiss();
         }
     }
     public void progressOFF2(String className) {
         if (progressDialog != null && progressDialog.isShowing()) {
-            //Log.i("로딩바OFF", className);
+            Log.i("로딩바OFF", className);
             progressDialog.dismiss();
             this.handler.removeCallbacksAndMessages(null);
         }

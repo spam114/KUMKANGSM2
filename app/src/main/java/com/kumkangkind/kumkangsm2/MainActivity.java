@@ -17,16 +17,14 @@ public class MainActivity extends BaseActivity {
     Boolean isShortcut = false;//아이콘의 생성
 
     private void startProgress() {
-
-        progressON("Loading...");
-
-        new Handler().postDelayed(new Runnable() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                progressOFF();
+                progressOFF2(this.getClass().getName());
             }
-        }, 3500);
-
+        }, 5000);
+        progressON("Loading...", handler);
     }
 
 
@@ -34,7 +32,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i("로그", "메인의 호출");
-        startProgress();
+        //startProgress();
         _pref = getSharedPreferences("kumkang", MODE_PRIVATE);//sharedPreferences 이름: "kumkang"에 저장
         isShortcut = _pref.getBoolean("isShortcut", false);//"isShortcut"에 들어있는값을 가져온다.
         //Log.e("test1", "isShortcut: " + isShortcut);
@@ -49,7 +47,7 @@ public class MainActivity extends BaseActivity {
 
         setContentView(R.layout.activity_main);
         VersionCheckActivity();
-        progressOFF();
+        //progressOFF();
     }
 
 

@@ -35,8 +35,14 @@ public class Customer implements Serializable, Comparable<Customer> {
         Location location=null;
         location = new Location(LocationNo,LocationName,ContractNo);
         locationHashMap.put(key,location);
+    }
 
-
+    public void addData2(String LocationNo,String LocationName)
+    {
+        String key = LocationName;
+        Location location=null;
+        location = new Location(LocationNo,LocationName);
+        locationHashMap.put(key,location);
     }
 
     /*

@@ -27,6 +27,7 @@ import com.kumkangkind.kumkangsm2.RequestHttpURLConnection;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -188,6 +189,9 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
                 String WorkDate = "";
                 String CreateDate = "";
                 String OutDate = "";
+                String CustomerName1 = "";
+                String CustomerName2 = "";
+                String CustomerName3 = "";
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject child = jsonArray.getJSONObject(i);
                     if (!child.getString("ErrorCheck").equals("null")) {//문제가 있을 시, 에러 메시지 호출 후 종료
@@ -199,6 +203,9 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
                     WorkDate = child.getString("WorkDate");
                     CreateDate = child.getString("CreateDate");
                     OutDate = child.getString("OutDate");
+                    CustomerName1 = child.getString("CustomerName1");
+                    CustomerName2 = child.getString("CustomerName2");
+                    CustomerName3 = child.getString("CustomerName3");
                 }
 
                 if(jsonArray.length()>0){
@@ -220,6 +227,9 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
                     TextView txtWorkDate = productionDateDialog.findViewById(R.id.txtWorkDate);
                     TextView txtCreateDate = productionDateDialog.findViewById(R.id.txtCreateDate);
                     TextView txtOutDate = productionDateDialog.findViewById(R.id.txtOutDate);
+                    TextView txtCustomerName1 = productionDateDialog.findViewById(R.id.txtCustomerName1);
+                    TextView txtCustomerName2 = productionDateDialog.findViewById(R.id.txtCustomerName2);
+                    TextView txtCustomerName3 = productionDateDialog.findViewById(R.id.txtCustomerName3);
                     Part=this.PartName+"("+this.PartSpec+")";
                     if(!this.Mspec.equals("")){
                         Part+="-"+this.Mspec;
@@ -229,6 +239,10 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
                     txtWorkDate.setText(WorkDate);
                     txtCreateDate.setText(CreateDate);
                     txtOutDate.setText(OutDate);
+                    txtCustomerName1.setText(CustomerName1);
+                    txtCustomerName2.setText(CustomerName2);
+                    txtCustomerName3.setText(CustomerName3);
+
                     /*buttonOk.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

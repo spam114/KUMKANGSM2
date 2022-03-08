@@ -64,6 +64,10 @@
             android:id="@+id/progress_floor_return"
             android:icon="@drawable/round_stairs_white_48"
             android:title="@string/progress_floor_return" />
+        <item
+            android:id="@+id/location_progress"
+            android:icon="@drawable/round_published_with_changes_white_48"
+            android:title="@string/location_progress" />
     </group>
 
     <item

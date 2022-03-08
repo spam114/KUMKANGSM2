@@ -13,6 +13,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.kumkangkind.kumkangsm2.ProgressFloor.ProgressFloorReturnViewAdapter;
 
 import org.apache.http.HttpEntity;
@@ -35,7 +38,7 @@ import java.util.TreeMap;
 
 public class ProgressFloorReturnActivity extends BaseActivity {
 
-    private ListView listView1;
+    private RecyclerView recyclerView;
     //private SuWorder[] items;
 
     TextView tvCustomerLocation;
@@ -104,7 +107,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
 
         // Set<String> keyset = dongHashMap.keySet();//TreeMap 을 이용한 Key값으로 정렬
         // Iterator<String> keyIterator = dongTreeMap.keySet().iterator();
-        listView1 = (ListView) findViewById(R.id.listView1);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         String fromDate = tyear + "-" + (tmonth + 1) + "-" + tdate;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         getDongProgressFloorReturn(fromDate);
@@ -222,17 +225,16 @@ public class ProgressFloorReturnActivity extends BaseActivity {
                     dongArrayList.add(_dong);
                 }
 
-                adapter = new ProgressFloorReturnViewAdapter(ProgressFloorReturnActivity.this, R.layout.progress_floor_return_row, dongArrayList, layoutTop, listView1, contractNo, this.fromDate);
-                //adapter = new SwListVIewAdapter(SuListViewActivity.this, R.layout.listview_row, items);
-                listView1.setAdapter(adapter);
-                //listView1.setOnItemClickListener(mItemClickListener);
+                LinearLayoutManager layoutManager =
+                        new LinearLayoutManager(ProgressFloorReturnActivity.this, LinearLayoutManager.VERTICAL,false);
+                recyclerView.setLayoutManager(layoutManager);
 
-                /*Intent i = new Intent(context, ProgressFloorReturnActivity.class);
+                ProgressFloorReturnViewAdapter adapter = new ProgressFloorReturnViewAdapter(ProgressFloorReturnActivity.this, layoutTop, contractNo, this.fromDate);
+                adapter.setItems(dongArrayList);
+                recyclerView.setAdapter(adapter);
 
-                i.putExtra("customerLocation", customerName + "-" + locationName);
-                i.putExtra("contractNo", contractNo);
-                i.putExtra("dongHashMap", dongHashMap);
-                context.startActivity(i);*/
+               // adapter = new ProgressFloorReturnViewAdapter(, R.layout.progress_floor_return_row, dongArrayList, );
+               // recyclerView.setAdapter(adapter);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -426,7 +428,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
                 //    Set<String> keyset = dongHashMap.keySet();//TreeMap 을 이용한 Key값으로 정렬
                 //   Iterator<String> keyIterator = dongTreeMap.keySet().iterator();
 
-                listView1 = (ListView) findViewById(R.id.listView1);
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
                 //View header = (View) getLayoutInflater().inflate(R.layout.progress_floor_header, null);
                 // listView1.addHeaderView(header);
                 dongArrayList = new ArrayList<>();

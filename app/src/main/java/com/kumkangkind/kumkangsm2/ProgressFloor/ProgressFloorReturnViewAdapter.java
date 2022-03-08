@@ -14,18 +14,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.kumkangkind.kumkangsm2.Application.ApplicationClass;
 import com.kumkangkind.kumkangsm2.BackPressEditText;
 import com.kumkangkind.kumkangsm2.BaseActivityInterface;
 import com.kumkangkind.kumkangsm2.Dong;
-import com.kumkangkind.kumkangsm2.MyWatcher;
 import com.kumkangkind.kumkangsm2.R;
 import com.kumkangkind.kumkangsm2.RequestHttpURLConnection;
 
@@ -34,54 +34,87 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class ProgressFloorReturnViewAdapter extends ArrayAdapter<Dong> implements BaseActivityInterface {
+public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<ProgressFloorReturnViewAdapter.ViewHolder> implements BaseActivityInterface {
 
     Context context;
-    int layoutRsourceId;
-    ArrayList data;
     LinearLayout layoutTop;
-    ListView listview;
-    com.kumkangkind.kumkangsm2.BackPressEditText edtProgressFloor;
     String contractNo;
     String fromDate;
-    com.google.android.material.textfield.TextInputLayout textInputLayout;
+    ArrayList<Dong> items = new ArrayList<>();
 
-    public ProgressFloorReturnViewAdapter(Context context, int layoutResourceID, ArrayList data, LinearLayout layoutTop, ListView listview, String contractNo, String fromDate) {
-
-        super(context, layoutResourceID, data);
+    public ProgressFloorReturnViewAdapter(Context context, LinearLayout layoutTop, String contractNo, String fromDate) {
+        super();
         this.context = context;
-        this.layoutRsourceId = layoutResourceID;
-        this.data = data;
         this.layoutTop = layoutTop;
-        this.listview = listview;
         this.contractNo = contractNo;
         this.fromDate = fromDate;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        View itemView = inflater.inflate(R.layout.progress_floor_return_row, viewGroup, false);
+        return new ViewHolder(itemView);
+    }
 
-        View row = convertView;
-        if (row == null) {
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        Dong item = items.get(position);
+        viewHolder.setItem(item, position); //왜오류
+    }
 
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            row = inflater.inflate(R.layout.progress_floor_return_row, null);
-           // edtProgressFloor = row.findViewById(R.id.edtProgressFloor);
-            //edtProgressFloor.addTextChangedListener(new MyWatcher(edtProgressFloor));
-            // row = inflater.inflate(layoutRsourceId, parent, false);
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
 
+    //보통은 ViewHolder를 Static 으로 쓴다.
+    //범용성을 위해서, 나는 제거함
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView textViewDong;
+        TextView textViewConstructionEmployee;
+        TextView textViewExYearMonth;
+        TextView textViewExProgressFloor;
+        TextView textViewYearMonth;
+        com.kumkangkind.kumkangsm2.BackPressEditText edtProgressFloor;
+        com.google.android.material.textfield.TextInputLayout textInputLayout;
+        View row;
+
+        public ViewHolder(View itemVIew) {
+            super(itemVIew);
+            this.row = itemVIew;
+            textViewDong = itemVIew.findViewById(R.id.tvDong);
+            textViewConstructionEmployee = itemVIew.findViewById(R.id.tvConstructionEmployee);
+            textViewExYearMonth = itemVIew.findViewById(R.id.tvExYearMonth);
+            textViewExProgressFloor = itemVIew.findViewById(R.id.tvExProgressFloor);
+            textViewYearMonth = itemVIew.findViewById(R.id.tvYearMonth);
+            edtProgressFloor = itemVIew.findViewById(R.id.edtProgressFloor);
+            textInputLayout = itemVIew.findViewById(R.id.textInputLayout);
         }
 
-        Dong item = (Dong) data.get(position);
-        if (item != null) {
+        public void setItem(Dong item, int position) {
+            textViewDong.setText(item.Dong);
+            textViewConstructionEmployee.setText(item.CollectEmployee);
+            //textViewExYearMonth.setText(((Dong) data.get(position)).ExProgressDate);
+            textViewExProgressFloor.setText(item.ExProgressFloor);
+            //.setText(((Dong) data.get(position)).ProgressDate);
+            edtProgressFloor.setTag(item);
+            edtProgressFloor.setText(item.ProgressFloor);
+            String exProgressDate = item.ExProgressDate;
+            String progressDate = item.ProgressDate;
 
-            TextView textViewDong = row.findViewById(R.id.tvDong);
-            TextView textViewConstructionEmployee = row.findViewById(R.id.tvConstructionEmployee);
-            TextView textViewExYearMonth = row.findViewById(R.id.tvExYearMonth);
-            TextView textViewExProgressFloor = row.findViewById(R.id.tvExProgressFloor);
-            TextView textViewYearMonth = row.findViewById(R.id.tvYearMonth);
-            textInputLayout=row.findViewById(R.id.textInputLayout);
-            edtProgressFloor = row.findViewById(R.id.edtProgressFloor);
+
+            if (!exProgressDate.equals(""))
+                textViewExYearMonth.setText(exProgressDate.substring(0, 4) + "\n" + exProgressDate.substring(5));
+            else
+                textViewExYearMonth.setText("");
+            textViewExProgressFloor.setText(item.ExProgressFloor);
+            if (!progressDate.equals(""))
+                textViewYearMonth.setText(progressDate.substring(0, 4) + "\n" + progressDate.substring(5));
+            else
+                textViewYearMonth.setText("");
+
             edtProgressFloor.setOnBackPressListener(new BackPressEditText.OnBackPressListener() {
                 @Override
                 public void onBackPress() {
@@ -106,27 +139,6 @@ public class ProgressFloorReturnViewAdapter extends ArrayAdapter<Dong> implement
                 }
             });
 
-            textViewDong.setText(item.Dong);
-            textViewConstructionEmployee.setText(item.CollectEmployee);
-            //textViewExYearMonth.setText(((Dong) data.get(position)).ExProgressDate);
-            textViewExProgressFloor.setText(item.ExProgressFloor);
-            //.setText(((Dong) data.get(position)).ProgressDate);
-            edtProgressFloor.setTag(item);
-            edtProgressFloor.setText(item.ProgressFloor);
-            String exProgressDate = item.ExProgressDate;
-            String progressDate = item.ProgressDate;
-
-
-            if (!exProgressDate.equals(""))
-                textViewExYearMonth.setText(exProgressDate.substring(0, 4) + "\n" + exProgressDate.substring(5));
-            else
-                textViewExYearMonth.setText("");
-            textViewExProgressFloor.setText(item.ExProgressFloor);
-            if (!progressDate.equals(""))
-                textViewYearMonth.setText(progressDate.substring(0, 4) + "\n" + progressDate.substring(5));
-            else
-                textViewYearMonth.setText("");
-
             row.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -140,7 +152,7 @@ public class ProgressFloorReturnViewAdapter extends ArrayAdapter<Dong> implement
                     }
 
                     view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                    new MaterialAlertDialogBuilder(getContext())
+                    new MaterialAlertDialogBuilder(context)
                             .setTitle("진행층 삭제")
                             .setMessage("동: " + item.Dong + "\n" +
                                     "진행일: " + item.ProgressDate + "\n" + "진행층을 삭제하시겠습니까?")
@@ -160,21 +172,50 @@ public class ProgressFloorReturnViewAdapter extends ArrayAdapter<Dong> implement
                     return false;
                 }
             });
+
+            /*recyclerView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    edtProgressFloor.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+                    layoutTop.requestFocus();
+                    notifyDataSetChanged();
+                    HideKeyBoard(context);
+                    return false;
+                }
+            });*/
+
+            edtProgressFloor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(!hasFocus){
+                        notifyItemChanged(position);
+                        //edtProgressFloor.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
+                        //layoutTop.requestFocus();
+                        //notifyDataSetChanged();
+                        //HideKeyBoard(context);
+                    }
+                }
+            });
+
         }
-
-        listview.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                edtProgressFloor.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
-                layoutTop.requestFocus();
-                notifyDataSetChanged();
-                HideKeyBoard(context);
-                return false;
-            }
-        });
-
-        return row;
     }
+
+    public void addItem(Dong item) {
+        items.add(item);
+    }
+
+    public void setItems(ArrayList<Dong> items) {
+        this.items = items;
+    }
+
+    public Dong getItem(int position) {
+        return items.get(position);
+    }
+
+    public void setItem(int position, Dong item) {
+        items.set(position, item);
+    }
+
 
     public void deleteDongProgressFloorReturn(String dong, Dong item) {
         String url = context.getString(R.string.service_address) + "deleteDongProgressFloorReturn";
@@ -183,6 +224,17 @@ public class ProgressFloorReturnViewAdapter extends ArrayAdapter<Dong> implement
         values.put("Dong", dong);
         values.put("FromDate", fromDate);
         DeleteDongProgressFloorReturn gsod = new DeleteDongProgressFloorReturn(url, values, item);
+        gsod.execute();
+    }
+
+    public void setDongProgressFloorReturn(String dong, TextView v, Dong item, String progressFloor) {
+        String url = context.getString(R.string.service_address) + "setDongProgressFloorReturn";
+        ContentValues values = new ContentValues();
+        values.put("ContractNo", contractNo);
+        values.put("Dong", dong);
+        values.put("FromDate", fromDate);
+        values.put("ProgressFloor", progressFloor);
+        SetDongProgressFloorReturn gsod = new SetDongProgressFloorReturn(url, values, v, item, fromDate);
         gsod.execute();
     }
 
@@ -246,17 +298,6 @@ public class ProgressFloorReturnViewAdapter extends ArrayAdapter<Dong> implement
         }
     }
 
-
-    public void setDongProgressFloorReturn(String dong, TextView v, Dong item, String progressFloor) {
-        String url = context.getString(R.string.service_address) + "setDongProgressFloorReturn";
-        ContentValues values = new ContentValues();
-        values.put("ContractNo", contractNo);
-        values.put("Dong", dong);
-        values.put("FromDate", fromDate);
-        values.put("ProgressFloor", progressFloor);
-        SetDongProgressFloorReturn gsod = new SetDongProgressFloorReturn(url, values, v, item, fromDate);
-        gsod.execute();
-    }
 
     public class SetDongProgressFloorReturn extends AsyncTask<Void, Void, String> {
         String url;

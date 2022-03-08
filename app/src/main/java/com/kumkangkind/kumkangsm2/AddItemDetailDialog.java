@@ -73,16 +73,14 @@ public class AddItemDetailDialog extends Dialog implements BaseActivityInterface
     }
 
     private void startProgress() {
-
-        progressON("Loading...");
-
-        new Handler().postDelayed(new Runnable() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                progressOFF();
+                progressOFF2(this.getClass().getName());
             }
-        }, 3500);
-
+        }, 5000);
+        progressON("Loading...", handler);
     }
     @Override
     public void HideKeyBoard(Context context) {

@@ -84,6 +84,7 @@
             android:theme="@style/AppTheme2"/>
         <activity android:name="com.kumkangkind.kumkangsm2.LocationTreeViewActivity"/>
         <activity android:name="com.kumkangkind.kumkangsm2.LocationTreeViewActivitySearch"/>
+        <activity android:name="com.kumkangkind.kumkangsm2.LocationTreeViewActivitySearchForAll"/>
         <activity android:name="com.kumkangkind.kumkangsm2.ProgressFloorActivity"/>
         <activity android:name="com.kumkangkind.kumkangsm2.AssignmentActivity"/>
         <activity android:name="com.kumkangkind.kumkangsm2.AssignmentStatusActivity"/>
@@ -101,6 +102,7 @@
         <activity android:name="com.kumkangkind.kumkangsm2.ComplaintImageActivity"
             android:theme="@style/Theme.ComplaintImageActivity"/>
         <activity android:name="com.kumkangkind.kumkangsm2.ProgressFloorReturnActivity"/>
+        <activity android:name="com.kumkangkind.kumkangsm2.LocationProgressActivity"/>
 
         <service android:name="com.kumkangkind.kumkangsm2.fcm.MyFcmListenerService" android:exported="false">
             <intent-filter>

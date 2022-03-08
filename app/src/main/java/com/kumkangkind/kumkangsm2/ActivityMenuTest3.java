@@ -23,12 +23,14 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,6 +95,7 @@ public class ActivityMenuTest3 extends BaseActivity {
     MenuItem item13;
     MenuItem item14;
     MenuItem item15;
+    MenuItem item16;
 
 
     //여기리스트들은 어플 최초 메인 버튼 셋팅을 의미한다.
@@ -106,7 +109,7 @@ public class ActivityMenuTest3 extends BaseActivity {
     ArrayList<String> ChangSale = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", ""));
     ArrayList<String> ChangSuper = new ArrayList<>(Arrays.asList("작업요청내역 조회", "경비등록", "알림 메시지", ""));
 
-    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("진행층수 등록(회수)", "알림 메시지"));
+    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("진행층수 등록(회수)", "알림 메시지","현장 진행현황"));
     ArrayList<String> myDefaultButtonList = new ArrayList<>();
 
     int fromYear = 0;
@@ -179,9 +182,6 @@ public class ActivityMenuTest3 extends BaseActivity {
 
         View view = mFloatingNavigationView.getHeaderView(0);
         userImage = view.findViewById(R.id.userImage);
-        userImage.setBackground(new ShapeDrawable(new OvalShape()));
-        userImage.setClipToOutline(true);
-
         getUserImage();
 
         TextView txtUserName = view.findViewById(R.id.txtUserName);
@@ -237,7 +237,10 @@ public class ActivityMenuTest3 extends BaseActivity {
                     GoProgressFloorReturn();
                 } else if (item.getTitle().equals(getString(R.string.product))) {
                     GoProduct();
-                } else if (item.getTitle().equals(getString(R.string.support))) {
+                } else if (item.getTitle().equals(getString(R.string.location_progress))) {
+                    GoLocationProgress();
+                }
+                else if (item.getTitle().equals(getString(R.string.support))) {
                     GoSupport();
                 } else if (item.getTitle().equals(getString(R.string.edit_menu))) {
                     ArrayList<String> btnList = new ArrayList<>();
@@ -361,10 +364,63 @@ public class ActivityMenuTest3 extends BaseActivity {
         viewNotice = noticePref.getBoolean("viewNotice", true);
 
         if (viewNotice == true) {
-            String restURL = getString(R.string.service_address) + "getNoticeData";
-            new GetNoticeData().execute(restURL);
+            getNoticeData();
         }
 
+    }
+
+    private void getNoticeData() {
+        String url = getString(R.string.service_address) + "getNoticeData";
+        ContentValues values = new ContentValues();
+        values.put("AppCode", getString(R.string.app_code));
+        GetNoticeData gsod = new GetNoticeData(url, values);
+        gsod.execute();
+    }
+
+    public class GetNoticeData extends AsyncTask<Void, Void, String> {
+        String url;
+        ContentValues values;
+
+        GetNoticeData(String url, ContentValues values) {
+            this.url = url;
+            this.values = values;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //startProgress();
+            //progress bar를 보여주는 등등의 행위
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String result;
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            result = requestHttpURLConnection.request(url, values);
+            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // 통신이 완료되면 호출됩니다.
+            // 결과에 따른 UI 수정 등은 여기서 합니다
+            try {
+                //WoImage image;
+                JSONArray jsonArray = new JSONArray(result);
+                String ErrorCheck = "";
+                //stockArrayList = new ArrayList<>();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject child = jsonArray.getJSONObject(i);
+                    noticeData = child.getString("AppRemark");
+                }
+                viewNotice();
+            } catch (Exception e) {
+
+            } finally {
+                //progressOFF2(this.getClass().getName());
+            }
+        }
     }
 
     private void getUserImage() {
@@ -419,14 +475,24 @@ public class ActivityMenuTest3 extends BaseActivity {
                     image = new WoImage();
                     image.ImageFile = child.getString("Imagefile");
                 }
+                if(jsonArray.length()==0){
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(120,120);
+                    userImage.setLayoutParams(layoutParams);
+                    userImage.setImageDrawable(getBaseContext().getResources().getDrawable(R.drawable.kumkangcircle));
+                }
 
                 try {
                     byte[] array5 = Base64.decode(image.ImageFile, Base64.DEFAULT);
+                    userImage.setBackground(new ShapeDrawable(new OvalShape()));
+                    userImage.setClipToOutline(true);
                     userImage.setImageBitmap(BitmapFactory.decodeByteArray(array5, 0, array5.length));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             } catch (Exception e) {
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(120,120);
+                userImage.setLayoutParams(layoutParams);
+                userImage.setImageDrawable(getBaseContext().getResources().getDrawable(R.drawable.kumkangcircle));
                 e.printStackTrace();
 
             } finally {
@@ -451,6 +517,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         item13 = menu.findItem(R.id.product);
         item14 = menu.findItem(R.id.message);
         item15 = menu.findItem(R.id.progress_floor_return);
+        item16 = menu.findItem(R.id.location_progress);
         item1.setVisible(false);
         item2.setVisible(false);
         item3.setVisible(false);
@@ -466,107 +533,11 @@ public class ActivityMenuTest3 extends BaseActivity {
         item13.setVisible(false);
         item14.setVisible(false);
         item15.setVisible(false);
+        item16.setVisible(false);
     }
 
     //POST
-    private class GetNoticeData extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
 
-            return PostForNotice(urls[0]);
-        }
-
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result) {
-
-            try {
-                //Log.i("ReadJSONFeedTask", result);
-                JSONArray jsonArray = new JSONArray(result);
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    JSONObject child = jsonArray.getJSONObject(i);
-                    noticeData = child.getString("AppRemark");
-                }
-                viewNotice();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-        }
-
-        private String convertInputStreamToString(InputStream inputStream) throws IOException {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line = "";
-            String result = "";
-            while ((line = bufferedReader.readLine()) != null)
-                result += line;
-
-            String message = "";
-            String resultCode = "";
-
-            try {
-                //.i("JSON", result);
-                JSONArray jsonArray = new JSONArray(result);
-                // message = jsonArray.getJSONObject(0).getString("Message");
-                //  resultCode = jsonArray.getJSONObject(0).getString("ResultCode");
-            } catch (Exception ex) {
-            }
-
-            inputStream.close();
-            return result;
-        }
-
-        public String PostForNotice(String url) {
-            InputStream inputStream = null;
-            String result = "";
-            try {
-                // 1. create HttpClient
-                HttpClient httpclient = new DefaultHttpClient();
-                // 2. make POST request to the given URL
-                HttpPost httpPost = new HttpPost(url);
-                String json = "";
-                // 3. build jsonObject
-                JSONObject jsonObject = new JSONObject();
-
-                //Delete & Insert
-                jsonObject.put("AppCode", getString(R.string.app_code));//앱코드
-
-                json = jsonObject.toString();
-                // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-                // ObjectMapper mapper = new ObjectMapper();
-                // json = mapper.writeValueAsString(person);
-
-                // 5. set json to StringEntity
-                StringEntity se = new StringEntity(json, "UTF-8");
-                // 6. set httpPost Entity
-                httpPost.setEntity(se);
-                // 7. Set some headers to inform server about the type of the content
-                httpPost.setHeader("Accept", "application/json");
-                httpPost.setHeader("Content-type", "application/json");
-                // 8. Execute POST request to the given URL
-                HttpResponse httpResponse = httpclient.execute(httpPost);
-                // 9. receive response as inputStream
-
-                HttpEntity entity = httpResponse.getEntity();
-                inputStream = entity.getContent();
-                //inputStream = httpResponse.getEntity().getContent();
-                // 10. convert inputstream to string
-                if (inputStream != null)
-                    result = convertInputStreamToString(inputStream);
-                else
-                    result = "Did not work!";
-
-            } catch (Exception e) {
-                //Log.d("InputStream", e.getLocalizedMessage());
-            }
-            // 11. return result
-            //Log.i("result", result.toString());
-            return result;
-        }
-    }
 
 
     @Override
@@ -862,7 +833,6 @@ public class ActivityMenuTest3 extends BaseActivity {
         }
 
         if(Users.LeaderType.equals("3")){
-            btn5.setVisibility(View.INVISIBLE);
             btn6.setVisibility(View.INVISIBLE);
             btn7.setVisibility(View.INVISIBLE);
         }
@@ -936,12 +906,10 @@ public class ActivityMenuTest3 extends BaseActivity {
      * 커스텀 버튼 클릭
      * */
     public void customButtonClick(View v) {
-
-        startProgress();
-
         switch (v.getTag().toString()) {
 
             case "담당자 배정":
+                startProgress();
                 if (Users.BusinessClassCode == 9) {//음성
                     programType = "담당자배정";
                     AssignPerson();//담당자배정
@@ -950,6 +918,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 break;
 
             case "담당자 배정현황":
+                startProgress();
                 if (Users.BusinessClassCode == 9) {//음성
                     programType = "담당자배정현황";
                     AssignPersonStatus();//담당자배정현황
@@ -959,36 +928,44 @@ public class ActivityMenuTest3 extends BaseActivity {
                 break;
 
             case "작업요청내역 조회":
+                startProgress();
                 ClickSearchButton();
                 break;
 
             case "나의 작업보기":
+                startProgress();
                 ClickSearchButton();
                 break;
 
             case "작업요청 관리":
+                startProgress();
                 startActivity(new Intent(ActivityMenuTest3.this, ActivitySales.class));
                 break;
 
             case "일보확인":
+                startProgress();
                 ClickSearchButton4();//일보확인
                 break;
 
             case "진행기준정보 관리":
+                startProgress();
                 programType = "진행기준정보관리";
                 ClickProgressFloor();
                 break;
 
             case "진행층수 등록":
+                startProgress();
                 programType = "진행층수등록";
                 ClickProgressFloor();
                 break;
             case "진행층수 등록(회수)":
+                startProgress();
                 programType = "진행층수등록회수";
                 ClickProgressFloor();
                 break;
 
             case "경비등록":
+                startProgress();
                 if (Users.BusinessClassCode == 11)//창녕
                     startActivity(new Intent(ActivityMenuTest3.this, ActivityDailyCost2.class));
                 else//음성
@@ -996,10 +973,12 @@ public class ActivityMenuTest3 extends BaseActivity {
                 break;
 
             case "현장 불만사례":
+                startProgress();
                 programType = "현장불만사례";
                 ClickComplain();
                 break;
             case "현장 지원요청":
+                startProgress();
                 programType = "현장지원요청";
                 ClickProgressFloor();
                 break;
@@ -1009,6 +988,9 @@ public class ActivityMenuTest3 extends BaseActivity {
             case "알림 메시지":
                 programType = "알림 메시지";
                 startActivity(new Intent(ActivityMenuTest3.this, ActivityMessageHistory.class));
+                break;
+            case "현장 진행현황":
+                GoLocationProgress();
                 break;
 
         }
@@ -1104,6 +1086,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         if (!isInitButton) {//초기 설정
             SharedPreferences.Editor initEditor = initPref.edit();
             SharedPreferences.Editor customEditor = pref.edit();
+
             if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("0")) {//음성 슈퍼바이저일때,1.담당자배정 2.나의현장보기(작업요청내역조회) 3.현장불만사례 4.경비등록
 
                 txt3.setText("담당자 배정");
@@ -1179,10 +1162,12 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn4.setTag(getString(R.string.message));
                 btn4.setVisibility(View.VISIBLE);
 
-                btn5.setTag(getString(R.string.message));
+                txt5.setText(getString(R.string.location_progress));
+                btn5.setTag(getString(R.string.location_progress));
+                btn5.setVisibility(View.VISIBLE);
+
                 btn6.setTag(getString(R.string.message));
                 btn7.setTag(getString(R.string.message));
-                btn5.setVisibility(View.INVISIBLE);
                 btn6.setVisibility(View.INVISIBLE);
                 btn7.setVisibility(View.INVISIBLE);
             }
@@ -1200,6 +1185,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 txt5.setText("알림 메시지");
                 btn5.setTag("알림 메시지");
                 btn5.setVisibility(View.VISIBLE);
+
                 btn6.setVisibility(View.INVISIBLE);
                 btn7.setVisibility(View.INVISIBLE);
 
@@ -1257,11 +1243,13 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn3.setTag(getString(R.string.progress_floor_return));
                 btn3.setVisibility(View.VISIBLE);
 
-                //getString(R.string.progress_floor)
-
                 txt4.setText(getString(R.string.message));
                 btn4.setTag(getString(R.string.message));
                 btn4.setVisibility(View.VISIBLE);
+
+                txt5.setText(getString(R.string.location_progress));
+                btn5.setTag(getString(R.string.location_progress));
+                btn5.setVisibility(View.VISIBLE);
 
                 btn5.setTag(getString(R.string.message));
                 btn6.setTag(getString(R.string.message));
@@ -1340,7 +1328,29 @@ public class ActivityMenuTest3 extends BaseActivity {
             imv7.setImageDrawable(img7);
 
             if(Users.LeaderType.equals("3")){//회수담당
-                btn5.setVisibility(View.INVISIBLE);
+                //회수는 일단 강제 메뉴 3개 셋팅
+                //1. 진행층수 등록(회수)
+                //2. 현장 진행현황
+                //3. 알림 메시지
+                txt3.setText(getString(R.string.progress_floor_return));
+                btn3.setTag(getString(R.string.progress_floor_return));
+                Drawable _img3 = FindImage(getString(R.string.progress_floor_return));
+                imv3.setImageDrawable(_img3);
+                //btn3.setCompoundDrawablesWithIntrinsicBounds(img3, null, null, null);
+
+                txt4.setText(getString(R.string.location_progress));
+                btn4.setTag(getString(R.string.location_progress));
+                Drawable _img4 = FindImage(getString(R.string.location_progress));
+                imv4.setImageDrawable(_img4);
+                //btn4.setCompoundDrawablesWithIntrinsicBounds(img4, null, null, null);
+
+
+                txt5.setText(getString(R.string.message));
+                btn5.setTag(getString(R.string.message));
+                Drawable _img5 = FindImage(getString(R.string.message));
+                imv5.setImageDrawable(_img5);
+
+
                 btn6.setVisibility(View.INVISIBLE);
                 btn7.setVisibility(View.INVISIBLE);
             }
@@ -1377,10 +1387,12 @@ public class ActivityMenuTest3 extends BaseActivity {
     private void SetFloatingButton() {
         setMenuItem();
         if(Users.LeaderType.equals("3")){//회수담당
-            //11.진행층수 관리
             //14.알림 메시지
-            item15.setVisible(true);
+            //15.진행층수 등록(회수)
+            //16.현장 진행현황
             item14.setVisible(true);
+            item15.setVisible(true);
+            item16.setVisible(true);
         }
         else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("1")) { //창녕 팀장권한, 메뉴갯수 8개
             //1.메뉴 편집
@@ -1736,7 +1748,10 @@ public class ActivityMenuTest3 extends BaseActivity {
             return getBaseContext().getResources().getDrawable(R.drawable.round_precision_manufacturing_white_48);
         } else if (str.equals(getString(R.string.message))) {//알림 메시지
             return getBaseContext().getResources().getDrawable(R.drawable.round_sms_white_48);
-        } else {
+        }
+        else if (str.equals(getString(R.string.location_progress))) {//현장 진행현황
+            return getBaseContext().getResources().getDrawable(R.drawable.round_published_with_changes_white_48);}
+        else {
             return getBaseContext().getResources().getDrawable(R.drawable.round_check_circle_outline_white_48);
         }
     }
@@ -1882,9 +1897,20 @@ public class ActivityMenuTest3 extends BaseActivity {
 
     private void GoProduct() {
         programType = "생산내역조회";
-        getCustomerLocation3();
+        Intent i;
+        i = new Intent(getBaseContext(), LocationTreeViewActivitySearchForAll.class);//todo
+
+        i.putExtra("type", programType);
+        i.putExtra("programType", programType);
+        startActivity(i);
     }
 
+
+    private void GoLocationProgress() {
+        Intent i;
+        i = new Intent(getBaseContext(), LocationProgressActivity.class);//todo
+        startActivity(i);
+    }
 
     /*
      * 담당자 배정
@@ -1898,84 +1924,6 @@ public class ActivityMenuTest3 extends BaseActivity {
      * */
     private void AssignPersonStatus() {
         new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(getString(R.string.service_address) + "getCustomerLocation2/" + "모든현장");
-    }
-
-
-    private void getCustomerLocation3() {
-        String url = getString(R.string.service_address) + "getCustomerLocation3";
-        ContentValues values = new ContentValues();
-        values.put("UserCode", "모든현장");
-        GetCustomerLocation3 gsod = new GetCustomerLocation3(url, values);
-        gsod.execute();
-    }
-
-    public class GetCustomerLocation3 extends AsyncTask<Void, Void, String> {
-        String url;
-        ContentValues values;
-
-        GetCustomerLocation3(String url, ContentValues values) {
-            this.url = url;
-            this.values = values;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            startProgress();
-            //progress bar를 보여주는 등등의 행위
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            String result;
-            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
-            result = requestHttpURLConnection.request(url, values);
-            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // 통신이 완료되면 호출됩니다.
-            // 결과에 따른 UI 수정 등은 여기서 합니다
-            try {
-                //WoImage image;
-                JSONArray jsonArray = new JSONArray(result);
-                String ErrorCheck = "";
-
-                HashMap<String, Customer> customerHashMap;
-                customerHashMap = new HashMap<>();
-                Customer customer = null;
-                String key = null;
-                //stockArrayList = new ArrayList<>();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject child = jsonArray.getJSONObject(i);
-
-                    key = child.getString("CustomerCode");
-
-                    if (!customerHashMap.containsKey(key)) {//없으면
-                        customer = new Customer(child.getString("CustomerCode"),
-                                child.getString("CustomerName"));
-                        customerHashMap.put(key, customer);
-                    } else {//있으면
-                        customer = customerHashMap.get(key);
-                    }
-                    customer.addData(child.getString("LocationNo"), child.getString("LocationName"), child.getString("ContractNo"));
-                }
-                Intent i;
-                i = new Intent(getBaseContext(), LocationTreeViewActivitySearch.class);//todo
-
-                i.putExtra("type", programType);
-                i.putExtra("programType", programType);
-                i.putExtra("hashMap", customerHashMap);
-                startActivity(i);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            } finally {
-                progressOFF2(this.getClass().getName());
-            }
-        }
     }
 
     /**
