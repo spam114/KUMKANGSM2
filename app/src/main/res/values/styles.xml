@@ -11,7 +11,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme2" parent="Theme.AppCompat.DayNight">
+    <style name="AppTheme2" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -21,7 +21,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.ComplaintImageActivity" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+    <style name="Theme.ComplaintImageActivity" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
