@@ -72,7 +72,7 @@ public class AddItemListActivity extends BaseActivity {//추가분 리스트 액
             public void run() {
                 progressOFF2(this.getClass().getName());
             }
-        }, 5000);
+        }, 10000);
         progressON("Loading...", handler);
     }
 

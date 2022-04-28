@@ -52,7 +52,7 @@ public class LocationTreeViewActivitySearchForAll extends BaseActivity {//+ê²€ìƒ
             public void run() {
                 progressOFF2(this.getClass().getName());
             }
-        }, 5000);
+        }, 10000);
         progressON("Loading...", handler);
     }
 

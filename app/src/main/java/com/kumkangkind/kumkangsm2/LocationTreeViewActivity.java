@@ -46,13 +46,8 @@ public class LocationTreeViewActivity extends BaseActivity {//트리뷰 엑티�
     //진행층수 등록, 진행기준 정보관리, 일보작성, 현장불만사례
 
     TextView textView;
-
     int leftComplainDateArr[];
     int rightcomplainDateArr[];
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

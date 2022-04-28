@@ -63,7 +63,7 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
             public void run() {
                 progressOFF2(this.getClass().getName());
             }
-        }, 5000);
+        }, 10000);
         progressON("Loading...", handler);
     }
 

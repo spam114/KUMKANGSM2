@@ -168,6 +168,7 @@ public class ApplicationClass extends Application {
     public void progressOFF() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
+            this.handler.removeCallbacksAndMessages(null);
         }
     }
 
@@ -175,6 +176,7 @@ public class ApplicationClass extends Application {
         if (progressDialog != null && progressDialog.isShowing()) {
             Log.i("로딩바OFF", className);
             progressDialog.dismiss();
+            this.handler.removeCallbacksAndMessages(null);
         }
     }
     public void progressOFF2(String className) {

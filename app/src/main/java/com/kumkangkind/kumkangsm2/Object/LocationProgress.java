@@ -13,7 +13,7 @@ public class LocationProgress implements Serializable {
     public String AlRate="";
     //public String AlPercent="";
     public String AlOver="";
-    public String StOutWeightG="";
+    //public String StOutWeightG="";
     public String StOutWeight="";
     public String StNewInWeight="";
     public String StInWeight="";

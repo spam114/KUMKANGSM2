@@ -73,7 +73,7 @@ public class ComplaintImageActivity extends BaseActivity {
             public void run() {
                 progressOFF2(this.getClass().getName());
             }
-        }, 5000);
+        }, 10000);
         progressON("Loading...", handler);
     }
 

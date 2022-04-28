@@ -60,7 +60,7 @@ public class SupportDialog extends Dialog implements BaseActivityInterface{
             public void run() {
                 progressOFF2(this.getClass().getName());
             }
-        }, 5000);
+        }, 10000);
         progressON("Loading...", handler);
     }
 

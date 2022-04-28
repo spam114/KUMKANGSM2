@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,7 +72,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
             public void run() {
                 progressOFF2(this.getClass().getName());
             }
-        }, 5000);
+        }, 10000);
         progressON("Loading...", handler);
     }
 
@@ -204,6 +203,9 @@ public class ProgressFloorReturnActivity extends BaseActivity {
                             dong.ExProgressFloor = child.getString("ProgressFloor");
                         }
                         dong.CollectEmployee = child.getString("CollectEmployee");
+                        dong.InPlanData = child.getString("InPlanData");
+                        dong.TotalFloor = child.getString("TotalFloor");
+                        dong.BaseFloor = child.getString("BaseFloor");
                         dongHashMap.put(key, dong);
                     } else {//있으면: 전 달 데이터 setting
                         dong = dongHashMap.get(key);
@@ -226,15 +228,15 @@ public class ProgressFloorReturnActivity extends BaseActivity {
                 }
 
                 LinearLayoutManager layoutManager =
-                        new LinearLayoutManager(ProgressFloorReturnActivity.this, LinearLayoutManager.VERTICAL,false);
+                        new LinearLayoutManager(ProgressFloorReturnActivity.this, LinearLayoutManager.VERTICAL, false);
                 recyclerView.setLayoutManager(layoutManager);
 
                 ProgressFloorReturnViewAdapter adapter = new ProgressFloorReturnViewAdapter(ProgressFloorReturnActivity.this, layoutTop, contractNo, this.fromDate);
                 adapter.setItems(dongArrayList);
                 recyclerView.setAdapter(adapter);
 
-               // adapter = new ProgressFloorReturnViewAdapter(, R.layout.progress_floor_return_row, dongArrayList, );
-               // recyclerView.setAdapter(adapter);
+                // adapter = new ProgressFloorReturnViewAdapter(, R.layout.progress_floor_return_row, dongArrayList, );
+                // recyclerView.setAdapter(adapter);
 
             } catch (Exception e) {
                 e.printStackTrace();

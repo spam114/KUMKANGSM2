@@ -100,16 +100,16 @@ public class ActivityMenuTest3 extends BaseActivity {
 
     //여기리스트들은 어플 최초 메인 버튼 셋팅을 의미한다.
     ArrayList<String> eumSungTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "나의 작업보기", "일보확인", "진행기준정보 관리", "진행층수 등록",
-            "경비등록", "현장 불만사례", "현장 지원요청", "알림 메시지", "생산내역 조회", ""));
+            "경비등록", "현장 불만사례", "현장 지원요청", "알림 메시지", "생산내역 조회", "진행층수 등록(회수)","현장 진행현황",""));
     ArrayList<String> eumSungSale = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "나의 작업보기", "일보확인", "진행기준정보 관리", "진행층수 등록",
             "경비등록", "현장 불만사례", "현장 지원요청", "알림 메시지", "생산내역 조회", ""));
     ArrayList<String> eumSungSuper = new ArrayList<>(Arrays.asList("담당자 배정", "나의 작업보기", "진행기준정보 관리", "진행층수 등록", "경비등록", "현장 불만사례",
             "현장 지원요청", "생산내역 조회", ""));
-    ArrayList<String> ChangTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", ""));
+    ArrayList<String> ChangTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", "진행층수 등록(회수)","현장 진행현황", ""));
     ArrayList<String> ChangSale = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", ""));
     ArrayList<String> ChangSuper = new ArrayList<>(Arrays.asList("작업요청내역 조회", "경비등록", "알림 메시지", ""));
 
-    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("진행층수 등록(회수)", "알림 메시지","현장 진행현황"));
+    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("진행층수 등록(회수)", "알림 메시지","현장 진행현황", "나의 작업보기"));
     ArrayList<String> myDefaultButtonList = new ArrayList<>();
 
     int fromYear = 0;
@@ -165,7 +165,7 @@ public class ActivityMenuTest3 extends BaseActivity {
             public void run() {
                 progressOFF2(this.getClass().getName());
             }
-        }, 5000);
+        }, 10000);
         progressON("Loading...", handler);
     }
 
@@ -833,7 +833,6 @@ public class ActivityMenuTest3 extends BaseActivity {
         }
 
         if(Users.LeaderType.equals("3")){
-            btn6.setVisibility(View.INVISIBLE);
             btn7.setVisibility(View.INVISIBLE);
         }
 
@@ -1158,17 +1157,19 @@ public class ActivityMenuTest3 extends BaseActivity {
 
                 //getString(R.string.progress_floor)
 
-                txt4.setText(getString(R.string.message));
-                btn4.setTag(getString(R.string.message));
+                txt4.setText(getString(R.string.location_progress));
+                btn4.setTag(getString(R.string.location_progress));
                 btn4.setVisibility(View.VISIBLE);
 
-                txt5.setText(getString(R.string.location_progress));
-                btn5.setTag(getString(R.string.location_progress));
+                txt5.setText(getString(R.string.my_work));
+                btn5.setTag(getString(R.string.my_work));
                 btn5.setVisibility(View.VISIBLE);
 
+                txt6.setText(getString(R.string.message));
                 btn6.setTag(getString(R.string.message));
+                btn6.setVisibility(View.VISIBLE);
+
                 btn7.setTag(getString(R.string.message));
-                btn6.setVisibility(View.INVISIBLE);
                 btn7.setVisibility(View.INVISIBLE);
             }
 
@@ -1243,19 +1244,21 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn3.setTag(getString(R.string.progress_floor_return));
                 btn3.setVisibility(View.VISIBLE);
 
-                txt4.setText(getString(R.string.message));
-                btn4.setTag(getString(R.string.message));
+                //getString(R.string.progress_floor)
+
+                txt4.setText(getString(R.string.location_progress));
+                btn4.setTag(getString(R.string.location_progress));
                 btn4.setVisibility(View.VISIBLE);
 
-                txt5.setText(getString(R.string.location_progress));
-                btn5.setTag(getString(R.string.location_progress));
+                txt5.setText(getString(R.string.my_work));
+                btn5.setTag(getString(R.string.my_work));
                 btn5.setVisibility(View.VISIBLE);
 
-                btn5.setTag(getString(R.string.message));
+                txt6.setText(getString(R.string.message));
                 btn6.setTag(getString(R.string.message));
+                btn6.setVisibility(View.VISIBLE);
+
                 btn7.setTag(getString(R.string.message));
-                btn5.setVisibility(View.INVISIBLE);
-                btn6.setVisibility(View.INVISIBLE);
                 btn7.setVisibility(View.INVISIBLE);
             }
 
@@ -1344,14 +1347,16 @@ public class ActivityMenuTest3 extends BaseActivity {
                 imv4.setImageDrawable(_img4);
                 //btn4.setCompoundDrawablesWithIntrinsicBounds(img4, null, null, null);
 
-
-                txt5.setText(getString(R.string.message));
-                btn5.setTag(getString(R.string.message));
-                Drawable _img5 = FindImage(getString(R.string.message));
+                txt5.setText(getString(R.string.my_work));
+                btn5.setTag(getString(R.string.my_work));
+                Drawable _img5 = FindImage(getString(R.string.my_work));
                 imv5.setImageDrawable(_img5);
 
+                txt6.setText(getString(R.string.message));
+                btn6.setTag(getString(R.string.message));
+                Drawable _img6 = FindImage(getString(R.string.message));
+                imv6.setImageDrawable(_img6);
 
-                btn6.setVisibility(View.INVISIBLE);
                 btn7.setVisibility(View.INVISIBLE);
             }
             //btn7.setCompoundDrawablesWithIntrinsicBounds(img7, null, null, null);
@@ -1387,9 +1392,11 @@ public class ActivityMenuTest3 extends BaseActivity {
     private void SetFloatingButton() {
         setMenuItem();
         if(Users.LeaderType.equals("3")){//회수담당
+            //4.나의 작업보기
             //14.알림 메시지
             //15.진행층수 등록(회수)
             //16.현장 진행현황
+            item4.setVisible(true);
             item14.setVisible(true);
             item15.setVisible(true);
             item16.setVisible(true);
@@ -1403,6 +1410,8 @@ public class ActivityMenuTest3 extends BaseActivity {
             //7.경비등록
             //8.담당자 배정
             //14.알림 메시지
+            //15.진행층수 등록(회수)
+            //16.현장 진행현황
             item1.setVisible(true);
             item2.setVisible(true);
             item3.setVisible(true);
@@ -1411,6 +1420,8 @@ public class ActivityMenuTest3 extends BaseActivity {
             item7.setVisible(true);
             item8.setVisible(true);
             item14.setVisible(true);
+            item15.setVisible(true);
+            item16.setVisible(true);
 
         } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("2")) {//창녕 영업담당자 권한, 8개
             //1.메뉴 편집
@@ -1454,6 +1465,8 @@ public class ActivityMenuTest3 extends BaseActivity {
             //12.현장 지원요청
             //13.생산내역 조회
             //14.알림 메시지
+            //15.진행층수 등록(회수)
+            //16.현장 진행현황
             item1.setVisible(true);
             item4.setVisible(true);
             item5.setVisible(true);
@@ -1466,6 +1479,8 @@ public class ActivityMenuTest3 extends BaseActivity {
             item12.setVisible(true);
             item13.setVisible(true);
             item14.setVisible(true);
+            item15.setVisible(true);
+            item16.setVisible(true);
         } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("2")) {//음성 영업담당자 권한, 11개
             //1.메뉴 편집
             //4.나의 작업보기

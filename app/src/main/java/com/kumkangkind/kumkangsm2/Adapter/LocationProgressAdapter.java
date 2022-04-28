@@ -39,7 +39,7 @@ public class LocationProgressAdapter extends ArrayAdapter<LocationProgress> impl
     TextView txt22;
     TextView txt23;
     TextView txt24;
-    TextView txt25;
+    //TextView txt25;
     TextView txt26;
     TextView txt27;
     TextView txt28;
@@ -113,7 +113,7 @@ public class LocationProgressAdapter extends ArrayAdapter<LocationProgress> impl
             txt22 = row.findViewById(R.id.txt22);
             txt23 = row.findViewById(R.id.txt23);
             txt24 = row.findViewById(R.id.txt24);
-            txt25 = row.findViewById(R.id.txt25);
+            //txt25 = row.findViewById(R.id.txt25);
             txt26 = row.findViewById(R.id.txt26);
             txt27 = row.findViewById(R.id.txt27);
             txt28 = row.findViewById(R.id.txt28);
@@ -159,7 +159,7 @@ public class LocationProgressAdapter extends ArrayAdapter<LocationProgress> impl
             txt24.setText(myFormatter.format(Double.parseDouble(item.AlOver)));
 
             //스틸
-            txt25.setText(myFormatter.format(Double.parseDouble(item.StOutWeightG)));
+            //txt25.setText(myFormatter.format(Double.parseDouble(item.StOutWeightG)));
             txt26.setText(myFormatter.format(Double.parseDouble(item.StOutWeight)));
             txt27.setText(myFormatter.format(Double.parseDouble(item.StNewInWeight)));
             txt28.setText(myFormatter.format(Double.parseDouble(item.StInWeight)));
@@ -235,7 +235,7 @@ public class LocationProgressAdapter extends ArrayAdapter<LocationProgress> impl
         txt22.setVisibility(View.GONE);
         txt23.setVisibility(View.GONE);
         txt24.setVisibility(View.GONE);
-        txt25.setVisibility(View.GONE);
+        //txt25.setVisibility(View.GONE);
         txt26.setVisibility(View.GONE);
         txt27.setVisibility(View.GONE);
         txt28.setVisibility(View.GONE);
@@ -272,7 +272,7 @@ public class LocationProgressAdapter extends ArrayAdapter<LocationProgress> impl
             txt23.setVisibility(View.VISIBLE);
             txt24.setVisibility(View.VISIBLE);
         } else if (type == 1) {
-            txt25.setVisibility(View.VISIBLE);
+            //txt25.setVisibility(View.VISIBLE);
             txt26.setVisibility(View.VISIBLE);
             txt27.setVisibility(View.VISIBLE);
             txt28.setVisibility(View.VISIBLE);
