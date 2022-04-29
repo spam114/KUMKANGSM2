@@ -182,6 +182,15 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
                     //i.putExtra("dongHashMap", dongHashMap);
                     context.startActivity(i);
                 }
+                else if (programType.equals("현장진행현황")){
+
+                    Intent i = new Intent(context, LocationProgressActivity2.class);
+                    i.putExtra("customerLocation", customerName + "-" + locationName);
+                    i.putExtra("locationNo", locationNo);
+                    //i.putExtra("contractNo", contractNo);
+                    context.startActivity(i);
+
+                }
 
             }
         });

@@ -1238,7 +1238,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn7.setVisibility(View.VISIBLE);
             }
 
-            else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("3")) {//창녕 영업담당자 일때,1.일보확인 2.작업요청 관리 3.작업요청내역 조회 4.경비등록
+            else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("3")) {
 
                 txt3.setText(getString(R.string.progress_floor_return));
                 btn3.setTag(getString(R.string.progress_floor_return));
@@ -1922,9 +1922,9 @@ public class ActivityMenuTest3 extends BaseActivity {
 
 
     private void GoLocationProgress() {
-        Intent i;
-        i = new Intent(getBaseContext(), LocationProgressActivity.class);//todo
-        startActivity(i);
+        programType = "현장진행현황";
+        startProgress();
+        ClickProgressFloor();
     }
 
     /*
@@ -2049,7 +2049,7 @@ public class ActivityMenuTest3 extends BaseActivity {
 
 
                 Intent i;
-                if (this.type.equals("내현장")) {//진행층수 등록, 진행기준 정보관리, 현장 지원요청, 진행층수 등록(회수)
+                if (this.type.equals("내현장")) {//진행층수 등록, 진행기준 정보관리, 현장 지원요청, 진행층수 등록(회수), 현장진행현황
                     i = new Intent(getBaseContext(), LocationTreeViewActivity.class);//todo
                 } else {//담당자배정 or 담당자 배정현황
                     i = new Intent(getBaseContext(), LocationTreeViewActivitySearch.class);//todo
