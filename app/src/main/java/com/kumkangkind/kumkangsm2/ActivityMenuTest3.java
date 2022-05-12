@@ -109,7 +109,7 @@ public class ActivityMenuTest3 extends BaseActivity {
     ArrayList<String> ChangSale = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", ""));
     ArrayList<String> ChangSuper = new ArrayList<>(Arrays.asList("작업요청내역 조회", "경비등록", "알림 메시지", ""));
 
-    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("진행층수 등록(회수)", "알림 메시지","현장 진행현황", "나의 작업보기"));
+    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("진행층수 등록(회수)", "알림 메시지","현장 진행현황", "나의 작업보기", "반출송장 등록"));
     ArrayList<String> myDefaultButtonList = new ArrayList<>();
 
     int fromYear = 0;
