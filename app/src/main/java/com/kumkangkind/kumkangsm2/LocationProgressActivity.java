@@ -90,7 +90,7 @@ public class LocationProgressActivity extends BaseActivity {
         spinnerType = findViewById(R.id.spinnerType);
         imvRefresh = findViewById(R.id.imvRefresh);
         //spinnerCal = findViewById(R.id.spinnerCal);
-        txtTitle.setText("현장 진행현황 [" + Users.UserName + "]");
+        txtTitle.setText("반출입 현황 [" + Users.UserName + "]");
         txt19 = findViewById(R.id.txt19);
         txt20 = findViewById(R.id.txt20);
         txt21 = findViewById(R.id.txt21);

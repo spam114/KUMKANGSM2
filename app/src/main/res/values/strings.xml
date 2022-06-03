@@ -69,7 +69,7 @@
     <string name="progress_information">진행기준정보 관리</string>
     <string name="progress_floor">진행층수 등록</string>
     <string name="progress_floor_return">진행층수 등록(회수)</string>
-    <string name="location_progress">현장 진행현황</string>
+    <string name="location_progress">반출입 현황</string>
     <string name="product">생산내역 조회</string>
     <string name="support">현장 지원요청</string>
     <string name="edit_menu">메뉴 편집</string>

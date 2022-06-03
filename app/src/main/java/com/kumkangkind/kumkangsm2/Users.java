@@ -10,7 +10,6 @@ public  class  Users {
     public static String UserName = "";
     public static String USER_ID = "";
     public static String EmployeeNo="";
-    public static String Phone = "010-2705-8632";
     public static String LeaderType = "Y";
     public static String[] supervisorList;
     public static String[] CardList;

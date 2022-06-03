@@ -144,11 +144,8 @@ public class ComplainDialog extends Dialog implements BaseActivityInterface{
         setContentView(R.layout.dialog_complain);
 
         WindowManager.LayoutParams lp = getWindow().getAttributes( ) ;
-
         WindowManager wm = ((WindowManager)context.getApplicationContext().getSystemService(context.getApplicationContext().WINDOW_SERVICE)) ;
-
         lp.width =  (int)( wm.getDefaultDisplay().getWidth( ) * 0.9 );
-
         getWindow().setAttributes( lp ) ;
 
         radioLeft=findViewById(R.id.toggleLeft);

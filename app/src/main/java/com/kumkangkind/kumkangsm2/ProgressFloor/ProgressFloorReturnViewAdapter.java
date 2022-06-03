@@ -33,6 +33,7 @@ import com.kumkangkind.kumkangsm2.BaseActivityInterface;
 import com.kumkangkind.kumkangsm2.Dong;
 import com.kumkangkind.kumkangsm2.R;
 import com.kumkangkind.kumkangsm2.RequestHttpURLConnection;
+import com.kumkangkind.kumkangsm2.Users;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -120,7 +121,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
             edtProgressFloor.setText(item.ProgressFloor);
             String exProgressDate = item.ExProgressDate;
             String inPlanDate = item.InPlanData;
-            textFloorInfo.setText(item.BaseFloor+"/"+item.TotalFloor);
+            textFloorInfo.setText(item.BaseFloor+"\n"+item.TotalFloor);
             //String progressDate = item.ProgressDate;
 
 
@@ -426,6 +427,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
         values.put("Dong", dong);
         values.put("FromDate", fromDate);
         values.put("ProgressFloor", progressFloor);
+        values.put("UserCode", Users.PhoneNumber);
         SetDongProgressFloorReturn gsod = new SetDongProgressFloorReturn(url, values, v, item, fromDate);
         gsod.execute();
     }

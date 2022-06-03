@@ -4,17 +4,56 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/JHLEE/.gradle/caches/transforms-2/files-2.1/f359d6ff98fdbff56011b5813b61ba6b/jetified-floatingnavigationview-1.1.1/res/drawable/ic_menu_vector.xml" value="0.136" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/add-48px.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/add_48px.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/background_rounding.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/background_tablecell.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/background_tablecell2.xml" value="0.2445" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/basicbutton.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/basicbutton_click.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/bg_spinner.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/border.xml" value="0.123" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/border2.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/border3.xml" value="0.123" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/border4.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/borderline.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/borderline2.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/borderline_top.xml" value="0.123" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/button_blue.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/button_blue_bg.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/button_gray.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/buttonshape.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/edittext.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/frame_loading.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.129" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/receipt-48px.xml" value="0.129" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/receipt_48px.xml" value="0.129" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/shape.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_dailycost_eumsung.xml" value="0.13229166666666667" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_location_progress.xml" value="0.33695652173913043" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_location_progress2.xml" value="0.33" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_main5.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_production_progress.xml" value="0.2520833333333333" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_saleorder.xml" value="0.23020833333333332" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_stock_in_certificate.xml" value="0.33" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_stock_in_certificate_detail.xml" value="0.33" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_workedit2.xml" value="0.33" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_additem.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_asitem.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_image.xml" value="0.37864583333333335" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_image2.xml" value="0.25" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_notice.xml" value="0.2520833333333333" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_photo.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/etet.xml" value="0.25" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/listview2.xml" value="0.22916666666666666" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/listview_image.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/listview_location_progress_row.xml" value="0.33" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/listview_location_progress_row2.xml" value="0.33" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/listview_production_progress_row.xml" value="0.2421875" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/navigation_view_header.xml" value="0.3536458333333333" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/progress_floor_return_listview.xml" value="0.33" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/progress_floor_return_row.xml" value="0.25" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/stock_in_certificate_row.xml" value="0.5" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/menu/navigation_view.xml" value="0.3536458333333333" />
       </map>
     </option>

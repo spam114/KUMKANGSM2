@@ -9,7 +9,9 @@ import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.kumkangkind.kumkangsm2.R;
 import com.kumkangkind.kumkangsm2.Users;
 
@@ -35,7 +37,7 @@ public class RegistrationIntentService extends IntentService { //RegistrationInt
 
 
     private static final String TAG = "RegIntentService";
-   // private static final String[] TOPICS = {"global"};
+    // private static final String[] TOPICS = {"global"};
     private String mToken = "";
 
     public RegistrationIntentService() {
@@ -50,19 +52,26 @@ public class RegistrationIntentService extends IntentService { //RegistrationInt
 
     }
 
-    protected void onHandleIntent(Intent intent){
+    protected void onHandleIntent(Intent intent) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         try {
-            String token = FirebaseInstanceId.getInstance().getToken();
-            Log.i(TAG, "FCM Registration Token : " + token);
-            sendRegistrationToServer(token);//서버에 토큰을 보내서 갱신한다.
-            //subscribeTopics(token);//주제 구독부분
-            sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();//여기서 true로 설정한다음에 SearchActivity에있는 동적 broadCastReceiver를 사용하여 textView형태로 토큰이 성공적으로 바뀌었다고, 출력
 
-        }
-        catch (Exception e){
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+                @Override
+                public void onSuccess(InstanceIdResult instanceIdResult) {
+                    String token = instanceIdResult.getToken();
+                    Log.i(TAG, "FCM Registration Token : " + token);
+                    sendRegistrationToServer(token);//서버에 토큰을 보내서 갱신한다.
+                    sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, true).apply();//여기서 true로 설정한다음에 SearchActivity에있는 동적 broadCastReceiver를 사용하여 textView형태로 토큰이 성공적으로 바뀌었다고, 출력
+                }
+
+            });
+            //deprecated
+            //String token = FirebaseInstanceId.getInstance().getToken();
+            //Log.i(TAG, "FCM Registration Token : " + token);
+        } catch (Exception e) {
             Log.d(TAG, "Failed to complete token refresh", e);
             sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();
         }
@@ -71,11 +80,11 @@ public class RegistrationIntentService extends IntentService { //RegistrationInt
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
     }
 
-    private void sendRegistrationToServer(String token){
+    private void sendRegistrationToServer(String token) {
 
         //내 서버에 폰에서 읽어온 토큰을 전송한다(token을 관리하기 위해서)
         mToken = token;
-        String address=getString(R.string.service_address)+"setfcm";
+        String address = getString(R.string.service_address) + "setfcm";
         new HttpAsyncTask().execute(address);
     }
 
@@ -168,6 +177,6 @@ public class RegistrationIntentService extends IntentService { //RegistrationInt
         }
 
         inputStream.close();
-        return  result;
+        return result;
     }
 }

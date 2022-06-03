@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class Customer implements Serializable, Comparable<Customer> {
     public String CustomerCode = "";
     public String CustomerName = "";
-    public HashMap<String, Location> locationHashMap;
+    public TreeMap<String, Location> locationHashMap;
     public List<String> confirmList;
-
 
     public Customer() {
         super();
@@ -18,12 +19,11 @@ public class Customer implements Serializable, Comparable<Customer> {
 
     public Customer(String CustomerCode, String CustomerName) {
         super();
-        this.locationHashMap= new HashMap<>();
+        this.locationHashMap= new TreeMap<>();
         this.CustomerCode=CustomerCode;
         this.CustomerName = CustomerName;
         confirmList=new ArrayList<>();
     }
-
 
     public void addData(String LocationNo,String LocationName,String ContractNo)
     {
@@ -31,7 +31,7 @@ public class Customer implements Serializable, Comparable<Customer> {
             LocationName=LocationName+"("+ContractNo+")";
         }
         confirmList.add(LocationName);
-        String key = ContractNo;
+        String key = ContractNo+"-"+LocationNo;
         Location location=null;
         location = new Location(LocationNo,LocationName,ContractNo);
         locationHashMap.put(key,location);

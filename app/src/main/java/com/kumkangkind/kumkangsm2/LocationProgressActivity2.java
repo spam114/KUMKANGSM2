@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,41 +30,43 @@ public class LocationProgressActivity2 extends BaseActivity {
     String locationNo;
     String customerLocation;
 
-    TextView txtAlName;
-    TextView txtAl_outWeight_g;
-    TextView txtAl_outWeight;
-    TextView txtAl_inWeight;
-    TextView txtAl_over;
-    TextView txtGaugeDate;
+    TextView AlName;
+    TextView al_outWeight_g;
+    TextView al_inWeight;
+    TextView al_over;
+    TextView al_rate;
+    TextView GaugeDate;
 
-    TextView txtStName;
-    TextView txtSt_outWeight_g;
-    TextView txtSt_outWeight;
-    TextView txtSt_inWeight;
-    TextView txtGaugeDate2;
+    TextView StName;
+    TextView st_outWeight;
+    TextView st_inWeight;
+    TextView st_rate;
+    TextView GaugeDate2;
 
-    TextView txtOtName;
-    TextView txtOt_outWeight_g;
-    TextView txtOt_outWeight;
-    TextView txtOt_inWeight;
-    TextView txtGaugeDate4;
+    TextView OtName;
+    TextView ot_outWeight;
+    TextView ot_inWeight;
+    TextView ot_rate;
+    TextView GaugeDate4;
 
-    TextView txtSpName;
-    TextView txtSp_outWeight_g;
-    TextView txtSp_outWeight;
-    TextView txtSp_inWeight_g;
-    TextView txtGaugeDate6;
+    TextView SpName;
+    TextView sp_outQty;
+    TextView sp_inQty;
+    TextView sp_qrate;
+    TextView GaugeDate6;
 
-    TextView txtKdspName;
-    TextView txtKdsp_outWeight_g;
-    TextView txtKdsp_outWeight;
-    TextView txtKdsp_inWeight_g;
-    TextView txtGaugeDate7;
+    TextView KdspName;
+    TextView kdsp_outQty;
+    TextView kdsp_inQty;
+    TextView kdsp_qrate;
+    TextView GaugeDate8;
 
-    TextView txtBeamName;
-    TextView txtKb_outWeight_g;
-    TextView txtKb_inWeight;
-    TextView txtGaugeDate8;
+    TextView BeamName;
+    TextView kb_outQty;
+    TextView kb_inQty;
+    TextView kb_qrate;
+    TextView GaugeDate7;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,41 +75,42 @@ public class LocationProgressActivity2 extends BaseActivity {
         txtTitle = findViewById(R.id.txtTitle);
         imvRefresh = findViewById(R.id.imvRefresh);
 
-        txtAlName = findViewById(R.id.txtAlName);
-        txtAl_outWeight_g = findViewById(R.id.txtAl_outWeight_g);
-        txtAl_outWeight = findViewById(R.id.txtAl_outWeight);
-        txtAl_inWeight = findViewById(R.id.txtAl_inWeight);
-        txtAl_over = findViewById(R.id.txtAl_over);
-        txtGaugeDate = findViewById(R.id.txtGaugeDate);
+        AlName = findViewById(R.id.AlName);
+        al_outWeight_g = findViewById(R.id.al_outWeight_g);
+        al_inWeight = findViewById(R.id.al_inWeight);
+        al_over = findViewById(R.id.al_over);
+        al_rate = findViewById(R.id.al_rate);
+        GaugeDate = findViewById(R.id.GaugeDate);
 
-        txtStName = findViewById(R.id.txtStName);
-        txtSt_outWeight_g = findViewById(R.id.txtSt_outWeight_g);
-        txtSt_outWeight = findViewById(R.id.txtSt_outWeight);
-        txtSt_inWeight = findViewById(R.id.txtSt_inWeight);
-        txtGaugeDate2 = findViewById(R.id.txtGaugeDate2);
+        StName = findViewById(R.id.StName);
+        st_outWeight = findViewById(R.id.st_outWeight);
+        st_inWeight = findViewById(R.id.st_inWeight);
+        st_rate = findViewById(R.id.st_rate);
+        GaugeDate2 = findViewById(R.id.GaugeDate2);
 
-        txtOtName = findViewById(R.id.txtOtName);
-        txtOt_outWeight_g = findViewById(R.id.txtOt_outWeight_g);
-        txtOt_outWeight = findViewById(R.id.txtOt_outWeight);
-        txtOt_inWeight = findViewById(R.id.txtOt_inWeight);
-        txtGaugeDate4 = findViewById(R.id.txtGaugeDate4);
+        OtName = findViewById(R.id.OtName);
+        ot_outWeight = findViewById(R.id.ot_outWeight);
+        ot_inWeight = findViewById(R.id.ot_inWeight);
+        ot_rate = findViewById(R.id.ot_rate);
+        GaugeDate4 = findViewById(R.id.GaugeDate4);
 
-        txtSpName = findViewById(R.id.txtSpName);
-        txtSp_outWeight_g = findViewById(R.id.txtSp_outWeight_g);
-        txtSp_outWeight = findViewById(R.id.txtSp_outWeight);
-        txtSp_inWeight_g = findViewById(R.id.txtSp_inWeight_g);
-        txtGaugeDate6 = findViewById(R.id.txtGaugeDate6);
+        SpName = findViewById(R.id.SpName);
+        sp_outQty = findViewById(R.id.sp_outQty);
+        sp_inQty = findViewById(R.id.sp_inQty);
+        sp_qrate = findViewById(R.id.sp_qrate);
+        GaugeDate6 = findViewById(R.id.GaugeDate6);
 
-        txtKdspName = findViewById(R.id.txtKdspName);
-        txtKdsp_outWeight_g = findViewById(R.id.txtKdsp_outWeight_g);
-        txtKdsp_outWeight = findViewById(R.id.txtKdsp_outWeight);
-        txtKdsp_inWeight_g = findViewById(R.id.txtKdsp_inWeight_g);
-        txtGaugeDate7 = findViewById(R.id.txtGaugeDate7);
+        KdspName = findViewById(R.id.KdspName);
+        kdsp_outQty = findViewById(R.id.kdsp_outQty);
+        kdsp_inQty = findViewById(R.id.kdsp_inQty);
+        kdsp_qrate = findViewById(R.id.kdsp_qrate);
+        GaugeDate8 = findViewById(R.id.GaugeDate8);
 
-        txtBeamName = findViewById(R.id.txtBeamName);
-        txtKb_outWeight_g = findViewById(R.id.txtKb_outWeight_g);
-        txtKb_inWeight = findViewById(R.id.txtKb_inWeight);
-        txtGaugeDate8 = findViewById(R.id.txtGaugeDate8);
+        BeamName = findViewById(R.id.BeamName);
+        kb_outQty = findViewById(R.id.kb_outQty);
+        kb_inQty = findViewById(R.id.kb_inQty);
+        kb_qrate = findViewById(R.id.kb_qrate);
+        GaugeDate7 = findViewById(R.id.GaugeDate7);
 
         locationNo = getIntent().getStringExtra("locationNo");
         customerLocation = getIntent().getStringExtra("customerLocation");
@@ -240,39 +241,42 @@ public class LocationProgressActivity2 extends BaseActivity {
                         return;
                     }
 
-                    txtAlName.setText(child.getString("AlName"));
-                    txtAl_outWeight_g.setText(child.getString("al_outWeight_g"));
-                    txtAl_outWeight.setText(child.getString("al_outWeight"));
-                    txtAl_inWeight.setText(child.getString("al_inWeight"));
-                    txtAl_over.setText(child.getString("al_over"));
-                    txtGaugeDate.setText(child.getString("GaugeDate"));
-                    txtStName.setText(child.getString("StName"));
-                    txtSt_outWeight_g.setText(child.getString("st_outWeight_g"));
-                    txtSt_outWeight.setText(child.getString("st_outWeight"));
-                    txtSt_inWeight.setText(child.getString("st_inWeight"));
-                    txtGaugeDate2.setText(child.getString("GaugeDate2"));
-                    txtOtName.setText(child.getString("OtName"));
-                    txtOt_outWeight_g.setText(child.getString("ot_outWeight_g"));
-                    txtOt_outWeight.setText(child.getString("ot_outWeight"));
-                    txtOt_inWeight.setText(child.getString("ot_inWeight"));
-                    txtGaugeDate4.setText(child.getString("GaugeDate4"));
-                    txtSpName.setText(child.getString("SpName"));
-                    txtSp_outWeight_g.setText(child.getString("sp_outWeight_g"));
-                    txtSp_outWeight.setText(child.getString("sp_outWeight"));
-                    txtSp_inWeight_g.setText(child.getString("sp_inWeight_g"));
-                    txtGaugeDate6.setText(child.getString("GaugeDate6"));
+                    AlName.setText(child.getString("AlName"));
+                    al_outWeight_g.setText(child.getString("al_outWeight_g"));
+                    al_inWeight.setText(child.getString("al_inWeight"));
+                    al_over.setText(child.getString("al_over"));
+                    al_rate.setText(child.getString("al_rate"));
+                    GaugeDate.setText(child.getString("GaugeDate"));
 
-                    txtKdspName.setText(child.getString("KdspName"));
-                    txtKdsp_outWeight_g.setText(child.getString("kdsp_outWeight_g"));
-                    txtKdsp_outWeight.setText(child.getString("kdsp_outWeight"));
-                    txtKdsp_inWeight_g.setText(child.getString("kdsp_inWeight_g"));
-                    txtGaugeDate8.setText(child.getString("GaugeDate8"));
+                    StName.setText(child.getString("StName"));
+                    st_outWeight.setText(child.getString("st_outWeight"));
+                    st_inWeight.setText(child.getString("st_inWeight"));
+                    st_rate.setText(child.getString("st_rate"));
+                    GaugeDate2.setText(child.getString("GaugeDate2"));
 
+                    OtName.setText(child.getString("OtName"));
+                    ot_outWeight.setText(child.getString("ot_outWeight"));
+                    ot_inWeight.setText(child.getString("ot_inWeight"));
+                    ot_rate.setText(child.getString("ot_rate"));
+                    GaugeDate4.setText(child.getString("GaugeDate4"));
 
-                    txtBeamName.setText(child.getString("BeamName"));
-                    txtKb_outWeight_g.setText(child.getString("kb_outWeight_g"));
-                    txtKb_inWeight.setText(child.getString("kb_inWeight"));
-                    txtGaugeDate7.setText(child.getString("GaugeDate7"));
+                    SpName.setText(child.getString("SpName"));
+                    sp_outQty.setText(child.getString("sp_outQty")+"("+child.getString("sp_outWeight_g")+")");
+                    sp_inQty.setText(child.getString("sp_inQty")+"("+child.getString("sp_inWeight_g")+")");
+                    sp_qrate.setText(child.getString("sp_qrate"));
+                    GaugeDate6.setText(child.getString("GaugeDate6"));
+
+                    KdspName.setText(child.getString("KdspName"));
+                    kdsp_outQty.setText(child.getString("kdsp_outQty")+"("+child.getString("kdsp_outWeight_g")+")");
+                    kdsp_inQty.setText(child.getString("kdsp_inQty")+"("+child.getString("kdsp_inWeight_g")+")");
+                    kdsp_qrate.setText(child.getString("kdsp_qrate"));
+                    GaugeDate8.setText(child.getString("GaugeDate8"));
+
+                    BeamName.setText(child.getString("BeamName"));
+                    kb_outQty.setText(child.getString("kb_outQty")+"("+child.getString("kb_outWeight_g")+")");
+                    kb_inQty.setText(child.getString("kb_inQty")+"("+child.getString("kb_inWeight")+")");
+                    kb_qrate.setText(child.getString("kb_qrate"));
+                    GaugeDate7.setText(child.getString("GaugeDate7"));
 
 
                     //locationProgressArrayList.add(locationProgress);

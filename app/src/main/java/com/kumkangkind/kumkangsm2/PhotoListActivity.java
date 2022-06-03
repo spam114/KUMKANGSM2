@@ -314,15 +314,6 @@ public class PhotoListActivity extends BaseActivity {
     }
 
 
-
-
-
-
-
-
-
-
-
     public class UpdateImageMulti extends AsyncTask<Void, Void, String> {
         String url;
         ContentValues values;

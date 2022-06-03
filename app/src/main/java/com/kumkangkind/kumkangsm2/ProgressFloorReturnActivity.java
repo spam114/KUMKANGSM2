@@ -42,6 +42,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
 
     TextView tvCustomerLocation;
     String contractNo = "";
+    String locationNo="";
     String type = "";
     String restURL = "";
     String arrayName = "";
@@ -85,6 +86,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
 
         tvCustomerLocation = (TextView) findViewById(R.id.tvCustomerLocation);
         contractNo = getIntent().getStringExtra("contractNo");
+        locationNo = getIntent().getStringExtra("locationNo");
         customerLocation = getIntent().getStringExtra("customerLocation");
         tvCustomerLocation.setText(customerLocation);
         this.txtFromDate = findViewById(R.id.txtFromDate);
@@ -109,7 +111,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         String fromDate = tyear + "-" + (tmonth + 1) + "-" + tdate;
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        getDongProgressFloorReturn(fromDate);
+        getDongProgressFloorReturn2(fromDate);
     }
 
     private void showDateTimePicker(int year, int month, int date) {
@@ -125,7 +127,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
                                 String fromDate = tyear + "-" + (tmonth + 1) + "-" + tdate;
                                 //DATA가져오기
                                 //getViewSaleOrderData(fromDate);
-                                getDongProgressFloorReturn(fromDate);
+                                getDongProgressFloorReturn2(fromDate);
                             }
                         }
                         , // 사용자가 날짜설정 후 다이얼로그 빠져나올때
@@ -134,21 +136,22 @@ public class ProgressFloorReturnActivity extends BaseActivity {
         dpd.show();
     }
 
-    public void getDongProgressFloorReturn(String fromDate) {
-        String url = getString(R.string.service_address) + "getDongProgressFloorReturn";
+    public void getDongProgressFloorReturn2(String fromDate) {
+        String url = getString(R.string.service_address) + "getDongProgressFloorReturn2";
         ContentValues values = new ContentValues();
         values.put("ContractNo", contractNo);
         values.put("FromDate", fromDate);
-        GetDongProgressFloorReturn gsod = new GetDongProgressFloorReturn(url, values, fromDate);
+        values.put("LocationNo", locationNo);
+        GetDongProgressFloorReturn2 gsod = new GetDongProgressFloorReturn2(url, values, fromDate);
         gsod.execute();
     }
 
-    public class GetDongProgressFloorReturn extends AsyncTask<Void, Void, String> {
+    public class GetDongProgressFloorReturn2 extends AsyncTask<Void, Void, String> {
         String url;
         ContentValues values;
         String fromDate;
 
-        GetDongProgressFloorReturn(String url, ContentValues values, String fromDate) {
+        GetDongProgressFloorReturn2(String url, ContentValues values, String fromDate) {
             this.url = url;
             this.values = values;
             this.fromDate = fromDate;

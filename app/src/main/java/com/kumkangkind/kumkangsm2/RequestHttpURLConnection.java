@@ -244,7 +244,7 @@ public class RequestHttpURLConnection {
 
 
         BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inSampleSize = 4; // 1/4배율로 읽어오게 하는 방법
+        options.inSampleSize = 1; // 1/4배율로 읽어오게 하는 방법
 
         byte[] decodedString = Base64.decode(jsonString, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length, options);

@@ -68,6 +68,10 @@
             android:id="@+id/location_progress"
             android:icon="@drawable/round_published_with_changes_white_48"
             android:title="@string/location_progress" />
+        <item
+            android:id="@+id/stock_in_certificate"
+            android:icon="@drawable/receipt_48px"
+            android:title="@string/stock_in_certificate" />
     </group>
 
     <item

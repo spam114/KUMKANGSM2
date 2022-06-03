@@ -29,6 +29,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 
 public class LocationTreeViewActivitySearchForAll extends BaseActivity {//+검색
@@ -210,7 +211,7 @@ public class LocationTreeViewActivitySearchForAll extends BaseActivity {//+검�
         for (Customer _customer : customerList) {
             customer = _customer;
             String customerName = customer.CustomerName;
-            HashMap<String, Location> locationHashMap = customer.locationHashMap;
+            TreeMap<String, Location> locationHashMap = customer.locationHashMap;
 
             ParentNode3.IconTreeItem parentItem = new ParentNode3.IconTreeItem();//부모 노드설정
             TreeNode parent = new TreeNode(parentItem).setViewHolder(new ParentNode3(this, customerName));//부모노드설정

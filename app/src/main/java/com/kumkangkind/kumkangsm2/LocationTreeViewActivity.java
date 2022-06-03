@@ -1,5 +1,6 @@
 package com.kumkangkind.kumkangsm2;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -91,7 +92,7 @@ public class LocationTreeViewActivity extends BaseActivity {//트리뷰 엑티�
         for (Customer _customer : list) {
             customer = _customer;
             String customerName = customer.CustomerName;
-            HashMap<String, Location> locationHashMap = customer.locationHashMap;
+            TreeMap<String, Location> locationHashMap = customer.locationHashMap;
 
             ParentNode.IconTreeItem parentItem = new ParentNode.IconTreeItem();//부모 노드설정
             TreeNode parent = new TreeNode(parentItem).setViewHolder(new ParentNode(this, customerName));//부모노드설정
@@ -106,7 +107,6 @@ public class LocationTreeViewActivity extends BaseActivity {//트리뷰 엑티�
                 MyHolder.IconTreeItem nodeItem = new MyHolder.IconTreeItem();//자식노드 설정
                 TreeNode child1 = new TreeNode(nodeItem).setViewHolder(new MyHolder(this, locationNo, locationName, contractNo, customerName, programType, leftComplainDateArr, rightcomplainDateArr));//자식 노드설정
                 parent.addChildren(child1);//parent 하위에 child 붙이기
-
             }
 
             root.addChild(parent);
@@ -179,16 +179,35 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
                     Intent i = new Intent(context, ProgressFloorReturnActivity.class);
                     i.putExtra("customerLocation", customerName + "-" + locationName);
                     i.putExtra("contractNo", contractNo);
+                    i.putExtra("locationNo", locationNo);
                     //i.putExtra("dongHashMap", dongHashMap);
                     context.startActivity(i);
                 }
-                else if (programType.equals("현장진행현황")){
+                else if (programType.equals("반출입현황")){
 
                     Intent i = new Intent(context, LocationProgressActivity2.class);
                     i.putExtra("customerLocation", customerName + "-" + locationName);
                     i.putExtra("locationNo", locationNo);
                     //i.putExtra("contractNo", contractNo);
                     context.startActivity(i);
+
+                }
+                else if (programType.equals("반출송장등록")){
+
+                    Intent i;
+                    i = new Intent(context, ActivityStockInCertificateDetail.class);
+                    i.putExtra("certificateNo", "");
+                    i.putExtra("locationNo", locationNo);
+                    i.putExtra("customerLocationName", customerName + "(" + locationName+")");
+                    i.putExtra("supervisorCode", Users.USER_ID);
+                    context.startActivity(i);
+                    ((Activity)(context)).finish();
+
+                   /* Intent i = new Intent(context, LocationProgressActivity2.class);
+                    i.putExtra("customerLocation", customerName + "-" + locationName);
+                    i.putExtra("locationNo", locationNo);
+                    //i.putExtra("contractNo", contractNo);
+                    context.startActivity(i);*/
 
                 }
 

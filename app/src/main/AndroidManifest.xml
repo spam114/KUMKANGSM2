@@ -11,8 +11,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--인터넷-->
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--gps권한(대략)-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!--gps권한(세부)-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!--핸드폰정보(본인 전화번호...)-->
@@ -24,6 +22,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" /><!--핸드폰정보 이름 설정값을 알아오기위한 블루투스 권한-->
 
     <application
+        android:requestLegacyExternalStorage="true"
         android:name="com.kumkangkind.kumkangsm2.Application.ApplicationClass"
         android:allowBackup="true"
         android:icon="@drawable/logo2"
@@ -35,7 +34,8 @@
 
         <activity
             android:name="com.kumkangkind.kumkangsm2.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
             <intent-filter><!--액티비티 사이에서 주고받음-->
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" /><!--LAUNCHER: app 아이콘을 눌렀을때 실행되는 액티비티-->
@@ -181,6 +181,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.kumkangkind.kumkangsm2.LocationProgressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.kumkangkind.kumkangsm2.ActivityStockInCertificate"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.kumkangkind.kumkangsm2.ActivityStockInCertificateDetail"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.kumkangkind.kumkangsm2.LocationProgressActivity2"

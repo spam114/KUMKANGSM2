@@ -27,7 +27,7 @@
             android:layout_marginBottom="5dp"
             android:text="동"
             android:textColor="#000000"
-            android:textSize="11sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_marginBottom="8dp"
             android:text="담당자"
             android:textColor="#0091EA"
-            android:textSize="11sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -54,9 +54,10 @@
             android:id="@+id/tvFloorInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="시작/총층수"
             android:textColor="#304FFE"
-            android:textSize="11sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -73,7 +74,7 @@
             android:layout_height="wrap_content"
             android:text="2021-01-01"
             android:textColor="#304FFE"
-            android:textSize="11sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -91,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="전진행층"
             android:textColor="#304FFE"
-            android:textSize="11sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -109,7 +110,7 @@
             android:gravity="center"
             android:text="2021-01-01"
             android:textColor="#000000"
-            android:textSize="11sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
 
@@ -126,7 +127,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="진행층"
             android:textColorHint="@color/medium_gray">
 
             <com.kumkangkind.kumkangsm2.BackPressEditText
@@ -141,7 +141,7 @@
                 android:maxLength="5"
                 android:padding="2dp"
                 android:singleLine="true"
-                android:textSize="12sp"></com.kumkangkind.kumkangsm2.BackPressEditText>
+                android:textSize="15sp"></com.kumkangkind.kumkangsm2.BackPressEditText>
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

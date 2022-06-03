@@ -411,7 +411,7 @@ public class RegisterActivity2 extends BaseActivity {
                 if (key.equals("생성모드")) {//작업일보 초기 생성일시
 
                     if(textView1.getText().toString().equals("")){
-                        Toast.makeText(getBaseContext(), "등록오류: 작업내용을 입력하세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "작업내용을 입력하세요.", Toast.LENGTH_SHORT).show();
                         progressOFF();
                         return;
                     }
