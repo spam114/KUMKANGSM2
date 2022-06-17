@@ -65,14 +65,9 @@ public class SplashView extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
         //startProgress();
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//M은 마쉬멜로
             //GetPermission1();
@@ -81,13 +76,8 @@ public class SplashView extends BaseActivity {
         } else {
             CheckUser();
         }
-
-
-
         //handelr.sendEmptyMessageDelayed(0, 3000);
-
         //progressOFF();
-
     }
 
     private void CheckPermission(){

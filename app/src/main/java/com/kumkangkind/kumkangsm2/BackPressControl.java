@@ -5,6 +5,8 @@ package com.kumkangkind.kumkangsm2;
 import android.app.Activity;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+
 public class BackPressControl {
     private long backKeyPressedTime = 0;
     private Toast toast;
@@ -26,7 +28,8 @@ public class BackPressControl {
             showGuide();
             return;
         } else {
-            activity.finish();
+            ActivityCompat.finishAffinity(activity);
+            System.exit(0);
         }
     }
 

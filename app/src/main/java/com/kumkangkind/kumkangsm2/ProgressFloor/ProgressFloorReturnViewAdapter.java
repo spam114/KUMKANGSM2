@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
@@ -93,6 +94,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
         TextView textViewExYearMonth;
         TextView textViewExProgressFloor;
         TextView textViewYearMonth;
+        LinearLayout tvYearMonthLayout;
         TextView textFloorInfo;
         com.kumkangkind.kumkangsm2.BackPressEditText edtProgressFloor;
         com.google.android.material.textfield.TextInputLayout textInputLayout;
@@ -106,12 +108,14 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
             textViewExYearMonth = itemVIew.findViewById(R.id.tvExYearMonth);
             textViewExProgressFloor = itemVIew.findViewById(R.id.tvExProgressFloor);
             textViewYearMonth = itemVIew.findViewById(R.id.tvYearMonth);
+            tvYearMonthLayout = itemVIew.findViewById(R.id.tvYearMonthLayout);
             edtProgressFloor = itemVIew.findViewById(R.id.edtProgressFloor);
             textInputLayout = itemVIew.findViewById(R.id.textInputLayout);
             textFloorInfo = itemVIew.findViewById(R.id.tvFloorInfo);
         }
 
         public void setItem(Dong item, int position) {
+            int dip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) 1, context.getResources().getDisplayMetrics());
             textViewDong.setText(item.Dong);
             textViewConstructionEmployee.setText(item.CollectEmployee);
             //textViewExYearMonth.setText(((Dong) data.get(position)).ExProgressDate);
@@ -130,12 +134,26 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
             else
                 textViewExYearMonth.setText("");
             textViewExProgressFloor.setText(item.ExProgressFloor);
-            if (!inPlanDate.equals(""))
+            if (!inPlanDate.equals("")){
                 textViewYearMonth.setText(inPlanDate.substring(0, 4) + "\n" + inPlanDate.substring(5));
-            else
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                // params.height = XX;
+                // params.width = XX;
+                textViewYearMonth.setLayoutParams(params);
+                //textViewYearMonth.setWidth(70*dip);
+                textViewYearMonth.setBackgroundResource(0);
+            }
+            else {
                 textViewYearMonth.setText("");
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(30*dip, LinearLayout.LayoutParams.WRAP_CONTENT);
+               // params.height = XX;
+               // params.width = XX;
+                textViewYearMonth.setLayoutParams(params);
+                //textViewYearMonth.setWidth(70*dip);
+                textViewYearMonth.setBackgroundResource(R.drawable.outline_more_horiz_24);
+            }
 
-            textViewYearMonth.setOnClickListener(new View.OnClickListener() {
+            tvYearMonthLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -159,7 +177,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                 }
             });
 
-            textViewYearMonth.setOnLongClickListener(new View.OnLongClickListener() {
+            tvYearMonthLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
 

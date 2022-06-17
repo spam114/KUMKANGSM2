@@ -1,18 +1,32 @@
 package com.kumkangkind.kumkangsm2.sqlite;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.kumkangkind.kumkangsm2.ActivityMenuTest3;
+import com.kumkangkind.kumkangsm2.ActivityStockInCertificateDetail;
 import com.kumkangkind.kumkangsm2.BaseActivity;
 import com.kumkangkind.kumkangsm2.R;
+import com.kumkangkind.kumkangsm2.RequestHttpURLConnection;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 public class ActivityMessageHistory extends BaseActivity{
@@ -21,6 +35,16 @@ public class ActivityMessageHistory extends BaseActivity{
     Cursor mCursor;
     SimpleCursorAdapter Adapter;
 
+    private void startProgress() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressOFF2(this.getClass().getName());
+            }
+        }, 10000);
+        progressON("Loading...", handler);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,16 +103,38 @@ public class ActivityMessageHistory extends BaseActivity{
                     mCursor.moveToPosition(position);
 
                     //선택한 아이템을 표현할 수 있는 메시지를 만든다.
-                    String mes =  mCursor.getString(mCursor.getColumnIndex("contents"));
-                    String mes1 = mCursor.getString(mCursor.getColumnIndex("time"));
-                    String mes2 = mCursor.getString(mCursor.getColumnIndex("header"));
+                    @SuppressLint("Range") String mes =  mCursor.getString(mCursor.getColumnIndex("contents"));
+                    @SuppressLint("Range") String mes1 = mCursor.getString(mCursor.getColumnIndex("time"));
+                    @SuppressLint("Range") String mes2 = mCursor.getString(mCursor.getColumnIndex("header"));
+                    @SuppressLint("Range") String certificateNo = mCursor.getString(mCursor.getColumnIndex("certificateNo"));
 
                     //메시지를 보여준다.
                     //Extra를 넣은 후에 폼을 종료합니다.
 
-
-                    new AlertDialog.Builder(ActivityMessageHistory.this).setMessage(mes)
-                            .setTitle(mes2).show();
+                    if(!certificateNo.equals("")){
+                        //송장 클릭
+                        new MaterialAlertDialogBuilder(ActivityMessageHistory.this)
+                                .setTitle(mes2)
+                                .setMessage(mes)
+                                .setCancelable(true)
+                                .setPositiveButton
+                                        ("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                return;
+                                            }
+                                        }).setNegativeButton("송장보기", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                getLocationInfoByCertificateNo(certificateNo);
+                                return;
+                            }
+                        }).show();
+                    }
+                    else{//작업요청서 클릭
+                        new AlertDialog.Builder(ActivityMessageHistory.this).setMessage(mes)
+                                .setTitle(mes2).show();
+                    }
 
                     /*
                     Intent i =  getIntent();
@@ -103,4 +149,80 @@ public class ActivityMessageHistory extends BaseActivity{
                 }
 
             };
+
+    private void getLocationInfoByCertificateNo(String certificateNo) {
+        String url = getString(R.string.service_address) + "getLocationInfoByCertificateNo";
+        ContentValues values = new ContentValues();
+        values.put("CertificateNo", certificateNo);
+        GetLocationInfoByCertificateNo gsod = new GetLocationInfoByCertificateNo(url, values);
+        gsod.execute();
+    }
+
+    public class GetLocationInfoByCertificateNo extends AsyncTask<Void, Void, String> {
+        String url;
+        ContentValues values;
+
+        GetLocationInfoByCertificateNo(String url, ContentValues values) {
+            this.url = url;
+            this.values = values;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            startProgress();
+            //progress bar를 보여주는 등등의 행위
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String result;
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            result = requestHttpURLConnection.request(url, values);
+            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // 통신이 완료되면 호출됩니다.
+            // 결과에 따른 UI 수정 등은 여기서 합니다
+            try {
+                //WoImage image;
+                JSONArray jsonArray = new JSONArray(result);
+                String ErrorCheck = "";
+                //stockArrayList = new ArrayList<>();
+                String certificateNo="";
+                String customerLocationName="";
+                String locationNo="";
+                String supervisorCode="";
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject child = jsonArray.getJSONObject(i);
+                    if (!child.getString("ErrorCheck").equals("null")) {//문제가 있을 시, 에러 메시지 호출 후 종료
+                        ErrorCheck = child.getString("ErrorCheck");
+                        Toast.makeText(ActivityMessageHistory.this, ErrorCheck, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    certificateNo = child.getString("CertificateNo");
+                    customerLocationName = child.getString("CustomerLocationName");
+                    locationNo = child.getString("LocationNo");
+                    supervisorCode = child.getString("SupervisorCode");
+                }
+
+                Intent i;
+                i = new Intent(getBaseContext(), ActivityStockInCertificateDetail.class);//todo
+                i.putExtra("certificateNo", certificateNo);
+                i.putExtra("customerLocationName", customerLocationName);
+                i.putExtra("locationNo", locationNo);
+                i.putExtra("supervisorCode", supervisorCode);
+
+                startActivity(i);
+            } catch (Exception e) {
+
+            } finally {
+                progressOFF2(this.getClass().getName());
+            }
+        }
+    }
+
 }

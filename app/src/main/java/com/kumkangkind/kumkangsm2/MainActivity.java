@@ -15,7 +15,7 @@ public class MainActivity extends BaseActivity {
 
     SharedPreferences _pref;
     Boolean isShortcut = false;//아이콘의 생성
-
+    String certificateNo="";
     private void startProgress() {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -33,6 +33,12 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         Log.i("로그", "메인의 호출");
         //startProgress();
+
+        Object cNo = getIntent().getStringExtra("certificateNo");
+        certificateNo="";
+        if(cNo!=null)
+            certificateNo=cNo.toString();
+
         _pref = getSharedPreferences("kumkang", MODE_PRIVATE);//sharedPreferences 이름: "kumkang"에 저장
         isShortcut = _pref.getBoolean("isShortcut", false);//"isShortcut"에 들어있는값을 가져온다.
         //Log.e("test1", "isShortcut: " + isShortcut);
@@ -41,10 +47,6 @@ public class MainActivity extends BaseActivity {
         {
             addShortcut(this);
         }
-
-
-
-
         setContentView(R.layout.activity_main);
         VersionCheckActivity();
         //progressOFF();
@@ -71,6 +73,7 @@ public class MainActivity extends BaseActivity {
         if (requestCode == 0 && resultCode == RESULT_OK && null != data) {//초기 화면 불러온다.
            // Intent i = new Intent(this, SearchActivity.class);
             Intent i = new Intent(this, ActivityMenuTest3.class);
+            i.putExtra("certificateNo", certificateNo);
             startActivityForResult(i, 0);
             finish();
         }

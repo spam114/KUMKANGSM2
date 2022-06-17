@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 public class DbOpenHelper {
 	 
     private static final String DATABASE_NAME = "hoosik.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static SQLiteDatabase mDB;
     public DatabaseHelper mDBHelper;
     private Context mCtx;
@@ -65,10 +65,11 @@ public class DbOpenHelper {
 	}
 
 	// Insert DB
-	public long insertColumn(String header, String contents, String time){
+	public long insertColumn(String header, String contents, String time, String certificateNo){
 		ContentValues values = new ContentValues();
 		values.put(Databases.CreateDB.HEADER, header);
 		values.put(Databases.CreateDB.CONTENTS, contents);
+        values.put(Databases.CreateDB.CERTIFICATENO, certificateNo);
 		values.put(Databases.CreateDB.TIME, time);
 		return mDB.insert(Databases.CreateDB._TABLENAME, null, values);
 	}

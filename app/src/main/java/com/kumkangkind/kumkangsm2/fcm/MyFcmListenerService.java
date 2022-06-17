@@ -39,13 +39,21 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         String str= remoteMessage.getMessageId();
         String str2= remoteMessage.getTo();
         String channelId = getString(R.string.default_notification_channel_id);
+        Object cNo =remoteMessage.getData().get("certificateNo");
+        String certificateNo="";
+        if(cNo!=null)
+            certificateNo=cNo.toString();
 
-        Intent intent = new Intent(this, MainActivity.class);
+       /* Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);*/
 
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        Intent intent;
+        intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("certificateNo",certificateNo);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,channelId)
@@ -80,16 +88,21 @@ public class MyFcmListenerService extends FirebaseMessagingService {
      */
     private void SaveDB(RemoteMessage remoteMessage)
     {
+        String certificateNo="";
         String msg1 = remoteMessage.getData().get("message");
         String msg2 = remoteMessage.getData().get("time");
         String msg3 = remoteMessage.getData().get("title");
+
+        Object cNo = remoteMessage.getData().get("certificateNo");
+        if(cNo!=null)
+            certificateNo=cNo.toString();
 
         if(msg1 == "" ||msg2 =="")
             return;
 
         DbOpenHelper mDbOpenHelper = new DbOpenHelper(this);
         mDbOpenHelper.open();
-        mDbOpenHelper.insertColumn(msg3, msg1, msg2);
+        mDbOpenHelper.insertColumn(msg3, msg1, msg2, certificateNo);
     }
 
     @SuppressLint("InvalidWakeLockTag")

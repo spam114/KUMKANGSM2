@@ -6,11 +6,11 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -20,9 +20,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -138,6 +136,8 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_in_certificate_detail);
+        setFilePath();
+
 
         this.certificateNo = getIntent().getStringExtra("certificateNo");
         this.customerLocationName = getIntent().getStringExtra("customerLocationName");
@@ -175,7 +175,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
         textView2 = findViewById(R.id.textView2);
 
 
-        if(!this.supervisorCode.equals(Users.USER_ID)){//본인이 작성한 송장이 아니라면 수정불가
+        if (!this.supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장이 아니라면 수정불가
             this.tvStartTime.setEnabled(false);
             this.tvEndTime.setEnabled(false);
             this.edtCarNo.setEnabled(false);
@@ -297,7 +297,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                         Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(supervisorCode.equals(Users.USER_ID)){//본인이 작성한 송장만 사진 추가가능
+                    if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
                         RegisterPicture();
                     }
                 } else {
@@ -316,7 +316,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                         Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(supervisorCode.equals(Users.USER_ID)){//본인이 작성한 송장만 사진 추가가능
+                    if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
                         RegisterPicture();
                     }
                 } else {
@@ -335,7 +335,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                         Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(supervisorCode.equals(Users.USER_ID)){//본인이 작성한 송장만 사진 추가가능
+                    if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
                         RegisterPicture();
                     }
                 } else {
@@ -353,7 +353,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                         Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(supervisorCode.equals(Users.USER_ID)){//본인이 작성한 송장만 사진 추가가능
+                    if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
                         RegisterPicture();
                     }
                 } else {
@@ -371,7 +371,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                         Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(supervisorCode.equals(Users.USER_ID)){//본인이 작성한 송장만 사진 추가가능
+                    if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
                         RegisterPicture();
                     }
                 } else {
@@ -389,7 +389,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                         Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if(supervisorCode.equals(Users.USER_ID)){//본인이 작성한 송장만 사진 추가가능
+                    if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
                         RegisterPicture();
                     }
                 } else {
@@ -427,6 +427,23 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
         //SetTime();
         //MakeSpinnerWorkTypeAndData();
 
+    }
+
+    private void setFilePath() {
+        try {
+            String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            File dir = new File(dirPath);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+
+            filePath = File.createTempFile("IMG", ".jpg", dir);
+            if (!filePath.exists()) {
+                filePath.createNewFile();
+            }
+        } catch (Exception et) {
+            et.getMessage();
+        }
     }
 
     public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
@@ -472,69 +489,12 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
         }
     }
 
-    public static Bitmap rotateBitmap2(Bitmap bitmap) {
+    /*public static Bitmap rotateBitmap2(Bitmap bitmap) {
 
-        Matrix matrix = new Matrix();
-
-        if (bitmap.getWidth()>bitmap.getHeight()){
-            matrix.setRotate(-90);
-        }
-        else
-            return  bitmap;
-
-        /*switch (orientation) {
-            case ExifInterface.ORIENTATION_NORMAL:
-                return bitmap;
-            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
-                matrix.setScale(-1, 1);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                matrix.setRotate(180);
-                break;
-            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
-                matrix.setRotate(180);
-                matrix.postScale(-1, 1);
-                break;
-            case ExifInterface.ORIENTATION_TRANSPOSE:
-                matrix.setRotate(90);
-                matrix.postScale(-1, 1);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                matrix.setRotate(90);
-                break;
-            case ExifInterface.ORIENTATION_TRANSVERSE:
-                matrix.setRotate(-90);
-                matrix.postScale(-1, 1);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                matrix.setRotate(-90);
-                break;
-            default:
-                return bitmap;
-        }*/
-        try {
-            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-            bitmap.recycle();
-            return bmRotated;
-        } catch (OutOfMemoryError e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+    }*/
 
     private void StartCamera() {
         try {
-            String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-            File dir = new File(dirPath);
-            if (!dir.exists()) {
-                dir.mkdir();
-            }
-
-            filePath = File.createTempFile("IMG", ".jpg", dir);
-            if (!filePath.exists()) {
-                filePath.createNewFile();
-            }
-
             Uri photoUri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".provider", filePath);
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
@@ -1156,31 +1116,31 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
             dialog = new Dialog(this);
             //dialog.setTitle(imageName);
             dialog.setContentView(R.layout.dialog_image2);
+            final Bitmap[] bm = new Bitmap[1];
 
+            WindowManager.LayoutParams lp = getWindow().getAttributes();
+            WindowManager wm = ((WindowManager) ActivityStockInCertificateDetail.this.getApplicationContext().getSystemService(ActivityStockInCertificateDetail.this.getApplicationContext().WINDOW_SERVICE));
+            lp.width = (int) (wm.getDefaultDisplay().getWidth() * 1.0);
+            lp.height = (int) (wm.getDefaultDisplay().getHeight() * 1.0);
 
-            WindowManager.LayoutParams lp = getWindow().getAttributes( ) ;
-            WindowManager wm = ((WindowManager)ActivityStockInCertificateDetail.this.getApplicationContext().getSystemService(ActivityStockInCertificateDetail.this.getApplicationContext().WINDOW_SERVICE)) ;
-            lp.width =  (int)( wm.getDefaultDisplay().getWidth( ) * 1.0 );
-            lp.height =  (int)( wm.getDefaultDisplay().getHeight( ) * 1.0 );
-
-            dialog.getWindow().setAttributes( lp ) ;
+            dialog.getWindow().setAttributes(lp);
 
             //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-            com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView imageView =  dialog.findViewById(R.id.imageView1);
+            com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView imageView = dialog.findViewById(R.id.imageView1);
             //imageView.setImageBitmap(rotateBitmap2(BitmapFactory.decodeByteArray(array, 0, array.length)));
-
-            imageView.setImage(ImageSource.bitmap(BitmapFactory.decodeByteArray(array, 0, array.length)));
-
-
+            bm[0] = BitmapFactory.decodeByteArray(array, 0, array.length);
+            imageView.setImage(ImageSource.bitmap(bm[0]));
 
             TextView tvDelete = dialog.findViewById(R.id.tvDelete);
             TextView tvCamera = dialog.findViewById(R.id.tvCamera);
             TextView tvCancel = dialog.findViewById(R.id.tvCancel);
+            TextView tvRotate = dialog.findViewById(R.id.tvRotate);
 
-            if(!this.supervisorCode.equals(Users.USER_ID)){//본인이 작성한 송장이 아니라면 수정불가
+            if (!this.supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장이 아니라면 수정불가
                 tvDelete.setEnabled(false);
                 tvCamera.setEnabled(false);
+                tvRotate.setEnabled(false);
             }
 
             tvDelete.setOnClickListener(new View.OnClickListener() {
@@ -1207,6 +1167,31 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     dialog.cancel();
+                }
+            });
+
+            tvRotate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    byte[] byteArray = null;
+                    ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+
+                    //회전
+                    bm[0] = rotateBitmap(bm[0], ExifInterface.ORIENTATION_ROTATE_90);
+                    Bitmap bmRotated = bm[0];
+                    bmRotated.compress(Bitmap.CompressFormat.JPEG, 100, bStream);
+                    byteArray = bStream.toByteArray();
+
+                    StockInCertificateImage currentImage;
+                    currentImage = new StockInCertificateImage();
+                    currentImage.LocationNo = locationNo;
+                    currentImage.SeqNo = seqNo;
+                    currentImage.ImageNo = imageNo;
+                    currentImage.ImageName = locationNo + "_" + seqNo + "_" + imageNo;
+                    currentImage.ImageFile = compressImage2(Base64.encodeToString(byteArray, Base64.DEFAULT));
+
+                    InsertOrUpdateStockInCertificateImage(currentImage);
+                    imageView.setImage(ImageSource.bitmap(bmRotated));
                 }
             });
 
@@ -1268,7 +1253,18 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
                                     byte[] byteArray = null;
                                     ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-                                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bStream);
+
+                                    ExifInterface exif = null;
+                                    try {
+                                        exif = new ExifInterface(getRealPathFromURI(uri));
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                                            ExifInterface.ORIENTATION_UNDEFINED);
+
+                                    Bitmap bmRotated = rotateBitmap(bitmap, orientation);
+                                    bmRotated.compress(Bitmap.CompressFormat.JPEG, 100, bStream);
                                     byteArray = bStream.toByteArray();
 
                                     StockInCertificateImage currentImage;
@@ -1288,8 +1284,23 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
         });
         materialAlertDialogBuilder.setCancelable(true);
         materialAlertDialogBuilder.show();
-        if(dialog!=null)
+        if (dialog != null)
             dialog.cancel();
+    }
+
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
     }
 
 

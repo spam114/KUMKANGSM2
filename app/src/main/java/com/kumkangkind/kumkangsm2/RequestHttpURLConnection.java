@@ -1,11 +1,14 @@
 package com.kumkangkind.kumkangsm2;
 
+import static com.kumkangkind.kumkangsm2.ActivityStockInCertificateDetail.rotateBitmap;
+
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -161,8 +164,23 @@ public class RequestHttpURLConnection {
                 String imagefile="";
 
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), arrayList.get(i));
+
+
+                ExifInterface exif = null;
+                try {
+                    exif = new ExifInterface(getRealPathFromURI(arrayList.get(i)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                        ExifInterface.ORIENTATION_UNDEFINED);
+
+
+                Bitmap bmRotated = rotateBitmap(bitmap, orientation);
+
+
                 ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bStream);
+                bmRotated.compress(Bitmap.CompressFormat.JPEG, 100, bStream);
                 byteArray = bStream.toByteArray();
 
                 imagefile = compressImage2(Base64.encodeToString(byteArray, Base64.DEFAULT));
@@ -217,6 +235,21 @@ public class RequestHttpURLConnection {
                 urlConn.disconnect();
         }
         return null;
+    }
+
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = context.getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
     }
 
     @SuppressLint("Range")

@@ -76,6 +76,7 @@ public class ActivityMenuTest3 extends BaseActivity {
     TextView txtDate;
     //TextView tvVersion;
     WoImage image;
+    String certificateNo;
 
     private static final String TAG = "SearchActivity";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -174,6 +175,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main5);
         backpressed = new BackPressControl(this);
+
         //tvVersion = findViewById(R.id.tvVersion);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -372,7 +374,95 @@ public class ActivityMenuTest3 extends BaseActivity {
             getNoticeData();
         }
 
+        certificateNo = getIntent().getStringExtra("certificateNo");
+        if(!certificateNo.equals("")){
+
+            getLocationInfoByCertificateNo();
+        }
+
     }
+
+    private void getLocationInfoByCertificateNo() {
+        String url = getString(R.string.service_address) + "getLocationInfoByCertificateNo";
+        ContentValues values = new ContentValues();
+        values.put("CertificateNo", certificateNo);
+        GetLocationInfoByCertificateNo gsod = new GetLocationInfoByCertificateNo(url, values);
+        gsod.execute();
+    }
+
+
+
+    public class GetLocationInfoByCertificateNo extends AsyncTask<Void, Void, String> {
+        String url;
+        ContentValues values;
+
+        GetLocationInfoByCertificateNo(String url, ContentValues values) {
+            this.url = url;
+            this.values = values;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            startProgress();
+            //progress bar를 보여주는 등등의 행위
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String result;
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            result = requestHttpURLConnection.request(url, values);
+            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // 통신이 완료되면 호출됩니다.
+            // 결과에 따른 UI 수정 등은 여기서 합니다
+            try {
+                //WoImage image;
+                JSONArray jsonArray = new JSONArray(result);
+                String ErrorCheck = "";
+                //stockArrayList = new ArrayList<>();
+                String certificateNo="";
+                String customerLocationName="";
+                String locationNo="";
+                String supervisorCode="";
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject child = jsonArray.getJSONObject(i);
+                    if (!child.getString("ErrorCheck").equals("null")) {//문제가 있을 시, 에러 메시지 호출 후 종료
+                        ErrorCheck = child.getString("ErrorCheck");
+                        Toast.makeText(ActivityMenuTest3.this, ErrorCheck, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    certificateNo = child.getString("CertificateNo");
+                    customerLocationName = child.getString("CustomerLocationName");
+                    locationNo = child.getString("LocationNo");
+                    supervisorCode = child.getString("SupervisorCode");
+                }
+
+                Intent i;
+                i = new Intent(getBaseContext(), ActivityStockInCertificateDetail.class);//todo
+                i.putExtra("certificateNo", certificateNo);
+                i.putExtra("customerLocationName", customerLocationName);
+                i.putExtra("locationNo", locationNo);
+                i.putExtra("supervisorCode", supervisorCode);
+
+                startActivity(i);
+            } catch (Exception e) {
+
+            } finally {
+                progressOFF2(this.getClass().getName());
+            }
+        }
+    }
+
+
+
+
+
 
     private void getNoticeData() {
         String url = getString(R.string.service_address) + "getNoticeData";

@@ -30,6 +30,7 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:launchMode="singleInstance"
         android:usesCleartextTraffic="true"> <!--메모리 많이쓰겠다 선언-->
 
         <activity
