@@ -8,10 +8,6 @@
     <string name="service_address">http://211.245.239.53:2221/Service/json/</string>
     <string name="app_code">2</string>
     <!--<string name="service_address">http://211.245.239.36:2222/Service/json/</string>-->
-
-
-    <string name="developer">André Mion</string>
-    <string name="website">https://github.com/andremion</string>
     <string name="menu_item_import">Import</string>
     <string name="menu_item_gallery">Gallery</string>
     <string name="menu_item_slideshow">Slideshow</string>

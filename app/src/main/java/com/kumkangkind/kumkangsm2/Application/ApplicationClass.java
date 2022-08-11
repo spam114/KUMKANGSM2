@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDialog;
+
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.kumkangkind.kumkangsm2.R;
 
@@ -72,8 +73,8 @@ public class ApplicationClass extends Application {
         }
     }
 
-    public void HideKeyBoard(Activity activity){
-        InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+    public void HideKeyBoard(Activity activity) {
+        InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         manager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
@@ -110,6 +111,10 @@ public class ApplicationClass extends Application {
         if (activity == null || activity.isFinishing()) {
             return;
         }
+        if(this.handler!=null){
+            //기존에 돌고있던 handler를 cancel 시켜준다.
+            this.handler.removeCallbacksAndMessages(null);
+        }
         this.handler=handler;
         if (progressDialog != null && progressDialog.isShowing()) {
             progressSET(message);
@@ -145,12 +150,11 @@ public class ApplicationClass extends Application {
         }
     }
 
-    public void showErrorDialog(Context context, String message, int type){
-        MaterialAlertDialogBuilder alertBuilder= new MaterialAlertDialogBuilder(context, R.style.Body_ThemeOverlay_MaterialComponents_MaterialAlertDialog);
-        if(type==1){
+    public void showErrorDialog(Context context, String message, int type) {
+        MaterialAlertDialogBuilder alertBuilder = new MaterialAlertDialogBuilder(context, R.style.Body_ThemeOverlay_MaterialComponents_MaterialAlertDialog);
+        if (type == 1) {
             alertBuilder.setTitle("작업 성공");
-        }
-        else{
+        } else {
             alertBuilder.setTitle("에러 발생");
         }
 
@@ -176,14 +180,13 @@ public class ApplicationClass extends Application {
         if (progressDialog != null && progressDialog.isShowing()) {
             Log.i("로딩바OFF", className);
             progressDialog.dismiss();
-            this.handler.removeCallbacksAndMessages(null);
         }
     }
+
     public void progressOFF2(String className) {
         if (progressDialog != null && progressDialog.isShowing()) {
             Log.i("로딩바OFF", className);
             progressDialog.dismiss();
-            this.handler.removeCallbacksAndMessages(null);
         }
     }
 

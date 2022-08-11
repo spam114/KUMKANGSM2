@@ -187,6 +187,7 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
 
                     Intent i = new Intent(context, LocationProgressActivity2.class);
                     i.putExtra("customerLocation", customerName + "-" + locationName);
+                    i.putExtra("contractNo", contractNo);
                     i.putExtra("locationNo", locationNo);
                     //i.putExtra("contractNo", contractNo);
                     context.startActivity(i);

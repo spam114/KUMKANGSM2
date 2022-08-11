@@ -81,6 +81,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
     TextView tvStartTime;
     TextView tvEndTime;
     TextView textView2;
+    TextView txtCar;
     EditText edtBundleQty;
     EditText edtFloor;
     EditText edtCarNo;
@@ -115,6 +116,9 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
     String seqNo;
     String supervisorCode;//해당작지를 등록한 사람의 supervisorCode
 
+    int returnTransFlag = -1;
+    int returnTransFlag2 = -1;
+
     private void startProgress() {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -137,7 +141,6 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_in_certificate_detail);
         setFilePath();
-
 
         this.certificateNo = getIntent().getStringExtra("certificateNo");
         this.customerLocationName = getIntent().getStringExtra("customerLocationName");
@@ -173,7 +176,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
         imageView6 = findViewById(R.id.imageView6);
         imageView6.setTag("");
         textView2 = findViewById(R.id.textView2);
-
+        txtCar = findViewById(R.id.txtCar);
 
         if (!this.supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장이 아니라면 수정불가
             this.tvStartTime.setEnabled(false);
@@ -227,6 +230,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
             textViewManageNo3.setVisibility(View.GONE);
             textViewManageNo4.setVisibility(View.GONE);
             textViewManageNo5.setVisibility(View.GONE);
+            GetReturnTransData();
         } else {
             getStockInCertificateDetail();
             this.btnNext.setText("저장하기");
@@ -429,6 +433,79 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
     }
 
+    private void GetReturnTransData() {
+        String url = getString(R.string.service_address) + "getReturnTransData";
+        ContentValues values = new ContentValues();
+        values.put("LocationNo", locationNo);
+        GetReturnTransData gsod = new GetReturnTransData(url, values);
+        gsod.execute();
+    }
+
+
+    public class GetReturnTransData extends AsyncTask<Void, Void, String> {
+        String url;
+        ContentValues values;
+
+        GetReturnTransData(String url, ContentValues values) {
+            this.url = url;
+            this.values = values;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            startProgress();
+            //Log.i("순서확인", "미납/재고시작");
+            //progress bar를 보여주는 등등의 행위
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String result;
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            result = requestHttpURLConnection.request(url, values);
+            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // 통신이 완료되면 호출됩니다.
+            // 결과에 따른 UI 수정 등은 여기서 합니다
+            try {
+                JSONObject child = new JSONObject(result);
+                String ErrorCheck;
+                if (!child.getString("ErrorCheck").equals("null")) {//문제가 있을 시, 에러 메시지 호출 후 종료
+                    ErrorCheck = child.getString("ErrorCheck");
+                    Toast.makeText(ActivityStockInCertificateDetail.this, ErrorCheck, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                returnTransFlag = Integer.parseInt(child.getString("ReturnTransFlag"));
+                returnTransFlag2 = Integer.parseInt(child.getString("ReturnTransFlag2"));
+
+                String returnTransFlagName;
+                String returnTransFlagName2;
+
+                if (returnTransFlag == 1)
+                    returnTransFlagName = "거래처";
+                else
+                    returnTransFlagName = "당사";
+                if (returnTransFlag2 == 1)
+                    returnTransFlagName2 = "거래처";
+                else
+                    returnTransFlagName2 = "당사";
+
+                txtCar.setText("반출차량: " + returnTransFlagName + " / 지게차: " + returnTransFlagName2);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                progressOFF2(this.getClass().getName());
+            }
+        }
+    }
+
+
     private void setFilePath() {
         try {
             String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -495,7 +572,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
     private void StartCamera() {
         try {
-            Uri photoUri = FileProvider.getUriForFile(getBaseContext(), BuildConfig.APPLICATION_ID + ".provider", filePath);
+            Uri photoUri = FileProvider.getUriForFile(getBaseContext(), getApplication().getPackageName() + ".provider", filePath);
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(filePath));
@@ -945,6 +1022,8 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                     stockInCertificate.CarNo = child.getString("CarNo");
                     stockInCertificate.Destination = child.getString("Destination");
                     stockInCertificate.cust_code = child.getString("cust_code");
+                    returnTransFlag = Integer.parseInt(child.getString("ReturnTransFlag"));
+                    returnTransFlag2 = Integer.parseInt(child.getString("ReturnTransFlag2"));
 
                     locationNo = stockInCertificate.LocationNo;
                     seqNo = stockInCertificate.SeqNo;
@@ -989,23 +1068,33 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 textViewManageNo5.setVisibility(View.VISIBLE);
                 certificateNo = stockInCertificate.LocationNo + "-" + stockInCertificate.SeqNo;
 
+                String returnTransFlagName;
+                String returnTransFlagName2;
+
+                if (returnTransFlag == 1)
+                    returnTransFlagName = "거래처";
+                else
+                    returnTransFlagName = "당사";
+                if (returnTransFlag2 == 1)
+                    returnTransFlagName2 = "거래처";
+                else
+                    returnTransFlagName2 = "당사";
+
+                txtCar.setText("반출차량: " + returnTransFlagName + " / 지게차: " + returnTransFlagName2);
+
                 if (!stockInCertificate.BundleQty.equals("null") && !stockInCertificate.BundleQty.equals("")) {
                     edtBundleQty.setText(stockInCertificate.BundleQty);
-
                 }
 
                 if (!stockInCertificate.Floor.equals("null") && !stockInCertificate.Floor.equals("")) {
                     edtFloor.setText(stockInCertificate.Floor);
-
                 }
 
                 if (!stockInCertificate.CarNo.equals("null") && !stockInCertificate.CarNo.equals("")) {
                     edtCarNo.setText(stockInCertificate.CarNo);
-
                 }
 
                 if (!stockInCertificate.Destination.equals("null") && !stockInCertificate.Destination.equals("")) {
-
                     if (stockInCertificate.Destination.equals("1")) {
                         spinnerDestination.setSelection(0);
                     } else if (stockInCertificate.Destination.equals("2")) {

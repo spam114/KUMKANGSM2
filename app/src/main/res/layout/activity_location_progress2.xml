@@ -2,6 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -12,7 +13,7 @@
         android:id="@+id/layoutTop"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="center_vertical"
         android:orientation="vertical"
         android:visibility="visible"
@@ -23,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:text="거래처/현장"
                         android:textColor="#000000"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -71,6 +72,71 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/layoutForms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtForms"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:text="형틀: "
+                            android:textColor="#000000"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/txtCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="코드: "
+                            android:textColor="#000000"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical|end"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txtDelivery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="납품여부"
+                            android:textColor="#000000" />
+
+                        <TextView
+                            android:id="@+id/txtDelivery2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=": 부속철물, 하부지지, BEAM, 우드판넬"
+                            android:textColor="#304FFE" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -78,7 +144,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"
+        android:layout_weight="8"
         android:orientation="vertical"
         android:weightSum="10">
 
@@ -185,7 +251,7 @@
                     android:paddingStart="7dp"
                     android:text="알폼"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/al_outWeight_g"
@@ -194,7 +260,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/al_inWeight"
@@ -203,7 +269,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/al_over"
@@ -211,8 +277,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textColor="#FF0000"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/al_rate"
@@ -221,7 +287,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/GaugeDate"
@@ -230,7 +296,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -251,7 +317,7 @@
                     android:paddingStart="7dp"
                     android:text="스틸"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/st_outWeight"
@@ -260,7 +326,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/st_inWeight"
@@ -269,16 +335,16 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/txttemp"
+                    android:id="@+id/st_over"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textColor="#FF0000"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/st_rate"
@@ -287,7 +353,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/GaugeDate2"
@@ -296,7 +362,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -317,7 +383,7 @@
                     android:paddingStart="7dp"
                     android:text="부속철물"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/ot_outWeight"
@@ -326,7 +392,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/ot_inWeight"
@@ -335,16 +401,16 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/tttem"
+                    android:id="@+id/ot_over"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textColor="#FF0000"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/ot_rate"
@@ -353,7 +419,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/GaugeDate4"
@@ -362,7 +428,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -383,7 +449,7 @@
                     android:paddingStart="7dp"
                     android:text="AL서포트"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/sp_outQty"
@@ -404,13 +470,13 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/txttemp3"
+                    android:id="@+id/sp_over"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textColor="#FF0000"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/sp_qrate"
@@ -419,7 +485,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/GaugeDate6"
@@ -428,7 +494,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -449,7 +515,7 @@
                     android:paddingStart="7dp"
                     android:text="KD서포트"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/kdsp_outQty"
@@ -470,13 +536,13 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/txtterve"
+                    android:id="@+id/kdsp_over"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textColor="#FF0000"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/kdsp_qrate"
@@ -485,7 +551,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/GaugeDate8"
@@ -494,7 +560,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 
@@ -515,7 +581,7 @@
                     android:paddingStart="7dp"
                     android:text="KS-BEAM"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/kb_outQty"
@@ -536,13 +602,13 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/textevc"
+                    android:id="@+id/kb_over"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
-                    android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textColor="#FF0000"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/kb_qrate"
@@ -551,7 +617,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/GaugeDate7"
@@ -560,7 +626,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
 

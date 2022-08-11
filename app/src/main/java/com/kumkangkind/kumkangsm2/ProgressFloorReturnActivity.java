@@ -49,7 +49,6 @@ public class ProgressFloorReturnActivity extends BaseActivity {
     String customerLocation = "";
     public HashMap<String, Dong> dongHashMap;
     TreeMap<String, Dong> dongTreeMap;
-    ProgressFloorReturnViewAdapter adapter;
     ArrayList<Dong> dongArrayList;
     TextView txtFromDate;
     public int tyear;

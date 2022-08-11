@@ -20,8 +20,8 @@ public class StockInCertificate implements Serializable {
     public String cust_code="";
     public String InsertUser="";
     public String ActualWeight="";
-
-
+    public String ReturnTransFlag="";
+    public String ReturnTransFlag2="";
 
     public StockInCertificate() {
         super();
