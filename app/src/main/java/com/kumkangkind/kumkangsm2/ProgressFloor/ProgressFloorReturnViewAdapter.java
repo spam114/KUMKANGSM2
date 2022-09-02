@@ -231,10 +231,10 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                                 int totalFloor= Integer.parseInt(item.TotalFloor);
                                 int cFloor = Integer.parseInt(v.getText().toString());
 
-                                if(totalFloor<cFloor){
+                                /*if(totalFloor<cFloor){
                                     Toast.makeText(context, "총층수 보다 높은 층수는 입력할 수 없습니다.", Toast.LENGTH_SHORT).show();
                                     return false;
-                                }
+                                }*/
 
                             }
 
