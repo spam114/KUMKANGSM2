@@ -23,7 +23,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -102,15 +101,15 @@ public class ActivityMenuTest3 extends BaseActivity {
 
     //여기리스트들은 어플 최초 메인 버튼 셋팅을 의미한다.
     ArrayList<String> eumSungTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "나의 작업보기", "일보확인", "진행기준정보 관리", "진행층수 등록",
-            "경비등록", "현장 불만사례", "현장 지원요청", "알림 메시지", "생산내역 조회", "진행층수 등록(회수)","반출입 현황", "반출송장 등록",""));
-    ArrayList<String> eumSungSale = new ArrayList<>(Arrays.asList( "알림 메시지", "생산내역 조회","반출입 현황", ""));
+            "경비등록", "현장 불만사례", "현장 지원요청", "알림 메시지", "생산내역 조회", "진행층수 등록(회수)", "반출입 현황", "반출송장 등록", ""));
+    ArrayList<String> eumSungSale = new ArrayList<>(Arrays.asList("알림 메시지", "생산내역 조회", "반출입 현황", ""));
     ArrayList<String> eumSungSuper = new ArrayList<>(Arrays.asList("담당자 배정", "나의 작업보기", "진행기준정보 관리", "진행층수 등록", "경비등록", "현장 불만사례",
             "현장 지원요청", "생산내역 조회", ""));
-    ArrayList<String> ChangTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", "진행층수 등록(회수)","반출입 현황", ""));
+    ArrayList<String> ChangTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", "진행층수 등록(회수)", "반출입 현황", ""));
     ArrayList<String> ChangSale = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", ""));
     ArrayList<String> ChangSuper = new ArrayList<>(Arrays.asList("작업요청내역 조회", "경비등록", "알림 메시지", ""));
 
-    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("진행층수 등록(회수)", "알림 메시지","반출입 현황", "반출송장 등록"));
+    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("진행층수 등록(회수)", "알림 메시지", "반출입 현황", "반출송장 등록", ""));
     ArrayList<String> myDefaultButtonList = new ArrayList<>();
 
     int fromYear = 0;
@@ -195,8 +194,7 @@ public class ActivityMenuTest3 extends BaseActivity {
             txtAuthorityName.setText("팀장");
         } else if (Users.LeaderType.equals("2")) {
             txtAuthorityName.setText("영업");
-        }
-        else{
+        } else {
             txtAuthorityName.setText("회수");
         }
 
@@ -241,14 +239,11 @@ public class ActivityMenuTest3 extends BaseActivity {
                     GoProduct();
                 } else if (item.getTitle().equals(getString(R.string.location_progress))) {
                     GoLocationProgress();
-                }
-                else if (item.getTitle().equals(getString(R.string.support))) {
+                } else if (item.getTitle().equals(getString(R.string.support))) {
                     GoSupport();
-                }
-                else if (item.getTitle().equals(getString(R.string.stock_in_certificate))) {
+                } else if (item.getTitle().equals(getString(R.string.stock_in_certificate))) {
                     GoStockInCertificate();
-                }
-                else if (item.getTitle().equals(getString(R.string.edit_menu))) {
+                } else if (item.getTitle().equals(getString(R.string.edit_menu))) {
                     ArrayList<String> btnList = new ArrayList<>();
                     CardView btn3 = findViewById(R.id.btn3);
                     ImageView imv3 = findViewById(R.id.imv3);
@@ -374,7 +369,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         }
 
         certificateNo = getIntent().getStringExtra("certificateNo");
-        if(!certificateNo.equals("")){
+        if (!certificateNo.equals("")) {
 
             getLocationInfoByCertificateNo();
         }
@@ -388,7 +383,6 @@ public class ActivityMenuTest3 extends BaseActivity {
         GetLocationInfoByCertificateNo gsod = new GetLocationInfoByCertificateNo(url, values);
         gsod.execute();
     }
-
 
 
     public class GetLocationInfoByCertificateNo extends AsyncTask<Void, Void, String> {
@@ -424,10 +418,10 @@ public class ActivityMenuTest3 extends BaseActivity {
                 JSONArray jsonArray = new JSONArray(result);
                 String ErrorCheck = "";
                 //stockArrayList = new ArrayList<>();
-                String certificateNo="";
-                String customerLocationName="";
-                String locationNo="";
-                String supervisorCode="";
+                String certificateNo = "";
+                String customerLocationName = "";
+                String locationNo = "";
+                String supervisorCode = "";
 
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject child = jsonArray.getJSONObject(i);
@@ -457,10 +451,6 @@ public class ActivityMenuTest3 extends BaseActivity {
             }
         }
     }
-
-
-
-
 
 
     private void getNoticeData() {
@@ -569,8 +559,8 @@ public class ActivityMenuTest3 extends BaseActivity {
                     image = new WoImage();
                     image.ImageFile = child.getString("Imagefile");
                 }
-                if(jsonArray.length()==0){
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(120,120);
+                if (jsonArray.length() == 0) {
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(120, 120);
                     userImage.setLayoutParams(layoutParams);
                     userImage.setImageDrawable(getBaseContext().getResources().getDrawable(R.drawable.kumkangcircle));
                 }
@@ -584,7 +574,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                     ex.printStackTrace();
                 }
             } catch (Exception e) {
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(120,120);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(120, 120);
                 userImage.setLayoutParams(layoutParams);
                 userImage.setImageDrawable(getBaseContext().getResources().getDrawable(R.drawable.kumkangcircle));
                 e.printStackTrace();
@@ -633,7 +623,6 @@ public class ActivityMenuTest3 extends BaseActivity {
     }
 
     //POST
-
 
 
     @Override
@@ -921,13 +910,6 @@ public class ActivityMenuTest3 extends BaseActivity {
 
         //FButton fbtn =findViewById(R.id.btn3);
 
-        if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("0")) {//창녕 슈퍼바이저는 아래 버튼 두개 hidden
-
-            btn5.setVisibility(View.INVISIBLE);
-            btn6.setVisibility(View.INVISIBLE);
-            btn7.setVisibility(View.INVISIBLE);
-        }
-
         if (strButton3 == "")
             btn3.setVisibility(View.INVISIBLE);
         else
@@ -952,10 +934,6 @@ public class ActivityMenuTest3 extends BaseActivity {
             btn7.setVisibility(View.INVISIBLE);
         else
             btn7.setVisibility(View.VISIBLE);
-
-        if(Users.LeaderType.equals("3")){
-            btn7.setVisibility(View.INVISIBLE);
-        }
 
         txt3.setText(strButton3);
         btn3.setTag(strButton3);
@@ -1183,11 +1161,6 @@ public class ActivityMenuTest3 extends BaseActivity {
         else
             btn7.setVisibility(View.VISIBLE);
 
-
-        if(Users.LeaderType.equals("3")){
-            btn7.setVisibility(View.INVISIBLE);
-        }
-
         initPref = getSharedPreferences("InitButton", MODE_PRIVATE);
         isInitButton = initPref.getBoolean("isInit", false);
 
@@ -1264,8 +1237,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 txt7.setText("");
                 btn7.setTag("");
                 btn7.setVisibility(View.INVISIBLE);
-            }
-            else if(Users.BusinessClassCode == 9 && Users.LeaderType.equals("3")){
+            } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("3")) {
                 txt3.setText(getString(R.string.progress_floor_return));
                 btn3.setTag(getString(R.string.progress_floor_return));
                 btn3.setVisibility(View.VISIBLE);
@@ -1287,9 +1259,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 txt7.setText("");
                 btn7.setTag("");
                 btn7.setVisibility(View.INVISIBLE);
-            }
-
-            else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("0")) {//창녕 슈퍼바이저일때,1.작업요청내역 조회 2. 경비등록
+            } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("0")) {//창녕 슈퍼바이저일때,1.작업요청내역 조회 2. 경비등록
 
                 txt3.setText("작업요청내역 조회");
                 btn3.setTag("작업요청내역 조회");
@@ -1311,9 +1281,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn7.setTag("");
                 btn7.setVisibility(View.INVISIBLE);
 
-            }
-
-            else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("1")) {//창녕 팀장일때,1.담당자배정 현황 2.담당자배정 3.일보확인 4.작업요청 관리
+            } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("1")) {//창녕 팀장일때,1.담당자배정 현황 2.담당자배정 3.일보확인 4.작업요청 관리
 
                 txt3.setText("담당자 배정현황");
                 btn3.setTag("담당자 배정현황");
@@ -1334,9 +1302,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 txt7.setText("작업요청내역 조회");
                 btn7.setTag("작업요청내역 조회");
                 btn7.setVisibility(View.VISIBLE);
-            }
-
-           else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("2")) {//창녕 영업담당자 일때,1.일보확인 2.작업요청 관리 3.작업요청내역 조회 4.경비등록
+            } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("2")) {//창녕 영업담당자 일때,1.일보확인 2.작업요청 관리 3.작업요청내역 조회 4.경비등록
 
                 txt3.setText("일보확인");
                 btn3.setTag("일보확인");
@@ -1357,9 +1323,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 txt7.setText("알림 메시지");
                 btn7.setTag("알림 메시지");
                 btn7.setVisibility(View.VISIBLE);
-            }
-
-            else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("3")) {
+            } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("3")) {
                 txt3.setText(getString(R.string.progress_floor_return));
                 btn3.setTag(getString(R.string.progress_floor_return));
                 btn3.setVisibility(View.VISIBLE);
@@ -1394,26 +1358,21 @@ public class ActivityMenuTest3 extends BaseActivity {
             Drawable img5 = FindImage(btn5.getTag().toString());
             imv5.setImageDrawable(img5);
             //btn5.setCompoundDrawablesWithIntrinsicBounds(img5, null, null, null);
+            Drawable img6 = FindImage(btn6.getTag().toString());
+            imv6.setImageDrawable(img6);
+            //btn6.setCompoundDrawablesWithIntrinsicBounds(img6, null, null, null);
 
-            if (!(Users.BusinessClassCode == 11 && Users.LeaderType.equals("0"))) {
-                Drawable img6 = FindImage(btn6.getTag().toString());
-                imv6.setImageDrawable(img6);
-                //btn6.setCompoundDrawablesWithIntrinsicBounds(img6, null, null, null);
+            Drawable img7 = FindImage(btn7.getTag().toString());
+            imv7.setImageDrawable(img7);
+            //btn7.setCompoundDrawablesWithIntrinsicBounds(img7, null, null, null);
 
-                Drawable img7 = FindImage(btn7.getTag().toString());
-                imv7.setImageDrawable(img7);
-                //btn7.setCompoundDrawablesWithIntrinsicBounds(img7, null, null, null);
-            }
 
             customEditor.putString("Button3", btn3.getTag().toString());
             customEditor.putString("Button4", btn4.getTag().toString());
             customEditor.putString("Button5", btn5.getTag().toString());
+            customEditor.putString("Button6", btn6.getTag().toString());
+            customEditor.putString("Button7", btn7.getTag().toString());
 
-
-            if (!(Users.BusinessClassCode == 11 && Users.LeaderType.equals("0"))) {
-                customEditor.putString("Button6", btn6.getTag().toString());
-                customEditor.putString("Button7", btn7.getTag().toString());
-            }
 
             customEditor.commit();
 
@@ -1450,39 +1409,6 @@ public class ActivityMenuTest3 extends BaseActivity {
             btn7.setTag(strButton7);
             Drawable img7 = FindImage(btn7.getTag().toString());
             imv7.setImageDrawable(img7);
-
-            if(Users.LeaderType.equals("3")){//회수담당
-                //회수는 일단 강제 메뉴 3개 셋팅
-                //1. 진행층수 등록(회수)
-                //2. 반출입 현황
-                //3. 알림 메시지
-                txt3.setText(getString(R.string.progress_floor_return));
-                btn3.setTag(getString(R.string.progress_floor_return));
-                Drawable _img3 = FindImage(getString(R.string.progress_floor_return));
-                imv3.setImageDrawable(_img3);
-                //btn3.setCompoundDrawablesWithIntrinsicBounds(img3, null, null, null);
-
-                txt4.setText(getString(R.string.location_progress));
-                btn4.setTag(getString(R.string.location_progress));
-                Drawable _img4 = FindImage(getString(R.string.location_progress));
-                imv4.setImageDrawable(_img4);
-                //btn4.setCompoundDrawablesWithIntrinsicBounds(img4, null, null, null);
-
-                txt5.setText(getString(R.string.stock_in_certificate));
-                btn5.setTag(getString(R.string.stock_in_certificate));
-                Drawable _img5 = FindImage(getString(R.string.stock_in_certificate));
-                imv5.setImageDrawable(_img5);
-
-                txt6.setText(getString(R.string.message));
-                btn6.setTag(getString(R.string.message));
-                Drawable _img6 = FindImage(getString(R.string.message));
-                imv6.setImageDrawable(_img6);
-
-                txt7.setText(getString(R.string.message));
-                btn7.setTag(getString(R.string.message));
-                Drawable _img7 = FindImage(getString(R.string.message));
-                imv7.setImageDrawable(_img7);
-            }
             //btn7.setCompoundDrawablesWithIntrinsicBounds(img7, null, null, null);
         }
 
@@ -1515,19 +1441,19 @@ public class ActivityMenuTest3 extends BaseActivity {
 
     private void SetFloatingButton() {
         setMenuItem();
-        if(Users.LeaderType.equals("3")){//회수담당
+        if (Users.LeaderType.equals("3")) {//회수담당
             //4.나의 작업보기
             //14.알림 메시지
             //15.진행층수 등록(회수)
             //16.반출입 현황
             //17.반출송장 등록
             //item4.setVisible(true);
+            item1.setVisible(true);
             item14.setVisible(true);
             item15.setVisible(true);
             item16.setVisible(true);
             item17.setVisible(true);
-        }
-        else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("1")) { //창녕 팀장권한, 메뉴갯수 8개
+        } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("1")) { //창녕 팀장권한, 메뉴갯수 8개
             //1.메뉴 편집
             //2.작업요청 관리
             //3.작업요청내역 조회
@@ -1647,7 +1573,7 @@ public class ActivityMenuTest3 extends BaseActivity {
      * */
     private boolean CheckCustomButton(String strButton3, String strButton4, String strButton5, String strButton6, String strButton7) {
 
-        if(Users.LeaderType.equals("3")){//회수담당
+        if (Users.LeaderType.equals("3")) {//회수담당
             myDefaultButtonList = returnUser;
             for (String str : returnUser) {
                 if (!returnUser.contains(strButton3)) {//포함하지않는다. -> Problem
@@ -1667,9 +1593,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 }
             }
             return true;
-        }
-
-        else if (Users.BusinessClassCode == 9) {//음성
+        } else if (Users.BusinessClassCode == 9) {//음성
             switch (Users.LeaderType) {
                 case "0"://슈퍼바이저
                     myDefaultButtonList = eumSungSuper;
@@ -1874,12 +1798,11 @@ public class ActivityMenuTest3 extends BaseActivity {
             return getBaseContext().getResources().getDrawable(R.drawable.round_precision_manufacturing_white_48);
         } else if (str.equals(getString(R.string.message))) {//알림 메시지
             return getBaseContext().getResources().getDrawable(R.drawable.round_sms_white_48);
-        }
-        else if (str.equals(getString(R.string.location_progress))) {//반출입 현황
-            return getBaseContext().getResources().getDrawable(R.drawable.round_published_with_changes_white_48);}
-        else if (str.equals(getString(R.string.stock_in_certificate))) {
-            return getBaseContext().getResources().getDrawable(R.drawable.receipt_48px);}
-        else {
+        } else if (str.equals(getString(R.string.location_progress))) {//반출입 현황
+            return getBaseContext().getResources().getDrawable(R.drawable.round_published_with_changes_white_48);
+        } else if (str.equals(getString(R.string.stock_in_certificate))) {
+            return getBaseContext().getResources().getDrawable(R.drawable.receipt_48px);
+        } else {
             return getBaseContext().getResources().getDrawable(R.drawable.round_check_circle_outline_white_48);
         }
     }
