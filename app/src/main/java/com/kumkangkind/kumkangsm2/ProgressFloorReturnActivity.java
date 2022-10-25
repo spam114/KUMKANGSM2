@@ -208,6 +208,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
                         dong.InPlanData = child.getString("InPlanData");
                         dong.TotalFloor = child.getString("TotalFloor");
                         dong.BaseFloor = child.getString("BaseFloor");
+                        dong.EndFlag = child.getString("EndFlag"); // 진행층 종료 여부 기록
                         dongHashMap.put(key, dong);
                     } else {//있으면: 전 달 데이터 setting
                         dong = dongHashMap.get(key);

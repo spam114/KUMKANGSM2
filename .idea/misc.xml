@@ -66,6 +66,32 @@
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/spinner_item.xml" value="0.22644927536231885" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/stock_in_certificate_row.xml" value="0.5" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/menu/navigation_view.xml" value="0.25" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/background_rounding.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/background_tablecell.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/background_tablecell2.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/background_tableheader.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/baseline_highlight_alt_24.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/basicbutton.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/basicbutton_click.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/bg_spinner.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/border.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/border2.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/border3.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/border4.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/border5.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/border6.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/borderline.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/drawable/borderline3.xml" value="0.209" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/layout/activity_location_progress.xml" value="0.3776041666666667" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/layout/activity_main.xml" value="0.3776041666666667" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/layout/activity_main4.xml" value="0.25769927536231885" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/layout/activity_main5.xml" value="0.3776041666666667" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/layout/activity_sale_main.xml" value="0.25769927536231885" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/layout/activity_splash.xml" value="0.3776041666666667" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/layout/progress_floor_listview.xml" value="0.2015625" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/layout/progress_floor_return_listview.xml" value="0.2015625" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/layout/progress_floor_return_row.xml" value="0.2015625" />
+        <entry key="..\:/Users/ycum/Desktop/KUMKANGSM2/app/src/main/res/layout/progress_floor_row.xml" value="0.2015625" />
       </map>
     </option>
   </component>
@@ -114,7 +140,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

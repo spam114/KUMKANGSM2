@@ -17,6 +17,7 @@ public class Dong implements Serializable {
     public String InPlanData="";//반출예정일
     public String TotalFloor="";//총층수
     public String BaseFloor="";//시작층
+    public String EndFlag = "";//진행층 종료 여부(종료: Y, 종료x: N)
     public Dong() {
         super();
 

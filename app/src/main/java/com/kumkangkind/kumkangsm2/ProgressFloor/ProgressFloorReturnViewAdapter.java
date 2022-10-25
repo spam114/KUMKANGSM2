@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
@@ -153,6 +154,19 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                 textViewYearMonth.setBackgroundResource(R.drawable.outline_more_horiz_24);
             }
 
+            if(item.EndFlag.equals("Y")) { // 진행이 종료된 층은 배경색 설정
+                row.setBackgroundResource(R.drawable.borderline3);
+//                edtProgressFloor.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
+//                edtProgressFloor.setText("종료");
+                edtProgressFloor.setInputType(InputType.TYPE_CLASS_NUMBER);
+                edtProgressFloor.setText(item.ProgressFloor);
+            }
+            else {
+                row.setBackgroundResource(R.drawable.borderline);
+                edtProgressFloor.setInputType(InputType.TYPE_CLASS_NUMBER);
+                edtProgressFloor.setText(item.ProgressFloor);
+            }
+
             tvYearMonthLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -225,7 +239,8 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                     if (actionId == EditorInfo.IME_ACTION_DONE) { // IME_ACTION_SEARCH , IME_ACTION_GO
                         //edtProgressFloor.clearFocus();
                         //저장
-                        if (!v.getText().toString().equals("")) {
+
+                        if (!v.getText().toString().equals("0") && !v.getText().toString().equals("")) {
                             //총층수보다 높게 입력 불가능
                             if(!item.TotalFloor.equals("")){
                                 int totalFloor= Integer.parseInt(item.TotalFloor);
@@ -238,11 +253,33 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
 
                             }
 
-
                             setDongProgressFloorReturn(item.Dong, v, item, v.getText().toString());
-                        } else {
-                            Toast.makeText(context, "진행층을 입력하시기 바랍니다.", Toast.LENGTH_SHORT).show();
+                        } 
+                        
+                        // 0 or 빈칸 입력 시 진행 층 삭제
+                        else if(v.getText().toString().equals("0") || v.getText().toString().trim().equals("")) {
+                            new MaterialAlertDialogBuilder(context)
+                                    .setTitle("진행층 삭제")
+                                    .setMessage("동: " + item.Dong + "\n" +
+                                            "진행일: " + item.ProgressDate + "\n" + "진행층을 삭제하시겠습니까?")
+                                    .setCancelable(true)
+                                    .setPositiveButton
+                                            ("확인", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    deleteDongProgressFloorReturn(item.Dong, item); // 진행층 삭제
+                                                }
+                                            }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            }).show();
                         }
+                        
+                        else {
+                            Toast.makeText(context, "진행층을 입력하시기 바랍니다.", Toast.LENGTH_SHORT).show();    
+                        }                            
                     }
                     return false;
                 }
@@ -255,29 +292,57 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                    /* if(!item.UserCode.equals(Users.UserID)){
                         return false;
                     }*/
-
-                    if (edtProgressFloor.getText().toString().equals("")) {
-                        return false;
-                    }
+                    
+                    // 진행층 종료시 필요 없는 코드 -> 진행층 삭제 시 필요
+//                    if (edtProgressFloor.getText().toString().equals("")) {
+//                        return false;
+//                    }
 
                     view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
-                    new MaterialAlertDialogBuilder(context)
-                            .setTitle("진행층 삭제")
-                            .setMessage("동: " + item.Dong + "\n" +
-                                    "진행일: " + item.ProgressDate + "\n" + "진행층을 삭제하시겠습니까?")
-                            .setCancelable(true)
-                            .setPositiveButton
-                                    ("확인", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            deleteDongProgressFloorReturn(item.Dong, item);
-                                        }
-                                    }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    }).show();
+                    if(item.EndFlag.equals("N")) { // 진행중인 층이라면
+                        new MaterialAlertDialogBuilder(context)
+//                            .setTitle("진행층 삭제")
+//                            .setMessage("동: " + item.Dong + "\n" +
+//                                    "진행일: " + item.ProgressDate + "\n" + "진행층을 삭제하시겠습니까?")
+                                .setTitle("동 진행 종료")
+                                .setMessage("동: " + item.Dong + "\n" + "해당 동의 진행을 종료하시겠습니까?")
+                                .setCancelable(true)
+                                .setPositiveButton
+                                        ("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                //deleteDongProgressFloorReturn(item.Dong, item); // 진행층 삭제
+                                                finishDongProgressFloorReturn(item.Dong, item); // 진행층 종료 (2022-10-24 엄영철 수정)
+                                                item.EndFlag = "Y";
+                                            }
+                                        }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
+                    }
+                    
+                    else { // 종료된 층이라면
+                        new MaterialAlertDialogBuilder(context)
+                                .setTitle("동 진행 변경")
+                                .setMessage("동: " + item.Dong + "\n" + "진행중인 동으로 변경하시겠습니까?")
+                                .setCancelable(true)
+                                .setPositiveButton
+                                        ("확인", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                startDongProgressFloorReturn(item.Dong, item); // 진행중인 층으로 변경 (2022-10-24 엄영철 수정)
+                                                item.EndFlag = "N";
+                                            }
+                                        }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
+                    }                    
                     return false;
                 }
             });
@@ -587,6 +652,151 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
             }
         }
     }
+
+    public void finishDongProgressFloorReturn(String dong, Dong item) {
+        String url = context.getString(R.string.service_address) + "finishDongProgressFloorReturn";
+        ContentValues values = new ContentValues();
+        values.put("ContractNo", contractNo);
+        values.put("Dong", dong);
+        FinishDongProgressFloorReturn gsod = new FinishDongProgressFloorReturn(url, values, item);
+        gsod.execute();
+    }
+
+    public class FinishDongProgressFloorReturn extends AsyncTask<Void, Void, String> {
+        String url;
+        ContentValues values;
+        Dong item;
+
+        FinishDongProgressFloorReturn(String url, ContentValues values, Dong item) {
+            this.url = url;
+            this.values = values;
+            this.item = item;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            startProgress();
+            //Log.i("순서확인", "미납/재고시작");
+            //progress bar를 보여주는 등등의 행위
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String result;
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            result = requestHttpURLConnection.request(url, values);
+            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // 통신이 완료되면 호출됩니다.
+            // 결과에 따른 UI 수정 등은 여기서 합니다
+            try {
+
+                JSONArray jsonArray = new JSONArray(result);
+                String ErrorCheck = "";
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject child = jsonArray.getJSONObject(i);
+                    if (!child.getString("ErrorCheck").equals("null")) {//문제가 있을 시, 에러 메시지 호출 후 종료
+                        ErrorCheck = child.getString("ErrorCheck");
+                        Toast.makeText(context, ErrorCheck, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                layoutTop.requestFocus();
+                //item.ProgressFloor = "";
+                //item.ProgressDate = "";
+                notifyDataSetChanged(); // recyclerView를 다시 업데이트한다. : List를 다시 뿌려주는 메소드(리스트 새로고침 메소드) -> 보통 Adapter에 추가(수정) 또는 삭제하고 해당 메소드를 호출하면 ListView가 새로고침된다.(ListView의 Viewer 생성자를 다시 조회 하는듯..)
+                HideKeyBoard(context);
+                Toast.makeText(context, "종료 되었습니다.", Toast.LENGTH_SHORT).show();
+
+                // 해당 Row 배경색 변경(진행 종료 시 다른 색상 표현)
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            } finally {
+                progressOFF2(this.getClass().getName());
+            }
+        }
+    }
+
+    public void startDongProgressFloorReturn(String dong, Dong item) {
+        String url = context.getString(R.string.service_address) + "startDongProgressFloorReturn";
+        ContentValues values = new ContentValues();
+        values.put("ContractNo", contractNo);
+        values.put("Dong", dong);
+        StartDongProgressFloorReturn gsod = new StartDongProgressFloorReturn(url, values, item);
+        gsod.execute();
+    }
+
+    public class StartDongProgressFloorReturn extends AsyncTask<Void, Void, String> {
+        String url;
+        ContentValues values;
+        Dong item;
+
+        StartDongProgressFloorReturn(String url, ContentValues values, Dong item) {
+            this.url = url;
+            this.values = values;
+            this.item = item;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            startProgress();
+            //Log.i("순서확인", "미납/재고시작");
+            //progress bar를 보여주는 등등의 행위
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String result;
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            result = requestHttpURLConnection.request(url, values);
+            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // 통신이 완료되면 호출됩니다.
+            // 결과에 따른 UI 수정 등은 여기서 합니다
+            try {
+
+                JSONArray jsonArray = new JSONArray(result);
+                String ErrorCheck = "";
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject child = jsonArray.getJSONObject(i);
+                    if (!child.getString("ErrorCheck").equals("null")) {//문제가 있을 시, 에러 메시지 호출 후 종료
+                        ErrorCheck = child.getString("ErrorCheck");
+                        Toast.makeText(context, ErrorCheck, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                layoutTop.requestFocus();
+                //item.ProgressFloor = "";
+                //item.ProgressDate = "";
+                notifyDataSetChanged(); // recyclerView를 다시 업데이트한다. : List를 다시 뿌려주는 메소드(리스트 새로고침 메소드) -> 보통 Adapter에 추가(수정) 또는 삭제하고 해당 메소드를 호출하면 ListView가 새로고침된다.(ListView의 Viewer 생성자를 다시 조회 하는듯..)
+                HideKeyBoard(context);
+                Toast.makeText(context, "변경 되었습니다.", Toast.LENGTH_SHORT).show();
+
+                // 해당 Row 배경색 변경(진행 종료 시 다른 색상 표현)
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            } finally {
+                progressOFF2(this.getClass().getName());
+            }
+        }
+    }
+
 
     private void startProgress() {
         Handler handler = new Handler();
