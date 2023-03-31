@@ -40,6 +40,7 @@ public class ComplainDialog extends Dialog implements BaseActivityInterface{
     String locationNo="";
     String customer="";
     String location="";//locationName
+    String contractNo="";
 
     ComplainDialog.OnDialogResult mDialogResult;
     ComplainDialog.OnDialogResult mDialogResult2;
@@ -123,7 +124,7 @@ public class ComplainDialog extends Dialog implements BaseActivityInterface{
     }
 
 
-    public ComplainDialog(Context context, String locationNo, String customer, String location,int leftComplainDateArr[], int rightComplainDateArr[]) {
+    public ComplainDialog(Context context, String locationNo, String customer, String location,int leftComplainDateArr[], int rightComplainDateArr[], String contractNo) {
         super(context);
         this.context=context;
 
@@ -132,7 +133,7 @@ public class ComplainDialog extends Dialog implements BaseActivityInterface{
         this.location=location;
         this.leftComplainDateArr=leftComplainDateArr;
         this.rightComplainDateArr=rightComplainDateArr;
-
+        this.contractNo=contractNo;
     }
 
 
@@ -285,6 +286,7 @@ public class ComplainDialog extends Dialog implements BaseActivityInterface{
                 i.putExtra("location", location);
                 i.putExtra("type","현장별");
                 i.putExtra("statusFlag","작성");
+                i.putExtra("contractNo", contractNo);
 
                 context.startActivity(i);
 

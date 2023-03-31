@@ -294,6 +294,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         tv.setTextColor(Color.BLUE);
         tv.setPadding(10, 25, 0, 25);
         tr_title.addView(tv);
+        tr_title.setVisibility(View.GONE);
         t0.addView(tr_title, new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         tr_title = new TableRow(this);
@@ -496,6 +497,7 @@ public class ActivityDailyCost2 extends BaseActivity {
             tvNo.setOnClickListener(mOnclickListener);
             tvNo.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
             tr_Cost7.addView(tvNo);
+            tr_Cost7.setVisibility(View.GONE);
         }
         t1.addView(tr_Cost7, new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 

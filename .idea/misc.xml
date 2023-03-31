@@ -26,6 +26,7 @@
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/buttonshape.xml" value="0.1295" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/edittext.xml" value="0.1295" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/frame_loading.xml" value="0.1295" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/ic_baseline_handyman_24.xml" value="0.1895" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/ic_menu_share.xml" value="0.1" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.129" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/drawable/outline_more_horiz_24.xml" value="0.1275" />
@@ -44,18 +45,20 @@
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_sale_register.xml" value="0.3509963768115942" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_saleorder.xml" value="0.33" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_splash.xml" value="0.23645833333333333" />
-        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_stock_in_certificate.xml" value="0.33" />
-        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_stock_in_certificate_detail.xml" value="0.33" />
-        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_workedit2.xml" value="0.33" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_stock_in_certificate.xml" value="0.25" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_stock_in_certificate_detail.xml" value="0.25" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/activity_workedit2.xml" value="0.22" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_additem.xml" value="0.20260416666666667" />
-        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_asitem.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_asitem.xml" value="0.25" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_image.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_image2.xml" value="0.25" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_notice.xml" value="0.2520833333333333" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_photo.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/dialog_support.xml" value="0.3138586956521739" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/etet.xml" value="0.25" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/listview2.xml" value="0.22916666666666666" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/listview_additem_detail.xml" value="0.3509963768115942" />
+        <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/listview_asitem.xml" value="0.25" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/listview_image.xml" value="0.37864583333333335" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/listview_location_progress_row.xml" value="0.33" />
         <entry key="..\:/Users/JHLEE/Desktop/KumkangApp/KUMKANGSM2/app/src/main/res/layout/listview_location_progress_row2.xml" value="0.33" />
@@ -140,7 +143,7 @@
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

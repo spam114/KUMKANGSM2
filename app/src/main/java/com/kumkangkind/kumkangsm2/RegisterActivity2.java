@@ -845,6 +845,7 @@ public class RegisterActivity2 extends BaseActivity {
                 i.putExtra("location", suworder3.LocationName);
                 i.putExtra("type", type);
                 i.putExtra("statusFlag", statusFlag);
+                i.putExtra("contractNo", contractNo);
 
                 startActivity(i);
 
@@ -1022,7 +1023,7 @@ public class RegisterActivity2 extends BaseActivity {
 
             //Delete & Insert
             jsonObject.put("SupervisorWoNo", key);//작업일보번호
-
+            jsonObject.put("ContractNo", contractNo);//작업일보번호
             json = jsonObject.toString();
             // ** Alternative way to convert Person object to JSON string usin Jackson Lib
             // ObjectMapper mapper = new ObjectMapper();

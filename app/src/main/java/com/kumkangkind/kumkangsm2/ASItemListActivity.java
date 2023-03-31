@@ -1,6 +1,5 @@
 package com.kumkangkind.kumkangsm2;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
@@ -73,8 +72,8 @@ public class ASItemListActivity extends BaseActivity {
     String supervisorWoNo;
     String type;//수정용 확인을 위함
     String statusFlag;
-
     String asNoForCopy;//복사를 위해 insert시키고 생성된 ASNO
+    String contractNo;
 
     private void startProgress() {
         Handler handler = new Handler();
@@ -107,6 +106,7 @@ public class ASItemListActivity extends BaseActivity {
         location = getIntent().getStringExtra("location");
         asItemArrayList = (ArrayList<ASItem>) getIntent().getSerializableExtra("asItemArrayList");
         supervisorWoNo = getIntent().getStringExtra("supervisorWoNo");
+        contractNo = getIntent().getStringExtra("contractNo");
         tvCustomerLocation.setText(customer + " - " + location);
         btnAdd = findViewById(R.id.btnAdd);
         btnEdit = findViewById(R.id.btnEdit);
@@ -141,7 +141,7 @@ public class ASItemListActivity extends BaseActivity {
                 if (clickPosition == -1)
                     Toast.makeText(getBaseContext(), "복사할 항목을 선택하여 주세요.", Toast.LENGTH_SHORT).show();
                 else {
-                    new GetASItemStandard().execute(getString(R.string.service_address)+"getASItemStandard");//AS 기준정보를 가져온 후에, 복사 다이얼로그를 실행한다.
+                    new GetASItemStandard().execute(getString(R.string.service_address) + "getASItemStandard");//AS 기준정보를 가져온 후에, 복사 다이얼로그를 실행한다.
                 }
             }
         });
@@ -341,7 +341,7 @@ public class ASItemListActivity extends BaseActivity {
 
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    new DeleteASItem(asItem.SupervisorASNo, clickPosition).execute(getString(R.string.service_address)+"deleteASItem");
+                                    new DeleteASItem(asItem.SupervisorASNo, clickPosition).execute(getString(R.string.service_address) + "deleteASItem");
                                 }
                             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
@@ -384,7 +384,7 @@ public class ASItemListActivity extends BaseActivity {
 
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    new SetASItemByPost(asItem).execute(getString(R.string.service_address)+"setASItem");
+                                    new SetASItemByPost(asItem).execute(getString(R.string.service_address) + "setASItem");
                                 }
                             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
@@ -512,6 +512,7 @@ public class ASItemListActivity extends BaseActivity {
                 jsonObject.put("Remark", asItem.Remark);
                 jsonObject.put("Actions", asItem.Actions);
                 jsonObject.put("ActionEmployee", asItem.ActionEmployee);
+                jsonObject.put("ContractNo", contractNo);
 
 
                 json = jsonObject.toString();
@@ -702,7 +703,7 @@ public class ASItemListActivity extends BaseActivity {
     private void ShowAddDialog() {
 
 
-        ASItemDialog asItemDialog = new ASItemDialog(this, supervisorWoNo, Users.USER_ID, Users.UserName);
+        ASItemDialog asItemDialog = new ASItemDialog(this, supervisorWoNo, Users.USER_ID, Users.UserName, contractNo);
         asItemDialog.show();
         asItemDialog.setDialogResult(new ASItemDialog.OnDialogResult() {
             @Override
@@ -738,7 +739,7 @@ public class ASItemListActivity extends BaseActivity {
                 return;
             }
 
-            ASItemDialog asItemDialog = new ASItemDialog(this, tempASItem.SupervisorWoNo, tempASItem, true, tempASItem.SupervisorCode, tempASItem.SupervisorName);
+            ASItemDialog asItemDialog = new ASItemDialog(this, tempASItem.SupervisorWoNo, tempASItem, true, tempASItem.SupervisorCode, tempASItem.SupervisorName, contractNo);
             asItemDialog.show();
             asItemDialog.setDialogResult(new ASItemDialog.OnDialogResult() {
                 @Override

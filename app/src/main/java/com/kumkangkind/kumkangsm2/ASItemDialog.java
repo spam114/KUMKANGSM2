@@ -64,14 +64,8 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
     EditText edtComplain;
     EditText edtAction;
     EditText edtActionEmployee;
-
-
-
     ScrollView scroll;
     String SeqNo;
-
-
-
     Button btnOK;
     Button btnPicture;
     Button btnCancel;
@@ -83,6 +77,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
 
     String supervisorCode;
     String supervisorName;
+    String contractNo;
 
     ArrayList<ComplaintImage> images;
     ComplaintImage image;
@@ -155,20 +150,22 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
 
 
 
-    public ASItemDialog(Context context, String supervisorWoNo, String supervisorCode, String supervisorName) {
+    public ASItemDialog(Context context, String supervisorWoNo, String supervisorCode, String supervisorName, String contractNo) {
         super(context);
         this.supervisorWoNo=supervisorWoNo;
         this.supervisorCode=supervisorCode;
         this.supervisorName=supervisorName;
+        this.contractNo= contractNo;
     }
 
-    public ASItemDialog(Context context, String supervisorWoNo, ASItem tempASItem,boolean editFlag, String supervisorCode, String supervisorName) {
+    public ASItemDialog(Context context, String supervisorWoNo, ASItem tempASItem,boolean editFlag, String supervisorCode, String supervisorName, String contractNo) {
         super(context);
         this.supervisorWoNo=supervisorWoNo;
         this.tempASItem=tempASItem;
         this.editFlag=editFlag;
         this.supervisorCode=supervisorCode;
         this.supervisorName=supervisorName;
+        this.contractNo=contractNo;
     }
 
 
@@ -498,6 +495,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
 
                 //Delete & Insert
                 jsonObject.put("SupervisorWoNo", supervisorWoNo);//작업일보번호
+                jsonObject.put("ContractNo", contractNo);//작업일보번호
 
                 json = jsonObject.toString();
                 // ** Alternative way to convert Person object to JSON string usin Jackson Lib
@@ -639,7 +637,6 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
                 onBackPressed();
                 e.printStackTrace();
             }
-
             new GetDongBySupervisor().execute(getContext().getString(R.string.service_address)+"getDongBySupervisorWoNo");//동정보를 가져온다.-> (onPost에 구현)'수정'일시 셋팅
             progressOFF();
         }
@@ -831,7 +828,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
                 jsonObject.put("Remark", edtComplain.getText().toString());
                 jsonObject.put("Actions", edtAction.getText().toString());
                 jsonObject.put("ActionEmployee", edtActionEmployee.getText().toString());
-
+                jsonObject.put("ContractNo", contractNo);
 
                 json = jsonObject.toString();
                 // ** Alternative way to convert Person object to JSON string usin Jackson Lib

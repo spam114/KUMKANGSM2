@@ -72,6 +72,11 @@
             android:id="@+id/stock_in_certificate"
             android:icon="@drawable/receipt_48px"
             android:title="@string/stock_in_certificate" />
+
+        <item
+            android:id="@+id/as_management"
+            android:icon="@drawable/ic_baseline_handyman_24"
+            android:title="@string/as_management" />
     </group>
 
     <item

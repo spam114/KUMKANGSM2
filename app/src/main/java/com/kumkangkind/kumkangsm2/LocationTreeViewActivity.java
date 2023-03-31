@@ -209,15 +209,154 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
                     i.putExtra("locationNo", locationNo);
                     //i.putExtra("contractNo", contractNo);
                     context.startActivity(i);*/
-
                 }
+                else if (programType.equals("A/S 관리")){
+                    new GetASItemByPost().execute(context.getString(R.string.service_address) + "getASItem2");
+                    /*Intent i;
+                    i = new Intent(context, ActivityStockInCertificateDetail.class);
+                    i.putExtra("certificateNo", "");
+                    i.putExtra("locationNo", locationNo);
+                    i.putExtra("customerLocationName", customerName + "(" + locationName+")");
+                    i.putExtra("supervisorCode", Users.USER_ID);
+                    context.startActivity(i);
+                    ((Activity)(context)).finish();*/
 
+                   /* Intent i = new Intent(context, LocationPogressActivity2.class);
+                    i.putExtra("customerLocation", customerName + "-" + locationName);
+                    i.putExtra("locationNo", locationNo);
+                    //i.putExtra("contractNo", contractNo);
+                    context.startActivity(i);*/
+                }
             }
         });
         return view;
     }
 
+    private class GetASItemByPost extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
 
+            return POST(urls[0]);
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+
+            try {
+                //Log.i("ReadJSONFeedTask", result);
+                JSONArray jsonArray = new JSONArray(result);
+
+                String SupervisorCode = "";
+                String SupervisorName = "";
+
+                String SupervisorASNo = "";
+                String SupervisorWoNo = "";
+                String Dong = "";
+                String Ho = "";
+                String HoLocation = "";
+                String ItemType = "";
+                String Item = "";
+                String ItemSpecs = "";
+                String Quantity = "";
+                String Reason = "";
+                String AsType = "";
+                String Remark = "";
+                String Actions = "";
+                String ActionEmployee = "";
+
+                ArrayList<ASItem> asItemArrayList = new ArrayList<>();
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject child = jsonArray.getJSONObject(i);
+
+                    SupervisorCode = child.getString("SupervisorCode");
+                    SupervisorName = child.getString("SupervisorName");
+
+                    SupervisorASNo = child.getString("SupervisorASNo");
+                    SupervisorWoNo = child.getString("SupervisorWoNo");
+                    Dong = child.getString("Dong");
+                    Ho = child.getString("Ho");
+                    HoLocation = child.getString("HoLocation");
+                    ItemType = child.getString("ItemType");
+                    Item = child.getString("Item");
+                    ItemSpecs = child.getString("ItemSpecs");
+                    Quantity = child.getString("Quantity");
+                    Reason = child.getString("Reason");
+                    AsType = child.getString("AsType");
+                    Remark = child.getString("Remark");
+                    Actions = child.getString("Actions");
+                    ActionEmployee = child.getString("ActionEmployee");
+                    asItemArrayList.add(new ASItem(SupervisorCode, SupervisorName, SupervisorASNo, SupervisorWoNo, Dong, Ho, HoLocation, ItemType, Item,
+                            ItemSpecs, Quantity, Reason, AsType, Remark, Actions, ActionEmployee));
+                }
+
+                Intent i = new Intent(context, ASItemListActivity.class);
+
+                i.putExtra("asItemArrayList", asItemArrayList);
+                i.putExtra("supervisorWoNo", "");
+                i.putExtra("customer", customerName);
+                i.putExtra("location", locationName);
+                i.putExtra("type", "");
+                i.putExtra("statusFlag", "1");
+                i.putExtra("contractNo", contractNo);
+                context.startActivity(i);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        public String POST(String url) {
+            InputStream inputStream = null;
+            String result = "";
+            try {
+                // 1. create HttpClient
+                HttpClient httpclient = new DefaultHttpClient();
+                // 2. make POST request to the given URL
+                HttpPost httpPost = new HttpPost(url);
+                String json = "";
+                // 3. build jsonObject
+                JSONObject jsonObject = new JSONObject();
+
+                //Delete & Insert
+                jsonObject.put("ContractNo", contractNo);
+                jsonObject.put("SupervisorCode", Users.USER_ID);
+
+                json = jsonObject.toString();
+                // ** Alternative way to convert Person object to JSON string usin Jackson Lib
+                // ObjectMapper mapper = new ObjectMapper();
+                // json = mapper.writeValueAsString(person);
+
+                // 5. set json to StringEntity
+                StringEntity se = new StringEntity(json, "UTF-8");
+                // 6. set httpPost Entity
+                httpPost.setEntity(se);
+                // 7. Set some headers to inform server about the type of the content
+                httpPost.setHeader("Accept", "application/json");
+                httpPost.setHeader("Content-type", "application/json");
+                // 8. Execute POST request to the given URL
+                HttpResponse httpResponse = httpclient.execute(httpPost);
+                // 9. receive response as inputStream
+
+                HttpEntity entity = httpResponse.getEntity();
+                inputStream = entity.getContent();
+                //inputStream = httpResponse.getEntity().getContent();
+                // 10. convert inputstream to string
+                if (inputStream != null)
+                    result = convertInputStreamToString(inputStream);
+                else
+                    result = "Did not work!";
+
+            } catch (Exception e) {
+                //Log.d("InputStream", e.getLocalizedMessage());
+            }
+            // 11. return result
+            //Log.i("result", result.toString());
+            return result;
+        }
+
+    }
 
     private void ShowSupportDialog() {
 
@@ -228,7 +367,7 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
     }
 
     private void ShowComplainDialog() {
-        ComplainDialog complainDialog = new ComplainDialog(context, locationNo, customerName, locationName, leftComplainDateArr, rightComplainDateArr);
+        ComplainDialog complainDialog = new ComplainDialog(context, locationNo, customerName, locationName, leftComplainDateArr, rightComplainDateArr, contractNo);
         complainDialog.show();
 
 

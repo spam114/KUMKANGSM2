@@ -97,14 +97,15 @@ public class ActivityMenuTest3 extends BaseActivity {
     MenuItem item15;
     MenuItem item16;
     MenuItem item17;
+    MenuItem item18;
 
-
+    
     //여기리스트들은 어플 최초 메인 버튼 셋팅을 의미한다.
     ArrayList<String> eumSungTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "나의 작업보기", "일보확인", "진행기준정보 관리", "진행층수 등록",
-            "경비등록", "현장 불만사례", "현장 지원요청", "알림 메시지", "생산내역 조회", "진행층수 등록(회수)", "반출입 현황", "반출송장 등록", ""));
+            "경비등록", "현장 불만사례", "현장 지원요청", "A/S 관리", "알림 메시지", "생산내역 조회", "진행층수 등록(회수)", "반출입 현황", "반출송장 등록", ""));
     ArrayList<String> eumSungSale = new ArrayList<>(Arrays.asList("알림 메시지", "생산내역 조회", "반출입 현황", ""));
     ArrayList<String> eumSungSuper = new ArrayList<>(Arrays.asList("담당자 배정", "나의 작업보기", "진행기준정보 관리", "진행층수 등록", "경비등록", "현장 불만사례",
-            "현장 지원요청", "생산내역 조회", ""));
+            "현장 지원요청", "A/S 관리", "생산내역 조회", ""));
     ArrayList<String> ChangTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", "진행층수 등록(회수)", "반출입 현황", ""));
     ArrayList<String> ChangSale = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", ""));
     ArrayList<String> ChangSuper = new ArrayList<>(Arrays.asList("작업요청내역 조회", "경비등록", "알림 메시지", ""));
@@ -229,7 +230,10 @@ public class ActivityMenuTest3 extends BaseActivity {
                     GoMessage();
                 } else if (item.getTitle().equals(getString(R.string.problem))) {
                     GoProblem();
-                } else if (item.getTitle().equals(getString(R.string.progress_information))) {
+                }
+                else if (item.getTitle().equals(getString(R.string.as_management))) {
+                    GoASManagement();
+                }else if (item.getTitle().equals(getString(R.string.progress_information))) {
                     GoProgressInformation();
                 } else if (item.getTitle().equals(getString(R.string.progress_floor))) {
                     GoProgressFloor();
@@ -603,6 +607,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         item15 = menu.findItem(R.id.progress_floor_return);
         item16 = menu.findItem(R.id.location_progress);
         item17 = menu.findItem(R.id.stock_in_certificate);
+        item18 = menu.findItem(R.id.as_management);
         item1.setVisible(false);
         item2.setVisible(false);
         item3.setVisible(false);
@@ -620,6 +625,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         item15.setVisible(false);
         item16.setVisible(false);
         item17.setVisible(false);
+        item18.setVisible(false);
     }
 
     //POST
@@ -1055,6 +1061,9 @@ public class ActivityMenuTest3 extends BaseActivity {
                 programType = "현장지원요청";
                 ClickProgressFloor();
                 break;
+            case "A/S 관리":
+                GoASManagement();
+                break;
             case "생산내역 조회":
                 GoProduct();
                 break;
@@ -1094,6 +1103,22 @@ public class ActivityMenuTest3 extends BaseActivity {
         } else if (Users.LeaderType.equals("2")) {//영업담당자
             new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(getString(R.string.service_address) + "getCustomerLocation2/" + "모든현장");
         }
+    }
+
+    /**
+     * A/S 관리 액티비티를 띄운다.
+     */
+    private void GoASManagement() {
+        startProgress();
+        programType = "A/S 관리";
+        ClickProgressFloor();
+        /*if (Users.LeaderType.equals("0")) {//슈퍼바이저
+            new ActivityMenuTest3.GetCustomerLocationByGet("내현장").execute(getString(R.string.service_address) + "getCustomerLocation/" + Users.USER_ID);
+        } else if (Users.LeaderType.equals("1")) {//팀장
+            new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(getString(R.string.service_address) + "getCustomerLocation2/" + "모든현장");
+        } else if (Users.LeaderType.equals("2")) {//영업담당자
+            new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(getString(R.string.service_address) + "getCustomerLocation2/" + "모든현장");
+        }*/
     }
 
 
@@ -1184,13 +1209,17 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn4.setTag("나의 작업보기");
                 btn4.setVisibility(View.VISIBLE);
 
-                txt5.setText("현장 불만사례");
-                btn5.setTag("현장 불만사례");
+                txt5.setText("A/S 관리");
+                btn5.setTag("A/S 관리");
                 btn5.setVisibility(View.VISIBLE);
 
-                txt6.setText("현장 지원요청");
-                btn6.setTag("현장 지원요청");
+                txt6.setText("현장 불만사례");
+                btn6.setTag("현장 불만사례");
                 btn6.setVisibility(View.VISIBLE);
+
+                /*txt6.setText("현장 지원요청");
+                btn6.setTag("현장 지원요청");
+                btn6.setVisibility(View.VISIBLE);*/
 
                 txt7.setText("경비등록");
                 btn7.setTag("경비등록");
@@ -1209,12 +1238,12 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn5.setTag("일보확인");
                 btn5.setVisibility(View.VISIBLE);
 
-                txt6.setText("현장 불만사례");
-                btn6.setTag("현장 불만사례");
+                txt6.setText("A/S 관리");
+                btn6.setTag("A/S 관리");
                 btn6.setVisibility(View.VISIBLE);
 
-                txt7.setText("현장 지원요청");
-                btn7.setTag("현장 지원요청");
+                txt7.setText("현장 불만사례");
+                btn7.setTag("현장 불만사례");
                 btn7.setVisibility(View.VISIBLE);
             } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("2")) {//음성 영업담당자
 
@@ -1504,7 +1533,7 @@ public class ActivityMenuTest3 extends BaseActivity {
             item7.setVisible(true);
             item14.setVisible(true);
 
-        } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("1")) {//음성 팀장 권한, 11개
+        } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("1")) {//음성 팀장 권한, 16개
             //1.메뉴 편집
             //4.나의 작업보기
             //5.일보확인
@@ -1519,6 +1548,7 @@ public class ActivityMenuTest3 extends BaseActivity {
             //14.알림 메시지
             //15.진행층수 등록(회수)
             //16.반출입 현황
+            //18.A/S 관리
             item1.setVisible(true);
             item4.setVisible(true);
             item5.setVisible(true);
@@ -1534,6 +1564,7 @@ public class ActivityMenuTest3 extends BaseActivity {
             item15.setVisible(true);
             item16.setVisible(true);
             item17.setVisible(true);
+            item18.setVisible(true);
         } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("2")) {//음성 영업담당자 권한, 3개
             //1.메뉴 편집
             //13.생산내역 조회
@@ -1543,7 +1574,7 @@ public class ActivityMenuTest3 extends BaseActivity {
             item13.setVisible(true);
             item14.setVisible(true);
             item16.setVisible(true);
-        } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("0")) {//음성 슈퍼바이저 권한, 9개
+        } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("0")) {//음성 슈퍼바이저 권한, 11개
             //1.메뉴 편집
             //4.나의 작업보기
             //7.경비등록
@@ -1554,6 +1585,7 @@ public class ActivityMenuTest3 extends BaseActivity {
             //12.현장 지원요청
             //13.생산내역 조회
             //14.알림 메시지
+            //18.A/S 관리
             item1.setVisible(true);
             item4.setVisible(true);
             item7.setVisible(true);
@@ -1564,6 +1596,7 @@ public class ActivityMenuTest3 extends BaseActivity {
             item12.setVisible(true);
             item13.setVisible(true);
             item14.setVisible(true);
+            item18.setVisible(true);
         }
     }
 
@@ -1802,7 +1835,11 @@ public class ActivityMenuTest3 extends BaseActivity {
             return getBaseContext().getResources().getDrawable(R.drawable.round_published_with_changes_white_48);
         } else if (str.equals(getString(R.string.stock_in_certificate))) {
             return getBaseContext().getResources().getDrawable(R.drawable.receipt_48px);
-        } else {
+        }
+        else if (str.equals(getString(R.string.as_management))) {
+            return getBaseContext().getResources().getDrawable(R.drawable.ic_baseline_handyman_24);
+        }
+        else {
             return getBaseContext().getResources().getDrawable(R.drawable.round_check_circle_outline_white_48);
         }
     }
@@ -2085,7 +2122,7 @@ public class ActivityMenuTest3 extends BaseActivity {
 
 
                 Intent i;
-                if (this.type.equals("내현장")) {//진행층수 등록, 진행기준 정보관리, 현장 지원요청, 진행층수 등록(회수), 반출입 현황
+                if (this.type.equals("내현장")) {//진행층수 등록, 진행기준 정보관리, 현장 지원요청, 진행층수 등록(회수), 반출입 현황, A/S 관리
                     i = new Intent(getBaseContext(), LocationTreeViewActivity.class);//todo
                 } else {//담당자배정 or 담당자 배정현황
                     i = new Intent(getBaseContext(), LocationTreeViewActivitySearch.class);//todo

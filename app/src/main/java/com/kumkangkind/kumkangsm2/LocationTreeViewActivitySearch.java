@@ -344,7 +344,7 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
                 //contractNo 보내기
                 //new GetDongProgessFloorByPost().execute(getString(R.string.service_address)+"getDongProgressFloor");
                 if (type.equals("현장불만사례")) {
-                    ComplainDialog complainDialog = new ComplainDialog(context, locationNo, customerName, locationName, leftComplainDateArr, rightcomplainDateArr);
+                    ComplainDialog complainDialog = new ComplainDialog(context, locationNo, customerName, locationName, leftComplainDateArr, rightcomplainDateArr, contractNo);
 
                     //window.setLayout( WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 

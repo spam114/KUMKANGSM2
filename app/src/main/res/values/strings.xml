@@ -68,6 +68,7 @@
     <string name="location_progress">반출입 현황</string>
     <string name="product">생산내역 조회</string>
     <string name="support">현장 지원요청</string>
+    <string name="as_management">A/S 관리</string>
     <string name="edit_menu">메뉴 편집</string>
     <string name="stock_in_certificate">반출송장 등록</string>
   </resources>

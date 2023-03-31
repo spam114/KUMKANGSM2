@@ -180,7 +180,7 @@ public class AddItemListActivity extends BaseActivity {//추가분 리스트 액
 
             //Delete & Insert
             jsonObject.put("SupervisorWoNo", supervisorWoNo);//작업일보번호
-
+            jsonObject.put("ContractNo", contractNo);//작업일보번호
             json = jsonObject.toString();
             // ** Alternative way to convert Person object to JSON string usin Jackson Lib
             // ObjectMapper mapper = new ObjectMapper();
