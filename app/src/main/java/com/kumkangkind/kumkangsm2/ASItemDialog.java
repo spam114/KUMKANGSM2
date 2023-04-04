@@ -2,6 +2,7 @@ package com.kumkangkind.kumkangsm2;
 
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +14,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kumkangkind.kumkangsm2.Application.ApplicationClass;
@@ -34,6 +37,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +56,9 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
     ArrayList<String> causeArrayList;
     ArrayList<String> asTypeArrayList;
 
+    private int mYear;
+    private int mMonth;
+    private int mDay;
 
     Spinner spinnerDong;
     EditText edtHo;
@@ -81,6 +89,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
 
     ArrayList<ComplaintImage> images;
     ComplaintImage image;
+    TextView textViewRealDate;
 
 
     @Override
@@ -105,8 +114,29 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
         mDialogResult = dialogResult;
     }
 
+    private void SetDate() {
+        //현재일자를 년 월 일 별로 불러온다.
+        Calendar cal = new GregorianCalendar();
+        mYear = cal.get(Calendar.YEAR);
+        mMonth = cal.get(Calendar.MONTH);
+        mDay = cal.get(Calendar.DATE);
+    }
 
+    DatePickerDialog.OnDateSetListener mDateSetListener1 =
+            new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    mYear = year;
+                    mMonth = monthOfYear;
+                    mDay = dayOfMonth;
+                    textViewRealDate.setText(String.format("%d-%d-%d", mYear,
+                            mMonth + 1, mDay));
+                }
+            };
 
+    private void ShowDatePickDialog() {
+        new DatePickerDialog(getContext(), mDateSetListener1, mYear, mMonth, mDay).show();
+        progressOFF();
+    }
 
     @Override
     public void progressON() {
@@ -201,7 +231,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
         btnOK = findViewById(R.id.btnOK);
         btnPicture=findViewById(R.id.btnPicture);
         btnCancel = findViewById(R.id.btnCancel);
-
+        textViewRealDate = findViewById(R.id.textViewRealDate);
 
         dongList = new ArrayList<>();
         typeHashMap= new HashMap<>();
@@ -211,6 +241,15 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
 
         edtPartSpec.setPrivateImeOptions("defaultInputmode=english;");
         edtPartSpec.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+
+        SetDate();
+        textViewRealDate.setText(mYear+"-"+(mMonth+1)+"-"+mDay);
+        textViewRealDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShowDatePickDialog();
+            }
+        });
 
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,9 +267,6 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
         btnPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
                 //사진관리
                 images= new ArrayList<>();
                 if(tempASItem==null){// 기존에 AS아이템 없이 추가하면서, 이미지도 같이 올릴때
@@ -241,8 +277,6 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
                     i.putExtra("type", "2");//추가분 이냐 AS냐 구분 2번: AS
 
                     getContext().startActivity(i);
-
-
                 }
                 else{
                     new GetComplaintImageList().execute(getContext().getString(R.string.service_address)+"getComplaintImageList");
@@ -829,6 +863,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
                 jsonObject.put("Actions", edtAction.getText().toString());
                 jsonObject.put("ActionEmployee", edtActionEmployee.getText().toString());
                 jsonObject.put("ContractNo", contractNo);
+                jsonObject.put("FromDate", textViewRealDate.getText().toString());
 
                 json = jsonObject.toString();
                 // ** Alternative way to convert Person object to JSON string usin Jackson Lib
@@ -1002,7 +1037,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
                 jsonObject.put("Actions", edtAction.getText().toString());
                 jsonObject.put("ActionEmployee", edtActionEmployee.getText().toString());
                 jsonObject.put("SupervisorCode", Users.USER_ID);
-
+                jsonObject.put("FromDate", textViewRealDate.getText().toString());
 
                 json = jsonObject.toString();
                 // ** Alternative way to convert Person object to JSON string usin Jackson Lib
