@@ -22,13 +22,14 @@ public class ASItem implements Serializable {
     public String Actions = "";
     public String ActionEmployee = "";
 
+    public String FromDate="";
 
     public ASItem() {
         super();
     }
 
     public ASItem(String SupervisorCode,String SupervisorName,String SupervisorASNo, String SupervisorWoNo, String Dong, String Ho, String HoLocation, String ItemType, String Item,
-                  String ItemSpecs, String Quantity, String Reason, String AsType, String Remark, String Actions, String ActionEmployee) {
+                  String ItemSpecs, String Quantity, String Reason, String AsType, String Remark, String Actions, String ActionEmployee, String FromDate) {
         super();
 
 
@@ -48,6 +49,6 @@ public class ASItem implements Serializable {
         this.Remark = Remark;
         this.Actions = Actions;
         this.ActionEmployee = ActionEmployee;
-
+        this.FromDate=FromDate;
     }
 }

@@ -251,6 +251,7 @@ public class ComplainDialog extends Dialog implements BaseActivityInterface{
                 String Remark = "";
                 String Actions = "";
                 String ActionEmployee = "";
+                String FromDate = "";
 
                 ArrayList<ASItem> asItemArrayList = new ArrayList<>();
 
@@ -274,8 +275,9 @@ public class ComplainDialog extends Dialog implements BaseActivityInterface{
                     Remark = child.getString("Remark");
                     Actions = child.getString("Actions");
                     ActionEmployee = child.getString("ActionEmployee");
+                    FromDate = child.getString("FromDate");
                     asItemArrayList.add(new ASItem(SupervisorCode, SupervisorName,SupervisorASNo, SupervisorWoNo, Dong, Ho, HoLocation, ItemType, Item,
-                            ItemSpecs, Quantity, Reason, AsType, Remark, Actions, ActionEmployee));
+                            ItemSpecs, Quantity, Reason, AsType, Remark, Actions, ActionEmployee, FromDate));
                 }
 
                 Intent i = new Intent(getContext(), ASItemListActivity.class);

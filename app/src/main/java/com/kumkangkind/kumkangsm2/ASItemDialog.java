@@ -784,7 +784,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
 
                     ASItem asItem= new ASItem(supervisorCode,supervisorName,supervisorASNo,supervisorWoNo,spinnerDong.getSelectedItem().toString(), edtHo.getText().toString(), edtLocation.getText().toString(), spinnerType.getSelectedItem().toString(),
                             spinnerPartName.getSelectedItem().toString(), edtPartSpec.getText().toString(), edtQty.getText().toString(), spinnerCause.getSelectedItem().toString(), spinnerASType.getSelectedItem().toString(),
-                            edtComplain.getText().toString(), edtAction.getText().toString(), edtActionEmployee.getText().toString());
+                            edtComplain.getText().toString(), edtAction.getText().toString(), edtActionEmployee.getText().toString(), textViewRealDate.getText().toString());
 
                     ASItemDialog.this.mDialogResult.finish(asItem);
 
@@ -962,7 +962,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
 
                     ASItem asItem= new ASItem(supervisorCode,supervisorName,supervisorASNo,supervisorWoNo,spinnerDong.getSelectedItem().toString(), edtHo.getText().toString(), edtLocation.getText().toString(), spinnerType.getSelectedItem().toString(),
                             spinnerPartName.getSelectedItem().toString(), edtPartSpec.getText().toString(), edtQty.getText().toString(), spinnerCause.getSelectedItem().toString(), spinnerASType.getSelectedItem().toString(),
-                            edtComplain.getText().toString(), edtAction.getText().toString(), edtActionEmployee.getText().toString());
+                            edtComplain.getText().toString(), edtAction.getText().toString(), edtActionEmployee.getText().toString(), textViewRealDate.getText().toString());
 
                     ASItemDialog.this.mDialogResult.finish(asItem);
                     ASItemDialog.this.dismiss();

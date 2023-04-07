@@ -440,7 +440,7 @@ public class ASItemListActivity extends BaseActivity {
 
                     ASItem item = new ASItem(asItem.SupervisorCode, asItem.SupervisorName, asNoForCopy, supervisorWoNo, asItem.Dong, asItem.Ho, asItem.HoLocation, asItem.ItemType,
                             asItem.Item, asItem.ItemSpecs, asItem.Quantity, asItem.Reason, asItem.AsType,
-                            asItem.Remark, asItem.Actions, asItem.ActionEmployee);
+                            asItem.Remark, asItem.Actions, asItem.ActionEmployee, asItem.FromDate);
 
                     asItemArrayList.add(item);
                     adapter.notifyDataSetChanged();
@@ -513,7 +513,7 @@ public class ASItemListActivity extends BaseActivity {
                 jsonObject.put("Actions", asItem.Actions);
                 jsonObject.put("ActionEmployee", asItem.ActionEmployee);
                 jsonObject.put("ContractNo", contractNo);
-
+                jsonObject.put("FromDate", asItem.FromDate);
 
                 json = jsonObject.toString();
                 // ** Alternative way to convert Person object to JSON string usin Jackson Lib
