@@ -17,10 +17,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/*import com.kakao.kakaolink.AppActionBuilder;
-import com.kakao.kakaolink.AppActionInfoBuilder;
-import com.kakao.kakaolink.KakaoLink;
-import com.kakao.kakaolink.KakaoTalkLinkMessageBuilder;*/
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -396,15 +392,6 @@ public class AssignUserActivity extends BaseActivity {
         }
     }*/
 
-    void sendKakaoImage(String imgName) {
-
-        Uri dataUri = Uri.parse(imgName);
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_STREAM, dataUri);
-        intent.setPackage("com.kakao.talk");
-        startActivity(intent);
-    }
 
     @Override
     public void onBackPressed() {
