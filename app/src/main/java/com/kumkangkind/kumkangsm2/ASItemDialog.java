@@ -506,6 +506,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
                     edtComplain.setText(tempASItem.Remark);
                     edtAction.setText(tempASItem.Actions);
                     edtActionEmployee.setText(tempASItem.ActionEmployee);
+                    textViewRealDate.setText(tempASItem.FromDate);
                 }
 
             } catch (Exception e) {
