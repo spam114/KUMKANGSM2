@@ -124,10 +124,11 @@ public class ProgressFloorActivity extends BaseActivity {
             return;
         }
 
-        if (!dongArrayList.get(clickPosition).ConstructionEmployee.equals(Users.UserName)) {
+        //조건 제거 2023-05-26 권숙요청
+        /*if (!dongArrayList.get(clickPosition).ConstructionEmployee.equals(Users.UserName)) {
             Toast.makeText(getApplicationContext(), "본인의 진행정보만 수정할 수 있습니다.", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
         if (yearMonth.equals("") || floor.equals("")) {
             Toast.makeText(getApplicationContext(), "삭제 할 진행정보가 없습니다.", Toast.LENGTH_SHORT).show();
@@ -166,10 +167,11 @@ public class ProgressFloorActivity extends BaseActivity {
             return;
         }
 
-        if (!dongArrayList.get(clickPosition).ConstructionEmployee.equals(Users.UserName)) {
+        //조건 제거 2023-05-26 권숙요청
+        /*if (!dongArrayList.get(clickPosition).ConstructionEmployee.equals(Users.UserName)) {
             Toast.makeText(getApplicationContext(), "본인의 진행정보만 수정할 수 있습니다.", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
         inputYearMonth = "";
         inputFloor = "";
