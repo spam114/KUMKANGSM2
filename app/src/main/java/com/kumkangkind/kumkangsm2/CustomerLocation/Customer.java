@@ -25,7 +25,7 @@ public class Customer implements Serializable, Comparable<Customer> {
         confirmList=new ArrayList<>();
     }
 
-    public void addData(String LocationNo,String LocationName,String ContractNo)
+    public void addData(String LocationNo,String LocationName,String ContractNo, String LocationName2)
     {
         if(confirmList.contains(LocationName)){//현장이 같을시-> 계약번호를 붙여줌
             LocationName=LocationName+"("+ContractNo+")";
@@ -33,15 +33,15 @@ public class Customer implements Serializable, Comparable<Customer> {
         confirmList.add(LocationName);
         String key = ContractNo+"-"+LocationNo;
         Location location=null;
-        location = new Location(LocationNo,LocationName,ContractNo);
+        location = new Location(LocationNo,LocationName,ContractNo, LocationName2);
         locationHashMap.put(key,location);
     }
 
-    public void addData2(String LocationNo,String LocationName)
+    public void addData2(String LocationNo,String LocationName, String LocationName2)
     {
         String key = LocationName;
         Location location=null;
-        location = new Location(LocationNo,LocationName);
+        location = new Location(LocationNo,LocationName, LocationName2);
         locationHashMap.put(key,location);
     }
 

@@ -53,8 +53,9 @@ public class MyFcmListenerService extends FirebaseMessagingService {
         intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("certificateNo",certificateNo);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_UPDATE_CURRENT| PendingIntent.FLAG_IMMUTABLE);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,channelId)
                 .setSmallIcon(R.drawable.ic_stat_, 1)
@@ -76,8 +77,6 @@ public class MyFcmListenerService extends FirebaseMessagingService {
             NotificationChannel channel = new NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_HIGH);
             notificationManager.createNotificationChannel(channel);
         }
-
-
         notificationManager.notify(55, notificationBuilder.build());
         BadgeControl.addBadgeCount(this);
     }

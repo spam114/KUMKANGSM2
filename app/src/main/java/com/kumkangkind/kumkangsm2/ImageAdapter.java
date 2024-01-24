@@ -41,6 +41,7 @@ public class ImageAdapter extends ArrayAdapter<WoImage> implements BaseActivityI
     ProgressDialog mProgressDialog;
     WoImage currentImage;
     public int removePosition;
+    boolean enableFlag=true;
 
     private void startProgress() {
         Handler handler = new Handler();
@@ -53,33 +54,31 @@ public class ImageAdapter extends ArrayAdapter<WoImage> implements BaseActivityI
         progressON("Loading...", handler);
     }
 
-    public ImageAdapter(Context context, int layoutResourceID, ArrayList data) {
-
+    public ImageAdapter(Context context, int layoutResourceID, ArrayList data, boolean enableFlag) {
         super(context, layoutResourceID, data);
         this.context = context;
         this.layoutRsourceId = layoutResourceID;
         this.data = data;
+        this.enableFlag = enableFlag;
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
         View row = convertView;
         if (row == null) {
-
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(R.layout.listview_imagerow, null);
         }
 
         WoImage image = (WoImage) data.get(position);
         if (image != null) {
-
             TextView textViewSeqNo = (TextView) row.findViewById(R.id.textViewImageSeqNo);
             TextView textViewImageName = (TextView) row.findViewById(R.id.textViewImageName);
             Button deleteButton = (Button) row.findViewById(R.id.buttonDelete);
             ImageView imageView = (ImageView) row.findViewById(R.id.imageViewSmall);
-
             deleteButton.setFocusable(false);
+            if(!enableFlag)
+                deleteButton.setEnabled(false);
 
             if (textViewImageName != null)
                 textViewImageName.setText(((WoImage) (data.get(position))).ImageName);

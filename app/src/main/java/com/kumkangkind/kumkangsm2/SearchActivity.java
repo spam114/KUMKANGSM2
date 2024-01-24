@@ -492,6 +492,7 @@ public class SearchActivity extends Activity {
                 String CustomerName = "";
                 String Supervisor = "";
                 String WorkTypeName = "";
+                String SupervisorCode="";
 
                 for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -503,7 +504,8 @@ public class SearchActivity extends Activity {
                     CustomerName = child.getString("CustomerName");
                     Supervisor = child.getString("SupervisorName");
                     WorkTypeName = child.getString("WorkTypeName");
-                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StatusFlag, CustomerName, Supervisor, WorkTypeName));
+                    SupervisorCode = child.getString("SupervisorCode");
+                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StatusFlag, CustomerName, Supervisor, WorkTypeName, SupervisorCode));
                 }
 
                 mHandler.sendEmptyMessage(0);
@@ -652,6 +654,7 @@ public class SearchActivity extends Activity {
                 String CustomerName = "";
                 String Supervisor = "";
                 String WorkTypeName = "";
+                String SupervisorCode="";
 
                 for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -664,7 +667,8 @@ public class SearchActivity extends Activity {
                     CustomerName = child.getString("CustomerName");
                     Supervisor = child.getString("SupervisorName");
                     WorkTypeName = child.getString("WorkTypeName");
-                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StatusFlag, CustomerName, Supervisor, WorkTypeName));
+                    SupervisorCode = child.getString("SupervisorCode");
+                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StatusFlag, CustomerName, Supervisor, WorkTypeName, SupervisorCode));
                 }
                 //Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
 
@@ -682,110 +686,8 @@ public class SearchActivity extends Activity {
         }
     }
 
-    /**
-     * 배정 리스트
-     */
-    private class ReadJSONFeedTask2 extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            return readJSONFeed(urls[0]);
-        }
-
-        protected void onPostExecute(String result) {
-            try {
-
-                //Log.i("ReadJSONFeedTask", result);
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray jsonArray = jsonObject.optJSONArray("GetAssignList2Result");
-
-                String LocationName = "";
-                String SupervisorWoNo = "";
-                String WorkDate = "";
-                String StatusFlag = "";
-                String CustomerName = "";
-                String Supervisor = "";
-                String WorkTypeName = "";
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    JSONObject child = jsonArray.getJSONObject(i);
-
-                    LocationName = child.getString("LocationName");
-                    SupervisorWoNo = child.getString("SupervisorWoNo");
-                    WorkDate = child.getString("WorkDate");
-                    StatusFlag = child.getString("StatusFlag");
-                    CustomerName = child.getString("CustomerName");
-                    Supervisor = child.getString("SupervisorName");
-                    WorkTypeName = child.getString("WorkTypeName");
-                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StatusFlag, CustomerName, Supervisor, WorkTypeName));
-                }
-                //Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
-
-                Intent i = new Intent(getBaseContext(), SuListViewActivity.class);
-                i.putExtra("data", suWorders);
-                i.putExtra("type", "배정");
-                i.putExtra("url", restURL);
-                i.putExtra("arrayName", "GetAssignList2Result");
-                startActivity(i);
-                mHandler.sendEmptyMessage(0);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * 배정 리스트
-     */
-    private class ReadJSONFeedTask3 extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            return readJSONFeed(urls[0]);
-        }
-
-        protected void onPostExecute(String result) {
-            try {
-                Log.i("ReadJSONFeedTask", result);
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray jsonArray = jsonObject.optJSONArray("GetAssignList2Result");
-
-                String LocationName = "";
-                String SupervisorWoNo = "";
-                String WorkDate = "";
-                String StatusFlag = "";
-                String CustomerName = "";
-                String Supervisor = "";
-                String WorkTypeName = "";
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    JSONObject child = jsonArray.getJSONObject(i);
-
-                    LocationName = child.getString("LocationName");
-                    SupervisorWoNo = child.getString("SupervisorWoNo");
-                    WorkDate = child.getString("WorkDate");
-                    StatusFlag = child.getString("StatusFlag");
-                    CustomerName = child.getString("CustomerName");
-                    Supervisor = child.getString("SupervisorName");
-                    WorkTypeName = child.getString("WorkTypeName");
-                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StatusFlag, CustomerName, Supervisor, WorkTypeName));
-                }
-                Intent i = new Intent(getBaseContext(), SuListViewActivity.class);
-                i.putExtra("data", suWorders);
-                i.putExtra("type", "확인");
-                i.putExtra("url", restURL);
-                i.putExtra("arrayName", "GetAssignList3Result");
-                startActivity(i);
-                mHandler.sendEmptyMessage(0);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private SuWorder MakeData(String woNo, String locationName, String workDate, String statusFlag, String customerName, String supervisor, String workTypeName) {
+    private SuWorder MakeData(String woNo, String locationName, String workDate,
+                              String statusFlag, String customerName, String supervisor, String workTypeName, String supervisorCode) {
 
         SuWorder suWorder = new SuWorder();
 
@@ -796,6 +698,7 @@ public class SearchActivity extends Activity {
         suWorder.CustomerName = customerName;
         suWorder.Supervisor = supervisor;
         suWorder.WorkTypeName = workTypeName;
+        suWorder.SupervisorCode = supervisorCode;
         return suWorder;
     }
 

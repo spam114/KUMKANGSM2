@@ -73,48 +73,50 @@
             android:id="@+id/textViewWorkDate"
             android:layout_width="0px"
             android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
             android:layout_weight="2"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:paddingTop="7dp"
             android:paddingBottom="7dp"
             android:text="작업일/동"
             android:textColor="#ffffff"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewLocation"
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:gravity="center"
-            android:text="거래처/현장"
+            android:layout_marginStart="3dp"
+            android:layout_weight="3"
+            android:gravity="center_vertical"
+            android:text="담당/작업"
             android:textColor="#ffffff"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewStatus"
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="상태"
+            android:layout_marginStart="3dp"
+            android:layout_weight="5"
+            android:gravity="center_vertical"
+            android:text="거래처/현장"
             android:textColor="#ffffff"
-            android:textSize="15sp"
-            android:textStyle="bold"
 
-            />
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewWorkType"
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:gravity="center"
-            android:text="담당/작업"
+            android:text="상태"
             android:textColor="#ffffff"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -122,6 +124,7 @@
     <ListView
         android:id="@+id/listView1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@drawable/borderline_bottom3" />
 
 </LinearLayout>

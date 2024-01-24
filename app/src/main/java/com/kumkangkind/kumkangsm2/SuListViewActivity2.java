@@ -69,10 +69,8 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listview2);
-
         textViewUserName = (TextView) findViewById(R.id.textViewUserName);
         btnIlbo = findViewById(R.id.btnIlbo);
         btnHelp = findViewById(R.id.btnHelp);
@@ -80,31 +78,24 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
         type = getIntent().getStringExtra("type");
         restURL = getIntent().getStringExtra("url");
         arrayName = getIntent().getStringExtra("arrayName");
-
+        programType = getIntent().getStringExtra("programType");
         if (Users.BusinessClassCode == 9)//음성이면 일보작성 버튼 생성
             btnIlbo.setVisibility(View.VISIBLE);
         makeSWList();
-
         listView1 = (ListView) findViewById(R.id.listView1);
-
         adapter = new SwListVIewAdapter2(SuListViewActivity2.this, R.layout.listview_row2, suWorders);
         //adapter = new SwListVIewAdapter(SuListViewActivity.this, R.layout.listview_row, items);
         listView1.setAdapter(adapter);
         listView1.setOnItemClickListener(mItemClickListener);
-
         progressOFF();
-
     }
 
     public void mOnClick(View v) {
-
         switch (v.getId()) {
             case R.id.btnIlbo:
-                programType = "일보작성";
                 startProgress();
                 MakeDailyReport();
                 break;
-
             case R.id.btnHelp:
                 new AlertDialog.Builder(this).setMessage("작업일보가 보이지 않을시, \n메인화면의 날짜를 확인한 후,\n변경하시기 바랍니다.").setCancelable(true).
                         setNegativeButton("닫기", new DialogInterface.OnClickListener() {
@@ -113,7 +104,6 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
                             }
                         }).show();
                 break;
-
         }
     }
 
@@ -123,21 +113,16 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
 
 
     private class GetCustomerLocationByGet extends AsyncTask<String, Void, String> {
-
         String type = "";
-
         public GetCustomerLocationByGet(String type) {
             this.type = type;
         }
-
         @Override
         protected String doInBackground(String... urls) {
             return readJSONFeed(urls[0]);
         }
-
         protected void onPostExecute(String result) {
             try {
-
                 //Log.i("ReadJSONFeedTask", result);
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray;
@@ -160,19 +145,13 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
                     } else {//있으면
                         customer = customerHashMap.get(key);
                     }
-                    customer.addData(child.getString("LocationNo"), child.getString("LocationName"), child.getString("ContractNo"));
+                    customer.addData(child.getString("LocationNo"), child.getString("LocationName"), child.getString("ContractNo"), child.getString("LocationName2"));
                 }
-                //Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
-
-
                 Intent i;
                 i = new Intent(getBaseContext(), LocationTreeViewActivity.class);//todo
-
                 i.putExtra("programType", programType);
                 i.putExtra("hashMap", customerHashMap);
                 startActivityForResult(i, REQUEST_CODE_CREATE_ILBO);
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -224,11 +203,19 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
 
             Intent intent;
             if (suWorders.get(position).Status.equals("1") || suWorders.get(position).Status.equals("2")) {// 상태: 작성 일시 -> 작업요청서 액티비티 생략하고 바로 작업일보 작성으로~
-                intent = new Intent(SuListViewActivity2.this, RegisterActivity2.class);
-                intent.putExtra("type", "작업");
-                intent.putExtra("key", key);
-                startActivityForResult(intent, REQUEST_CODE_VIEW_ILBO);
-
+                if(programType.equals("일보작성")){
+                    intent = new Intent(SuListViewActivity2.this, RegisterActivity2.class);
+                    intent.putExtra("type", "작업");
+                    intent.putExtra("key", key);
+                    startActivityForResult(intent, REQUEST_CODE_VIEW_ILBO);
+                }
+                else{//programType: 회수일보작성
+                    intent = new Intent(SuListViewActivity2.this, RegisterActivityReturn.class);
+                    intent.putExtra("type", "작업");
+                    intent.putExtra("key", key);
+                    intent.putExtra("inputUser",suWorders.get(position).SupervisorCode);
+                    startActivityForResult(intent, REQUEST_CODE_VIEW_ILBO);
+                }
             } else {//작업요청서 거친다.
                 intent = new Intent(getBaseContext(), ViewActivity.class);
                 intent.putExtra("key", key);
@@ -236,8 +223,6 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
                 intent.putExtra("seqNo", position);
                 startActivityForResult(intent, REQUEST_CODE_VIEW_ILBO);
             }
-
-
         }
     };
 
@@ -255,9 +240,7 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         super.onActivityResult(requestCode, resultCode, data);
-
         new ReadJSONFeedTask(this.adapter).execute(restURL);
     }
 
@@ -282,9 +265,7 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
 
                 //Log.i("ReadJSONFeedTask", result);
                 JSONObject jsonObject = new JSONObject(result);
-                JSONArray jsonArray = jsonObject.optJSONArray("GetSWorderListResult");
-
-
+                JSONArray jsonArray = jsonObject.optJSONArray(arrayName);
                 String LocationName = "";
                 String SupervisorWoNo = "";
                 String WorkDate = "";
@@ -294,13 +275,11 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
                 String Supervisor = "";
                 String WorkTypeName = "";
                 String Dong = "";
+                String SupervisorCode="";
 
                 suWorders.clear();
                 for (int i = 0; i < jsonArray.length(); i++) {
-
                     JSONObject child = jsonArray.getJSONObject(i);
-
-
                     LocationName = child.getString("LocationName");
                     SupervisorWoNo = child.getString("SupervisorWoNo");
                     WorkDate = child.getString("WorkDate");
@@ -310,8 +289,8 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
                     Supervisor = child.getString("SupervisorName");
                     WorkTypeName = child.getString("WorkTypeName");
                     Dong = child.getString("Dong");
-
-                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StartTime, StatusFlag, CustomerName, Supervisor, WorkTypeName, Dong));
+                    SupervisorCode = child.getString("SupervisorCode");
+                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StartTime, StatusFlag, CustomerName, Supervisor, WorkTypeName, Dong, SupervisorCode));
                 }
                 this.adapter.notifyDataSetChanged();
 
@@ -320,10 +299,10 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
             }
         }
 
-        private SuWorder MakeData(String woNo, String locationName, String workDate, String startTime, String statusFlag, String customerName, String supervisor, String workTypeName, String dong) {
-
+        private SuWorder MakeData(String woNo, String locationName, String workDate, String startTime,
+                                  String statusFlag, String customerName,
+                                  String supervisor, String workTypeName, String dong, String supervisorCode) {
             SuWorder suWorder = new SuWorder();
-
             suWorder.WorkNo = woNo;
             suWorder.LocationName = locationName;
             suWorder.WorkDate = workDate;
@@ -333,6 +312,7 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
             suWorder.Supervisor = supervisor;
             suWorder.WorkTypeName = workTypeName;
             suWorder.Dong = dong;
+            suWorder.SupervisorCode = supervisorCode;
             return suWorder;
         }
     }

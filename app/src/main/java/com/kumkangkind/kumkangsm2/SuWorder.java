@@ -16,13 +16,15 @@ public class SuWorder implements Serializable {
     public String Supervisor = "";
     public String WorkTypeName = "";
     public String Dong = "";
+    public String SupervisorCode="";
 
 
     public SuWorder() {
         super();
     }
 
-    public SuWorder(String workNo, String workDate, String startTime, String locationName, String status, String customerName, String supervisor, String workTypeName) {
+    public SuWorder(String workNo, String workDate, String startTime, String locationName,
+                    String status, String customerName, String supervisor, String workTypeName, String supervisorCode) {
 
         super();
         this.WorkNo = workNo;
@@ -33,5 +35,6 @@ public class SuWorder implements Serializable {
         this.CustomerName = customerName;
         this.Supervisor = supervisor;
         this.WorkTypeName = workTypeName;
+        this.SupervisorCode = supervisorCode;
     }
 }

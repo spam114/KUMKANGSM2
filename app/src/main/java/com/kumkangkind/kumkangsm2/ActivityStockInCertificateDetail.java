@@ -495,6 +495,10 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 else
                     returnTransFlagName2 = "당사";
 
+                if(returnTransFlag==1 || returnTransFlag2!=1){//반출차량: 당사 && 지게차: 거래처 가 아닌경우
+                    txtCar.setTextColor(Color.RED);
+                    txtCar.setBackgroundColor(Color.YELLOW);
+                }
                 txtCar.setText("반출차량: " + returnTransFlagName + " / 지게차: " + returnTransFlagName2);
 
             } catch (Exception e) {
@@ -1079,6 +1083,11 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                     returnTransFlagName2 = "거래처";
                 else
                     returnTransFlagName2 = "당사";
+
+                if(returnTransFlag==1 || returnTransFlag2!=1){//반출차량: 당사 && 지게차: 거래처 가 아닌경우
+                    txtCar.setTextColor(Color.RED);
+                    txtCar.setBackgroundColor(Color.YELLOW);
+                }
 
                 txtCar.setText("반출차량: " + returnTransFlagName + " / 지게차: " + returnTransFlagName2);
 

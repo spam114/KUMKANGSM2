@@ -98,11 +98,12 @@ public class ActivityMenuTest3 extends BaseActivity {
     MenuItem item16;
     MenuItem item17;
     MenuItem item18;
-
+    MenuItem item19;
+    MenuItem item20;
     
     //여기리스트들은 어플 최초 메인 버튼 셋팅을 의미한다.
-    ArrayList<String> eumSungTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "나의 작업보기", "일보확인", "진행기준정보 관리", "진행층수 등록",
-            "경비등록", "현장 불만사례", "현장 지원요청", "A/S 관리", "알림 메시지", "생산내역 조회", "진행층수 등록(회수)", "반출입 현황", "반출송장 등록", ""));
+    ArrayList<String> eumSungTeam = new ArrayList<>(Arrays.asList("회수 일보", "담당자 배정", "담당자 배정현황", "나의 작업보기", "일보확인", "진행기준정보 관리", "진행층수 등록",
+            "경비등록", "현장 불만사례", "현장 지원요청", "A/S 관리", "알림 메시지", "생산내역 조회", "진행층수 등록(회수)", "반출입 현황", "반출송장 등록", "현장별 송장 조회", ""));
     ArrayList<String> eumSungSale = new ArrayList<>(Arrays.asList("알림 메시지", "생산내역 조회", "반출입 현황", ""));
     ArrayList<String> eumSungSuper = new ArrayList<>(Arrays.asList("담당자 배정", "나의 작업보기", "진행기준정보 관리", "진행층수 등록", "경비등록", "현장 불만사례",
             "현장 지원요청", "A/S 관리", "생산내역 조회", ""));
@@ -110,7 +111,7 @@ public class ActivityMenuTest3 extends BaseActivity {
     ArrayList<String> ChangSale = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", ""));
     ArrayList<String> ChangSuper = new ArrayList<>(Arrays.asList("작업요청내역 조회", "경비등록", "알림 메시지", ""));
 
-    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("진행층수 등록(회수)", "알림 메시지", "반출입 현황", "반출송장 등록", ""));
+    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("회수 일보", "진행층수 등록(회수)", "알림 메시지", "반출입 현황", "반출송장 등록", "현장별 송장 조회", ""));
     ArrayList<String> myDefaultButtonList = new ArrayList<>();
 
     int fromYear = 0;
@@ -211,7 +212,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 //네비게이션 메뉴 하나선택시
                 //Snackbar.make((View) mFloatingNavigationView.getParent(), item.getTitle() + " Selected!", Snackbar.LENGTH_SHORT).show();
                 mFloatingNavigationView.close();
-
+                startProgress();
                 if (item.getTitle().equals(getString(R.string.work_request_management))) {
                     GoWorkRequestManagement();
                 } else if (item.getTitle().equals(getString(R.string.work_request_search))) {
@@ -247,7 +248,14 @@ public class ActivityMenuTest3 extends BaseActivity {
                     GoSupport();
                 } else if (item.getTitle().equals(getString(R.string.stock_in_certificate))) {
                     GoStockInCertificate();
-                } else if (item.getTitle().equals(getString(R.string.edit_menu))) {
+                }
+                else if (item.getTitle().equals(getString(R.string.stock_in_certificate_location))) {
+                    GoStockInCertificateLocation();
+                }
+                else if (item.getTitle().equals(getString(R.string.daily_report_return))) {
+                    GoDailyReportReturn();
+                }
+                else if (item.getTitle().equals(getString(R.string.edit_menu))) {
                     ArrayList<String> btnList = new ArrayList<>();
                     CardView btn3 = findViewById(R.id.btn3);
                     ImageView imv3 = findViewById(R.id.imv3);
@@ -374,8 +382,20 @@ public class ActivityMenuTest3 extends BaseActivity {
 
         certificateNo = getIntent().getStringExtra("certificateNo");
         if (!certificateNo.equals("")) {
-
-            getLocationInfoByCertificateNo();
+            if(!certificateNo.substring(0,2).equals("SW")){
+                getLocationInfoByCertificateNo();
+            }
+            else{//SW로 시작한다고 본다. 일보번호
+                Intent intent = new Intent(ActivityMenuTest3.this, RegisterActivityReturn.class);
+                intent.putExtra("type", "작업");
+                intent.putExtra("key", certificateNo);
+                /*intent.putExtra("contractNo", contractNo);
+                intent.putExtra("customerLocation", customerName + "(" + locationName + ")");
+                intent.putExtra("customer", customerName);
+                intent.putExtra("location", locationName);*/
+                intent.putExtra("inputUser","-1");
+                startActivityForResult(intent, 2);
+            }
         }
 
     }
@@ -455,6 +475,7 @@ public class ActivityMenuTest3 extends BaseActivity {
             }
         }
     }
+
 
 
     private void getNoticeData() {
@@ -608,6 +629,8 @@ public class ActivityMenuTest3 extends BaseActivity {
         item16 = menu.findItem(R.id.location_progress);
         item17 = menu.findItem(R.id.stock_in_certificate);
         item18 = menu.findItem(R.id.as_management);
+        item19 = menu.findItem(R.id.stock_in_certificate_location);
+        item20 = menu.findItem(R.id.daily_report_return);
         item1.setVisible(false);
         item2.setVisible(false);
         item3.setVisible(false);
@@ -626,6 +649,8 @@ public class ActivityMenuTest3 extends BaseActivity {
         item16.setVisible(false);
         item17.setVisible(false);
         item18.setVisible(false);
+        item19.setVisible(false);
+        item20.setVisible(false);
     }
 
     //POST
@@ -684,8 +709,6 @@ public class ActivityMenuTest3 extends BaseActivity {
                 dialog.dismiss();
             }
         });
-
-
     }
 
 
@@ -693,8 +716,6 @@ public class ActivityMenuTest3 extends BaseActivity {
         //mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {//한번 토큰이 설정된후에 잘 설정 되었는지 확인하려고 한거같은데, RegistrationIntentService.java 에서 확인해보면 54 or 55번 쨰 줄에서 에러가 발생해서 catch문으로 빠짐
             //topics/global 이름이 잘못된거같다.
-
-
             @Override
             public void onReceive(Context context, Intent intent) {//
                 //mRegistrationProgressBar.setVisibility(ProgressBar.GONE);
@@ -1077,6 +1098,13 @@ public class ActivityMenuTest3 extends BaseActivity {
             case "반출송장 등록":
                 GoStockInCertificate();
                 break;
+            case "현장별 송장 조회":
+                GoStockInCertificateLocation();
+                break;
+            case "회수 일보":
+                startProgress();
+                GoDailyReportReturn();
+                break;
 
         }
     }
@@ -1088,8 +1116,15 @@ public class ActivityMenuTest3 extends BaseActivity {
         i = new Intent(getBaseContext(), ActivityStockInCertificate.class);//todo
         i.putExtra("fromDate", fromDate);
         i.putExtra("toDate", toDate);
+        i.putExtra("locationName","");
 
         startActivity(i);
+    }
+
+    private void GoStockInCertificateLocation() {
+        programType = "현장별송장조회";
+        startProgress();
+        ClickProgressFloor();
     }
 
     /**
@@ -1126,8 +1161,6 @@ public class ActivityMenuTest3 extends BaseActivity {
         //전체 버튼 셋팅
 
         SetFloatingButton();
-
-
         //빠른 버튼 셋팅
         CardView btn3 = findViewById(R.id.btn3);
         ImageView imv3 = findViewById(R.id.imv3);
@@ -1267,27 +1300,25 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn7.setTag("");
                 btn7.setVisibility(View.INVISIBLE);
             } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("3")) {
-                txt3.setText(getString(R.string.progress_floor_return));
-                btn3.setTag(getString(R.string.progress_floor_return));
+                txt3.setText(getString(R.string.daily_report_return));
+                btn3.setTag(getString(R.string.daily_report_return));
                 btn3.setVisibility(View.VISIBLE);
 
-                //getString(R.string.progress_floor)
-
-                txt4.setText(getString(R.string.location_progress));
-                btn4.setTag(getString(R.string.location_progress));
+                txt4.setText(getString(R.string.progress_floor_return));
+                btn4.setTag(getString(R.string.progress_floor_return));
                 btn4.setVisibility(View.VISIBLE);
-
-                txt5.setText(getString(R.string.stock_in_certificate));
-                btn5.setTag(getString(R.string.stock_in_certificate));
+                //getString(R.string.progress_floor)
+                txt5.setText(getString(R.string.location_progress));
+                btn5.setTag(getString(R.string.location_progress));
                 btn5.setVisibility(View.VISIBLE);
 
-                txt6.setText(getString(R.string.message));
-                btn6.setTag(getString(R.string.message));
+                txt6.setText(getString(R.string.stock_in_certificate));
+                btn6.setTag(getString(R.string.stock_in_certificate));
                 btn6.setVisibility(View.VISIBLE);
 
-                txt7.setText("");
-                btn7.setTag("");
-                btn7.setVisibility(View.INVISIBLE);
+                txt7.setText(getString(R.string.stock_in_certificate_location));
+                btn7.setTag(getString(R.string.stock_in_certificate_location));
+                btn7.setVisibility(View.VISIBLE);
             } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("0")) {//창녕 슈퍼바이저일때,1.작업요청내역 조회 2. 경비등록
 
                 txt3.setText("작업요청내역 조회");
@@ -1353,27 +1384,30 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn7.setTag("알림 메시지");
                 btn7.setVisibility(View.VISIBLE);
             } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("3")) {
-                txt3.setText(getString(R.string.progress_floor_return));
-                btn3.setTag(getString(R.string.progress_floor_return));
+                txt3.setText(getString(R.string.daily_report_return));
+                btn3.setTag(getString(R.string.daily_report_return));
                 btn3.setVisibility(View.VISIBLE);
 
+                txt4.setText(getString(R.string.progress_floor_return));
+                btn4.setTag(getString(R.string.progress_floor_return));
+                btn4.setVisibility(View.VISIBLE);
                 //getString(R.string.progress_floor)
 
-                txt4.setText(getString(R.string.location_progress));
-                btn4.setTag(getString(R.string.location_progress));
-                btn4.setVisibility(View.VISIBLE);
-
-                txt5.setText(getString(R.string.stock_in_certificate));
-                btn5.setTag(getString(R.string.stock_in_certificate));
+                txt5.setText(getString(R.string.location_progress));
+                btn5.setTag(getString(R.string.location_progress));
                 btn5.setVisibility(View.VISIBLE);
 
-                txt6.setText(getString(R.string.message));
-                btn6.setTag(getString(R.string.message));
+                txt6.setText(getString(R.string.stock_in_certificate));
+                btn6.setTag(getString(R.string.stock_in_certificate));
                 btn6.setVisibility(View.VISIBLE);
 
-                txt7.setText("");
-                btn7.setTag("");
-                btn7.setVisibility(View.INVISIBLE);
+                txt7.setText(getString(R.string.stock_in_certificate_location));
+                btn7.setTag(getString(R.string.stock_in_certificate_location));
+                btn7.setVisibility(View.VISIBLE);
+
+              /*  txt7.setText(getString(R.string.message));
+                btn7.setTag(getString(R.string.message));
+                btn7.setVisibility(View.VISIBLE);*/
             }
 
             Drawable img3 = FindImage(btn3.getTag().toString());
@@ -1476,12 +1510,16 @@ public class ActivityMenuTest3 extends BaseActivity {
             //15.진행층수 등록(회수)
             //16.반출입 현황
             //17.반출송장 등록
+            //19.현장별 송장 조회
+            //20.회수 일보
             //item4.setVisible(true);
             item1.setVisible(true);
             item14.setVisible(true);
             item15.setVisible(true);
             item16.setVisible(true);
             item17.setVisible(true);
+            item19.setVisible(true);
+            item20.setVisible(true);
         } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("1")) { //창녕 팀장권한, 메뉴갯수 8개
             //1.메뉴 편집
             //2.작업요청 관리
@@ -1548,7 +1586,10 @@ public class ActivityMenuTest3 extends BaseActivity {
             //14.알림 메시지
             //15.진행층수 등록(회수)
             //16.반출입 현황
+            //17.반출송장 등록
             //18.A/S 관리
+            //19.현장별 송장 조회
+            //20.회수 일보
             item1.setVisible(true);
             item4.setVisible(true);
             item5.setVisible(true);
@@ -1565,6 +1606,8 @@ public class ActivityMenuTest3 extends BaseActivity {
             item16.setVisible(true);
             item17.setVisible(true);
             item18.setVisible(true);
+            item19.setVisible(true);
+            item20.setVisible(true);
         } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("2")) {//음성 영업담당자 권한, 3개
             //1.메뉴 편집
             //13.생산내역 조회
@@ -1836,8 +1879,14 @@ public class ActivityMenuTest3 extends BaseActivity {
         } else if (str.equals(getString(R.string.stock_in_certificate))) {
             return getBaseContext().getResources().getDrawable(R.drawable.receipt_48px);
         }
+        else if (str.equals(getString(R.string.stock_in_certificate_location))) {
+            return getBaseContext().getResources().getDrawable(R.drawable.receipt_48px);
+        }
         else if (str.equals(getString(R.string.as_management))) {
             return getBaseContext().getResources().getDrawable(R.drawable.ic_baseline_handyman_24);
+        }
+        else if (str.equals(getString(R.string.daily_report_return))) {
+            return getBaseContext().getResources().getDrawable(R.drawable.round_menu_book_white_48);
         }
         else {
             return getBaseContext().getResources().getDrawable(R.drawable.round_check_circle_outline_white_48);
@@ -1883,7 +1932,38 @@ public class ActivityMenuTest3 extends BaseActivity {
      */
     private void GoDailyReport() {
         ClickSearchButton4();//일보확인
+    }
 
+    private void GoDailyReportReturn(){
+        //사용자 ID 와 일자 조건을 통하여 데이터를 조회한다.
+        //검색조건
+        String userID = Users.USER_ID;
+        String fromDate = fromYear + "-" + (fromMonth + 1) + "-" + fromDay;
+        String toDate = toYear + "-" + (toMonth + 1) + "-" + toDay;
+        String type;
+        String leaderType = Users.LeaderType;
+        suWorders = new ArrayList<SuWorder>();
+        if (searchDateType.equals("요청일"))
+            type = "1";
+        else if (searchDateType.equals("희망일"))
+            type = "0";
+        else//작업일
+            type = "2";
+
+        /*String url = getString(R.string.service_address) + "getWorders";
+        ContentValues values = new ContentValues();
+        values.put("SupervisorCode", userID);
+        values.put("FromDate", fromDate);
+        values.put("ToDate", toDate);
+        values.put("Type", type);//요청일, 희망일, 작업일 type
+        values.put("LeaderType", leaderType);
+        GetWorders gsod = new GetWorders(url, values);
+        gsod.execute();*/
+
+        suWorders = new ArrayList<SuWorder>();
+        restURL = "";
+        restURL = getString(R.string.service_address) + "getWorders2/" + userID + "/" + fromDate + "/" + toDate + "/" + type+ "/" + leaderType;
+        new ActivityMenuTest3.ReadJSONFeedTask("회수일보작성").execute(restURL);
     }
 
     /*
@@ -2090,8 +2170,6 @@ public class ActivityMenuTest3 extends BaseActivity {
 
         protected void onPostExecute(String result) {
             try {
-
-                //Log.i("ReadJSONFeedTask", result);
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray;
                 if (this.type.equals("내현장"))//내현장만
@@ -2116,13 +2194,13 @@ public class ActivityMenuTest3 extends BaseActivity {
                     } else {//있으면
                         customer = customerHashMap.get(key);
                     }
-                    customer.addData(child.getString("LocationNo"), child.getString("LocationName"), child.getString("ContractNo"));
+                    customer.addData(child.getString("LocationNo"), child.getString("LocationName"), child.getString("ContractNo"), child.getString("LocationName2"));
                 }
                 //Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
 
 
                 Intent i;
-                if (this.type.equals("내현장")) {//진행층수 등록, 진행기준 정보관리, 현장 지원요청, 진행층수 등록(회수), 반출입 현황, A/S 관리
+                if (this.type.equals("내현장")) {//진행층수 등록, 진행기준 정보관리, 현장 지원요청, 진행층수 등록(회수), 반출입 현황, A/S 관리, 현장별 송장 조회
                     i = new Intent(getBaseContext(), LocationTreeViewActivity.class);//todo
                 } else {//담당자배정 or 담당자 배정현황
                     i = new Intent(getBaseContext(), LocationTreeViewActivitySearch.class);//todo
@@ -2134,10 +2212,15 @@ public class ActivityMenuTest3 extends BaseActivity {
                     i.putExtra("type", "담당자배정현황");
                 }
 
+                if(programType.equals("현장별송장조회")){
+                    String fromDate = fromYear + "-" + (fromMonth + 1) + "-" + fromDay;
+                    String toDate = toYear + "-" + (toMonth + 1) + "-" + toDay;
+                    i.putExtra("fromDate", fromDate);
+                    i.putExtra("toDate", toDate);
+                }
+
                 i.putExtra("programType", programType);
                 i.putExtra("hashMap", customerHashMap);
-
-
                 startActivity(i);
 
             } catch (Exception e) {
@@ -2161,7 +2244,6 @@ public class ActivityMenuTest3 extends BaseActivity {
         suWorders = new ArrayList<SuWorder>();
 
         restURL = "";
-
         if (searchDateType.equals("요청일")) {
             restURL = getString(R.string.service_address) + "getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/1"; //요청
         } else if (searchDateType.equals("희망일")) {
@@ -2171,10 +2253,16 @@ public class ActivityMenuTest3 extends BaseActivity {
         }
 
         //mProgress = ProgressDialog.show(SearchActivity.this, "Wait", "Loading...");
-        new ActivityMenuTest3.ReadJSONFeedTask().execute(restURL);
+        new ActivityMenuTest3.ReadJSONFeedTask("일보작성").execute(restURL);
     }
 
     private class ReadJSONFeedTask extends AsyncTask<String, Void, String> {
+        String pType;
+
+        ReadJSONFeedTask(String pType){
+            this.pType = pType;
+        }
+
         @Override
         protected String doInBackground(String... urls) {
             return readJSONFeed(urls[0]);
@@ -2185,8 +2273,13 @@ public class ActivityMenuTest3 extends BaseActivity {
 
                 //Log.i("ReadJSONFeedTask", result);
                 JSONObject jsonObject = new JSONObject(result);
-                JSONArray jsonArray = jsonObject.optJSONArray("GetSWorderListResult");
-
+                JSONArray jsonArray;
+                String arrayName;
+                if(pType.equals("회수일보작성"))
+                    arrayName="GetWorders2Result";
+                else
+                    arrayName="GetSWorderListResult";
+                jsonArray= jsonObject.optJSONArray(arrayName);
                 String LocationName = "";
                 String SupervisorWoNo = "";
                 String WorkDate = "";
@@ -2196,6 +2289,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 String Supervisor = "";
                 String WorkTypeName = "";
                 String Dong = "";
+                String SupervisorCode="";
 
                 for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -2210,7 +2304,8 @@ public class ActivityMenuTest3 extends BaseActivity {
                     Supervisor = child.getString("SupervisorName");
                     WorkTypeName = child.getString("WorkTypeName");
                     Dong = child.getString("Dong");
-                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StartTime, StatusFlag, CustomerName, Supervisor, WorkTypeName, Dong));
+                    SupervisorCode = child.getString("SupervisorCode");
+                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StartTime, StatusFlag, CustomerName, Supervisor, WorkTypeName, Dong, SupervisorCode));
                 }
                 //Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
 
@@ -2220,24 +2315,24 @@ public class ActivityMenuTest3 extends BaseActivity {
                     i.putExtra("data", suWorders);
                     i.putExtra("type", "작업");
                     i.putExtra("url", restURL);
-                    i.putExtra("arrayName", "GetSWorderListResult");
+                    i.putExtra("arrayName", arrayName);
+                    i.putExtra("programType", pType);
                 } else {//창녕
                     i = new Intent(getBaseContext(), SuListViewActivity.class);
                     i.putExtra("data", suWorders);
                     i.putExtra("type", "작업");
                     i.putExtra("url", restURL);
-                    i.putExtra("arrayName", "GetSWorderListResult");
+                    i.putExtra("arrayName", arrayName);
                 }
-
                 startActivity(i);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private SuWorder MakeData(String woNo, String locationName, String workDate, String startTime, String statusFlag, String customerName, String supervisor, String workTypeName, String dong) {
+    private SuWorder MakeData(String woNo, String locationName, String workDate, String startTime,
+                              String statusFlag, String customerName, String supervisor, String workTypeName, String dong, String supervisorCode) {
 
         SuWorder suWorder = new SuWorder();
 
@@ -2250,6 +2345,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         suWorder.Supervisor = supervisor;
         suWorder.WorkTypeName = workTypeName;
         suWorder.Dong = dong;
+        suWorder.SupervisorCode = supervisorCode;
         return suWorder;
     }
 
@@ -2373,6 +2469,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 String Supervisor = "";
                 String WorkTypeName = "";
                 String Dong = "";
+                String SupervisorCode="";
 
                 for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -2386,7 +2483,8 @@ public class ActivityMenuTest3 extends BaseActivity {
                     Supervisor = child.getString("SupervisorName");
                     WorkTypeName = child.getString("WorkTypeName");
                     Dong = child.getString("Dong");
-                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StartTime, StatusFlag, CustomerName, Supervisor, WorkTypeName, Dong));
+                    SupervisorCode = child.getString("SupervisorCode");
+                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StartTime, StatusFlag, CustomerName, Supervisor, WorkTypeName, Dong, SupervisorCode));
                 }
 
                 Intent i = new Intent(getBaseContext(), SuListViewActivity.class);//todo

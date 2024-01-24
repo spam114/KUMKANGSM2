@@ -1,112 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="12">
 
 
     <LinearLayout
         android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="2"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textViewStartTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
             android:text="일자"
             android:textColor="#0022ff"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewDong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:text="동"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0px"
-        android:layout_weight="3"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="3dp"
+        android:layout_weight="3"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textViewSupervisorName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewSupervisorName"
-            android:text="이름"
             android:gravity="center_vertical"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp"/>
+            android:text="이름"
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/textViewWorkTypeName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewWorkTypeName"
-            android:text="작업구분"
             android:gravity="center_vertical"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp"/>
+            android:text="작업구분"
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0px"
-        android:layout_weight="5"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="3dp"
+        android:layout_weight="5"
+        android:gravity="center"
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/textViewCustomer"
-            android:text="거래처"
-            android:gravity="center_vertical"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp"
-            android:textColor="#0022ff"/>
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewLocation"
-            android:text="현장"
             android:gravity="center_vertical"
-            android:textSize="15sp"
-            android:textStyle="bold"/>
+            android:text="거래처"
+            android:textColor="#0022ff"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="현장"
+            android:textSize="13sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 
     <TextView
-        android:layout_width="0px"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:layout_weight="2"
-        android:layout_height="match_parent"
         android:id="@+id/textViewStatus"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="center"
         android:text="상태"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
-        android:textSize="15sp"
-        android:textStyle="bold"/>
+        android:textSize="13sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

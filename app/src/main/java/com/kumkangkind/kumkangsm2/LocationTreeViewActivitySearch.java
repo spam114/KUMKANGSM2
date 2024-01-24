@@ -202,7 +202,7 @@ public class LocationTreeViewActivitySearch extends BaseActivity {//+검색
                     } else {//있으면
                         customer = customerHashMap.get(key);
                     }
-                    customer.addData(child.getString("LocationNo"), child.getString("LocationName"), child.getString("ContractNo"));
+                    customer.addData(child.getString("LocationNo"), child.getString("LocationName"), child.getString("ContractNo"), child.getString("LocationName2"));
                 }
 
                 customerList = new ArrayList<>(customerHashMap.values());

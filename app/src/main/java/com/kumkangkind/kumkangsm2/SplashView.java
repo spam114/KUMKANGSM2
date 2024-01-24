@@ -51,7 +51,6 @@ public class SplashView extends BaseActivity {
     DownloadManager mDm;
 
 
-
     private void startProgress() {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -80,14 +79,37 @@ public class SplashView extends BaseActivity {
         //progressOFF();
     }
 
-    private void CheckPermission(){
-        if (PermissionUtil.haveAllpermission(SplashView.this,PermissionUtil.permissionList)){
-            // 모든 퍼미션 허용
-            CheckUser();
+    private void CheckPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {//29이상, 33미만
+            PermissionUtil.permissionList = new String[]{
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_PHONE_NUMBERS
+            };
+        }
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {//33이상
+            PermissionUtil.permissionList = new String[]{
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_PHONE_NUMBERS,
+                    Manifest.permission.POST_NOTIFICATIONS
+            };
         }
         else{
+            PermissionUtil.permissionList = new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_PHONE_NUMBERS
+            };
+        }
+
+        if (PermissionUtil.haveAllpermission(SplashView.this, PermissionUtil.permissionList)) {
+            // 모든 퍼미션 허용
+            CheckUser();
+        } else {
             // 퍼미션 하나로도 허용 안함
-            ActivityCompat.requestPermissions(SplashView.this,PermissionUtil.permissionList,PermissionUtil.MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
+            ActivityCompat.requestPermissions(SplashView.this, PermissionUtil.permissionList, PermissionUtil.MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
         }
     }
 
@@ -95,42 +117,6 @@ public class SplashView extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
-        /*switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_PHONE_STATE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    //다음권한으로 넘어간다.
-                    GetPermission2();
-
-                } else {
-
-                    Toast.makeText(this, "앱에 로그인하기 위해 반드시 필요합니다.", Toast.LENGTH_LONG).show();
-
-
-                }
-                return;
-            }
-
-            case MY_PERMISSIONS_REQUEST_WRITE_DATA: {
-
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    CheckUser();//권한이 있다면 CheckUser실행
-
-                } else {
-                    Toast.makeText(this, "사진을 업로드하기 위해 반드시 필요합니다.", Toast.LENGTH_LONG).show();
-
-                }
-                return;
-            }
-
-            // other 'case' lines to check for other
-            // permissions this app might request
-        }*/
-
         //region 요청 코드가 PERMISSIONS_REQUEST_CODE 이고,
         // 요청한 퍼미션 개수만큼 수신되었다면
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -154,10 +140,14 @@ public class SplashView extends BaseActivity {
             }
             //거부 ,재거부
             else {
-                if (PermissionUtil.recheckPermission(this, PermissionUtil.permissionList)) {
+                //거부 눌렀을 때 로직
+                Toast.makeText(this, "앱에 로그인하기 위해 반드시 필요합니다.", Toast.LENGTH_LONG).show();
+                Intent intent = getIntent();
+                setResult(RESULT_CANCELED, intent);
+                finish();
+                /*if (PermissionUtil.recheckPermission(this, PermissionUtil.permissionList)) {
                     //거부 눌렀을 때 로직
                     Toast.makeText(this, "앱에 로그인하기 위해 반드시 필요합니다.", Toast.LENGTH_LONG).show();
-
                     Intent intent = getIntent();
                     setResult(RESULT_CANCELED, intent);
                     finish();
@@ -165,11 +155,10 @@ public class SplashView extends BaseActivity {
                 } else {
                     //재거부 눌렀을 때 로직
                     Toast.makeText(this, "앱에 로그인하기 위해 반드시 필요합니다.", Toast.LENGTH_LONG).show();
-
                     Intent intent = getIntent();
                     setResult(RESULT_CANCELED, intent);
                     finish();
-                }
+                }*/
             }
         }
         //end region
@@ -198,11 +187,11 @@ public class SplashView extends BaseActivity {
                     return;
                 }//
 
-               // PhoneNumber=Settings.Secure.getString (getContentResolver(), Settings.Secure.ANDROID_ID);
+                // PhoneNumber=Settings.Secure.getString (getContentResolver(), Settings.Secure.ANDROID_ID);
                 //PhoneNumber=systemService.getLine1Number();
-                PhoneNumber=systemService.getLine1Number();
-                if(PhoneNumber==null) {
-                    PhoneNumber = Settings.Secure.getString (getContentResolver(), Settings.Secure.ANDROID_ID);// 나중에는 안드로이드 아이디로 셋팅하여야한다.
+                PhoneNumber = systemService.getLine1Number();
+                if (PhoneNumber == null) {
+                    PhoneNumber = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);// 나중에는 안드로이드 아이디로 셋팅하여야한다.
                     /*BluetoothAdapter myDevice = BluetoothAdapter.getDefaultAdapter();
                     if(myDevice==null){
                         // device does not support bluetooth
@@ -210,39 +199,36 @@ public class SplashView extends BaseActivity {
                     String deviceName = myDevice.getName();
                     PhoneNumber=deviceName;*/
                     //Toast.makeText(this, PhoneNumber, Toast.LENGTH_LONG).show();
-                }
-                else if(PhoneNumber.equals("")){
-                    PhoneNumber = Settings.Secure.getString (getContentResolver(), Settings.Secure.ANDROID_ID);
+                } else if (PhoneNumber.equals("")) {
+                    PhoneNumber = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
                 }
 
-                Users.AndroidID= Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-                if(Users.AndroidID==null)
-                    Users.AndroidID="";
-                Users.Model=Build.MODEL;
-                if(Users.Model==null)
-                    Users.Model="";
-                Users.PhoneNumber=systemService.getLine1Number();//없으면 null이들어갈수도있다 -> if(Users.PhoneNumber==null) 으로 활용가능
-                if(Users.PhoneNumber==null)
-                    Users.PhoneNumber="";
+                Users.AndroidID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+                if (Users.AndroidID == null)
+                    Users.AndroidID = "";
+                Users.Model = Build.MODEL;
+                if (Users.Model == null)
+                    Users.Model = "";
+                Users.PhoneNumber = systemService.getLine1Number();//없으면 null이들어갈수도있다 -> if(Users.PhoneNumber==null) 으로 활용가능
+                if (Users.PhoneNumber == null)
+                    Users.PhoneNumber = "";
                 /*else
                     Users.PhoneNumber = Users.PhoneNumber.replace("+82", "0");*/
-                Users.DeviceOS=Build.VERSION.RELEASE;
-                if(Users.DeviceOS==null)
-                    Users.DeviceOS="";
-                Users.Remark="";
-                Users.DeviceName=BluetoothAdapter.getDefaultAdapter().getName();//블루투스 권한 필요 manifest확인: 블루투스가 없으면 에러남
+                Users.DeviceOS = Build.VERSION.RELEASE;
+                if (Users.DeviceOS == null)
+                    Users.DeviceOS = "";
+                Users.Remark = "";
+                Users.DeviceName = BluetoothAdapter.getDefaultAdapter().getName();//블루투스 권한 필요 manifest확인: 블루투스가 없으면 에러남
                 //PhoneNumber = "01067375288";//테스트용
 
             } catch (Exception ex) {
-            }
-            finally {
-                String restURL = getString(R.string.service_address)+"checkemployee/" + PhoneNumber;
+            } finally {
+                String restURL = getString(R.string.service_address) + "checkemployee/" + PhoneNumber;
                 //String restURL = getString(R.string.service_address)+"checkemployeebyInput";
                 new ReadJSONFeedTask().execute(restURL);
                 InsertAppLoginHistory();
                 Log.i("사용자전화번호", PhoneNumber);
             }
-
 
 
         } catch (Exception ex) {
@@ -252,7 +238,6 @@ public class SplashView extends BaseActivity {
         }
 
     }
-
 
 
     private class ReadJSONFeedTask extends AsyncTask<String, Void, String> {//Users.USER_ID 이런식으로 갖고와도 쓰레드여서 다른곳에서 그대로 쓰기에 괜찮은 걸까?
@@ -279,13 +264,13 @@ public class SplashView extends BaseActivity {
                     Users.EmployeeNo = child.getString("EmployeeNo");
                 }
 
-                if (Users.LeaderType.equals("1") || Users.LeaderType.equals("2") || Users.BusinessClassCode==9) {//음성은 슈퍼바이저 리스트 구분상관없이 받음
-                    String restURL = getString(R.string.service_address)+"getsupervisorlist/" + Users.USER_ID;
+                if (Users.LeaderType.equals("1") || Users.LeaderType.equals("2") || Users.BusinessClassCode == 9) {//음성은 슈퍼바이저 리스트 구분상관없이 받음
+                    String restURL = getString(R.string.service_address) + "getsupervisorlist/" + Users.USER_ID;
                     new ReadJSONFeedTask2().execute(restURL);
                 }
 
                 if (!Users.USER_ID.equals("")) {
-                    String restURL = getString(R.string.service_address)+"getcardlist/" + Users.USER_ID;
+                    String restURL = getString(R.string.service_address) + "getcardlist/" + Users.USER_ID;
                     new ReadJSONFeedTask3().execute(restURL);
                 }
 
@@ -300,7 +285,6 @@ public class SplashView extends BaseActivity {
 
 
             } catch (JSONException e) {
-
                 Toast.makeText(SplashView.this, "등록되어 있는 휴대폰 정보가 없습니다. 관리자에게 문의 하세요. ", Toast.LENGTH_LONG).show();
             }
         }
@@ -338,7 +322,6 @@ public class SplashView extends BaseActivity {
         }
         return stringBuilder.toString();
     }
-
 
 
     /**
@@ -399,13 +382,13 @@ public class SplashView extends BaseActivity {
         }
     }
 
-    private void InsertAppLoginHistory(){
-        new InsertAppLoginHistory().execute(getString(R.string.service_address)+"insertAppLoginHistory");
+    private void InsertAppLoginHistory() {
+        new InsertAppLoginHistory().execute(getString(R.string.service_address) + "insertAppLoginHistory");
     }
 
     public class InsertAppLoginHistory extends AsyncTask<String, Void, String> {
 
-        public InsertAppLoginHistory(){
+        public InsertAppLoginHistory() {
         }
 
         @Override

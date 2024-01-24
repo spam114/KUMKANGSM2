@@ -214,6 +214,7 @@ public class ActivitySales extends BaseActivity {
                 String CustomerName = "";
                 String Supervisor  = "";
                 String WorkTypeName  = "";
+                String SupervisorCode = "";
 
                 for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -225,7 +226,8 @@ public class ActivitySales extends BaseActivity {
                     CustomerName = child.getString("CustomerName");
                     Supervisor = child.getString("SupervisorName");
                     WorkTypeName = child.getString("WorkTypeName");
-                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StatusFlag, CustomerName, Supervisor, WorkTypeName));
+                    SupervisorCode = child.getString("SupervisorCode");
+                    suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StatusFlag, CustomerName, Supervisor, WorkTypeName, SupervisorCode));
                 }
 
                 mHandler.sendEmptyMessage(0);
@@ -324,7 +326,8 @@ public class ActivitySales extends BaseActivity {
     };
 
 
-    private SuWorder MakeData(String woNo, String locationName, String workDate, String statusFlag, String customerName, String supervisor, String workTypeName){
+    private SuWorder MakeData(String woNo, String locationName, String workDate,
+                              String statusFlag, String customerName, String supervisor, String workTypeName, String supervisorCode){
 
         SuWorder suWorder = new SuWorder();
 
@@ -335,6 +338,7 @@ public class ActivitySales extends BaseActivity {
         suWorder.CustomerName = customerName;
         suWorder.Supervisor = supervisor;
         suWorder.WorkTypeName = workTypeName;
+        suWorder.SupervisorCode = supervisorCode;
         return suWorder;
     }
 

@@ -1055,19 +1055,7 @@ public class DongPersonListViewActivity extends Activity {
                     tvGangFormDate.setText(child.getString("GangFormDate").equals("")?getString(R.string.clear_string):child.getString("GangFormDate"));
                     tvOutDate.setText(child.getString("OutDate").equals("")?getString(R.string.clear_string):child.getString("OutDate"));
                     tvSettingFloor.setText(child.getString("SettingFloor").equals("")?getString(R.string.clear_string):child.getString("SettingFloor"));
-
-
-                    //suWorders.add(MakeData(SupervisorWoNo, LocationName, WorkDate, StatusFlag, CustomerName, Supervisor, WorkTypeName));
-                    //SupervisorWoNo = child.getString("SupervisorWoNo");
                 }
-
-              //  mHandler.sendEmptyMessage(0);
-           //     Intent i = new Intent(getBaseContext(), SuListViewActivity.class);//todo
-              //  i.putExtra("data", suWorders);
-             //   i.putExtra("type", activityType);
-      //          i.putExtra("url", restURL);
-        //        startActivity(i);
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

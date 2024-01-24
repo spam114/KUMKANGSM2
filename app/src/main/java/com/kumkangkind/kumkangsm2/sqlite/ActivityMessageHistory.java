@@ -1,16 +1,8 @@
 package com.kumkangkind.kumkangsm2.sqlite;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.kumkangkind.kumkangsm2.ActivityMenuTest3;
-import com.kumkangkind.kumkangsm2.ActivityStockInCertificateDetail;
-import com.kumkangkind.kumkangsm2.BaseActivity;
-import com.kumkangkind.kumkangsm2.R;
-import com.kumkangkind.kumkangsm2.RequestHttpURLConnection;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -25,11 +17,18 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.kumkangkind.kumkangsm2.ActivityStockInCertificateDetail;
+import com.kumkangkind.kumkangsm2.BaseActivity;
+import com.kumkangkind.kumkangsm2.R;
+import com.kumkangkind.kumkangsm2.RegisterActivityReturn;
+import com.kumkangkind.kumkangsm2.RequestHttpURLConnection;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 
-public class ActivityMessageHistory extends BaseActivity{
+public class ActivityMessageHistory extends BaseActivity {
 
     DbOpenHelper mHelper;
     Cursor mCursor;
@@ -68,17 +67,17 @@ public class ActivityMessageHistory extends BaseActivity{
                 mCursor, new String[]{"header", "time"},
                 new int[]{android.R.id.text1, android.R.id.text2});
 
-        ListView list = (ListView)findViewById(R.id.ListViewMessage);
+        ListView list = (ListView) findViewById(R.id.ListViewMessage);
         list.setAdapter(Adapter);
         list.setOnItemClickListener(mItemClickListener);
 
-        Button button = (Button)findViewById(R.id.btnClear);
+        Button button = (Button) findViewById(R.id.btnClear);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 mHelper.deleteAll();
-               finish();
+                finish();
             }
         });
 
@@ -103,35 +102,57 @@ public class ActivityMessageHistory extends BaseActivity{
                     mCursor.moveToPosition(position);
 
                     //선택한 아이템을 표현할 수 있는 메시지를 만든다.
-                    @SuppressLint("Range") String mes =  mCursor.getString(mCursor.getColumnIndex("contents"));
+                    @SuppressLint("Range") String mes = mCursor.getString(mCursor.getColumnIndex("contents"));
                     @SuppressLint("Range") String mes1 = mCursor.getString(mCursor.getColumnIndex("time"));
                     @SuppressLint("Range") String mes2 = mCursor.getString(mCursor.getColumnIndex("header"));
                     @SuppressLint("Range") String certificateNo = mCursor.getString(mCursor.getColumnIndex("certificateNo"));
 
                     //메시지를 보여준다.
                     //Extra를 넣은 후에 폼을 종료합니다.
-
-                    if(!certificateNo.equals("")){
-                        //송장 클릭
-                        new MaterialAlertDialogBuilder(ActivityMessageHistory.this)
-                                .setTitle(mes2)
-                                .setMessage(mes)
-                                .setCancelable(true)
-                                .setPositiveButton
-                                        ("확인", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                return;
-                                            }
-                                        }).setNegativeButton("송장보기", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                getLocationInfoByCertificateNo(certificateNo);
-                                return;
-                            }
-                        }).show();
-                    }
-                    else{//작업요청서 클릭
+                    if (!certificateNo.equals("")) {
+                        if (!certificateNo.substring(0, 2).equals("SW")) {
+                            //송장 클릭
+                            new MaterialAlertDialogBuilder(ActivityMessageHistory.this)
+                                    .setTitle(mes2)
+                                    .setMessage(mes)
+                                    .setCancelable(true)
+                                    .setPositiveButton
+                                            ("확인", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    return;
+                                                }
+                                            }).setNegativeButton("송장보기", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            getLocationInfoByCertificateNo(certificateNo);
+                                            return;
+                                        }
+                                    }).show();
+                        } else {//SW로 시작한다고 본다. 일보번호
+                            new MaterialAlertDialogBuilder(ActivityMessageHistory.this)
+                                    .setTitle(mes2)
+                                    .setMessage(mes)
+                                    .setCancelable(true)
+                                    .setPositiveButton
+                                            ("확인", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    return;
+                                                }
+                                            }).setNegativeButton("회수일보", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            Intent intent = new Intent(ActivityMessageHistory.this, RegisterActivityReturn.class);
+                                            intent.putExtra("type", "작업");
+                                            intent.putExtra("key", certificateNo);
+                                            intent.putExtra("inputUser", "-1");
+                                            startActivityForResult(intent, 2);
+                                            return;
+                                        }
+                                    }).show();
+                        }
+                    } else {//작업요청서 클릭
                         new AlertDialog.Builder(ActivityMessageHistory.this).setMessage(mes)
                                 .setTitle(mes2).show();
                     }
@@ -191,10 +212,10 @@ public class ActivityMessageHistory extends BaseActivity{
                 JSONArray jsonArray = new JSONArray(result);
                 String ErrorCheck = "";
                 //stockArrayList = new ArrayList<>();
-                String certificateNo="";
-                String customerLocationName="";
-                String locationNo="";
-                String supervisorCode="";
+                String certificateNo = "";
+                String customerLocationName = "";
+                String locationNo = "";
+                String supervisorCode = "";
 
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject child = jsonArray.getJSONObject(i);

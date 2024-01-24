@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -23,14 +25,26 @@ import com.kumkangkind.kumkangsm2.RegisterActivity2;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class StockInCertificateAdapter extends RecyclerView.Adapter<StockInCertificateAdapter.ViewHolder> implements BaseActivityInterface {
+public class StockInCertificateAdapter extends RecyclerView.Adapter<StockInCertificateAdapter.ViewHolder> implements BaseActivityInterface, Filterable {
 
     Context context;
     ArrayList<StockInCertificate> items = new ArrayList<>();
 
-    public StockInCertificateAdapter(Context context) {
+    ArrayList<StockInCertificate> unFilteredlist;//for filter
+    ArrayList<StockInCertificate> filteredList;//for filter
+
+    public StockInCertificateAdapter(ArrayList<StockInCertificate> items, Context context) {
         super();
         this.context = context;
+        this.items = items;
+        this.unFilteredlist = items;
+        this.filteredList = items;
+    }
+
+    public void updateAdapter(ArrayList<StockInCertificate> newCountries) {
+        items.clear();
+        items.addAll(newCountries);
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -43,13 +57,43 @@ public class StockInCertificateAdapter extends RecyclerView.Adapter<StockInCerti
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        StockInCertificate item = items.get(position);
+        StockInCertificate item = filteredList.get(position);//for filter
         viewHolder.setItem(item, position); //왜오류
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return filteredList.size();//for filter
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()) {
+                    filteredList = unFilteredlist;
+                } else {
+                    ArrayList<StockInCertificate> filteringList = new ArrayList<>();
+                    for (StockInCertificate sic : unFilteredlist) {
+                        if (sic.LocationName.toLowerCase().contains(charString.toLowerCase())) {
+                            filteringList.add(sic);
+                        }
+                    }
+                    filteredList = filteringList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredList = (ArrayList<StockInCertificate>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     //보통은 ViewHolder를 Static 으로 쓴다.
@@ -115,6 +159,7 @@ public class StockInCertificateAdapter extends RecyclerView.Adapter<StockInCerti
 
     public void addItem(StockInCertificate item) {
         items.add(item);
+        notifyDataSetChanged();
     }
 
     public void setItems(ArrayList<StockInCertificate> items) {
@@ -128,81 +173,6 @@ public class StockInCertificateAdapter extends RecyclerView.Adapter<StockInCerti
     public void setItem(int position, StockInCertificate item) {
         items.set(position, item);
     }
-
-    /*public void setDongProgressFloorReturn(String dong, TextView v, Dong item, String progressFloor) {
-        String url = context.getString(R.string.service_address) + "setDongProgressFloorReturn";
-        ContentValues values = new ContentValues();
-        values.put("ContractNo", contractNo);
-        values.put("Dong", dong);
-        values.put("FromDate", fromDate);
-        values.put("ProgressFloor", progressFloor);
-        SetDongProgressFloorReturn gsod = new SetDongProgressFloorReturn(url, values, v, item, fromDate);
-        gsod.execute();
-    }*/
-
-    /*public class SetDongProgressFloorReturn extends AsyncTask<Void, Void, String> {
-        String url;
-        ContentValues values;
-        String fromDate;
-        TextView v;
-        Dong item;
-
-        SetDongProgressFloorReturn(String url, ContentValues values, TextView v, Dong item, String fromDate) {
-            this.url = url;
-            this.values = values;
-            this.fromDate = fromDate;
-            this.v = v;
-            this.item = item;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            startProgress();
-            //Log.i("순서확인", "미납/재고시작");
-            //progress bar를 보여주는 등등의 행위
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            String result;
-            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
-            result = requestHttpURLConnection.request(url, values);
-            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            // 통신이 완료되면 호출됩니다.
-            // 결과에 따른 UI 수정 등은 여기서 합니다
-            try {
-
-                JSONArray jsonArray = new JSONArray(result);
-                String ErrorCheck = "";
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject child = jsonArray.getJSONObject(i);
-                    if (!child.getString("ErrorCheck").equals("null")) {//문제가 있을 시, 에러 메시지 호출 후 종료
-                        ErrorCheck = child.getString("ErrorCheck");
-                        Toast.makeText(context, ErrorCheck, Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                }
-
-                //layoutTop.requestFocus();
-                item.ProgressFloor = v.getText().toString();
-                item.ProgressDate = this.fromDate;
-                notifyDataSetChanged();
-                HideKeyBoard(context);
-                Toast.makeText(context, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            } finally {
-                progressOFF2(this.getClass().getName());
-            }
-        }
-    }*/
 
     private void startProgress() {
         Handler handler = new Handler();

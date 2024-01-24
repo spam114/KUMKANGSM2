@@ -79,7 +79,7 @@ public class PhotoListActivity extends BaseActivity {
     Button addButton;
     Dialog dialog;
     EditText textViewphotoName;
-
+    boolean enableFlag=true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,9 +92,9 @@ public class PhotoListActivity extends BaseActivity {
 
         FIXFLAG = getIntent().getStringExtra("fix");
         type = getIntent().getStringExtra("type");
+        enableFlag = getIntent().getBooleanExtra("enableFlag", true);
         if(type==null)
             type="";
-
         textViewUserName = (TextView) findViewById(R.id.textViewUserName);
         textViewUserName.setText(customer);
         addButton = (Button)findViewById(R.id.btnAdd);
@@ -102,7 +102,7 @@ public class PhotoListActivity extends BaseActivity {
 
         makeImageList();
 
-        adapter = new ImageAdapter(this, R.layout.listview_imagerow, imageList);
+        adapter = new ImageAdapter(this, R.layout.listview_imagerow, imageList, enableFlag);
 
         //ListView
         listView1 = (ListView) findViewById(R.id.listViewImage);
@@ -111,10 +111,15 @@ public class PhotoListActivity extends BaseActivity {
         listView1.setAdapter(adapter);
         listView1.setOnItemClickListener(mItemClickListener);
         listView1.setFocusable(false);
-
+        SetEnableFalse();
         progressOFF();
     }
 
+    private void SetEnableFalse() {
+        if(!enableFlag){
+            addButton.setEnabled(false);
+        }
+    }
 
 
     private void startProgress() {
@@ -134,8 +139,6 @@ public class PhotoListActivity extends BaseActivity {
                 return;
 
         switch (v.getId()) {
-
-
             case R.id.btnAdd: //추가
                 //이미지 갤러리
                 if(Build.VERSION.SDK_INT < 19) {
@@ -158,56 +161,6 @@ public class PhotoListActivity extends BaseActivity {
                     startActivityForResult(intent, RESULT_MULTI_PICTURE);
                 }
                 break;
-
-            /*case R.id.buttonDelete:
-
-                final View v2 = v;
-                new AlertDialog.Builder(this).setMessage("삭제할까요?").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //POST 명령어 호출(업데이트를 적용한다)
-
-                        mHandler = new Handler();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mProgressDialog = ProgressDialog.show(PhotoListActivity.this, "",
-                                        "잠시만 기다려 주세요.", true);
-                                mHandler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                                                mProgressDialog.dismiss();
-                                            }
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }, 5000);
-                            }
-                        });
-
-                        int position = (int)v2.getTag();
-                        int position2 = listView1.getCheckedItemPosition();
-
-                        Log.i("Position1", String.valueOf(position));
-                        Log.i("Position2", String.valueOf(position2));
-
-                        if(position != ListView.INVALID_POSITION) {
-                            removePosition = position;
-                                currentImage = imageList.get(position);
-
-                            new HttpAsyncTaskDelete().execute(getString(R.string.service_address)+"deleteimage");
-                        }
-                    }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).show();
-                break;*/
         }
     }
 
@@ -272,10 +225,6 @@ public class PhotoListActivity extends BaseActivity {
                 Log.e("single choice: ", String.valueOf(data.getData()));
                 Uri imageUri = data.getData();
                 uriList.add(imageUri);
-
-                //adapter = new MultiImageAdapter(uriList, getApplicationContext());
-                //recyclerView.setAdapter(adapter);
-                //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
             }
             else{      // 이미지를 여러장 선택한 경우
                 ClipData clipData = data.getClipData();
@@ -372,7 +321,7 @@ public class PhotoListActivity extends BaseActivity {
                 }
 
                 remakeImageList();
-                adapter = new ImageAdapter(PhotoListActivity.this, R.layout.listview_imagerow, imageList);
+                adapter = new ImageAdapter(PhotoListActivity.this, R.layout.listview_imagerow, imageList, enableFlag);
 
                 //ListView
                 //listView1 = (ListView) findViewById(R.id.listViewImage);
@@ -393,18 +342,6 @@ public class PhotoListActivity extends BaseActivity {
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     private void MakePhotoSettingDialog(final Uri uri){
 

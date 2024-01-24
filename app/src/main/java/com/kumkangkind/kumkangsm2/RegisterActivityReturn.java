@@ -3,6 +3,7 @@ package com.kumkangkind.kumkangsm2;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,14 +23,15 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -65,11 +67,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-
-/**
- * 음성 용 기존꺼 수정
- */
-public class RegisterActivity2 extends BaseActivity {
+public class RegisterActivityReturn extends BaseActivity {
 
     public static final int RESULT_TEXTVIEW1 = 0;
     public static final int RESULT_TEXTVIEW2 = 1;
@@ -79,7 +77,6 @@ public class RegisterActivity2 extends BaseActivity {
 
     TextView textView1;
     TextView textView2;
-    TextView textView3;
     TextView textViewImage1;
     TextView textViewImage2;
     TextView textViewTime1;
@@ -91,8 +88,9 @@ public class RegisterActivity2 extends BaseActivity {
     TextView textViewManageNo;
     TextView textViewCustomer;
     TextView textViewRealDate;
-    TextView textViewDong;
-    private Spinner spinnerWorkType;
+    TextView textViewWorkType2;
+    //private Spinner spinnerWorkType;
+    private Spinner spinnerWorkType2;
     Button btnNext;
     Button btnDelete;
     SuWorder3 suworder3;
@@ -103,8 +101,11 @@ public class RegisterActivity2 extends BaseActivity {
 
     RadioButton radioButton1;
     RadioButton radioButton2;
+    LinearLayout layoutWorkType2;
+    LinearLayout totalLayout;
 
     private ArrayList<WorkType> workTypeList;
+    private ArrayList<WorkType> workTypeList2;
     private int mYear;
     private int mMonth;
     private int mDay;
@@ -113,16 +114,12 @@ public class RegisterActivity2 extends BaseActivity {
     private int mHour2;
     private int mMinute2;
     private String mAddress;
-
-
     LocationManager lm;
     DispLocListener locListenD;
     Uri uri;
     String type;
     String statusFlag;
-
-
-
+    String inputUser;
 
     private void startProgress() {
         Handler handler = new Handler();
@@ -144,27 +141,20 @@ public class RegisterActivity2 extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        setContentView(R.layout.activity_workedit2);
-
+        setContentView(R.layout.activity_register_return);
         type = getIntent().getStringExtra("type");//수정 가능 하게 할건지 아니면 일보확인에서 쓸 수정불가 뷰용인지 구분하는 타입
         key = getIntent().getStringExtra("key");//SupervisorWoNo
-
+        inputUser = getIntent().getStringExtra("inputUser");
         mAddress = "X";
-
         try {
             lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locListenD = new DispLocListener();
-
             //CheckLocation();
         } catch (Exception e) {
             Log.i("location error", e.getMessage());
         }
-
         textView1 = (TextView) findViewById(R.id.textView1);
         textView2 = (TextView) findViewById(R.id.textView2);
-        textView3 = (TextView) findViewById(R.id.textView3);
         textViewTime1 = (TextView) findViewById(R.id.textViewTime1);
         textViewTime2 = (TextView) findViewById(R.id.textViewTime2);
         btnNext = (Button) findViewById(R.id.btnNext);
@@ -176,25 +166,63 @@ public class RegisterActivity2 extends BaseActivity {
         radioButton2 = (RadioButton) findViewById(R.id.radioButton2);
         textViewCustomer = (TextView) findViewById(R.id.textViewCustomer);
         textViewRealDate = (TextView) findViewById(R.id.textViewRealDate);
-        textViewDong = findViewById(R.id.textViewDong);
-        spinnerWorkType = (Spinner) findViewById(R.id.spinnerWorkType);
+        //spinnerWorkType = (Spinner) findViewById(R.id.spinnerWorkType);
+        spinnerWorkType2 = (Spinner) findViewById(R.id.spinnerWorkType2);
+        textViewWorkType2 = findViewById(R.id.textViewWorkType2);
+        totalLayout = findViewById(R.id.totalLayout);
+        layoutWorkType2 = findViewById(R.id.layoutWorkType2);
+        layoutWorkType2.setVisibility(View.GONE);
+        radioButton1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    layoutWorkType2.setVisibility(View.GONE);
+                else
+                    layoutWorkType2.setVisibility(View.VISIBLE);
+            }
+        });
         SetDate();
         SetTime();
         MakeSpinnerWorkTypeAndData();
+        SetEnableFalse();
         progressOFF();
+    }
 
+    private void SetEnableFalse() {
+        if(!this.inputUser.equals("")){
+            if (!this.inputUser.equals(Users.USER_ID)) {
+                btnNext.setEnabled(false);
+                btnDelete.setEnabled(false);
+                textViewRealDate.setEnabled(false);
+                textViewTime1.setEnabled(false);
+                textViewTime2.setEnabled(false);
+                radioButton1.setEnabled(false);
+                radioButton2.setEnabled(false);
+                spinnerWorkType2.setEnabled(false);
+                textViewWorkType2.setEnabled(false);
+                textView1.setEnabled(false);
+                textView2.setEnabled(false);
+            }
+        }
     }
 
     /**
      * 여기의 onpost->mHandler2 에서 버튼 데이터들을 각 테스트뷰, 스피너리스트 등등에 넣어줌
      */
     private void MakeSpinnerWorkTypeAndData() {
-        String restURL = getString(R.string.service_address) + "worktypelistByBusinessClassCode";
-        new GetWorkTypeList().execute(restURL);
+        /*String restURL = getString(R.string.service_address) + "worktypelistByBusinessClassCode";
+        new GetWorkTypeList().execute(restURL);*/
+
+        String url = getString(R.string.service_address) + "getSupervisorWorkType2";
+        ContentValues values = new ContentValues();
+        values.put("Parent", "-1");
+        values.put("Type", "2");
+        GetSupervisorWorkType gsod = new GetSupervisorWorkType(url, values);
+        gsod.execute();
     }
 
     //POST
-    private class GetWorkTypeList extends AsyncTask<String, Void, String> {
+    /*private class GetWorkTypeList extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
 
@@ -204,7 +232,6 @@ public class RegisterActivity2 extends BaseActivity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-
             try {
                 //Log.i("ReadJSONFeedTask", result);
                 JSONArray jsonArray = new JSONArray(result);
@@ -229,8 +256,6 @@ public class RegisterActivity2 extends BaseActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
         }
 
         private String convertInputStreamToString(InputStream inputStream) throws IOException {
@@ -302,39 +327,178 @@ public class RegisterActivity2 extends BaseActivity {
             //Log.i("result", result.toString());
             return result;
         }
-    }
+    }*/
 
 
     /**
      * 작업구분을 가져온다.
      */
-    private Handler mHandler2 = new Handler() {
+    /*private Handler mHandler2 = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
             String[] workTypes = new String[workTypeList.size()];
-
             for (int i = 0; i < workTypeList.size(); i++) {
-
                 workTypes[i] = workTypeList.get(i).WorkTypeCode + "-" + workTypeList.get(i).WorkTypeName;
             }
             spinnerWorkType = (Spinner) findViewById(R.id.spinnerWorkType);
-            ArrayAdapter<String> workTypeAdapter = new ArrayAdapter<String>(RegisterActivity2.this, android.R.layout.simple_spinner_dropdown_item, workTypes);
+            ArrayAdapter<String> workTypeAdapter = new ArrayAdapter<String>(RegisterActivityReturn.this, android.R.layout.simple_spinner_dropdown_item, workTypes);
             spinnerWorkType.setAdapter(workTypeAdapter);
 
-            if (!key.equals("생성모드")) {
-                SetData(key);//여기에서 데이터 및 수정가능 여부 구성
-            } else {//생성모드 초기 셋팅 값 입력
-                SetCreateData();
-                Toast.makeText(getBaseContext(), "'작업일보생성' 버튼을 눌러야\n일보가 생성됩니다.", Toast.LENGTH_SHORT).show();
-            }
+            String url = getString(R.string.service_address) + "getSupervisorWorkType2";
+            ContentValues values = new ContentValues();
+            values.put("Parent", "2");
+            values.put("Type", "");
+            GetSupervisorWorkType2 gsod = new GetSupervisorWorkType2(url, values);
+            gsod.execute();
 
-          /*  if(suWorder2 != null)
-                spinnerWorkType.setSelection(getIndex(spinnerWorkType, suWorder2.WorkTypeCode + "-" + suWorder2.WorkTypeName));*/
+          *//*  if(suWorder2 != null)
+                spinnerWorkType.setSelection(getIndex(spinnerWorkType, suWorder2.WorkTypeCode + "-" + suWorder2.WorkTypeName));*//*
         }
-    };
+    };*/
+
+
+    public class GetSupervisorWorkType extends AsyncTask<Void, Void, String> {
+        String url;
+        ContentValues values;
+
+        GetSupervisorWorkType(String url, ContentValues values) {
+            this.url = url;
+            this.values = values;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            startProgress();
+            //progress bar를 보여주는 등등의 행위
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String result;
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            result = requestHttpURLConnection.request(url, values);
+            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // 통신이 완료되면 호출됩니다.
+            // 결과에 따른 UI 수정 등은 여기서 합니다
+            try {
+                //WoImage image;
+                JSONArray jsonArray = new JSONArray(result);
+                workTypeList = new ArrayList<WorkType>();
+                String WorkTypeCode = "";
+                String WorkTypeName = "";
+                String SeqNo = "";
+                int No;
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject child = jsonArray.getJSONObject(i);
+                    WorkTypeCode = child.getString("WorkTypeCode");
+                    WorkTypeName = child.getString("WorkTypeName");
+                    SeqNo = child.getString("SeqNo");
+                    No = i;
+                    workTypeList.add(new WorkType(WorkTypeCode, WorkTypeName, SeqNo, No));
+                }
+
+                String[] workTypes = new String[workTypeList.size()];
+                for (int i = 0; i < workTypeList.size(); i++) {
+                    workTypes[i] = workTypeList.get(i).WorkTypeCode + "-" + workTypeList.get(i).WorkTypeName;
+                }
+                // = (Spinner) findViewById(R.id.spinnerWorkType);
+                ArrayAdapter<String> workTypeAdapter = new ArrayAdapter<String>(RegisterActivityReturn.this, android.R.layout.simple_spinner_dropdown_item, workTypes);
+                //spinnerWorkType.setAdapter(workTypeAdapter);
+
+                String url = getString(R.string.service_address) + "getSupervisorWorkType2";
+                ContentValues values = new ContentValues();
+                values.put("Parent", "2");
+                values.put("Type", "");
+                GetSupervisorWorkType2 gsod = new GetSupervisorWorkType2(url, values);
+                gsod.execute();
+
+            } catch (Exception e) {
+
+            } finally {
+                progressOFF2(this.getClass().getName());
+            }
+        }
+    }
+
+
+    public class GetSupervisorWorkType2 extends AsyncTask<Void, Void, String> {
+        String url;
+        ContentValues values;
+
+        GetSupervisorWorkType2(String url, ContentValues values) {
+            this.url = url;
+            this.values = values;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            startProgress();
+            //progress bar를 보여주는 등등의 행위
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String result;
+            RequestHttpURLConnection requestHttpURLConnection = new RequestHttpURLConnection();
+            result = requestHttpURLConnection.request(url, values);
+            return result; // 결과가 여기에 담깁니다. 아래 onPostExecute()의 파라미터로 전달됩니다.
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            // 통신이 완료되면 호출됩니다.
+            // 결과에 따른 UI 수정 등은 여기서 합니다
+            try {
+                //WoImage image;
+                JSONArray jsonArray = new JSONArray(result);
+                workTypeList2 = new ArrayList<WorkType>();
+                String WorkTypeCode = "";
+                String WorkTypeName = "";
+                String SeqNo = "";
+                int No;
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject child = jsonArray.getJSONObject(i);
+                    WorkTypeCode = child.getString("WorkTypeCode");
+                    WorkTypeName = child.getString("WorkTypeName");
+                    SeqNo = child.getString("SeqNo");
+                    No = i;
+                    workTypeList2.add(new WorkType(WorkTypeCode, WorkTypeName, SeqNo, No));
+                }
+
+                String[] workTypes = new String[workTypeList2.size()];
+                for (int i = 0; i < workTypeList2.size(); i++) {
+                    workTypes[i] = workTypeList2.get(i).WorkTypeCode + "-" + workTypeList2.get(i).WorkTypeName;
+                }
+                spinnerWorkType2 = (Spinner) findViewById(R.id.spinnerWorkType2);
+                ArrayAdapter<String> workTypeAdapter = new ArrayAdapter<String>(RegisterActivityReturn.this, android.R.layout.simple_spinner_dropdown_item, workTypes);
+                spinnerWorkType2.setAdapter(workTypeAdapter);
+
+                if (!key.equals("생성모드")) {
+                   SetData(key);//여기에서 데이터 및 수정가능 여부 구성
+                } else {//생성모드 초기 셋팅 값 입력
+                    SetCreateData();
+                    Toast.makeText(getBaseContext(), "'작업일보생성' 버튼을 눌러야\n일보가 생성됩니다.", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+
+            } finally {
+                progressOFF2(this.getClass().getName());
+            }
+        }
+    }
+
 
     /**
      * 일보 생성모드시 데이터 셋팅
@@ -343,26 +507,24 @@ public class RegisterActivity2 extends BaseActivity {
         suworder3 = new SuWorder3();
         suworder3.StartTime = mYear+"-"+(mMonth+1)+"-"+mDay+" "+"09:00";
         suworder3.EndTime = mYear+"-"+(mMonth+1)+"-"+mDay+" "+"17:00";
-        suworder3.StayFlag = "0";
+        suworder3.StayFlag = "1";
         suworder3.WorkDescription1 = "";
         suworder3.WorkDescription2 = "";
         suworder3.WorkDescription3 = "";
         suworder3.Dong = "";
-        suworder3.WorkTypeCode = 7;
-
+        suworder3.WorkTypeCode = -1;
+        suworder3.WorkTypeCode2="";
         textViewRealDate.setText(mYear+"-"+(mMonth+1)+"-"+mDay);
         textViewTime1.setText("오전 9:00");
         textViewTime2.setText("오후 5:00");
 
-        textViewManageNo.setText("'작업일보생성' 버튼을 눌러 일보를 생성하세요.");
+        textViewManageNo.setText("'회수일보생성' 버튼을 눌러 일보를 생성하세요.");
         //textViewManageNo.setTextColor(Color.rgb(255, 165, 0));// Color:Orange
         textViewManageNo.setTextColor(Color.YELLOW);
         contractNo = getIntent().getStringExtra("contractNo");
         textViewCustomer.setText(getIntent().getStringExtra("customerLocation"));
-        btnNext.setText("작업일보생성");
+        btnNext.setText("회수일보생성");
         btnNext.setClickable(true);
-
-
     }
 
     private void SetDate() {
@@ -408,6 +570,12 @@ public class RegisterActivity2 extends BaseActivity {
         switch (v.getId()) {
             case R.id.btnNext:
 
+                if(textViewWorkType2.getText().toString().equals("")){
+                    Toast.makeText(getBaseContext(), "작업구분을 선택하세요.", Toast.LENGTH_SHORT).show();
+                    progressOFF();
+                    return;
+                }
+
                 if (key.equals("생성모드")) {//작업일보 초기 생성일시
 
                     if(textView1.getText().toString().equals("")){
@@ -436,12 +604,11 @@ public class RegisterActivity2 extends BaseActivity {
                                 }
                             }).show();
                 } else {
-
                     new AlertDialog.Builder(this).setMessage("등록할까요?").setCancelable(true).setPositiveButton("YES", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //POST 명령어 호출(업데이트를 적용한다)
-                            //progressDialog = ProgressDialog.show(RegisterActivity2.this, "Wait", "Loading...");
+                            //progressDialog = ProgressDialog.show(RegisterActivityReturn.this, "Wait", "Loading...");
                             SaveDataFromControl();
                             new HttpAsyncTask().execute(getString(R.string.service_address) + "setworderEumsung");
                         }
@@ -468,23 +635,6 @@ public class RegisterActivity2 extends BaseActivity {
                 Log.i(this.toString(), "특이사항 클릭");
                 break;
 
-
-            case R.id.textView3:
-
-                TextView txView = (TextView) v;
-
-                String content = "";
-                if (txView.getTag() != null)
-                    content = txView.getTag().toString();
-
-                Intent intent3 = new Intent(this, VehicleRegisterActivity.class);
-                intent3.putExtra("title", "차량운행");
-                intent3.putExtra("content", content);
-                startActivityForResult(intent3, RESULT_TEXTVIEW3);
-
-                Log.i(this.toString(), "차량운행내역 클릭");
-                break;
-
             case R.id.textViewTime1:
                 ShowTimePickDialog(R.id.textViewTime1);
                 break;
@@ -502,45 +652,40 @@ public class RegisterActivity2 extends BaseActivity {
                 ViewPhotoControlActivity();
                 break;
 
-            case R.id.btnAddItem://추가분 관리
+            /*case R.id.btnAddItem://추가분 관리
                 if(key.equals("생성모드")){
                     Toast.makeText(getBaseContext(), "작업일보를 먼저 생성하시기 바랍니다.", Toast.LENGTH_SHORT).show();
                     progressOFF();
                     return;
                 }
                 ViewItemControlActivity();
-                break;
+                break;*/
 
             case R.id.textViewRealDate:
                 ShowDatePickDialog();
                 break;
 
-            case R.id.btnCommon:
+            /*case R.id.btnCommon:
                 if(key.equals("생성모드")){
                     Toast.makeText(getBaseContext(), "작업일보를 먼저 생성하시기 바랍니다.", Toast.LENGTH_SHORT).show();
                     progressOFF();
                     return;
                 }
                 ViewCommonActivity();
+                break;*/
+
+            case R.id.textViewWorkType2:
+                drawWorkType2List();
                 break;
 
-            case R.id.textViewDong://동 정보 클릭
-
-                if (key.equals("생성모드"))
-                    new GetDongByContractNo().execute(getString(R.string.service_address) + "getDongByContractNo");
-                else
-                    new GetDongBySupervisor().execute(getString(R.string.service_address) + "getDongBySupervisorWoNo");
-
-                break;
-
-            case R.id.btnASItem:
+            /*case R.id.btnASItem:
                 if(key.equals("생성모드")){
                     Toast.makeText(getBaseContext(), "작업일보를 먼저 생성하시기 바랍니다.", Toast.LENGTH_SHORT).show();
                     progressOFF();
                     return;
                 }
                 new GetASItemByPost().execute(getString(R.string.service_address) + "getASItem");
-                break;
+                break;*/
 
 
             case R.id.btnDelete://삭제버튼: 작업일보, 추가분정보, A/S정보, 사진정보를 삭제한다. 공통작성란 변경사항은 유지된다.
@@ -570,11 +715,11 @@ public class RegisterActivity2 extends BaseActivity {
                                         new DeleteSupervisorWorderInfoByPost().execute(getString(R.string.service_address) + "deleteSupervisorWorderInfo");
                                     }
                                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        progressOFF();
-                    }
-                }).show();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                progressOFF();
+                            }
+                        }).show();
 
 
                 break;
@@ -582,9 +727,65 @@ public class RegisterActivity2 extends BaseActivity {
         }
     }
 
+    private void drawWorkType2List() {
+        ArrayList<String> inputedWorkType2List = new ArrayList<>();
+        inputedWorkType2List = (ArrayList<String>) textViewWorkType2.getTag();
+
+        final AlertDialog.Builder build = new AlertDialog.Builder(this);
+        build.create();
+        build.setTitle("작업구분");
+        final String[] items = new String[workTypeList.size()];
+        for (int i = 0; i < workTypeList.size(); i++)
+            items[i] = workTypeList.get(i).WorkTypeCode +"-"+workTypeList.get(i).WorkTypeName;
+        final boolean[] checkedItems = new boolean[items.length];
+        for (int i = 0; i < items.length; i++) {
+            if (inputedWorkType2List == null) {
+                checkedItems[i] = false;
+            } else {
+                if (inputedWorkType2List.contains(items[i]))
+                    checkedItems[i] = true;
+                else
+                    checkedItems[i] = false;
+            }
+        }
+
+        build.setMultiChoiceItems(items, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                checkedItems[which] = isChecked;
+            }
+        });
+
+        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ArrayList<String> stringArrayList = new ArrayList<>();
+                String workType2Str = "";
+
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    for (int i = 0; i < items.length; i++) {
+                        if (checkedItems[i]) {
+                            stringArrayList.add(items[i]);
+                            workType2Str += items[i] + ", ";
+                        }
+                    }
+                    if (!workType2Str.equals(""))
+                        workType2Str = workType2Str.substring(0, workType2Str.length() - 2);
+                    textViewWorkType2.setTag(stringArrayList);
+                    textViewWorkType2.setText(workType2Str);
+                } else {
+                    Toast.makeText(RegisterActivityReturn.this, "취소되었습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+        build.setPositiveButton("선택", listener);
+        build.setNegativeButton("취소", listener);
+        build.create().show();
+        progressOFF();
+    }
+
     private class SetSupervisorWorderEumsungByPost extends AsyncTask<String, Void, String> {//todo
-
-
         @Override
         protected String doInBackground(String... urls) {
 
@@ -606,7 +807,7 @@ public class RegisterActivity2 extends BaseActivity {
                 }
 
                 progressOFF();
-                Toast.makeText(RegisterActivity2.this, "작업일보가 생성되었습니다.\n(일보번호: " + key + ")", Toast.LENGTH_LONG).show();
+
 
                 textViewManageNo.setText(key);
                 textViewManageNo.setTextColor(Color.WHITE);
@@ -618,7 +819,13 @@ public class RegisterActivity2 extends BaseActivity {
                 suworder3.CustomerName=getIntent().getStringExtra("customer");
                 suworder3.LocationName=getIntent().getStringExtra("location");
                 suworder3.WoNo=key;
-
+                String pushMessageResult = "";
+                if(suworder3.WorkTypeCode2.length()>0){
+                    if(suworder3.WorkTypeCode2.substring(0,1).equals("7")){
+                        pushMessageResult = "\n(푸시 알림 전송 완료)";
+                    }
+                }
+                Toast.makeText(RegisterActivityReturn.this, "작업일보가 생성되었습니다."+pushMessageResult, Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -641,16 +848,15 @@ public class RegisterActivity2 extends BaseActivity {
             jsonObject.put("ContractMasterNo", contractNo);//masterNo라고 써놨지만 실제로는 contractNo이다.
             jsonObject.put("SupervisorCode", Users.USER_ID);
             jsonObject.put("BusinessClassCode", Users.BusinessClassCode);
-
             jsonObject.put("StartTime", suworder3.StartTime);
             jsonObject.put("EndTime", suworder3.EndTime);
             jsonObject.put("StayFlag", suworder3.StayFlag);
             jsonObject.put("WorkTypeCode", suworder3.WorkTypeCode);
+            jsonObject.put("WorkTypeCode2", suworder3.WorkTypeCode2);
             jsonObject.put("Dong", suworder3.Dong);
             jsonObject.put("WorkDescription1", suworder3.WorkDescription1);
             jsonObject.put("WorkDescription2", suworder3.WorkDescription2);
             jsonObject.put("WorkDescription3", suworder3.WorkDescription3);
-
 
             json = jsonObject.toString();
 
@@ -907,110 +1113,6 @@ public class RegisterActivity2 extends BaseActivity {
     }
 
 
-    private class GetDongBySupervisor extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-
-            return PostForGetDong(urls[0]);
-        }
-
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result) {
-
-            try {
-                //Log.i("ReadJSONFeedTask", result);
-                JSONArray jsonArray = new JSONArray(result);
-
-                ArrayList<String> dongList = new ArrayList<>();
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    JSONObject child = jsonArray.getJSONObject(i);
-                    dongList.add(child.getString("Dong"));
-                }
-
-                drawDongDialog(dongList);
-                progressOFF();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /*
-     * 동 다이얼로그를 그린다.
-     * */
-    private void drawDongDialog(ArrayList<String> dongList) {
-
-
-        ArrayList<String> inputedDongList = new ArrayList<>();
-        inputedDongList = (ArrayList<String>) textViewDong.getTag();
-
-        final AlertDialog.Builder build = new AlertDialog.Builder(this);
-        build.create();
-        build.setTitle("동 정보");
-
-
-        final String[] items = new String[dongList.size()];
-
-        for (int i = 0; i < dongList.size(); i++)
-            items[i] = dongList.get(i).toString();
-
-        final boolean[] checkedItems = new boolean[items.length];
-
-        for (int i = 0; i < items.length; i++) {
-
-            if (inputedDongList == null) {
-                checkedItems[i] = false;
-            } else {
-                if (inputedDongList.contains(items[i]))
-                    checkedItems[i] = true;
-                else
-                    checkedItems[i] = false;
-            }
-
-
-        }
-
-
-        build.setMultiChoiceItems(items, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                checkedItems[which] = isChecked;
-            }
-        });
-
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ArrayList<String> stringArrayList = new ArrayList<>();
-                String dongStr = "";
-
-                if (which == DialogInterface.BUTTON_POSITIVE) {
-                    for (int i = 0; i < items.length; i++) {
-                        if (checkedItems[i]) {
-                            stringArrayList.add(items[i]);
-                            dongStr += items[i] + ",";
-                        }
-                    }
-
-                    if (!dongStr.equals(""))
-                        dongStr = dongStr.substring(0, dongStr.length() - 1);
-                    textViewDong.setTag(stringArrayList);
-                    textViewDong.setText(dongStr);
-                } else {
-                    Toast.makeText(RegisterActivity2.this, "취소되었습니다.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-
-        build.setPositiveButton("선택", listener);
-        build.setNegativeButton("취소", listener);
-        build.create().show();
-    }
-
     public String PostForGetDong(String url) {
         InputStream inputStream = null;
         String result = "";
@@ -1059,87 +1161,6 @@ public class RegisterActivity2 extends BaseActivity {
         return result;
     }
 
-    private class GetDongByContractNo extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-
-            return PostForGetDongByContractNo(urls[0]);
-        }
-
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result) {
-
-            try {
-                //Log.i("ReadJSONFeedTask", result);
-                JSONArray jsonArray = new JSONArray(result);
-
-                ArrayList<String> dongList = new ArrayList<>();
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    JSONObject child = jsonArray.getJSONObject(i);
-                    dongList.add(child.getString("Dong"));
-                }
-
-                drawDongDialog(dongList);
-                progressOFF();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        public String PostForGetDongByContractNo(String url) {
-            InputStream inputStream = null;
-            String result = "";
-            try {
-                // 1. create HttpClient
-                HttpClient httpclient = new DefaultHttpClient();
-                // 2. make POST request to the given URL
-                HttpPost httpPost = new HttpPost(url);
-                String json = "";
-                // 3. build jsonObject
-                JSONObject jsonObject = new JSONObject();
-
-                //Delete & Insert
-                jsonObject.put("ContractNo", contractNo);//작업일보번호
-
-                json = jsonObject.toString();
-                // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-                // ObjectMapper mapper = new ObjectMapper();
-                // json = mapper.writeValueAsString(person);
-
-                // 5. set json to StringEntity
-                StringEntity se = new StringEntity(json, "UTF-8");
-                // 6. set httpPost Entity
-                httpPost.setEntity(se);
-                // 7. Set some headers to inform server about the type of the content
-                httpPost.setHeader("Accept", "application/json");
-                httpPost.setHeader("Content-type", "application/json");
-                // 8. Execute POST request to the given URL
-                HttpResponse httpResponse = httpclient.execute(httpPost);
-                // 9. receive response as inputStream
-
-                HttpEntity entity = httpResponse.getEntity();
-                inputStream = entity.getContent();
-                //inputStream = httpResponse.getEntity().getContent();
-                // 10. convert inputstream to string
-                if (inputStream != null)
-                    result = convertInputStreamToString(inputStream);
-                else
-                    result = "Did not work!";
-
-            } catch (Exception e) {
-                //Log.d("InputStream", e.getLocalizedMessage());
-            }
-            // 11. return result
-            //Log.i("result", result.toString());
-            return result;
-        }
-    }
-
-
     private void ViewCommonActivity() {
         Intent i = new Intent(getBaseContext(), CommonActivity.class);
         i.putExtra("contractNo", contractNo);
@@ -1154,7 +1175,7 @@ public class RegisterActivity2 extends BaseActivity {
 
     private void ShowDatePickDialog() {
 
-        new DatePickerDialog(RegisterActivity2.this, mDateSetListener1, mYear, mMonth, mDay).show();
+        new DatePickerDialog(RegisterActivityReturn.this, mDateSetListener1, mYear, mMonth, mDay).show();
         progressOFF();
     }
 
@@ -1163,7 +1184,6 @@ public class RegisterActivity2 extends BaseActivity {
      * 서버와 통신하여 데이터를 가져온다.
      */
     private void SetData(String key) {
-
         String restURL = getString(R.string.service_address) + "getworder2/" + key;
         new ReadJSONFeedTask().execute(restURL);
     }
@@ -1177,16 +1197,14 @@ public class RegisterActivity2 extends BaseActivity {
         protected void onPostExecute(String result) {
             try {
 
-                Log.i("ReadJSONFeedTask", "통신2");
+                //Log.i("ReadJSONFeedTask", "통신2");
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.optJSONArray("GetSupervisorWorder2Result");
 
                 suworder3 = new SuWorder3();
 
                 for (int i = 0; i < jsonArray.length(); i++) {
-
                     JSONObject child = jsonArray.getJSONObject(i);
-
                     suworder3.WoNo = child.getString("SupervisorWoNo");
                     suworder3.WorkDate = child.getString("WorkDate");
                     suworder3.StartTime = child.getString("StartTime");
@@ -1204,9 +1222,10 @@ public class RegisterActivity2 extends BaseActivity {
                     suworder3.LocationName = child.getString("LocationName");
                     suworder3.Dong = child.getString("Dong");
                     suworder3.WorkTypeCode = Integer.parseInt(child.getString("WorkTypeCode"));
+                    suworder3.WorkTypeCode2 = child.getString("WorkTypeCode2");
                     contractNo = child.getString("ContractNo");
 
-                    Log.i("JSON", result);
+                    //Log.i("JSON", result);
                 }
                 SetControlFormData(suworder3);
 
@@ -1220,20 +1239,17 @@ public class RegisterActivity2 extends BaseActivity {
                     textViewTime2.setClickable(false);
                     radioButton1.setClickable(false);
                     radioButton2.setClickable(false);
-                    textViewDong.setClickable(false);
-                    textViewDong.setHint("");
                     textView1.setClickable(false);
                     textView1.setHint("");
                     textView2.setClickable(false);
                     textView2.setHint("");
-                    textView3.setClickable(false);
-                    textView3.setHint("");
                     btnDelete.setVisibility(View.INVISIBLE);
                     btnNext.setVisibility(View.INVISIBLE);
-                    spinnerWorkType.setClickable(false);
+                    //spinnerWorkType.setClickable(false);
+                    spinnerWorkType2.setClickable(false);
+                    textViewWorkType2.setClickable(false);
+                    textViewWorkType2.setHint("");
                 }
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1249,7 +1265,7 @@ public class RegisterActivity2 extends BaseActivity {
          * null이 아닐 경우 뷰에 넣는다.
          */
 
-        if (!suworder3.StatusFlag.toString().equals("null") && !suworder3.StatusFlag.toString().equals("")) {
+        if (!suworder3.StatusFlag.equals("null") && !suworder3.StatusFlag.equals("")) {
 
             if (suworder3.StatusFlag.equals("0")) {
 
@@ -1269,60 +1285,73 @@ public class RegisterActivity2 extends BaseActivity {
 
         }
 
-        if (!suworder3.StartTime.toString().equals("null") && !suworder3.StartTime.toString().equals("")) {
+        if (!suworder3.StartTime.equals("null") && !suworder3.StartTime.equals("")) {
             textViewRealDate.setText(suworder3.WorkDate);
             textViewTime1.setText(suworder3.StartTime); //시작일자
         }
 
-        if (!suworder3.EndTime.toString().equals("null") && !suworder3.EndTime.toString().equals("")) {
+        if (!suworder3.EndTime.equals("null") && !suworder3.EndTime.equals("")) {
             textViewTime2.setText(suworder3.EndTime);  //종료일자
         }
-        if (!suworder3.StayFlag.toString().equals("null") && !suworder3.StayFlag.toString().equals("")) {
+        if (!suworder3.StayFlag.equals("null") && !suworder3.StayFlag.equals("")) {
             if (suworder3.StayFlag.equals("1")) {
-                this.radioButton1.setChecked(true); //숙박
+                this.radioButton1.setChecked(true);
             } else {
                 this.radioButton2.setChecked(true);
             }
         }
-        if (!suworder3.WorkDescription1.toString().equals("null") && !suworder3.WorkDescription1.toString().equals("")) {
+        if (!suworder3.WorkDescription1.equals("null") && !suworder3.WorkDescription1.equals("")) {
             textView1.setText(suworder3.WorkDescription1);
         }
-        if (!suworder3.WorkDescription2.toString().equals("null") && !suworder3.WorkDescription2.toString().equals("")) {
+        if (!suworder3.WorkDescription2.equals("null") && !suworder3.WorkDescription2.equals("")) {
 
             textView2.setText(suworder3.WorkDescription2);
         }
-        if (!suworder3.WorkDescription3.toString().equals("null") && !suworder3.WorkDescription3.toString().equals("")) {
 
-            textView3.setTag(suworder3.WorkDescription3);
+        if (!suworder3.WorkTypeCode2.equals("null") && !suworder3.WorkTypeCode2.equals("")) {
+            try{
+                String[] first = suworder3.WorkTypeCode2.split("-");
+                String[] second = first[1].split("/");
+                int num = 0;
+                for (WorkType workType : workTypeList2) {
+                    if (Integer.parseInt(workType.WorkTypeCode) == Integer.parseInt(first[0]))
+                        num = workType.No;
+                }
+                spinnerWorkType2.setSelection(num);
 
-            textView3.setText(MakeArraycontent(suworder3.WorkDescription3));
+                ArrayList<String> stringArrayList = new ArrayList<>();
+                String workType2Str = "";
+
+                for (WorkType workType : workTypeList) {
+                    for(int i=0;i<second.length;i++){
+                        if(Integer.parseInt(workType.WorkTypeCode) == Integer.parseInt(second[i])){
+                            stringArrayList.add(workType.WorkTypeCode+"-"+workType.WorkTypeName);
+                            workType2Str += workType.WorkTypeCode+"-"+workType.WorkTypeName + ", ";
+                            continue;
+                        }
+                    }
+                }
+                if (!workType2Str.equals(""))
+                    workType2Str = workType2Str.substring(0, workType2Str.length() - 2);
+                textViewWorkType2.setTag(stringArrayList);
+                textViewWorkType2.setText(workType2Str);
+            }
+            catch (Exception et){
+            }
+        }
+
+        if (!suworder3.GPSInfo.equals("null") && !suworder3.GPSInfo.equals("")) {
 
         }
 
-        if (!suworder3.GPSInfo.toString().equals("null") && !suworder3.GPSInfo.toString().equals("")) {
+        if (!suworder3.UpdateDate.equals("null") && !suworder3.UpdateDate.equals("")) {
 
         }
 
-        if (!suworder3.UpdateDate.toString().equals("null") && !suworder3.UpdateDate.toString().equals("")) {
-
-        }
-
-        if (!suworder3.CustomerName.toString().equals("null") && !suworder3.CustomerName.toString().equals("")) {
+        if (!suworder3.CustomerName.equals("null") && !suworder3.CustomerName.equals("")) {
 
             textViewCustomer.setText(suworder3.CustomerName + "(" + suworder3.LocationName + ")");
         }
-        if (!suworder3.Dong.equals("null") && !suworder3.Dong.equals("")) {
-            textViewDong.setText(suworder3.Dong);
-        }
-
-        int num = 0;
-
-        for (WorkType workType : workTypeList) {
-            if (Integer.parseInt(workType.WorkTypeCode) == suworder3.WorkTypeCode)
-                num = workType.No;
-        }
-        spinnerWorkType.setSelection(num);
-
     }
 
     private String MakeArraycontent(String arrayString) {
@@ -1411,18 +1440,8 @@ public class RegisterActivity2 extends BaseActivity {
      */
     private void ViewPhotoControlActivity() {
         images = new ArrayList<WoImage>();
-
-
         String restURL = getString(R.string.service_address) + "getimagelist/" + this.key;
         new GetImageFeedTask().execute(restURL);
-    }
-
-
-    /*
-     * 추가분 관리
-     * */
-    private void ViewItemControlActivity() {
-        new GetAddItemByPost().execute(getString(R.string.service_address) + "getAddItem");
     }
 
 
@@ -1566,8 +1585,13 @@ public class RegisterActivity2 extends BaseActivity {
                     image.ImageName = child.getString("ImageName");
                     image.SmallImageFile = child.getString("Imagefile");
                     image.ImageFile = "";
-
                     images.add(new WoImage(image.WoNo, image.SeqNo, image.ImageName, image.ImageFile, image.SmallImageFile));
+                }
+                boolean enableFlag=true;
+                if(!inputUser.equals("")){
+                    if (!inputUser.equals(Users.USER_ID)) {
+                        enableFlag=false;
+                    }
                 }
                 Intent i = new Intent(getBaseContext(), PhotoListActivity.class);
                 i.putExtra("data", images);
@@ -1575,7 +1599,7 @@ public class RegisterActivity2 extends BaseActivity {
                 i.putExtra("key", key);
                 i.putExtra("customer", suworder3.CustomerName + "(" + suworder3.LocationName + ")");
                 i.putExtra("type", type);
-                i.putExtra("enableFlag", true);
+                i.putExtra("enableFlag", enableFlag);
                 startActivity(i);
 
             } catch (Exception e) {
@@ -1734,14 +1758,6 @@ public class RegisterActivity2 extends BaseActivity {
             Log.i("onActivityResult", "결과 받아옴");
             textView2.setText(content);
 
-        } else if (requestCode == RESULT_TEXTVIEW3 && resultCode == RESULT_OK && null != data) {
-
-            String content = data.getStringExtra("content");
-            Log.i("onActivityResult", "결과 받아옴");
-
-            textView3.setTag(content);
-            String newContent = this.MakeArraycontent(content);
-            textView3.setText(newContent);
         } else if (requestCode == RESULT_GALLERY1 && resultCode == RESULT_OK && null != data) {
 
             buttonImageView1.setTag(data.getData());
@@ -1907,8 +1923,6 @@ public class RegisterActivity2 extends BaseActivity {
             }
             progressOFF();//저장완료후 progress닫기
             Toast.makeText(getBaseContext(), Message, Toast.LENGTH_LONG).show();
-
-
         }
     }
 
@@ -1937,7 +1951,8 @@ public class RegisterActivity2 extends BaseActivity {
             jsonObject.put("UpdateDate", suworder3.UpdateDate);
             jsonObject.put("Dong", suworder3.Dong);
             jsonObject.put("WorkTypeCode", suworder3.WorkTypeCode);
-
+            jsonObject.put("WorkTypeCode2", suworder3.WorkTypeCode2);
+            jsonObject.put("SupervisorCode", Users.USER_ID);
             json = jsonObject.toString();
 
             // ** Alternative way to convert Person object to JSON string usin Jackson Lib
@@ -1998,9 +2013,6 @@ public class RegisterActivity2 extends BaseActivity {
      * * @param suworder3
      */
     private void SaveDataFromControl() {
-
-        String stringArray[];
-
         String startTime = suworder3.WorkDate + " " + textViewTime1.getText().toString();
         String endTime = suworder3.WorkDate + " " + textViewTime2.getText().toString();
 
@@ -2012,18 +2024,26 @@ public class RegisterActivity2 extends BaseActivity {
 
         suworder3.StartTime = startTime;
         suworder3.EndTime = endTime;
-        suworder3.StayFlag = radioButton1.isChecked() == true ? "1" : "0";
+        suworder3.StayFlag = radioButton1.isChecked() == true ? "1" : "2";
         suworder3.WorkDescription1 = textView1.getText().toString();
         suworder3.WorkDescription2 = textView2.getText().toString();
 
-        if (textView3.getTag() != null)
-            suworder3.WorkDescription3 = textView3.getTag().toString();
+        /*if (textView3.getTag() != null)
+            suworder3.WorkDescription3 = textView3.getTag().toString();*/
 
         suworder3.GPSInfo = mAddress;
         suworder3.UpdateDate = textViewTime2.getText().toString();
-        suworder3.Dong = textViewDong.getText().toString();
-        stringArray = spinnerWorkType.getSelectedItem().toString().split("-");
-        suworder3.WorkTypeCode = (Integer.parseInt(stringArray[0]));
+
+        String workTypeCode2 = spinnerWorkType2.getSelectedItem().toString().split("-")[0]+"-";
+        if (textViewWorkType2.getTag() == null)
+            Toast.makeText(getBaseContext(), "작업구분을 입력하세요.", Toast.LENGTH_SHORT).show();
+        ArrayList<String> arrayList = (ArrayList<String>)textViewWorkType2.getTag();
+
+        for(int i=0;i<arrayList.size();i++){
+            workTypeCode2 += arrayList.get(i).split("-")[0]+"/";
+        }
+        suworder3.WorkTypeCode = -1;
+        suworder3.WorkTypeCode2 = workTypeCode2.substring(0, workTypeCode2.length()-1);
 
     }
 }

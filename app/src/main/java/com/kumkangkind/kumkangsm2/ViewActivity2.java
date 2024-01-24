@@ -376,7 +376,7 @@ public class ViewActivity2 extends Activity {
                 i.putExtra("fix", "2");
                 i.putExtra("key", key);
                 i.putExtra("customer", suworder3.CustomerName + "(" + suworder3.LocationName + ")");
-
+                i.putExtra("enableFlag", true);
                 mProgressDialog.dismiss();
                 startActivity(i);
 

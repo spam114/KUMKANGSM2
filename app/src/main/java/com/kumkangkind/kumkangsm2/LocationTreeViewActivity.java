@@ -44,11 +44,14 @@ import java.util.TreeMap;
 
 
 public class LocationTreeViewActivity extends BaseActivity {//트리뷰 엑티비티, 검색 X(기본)
-    //진행층수 등록, 진행기준 정보관리, 일보작성, 현장불만사례
+    //진행층수 등록, 진행기준 정보관리, 현장 지원요청, 진행층수 등록(회수), 반출입 현황, A/S 관리, 현장별 송장 조회
 
     TextView textView;
     int leftComplainDateArr[];
     int rightcomplainDateArr[];
+
+    String fromDate;
+    String toDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,12 @@ public class LocationTreeViewActivity extends BaseActivity {//트리뷰 엑티�
         }
         else
             textView.setText(programType);
+
+
+        if(programType.equals("현장별송장조회")){
+            fromDate = getIntent().getStringExtra("fromDate");
+            toDate = getIntent().getStringExtra("toDate");
+        }
 
         HashMap<String, Customer> customerHashMap;
         TreeMap<String, Customer> customerTreeMap;
@@ -103,9 +112,10 @@ public class LocationTreeViewActivity extends BaseActivity {//트리뷰 엑티�
                 location = locationEntry.getValue();
                 String locationNo = location.LocationNo;
                 String locationName = location.LocationName;
+                String locationName2 = location.LocationName2;
                 String contractNo = location.ContractNo;
                 MyHolder.IconTreeItem nodeItem = new MyHolder.IconTreeItem();//자식노드 설정
-                TreeNode child1 = new TreeNode(nodeItem).setViewHolder(new MyHolder(this, locationNo, locationName, contractNo, customerName, programType, leftComplainDateArr, rightcomplainDateArr));//자식 노드설정
+                TreeNode child1 = new TreeNode(nodeItem).setViewHolder(new MyHolder(this, locationNo, locationName, locationName2, contractNo, customerName, programType, leftComplainDateArr, rightcomplainDateArr, fromDate, toDate));//자식 노드설정
                 parent.addChildren(child1);//parent 하위에 child 붙이기
             }
 
@@ -136,19 +146,25 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
 
     String locationNo;
     String locationName;
+    String locationName2;
     String contractNo;
     String customerName;
     String programType;
+    String fromDate;
+    String toDate;
     int leftComplainDateArr[];
     int rightComplainDateArr[];
 
-    public MyHolder(Context context, String locationNo, String locationName, String contractNo, String customerName, String programType, int leftComplainDateArr[], int rightComplainDateArr[]) {
+    public MyHolder(Context context, String locationNo, String locationName, String locationName2, String contractNo, String customerName, String programType, int leftComplainDateArr[], int rightComplainDateArr[], String fromDate, String toDate) {
         super(context);
         this.programType = programType;
         this.locationNo = locationNo;
         this.locationName = locationName;
+        this.locationName2 = locationName2;
         this.contractNo = contractNo;
         this.customerName = customerName;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
 
         this.leftComplainDateArr = leftComplainDateArr;
         this.rightComplainDateArr = rightComplainDateArr;
@@ -171,6 +187,8 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
                     new GetDongByPost(customerName, locationName).execute(context.getString(R.string.service_address) + "getDong");
                 else if (programType.equals("일보작성"))
                     ShowRequestDailyReport();
+                else if (programType.equals("회수일보작성"))
+                    ShowRequestDailyReportReturn();
                 else if (programType.equals("현장불만사례"))
                     ShowComplainDialog();
                 else if (programType.equals("현장지원요청"))
@@ -210,6 +228,14 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
                     //i.putExtra("contractNo", contractNo);
                     context.startActivity(i);*/
                 }
+                else if (programType.equals("현장별송장조회")){
+                    GoStockInCertificate(fromDate, toDate);
+                   /* Intent i = new Intent(context, LocationProgressActivity2.class);
+                    i.putExtra("customerLocation", customerName + "-" + locationName);
+                    i.putExtra("locationNo", locationNo);
+                    //i.putExtra("contractNo", contractNo);
+                    context.startActivity(i);*/
+                }
                 else if (programType.equals("A/S 관리")){
                     new GetASItemByPost().execute(context.getString(R.string.service_address) + "getASItem2");
                     /*Intent i;
@@ -232,6 +258,17 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
         return view;
     }
 
+    private void GoStockInCertificate(String fromDate, String toDate) {
+
+        Intent i;
+        i = new Intent(context, ActivityStockInCertificate.class);//todo
+        i.putExtra("fromDate", fromDate);
+        i.putExtra("toDate", toDate);
+        i.putExtra("locationName", locationName2);
+
+        context.startActivity(i);
+    }
+
     private class GetASItemByPost extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
@@ -244,7 +281,6 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
         protected void onPostExecute(String result) {
 
             try {
-                //Log.i("ReadJSONFeedTask", result);
                 JSONArray jsonArray = new JSONArray(result);
 
                 String SupervisorCode = "";
@@ -395,19 +431,28 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
 
 
     private void ShowRequestDailyReport() {
-
         Intent i;
         i = new Intent(context, RegisterActivity2.class);
         i.putExtra("type", "작업");
         i.putExtra("key", "생성모드");
         i.putExtra("contractNo", contractNo);
         i.putExtra("customerLocation", customerName + "(" + locationName + ")");
-
         i.putExtra("customer", customerName);
         i.putExtra("location", locationName);
-
         context.startActivity(i);
+    }
 
+    private void ShowRequestDailyReportReturn() {
+        Intent i;
+        i = new Intent(context, RegisterActivityReturn.class);
+        i.putExtra("type", "작업");
+        i.putExtra("key", "생성모드");
+        i.putExtra("contractNo", contractNo);
+        i.putExtra("customerLocation", customerName + "(" + locationName + ")");
+        i.putExtra("customer", customerName);
+        i.putExtra("location", locationName);
+        i.putExtra("inputUser","");
+        context.startActivity(i);
     }
 
     public static class IconTreeItem {
@@ -441,7 +486,6 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
         protected void onPostExecute(String result) {
 
             try {
-                //Log.i("ReadJSONFeedTask", result);
                 HashMap<String, Dong> dongHashMap = new HashMap<>();
                 JSONArray jsonArray = new JSONArray(result);
                 Dong dong = null;

@@ -2,19 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kumkangkind.kumkangsm2">
 
-    <!--권한설정-->
-    <!--사진같은거 업로드 (외부저장소 접근)-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <!--명시해야할 권한 = 위험 권한 = 런타임 권한-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--쓰기권한-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--인터넷-->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!--gps권한(세부)-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!--핸드폰정보(본인 전화번호...)-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" /><!--29이상부터는 필요없다.-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /><!--과거버전에서는 물어보지 않아서, 무조건 명시하지 않도록 처리한다.-->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /><!--알림권한-->
+
+    <!--여기만으로 OK-->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" /> <!--아이콘 바로가기 만들기 권한-->
     <uses-permission android:name="android.permission.WAKE_LOCK" /> <!--메세지를 받기위해 핸드폰 절전상태 방지-->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" /> <!--GCM메세지 권한-->
@@ -36,7 +34,7 @@
         <activity
             android:name="com.kumkangkind.kumkangsm2.MainActivity"
             android:screenOrientation="portrait"
-            >
+            android:exported="true">
             <intent-filter><!--액티비티 사이에서 주고받음-->
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" /><!--LAUNCHER: app 아이콘을 눌렀을때 실행되는 액티비티-->
@@ -84,7 +82,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.kumkangkind.kumkangsm2.ActivityDownload"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -152,6 +151,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.kumkangkind.kumkangsm2.RegisterActivity2"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.kumkangkind.kumkangsm2.RegisterActivityReturn"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity

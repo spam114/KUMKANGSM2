@@ -626,7 +626,7 @@ public class RegisterActivity extends Activity {
                 i.putExtra("fix", suworder3.StatusFlag);
                 i.putExtra("key", key);
                 i.putExtra("customer", suworder3.CustomerName + "(" + suworder3.LocationName + ")");
-
+                i.putExtra("enableFlag", true);
                 mProgressDialog.dismiss();
                 startActivity(i);
 

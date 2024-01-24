@@ -19,5 +19,6 @@ public class  SuWorder3 {
     public String Dong = "";
     public String LocationName = "";
     public int WorkTypeCode;
+    public String WorkTypeCode2;
 
 }

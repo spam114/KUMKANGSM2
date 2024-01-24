@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     useLibrary 'org.apache.http.legacy'
 
     dataBinding {
@@ -15,9 +15,9 @@ android {
     defaultConfig {
         applicationId "com.kumkangkind.kumkangsm2"
         minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 47
-        versionName "47.0"
+        targetSdkVersion 33
+        versionCode 49
+        versionName "49.0"
     }
     buildTypes {
         release {
@@ -54,6 +54,7 @@ dependencies {
     implementation 'org.jetbrains:annotations:16.0.2'
     implementation 'io.github.ParkSangGwon:tedimagepicker:1.2.5' //갤러리 사진 다중선택, 숫자 표기
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view-androidx:3.10.0' //이미지뷰를 확대 할때 사용한다.
+    implementation "androidx.work:work-runtime:2.7.1" // java
 }
 
 apply plugin: 'com.google.gms.google-services'

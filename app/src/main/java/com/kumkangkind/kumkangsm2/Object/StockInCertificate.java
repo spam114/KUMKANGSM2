@@ -11,6 +11,7 @@ public class StockInCertificate implements Serializable {
     public String CustomerName="";
     public String LocationNo="";
     public String LocationName="";
+    public String LocationName2="";
     public String CarNo="";
     public String SeqNo="";
     public String SupervisorCode="";

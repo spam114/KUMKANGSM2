@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -54,9 +56,12 @@ public class ActivityStockInCertificate extends BaseActivity {
     boolean firstToken = true;
 
     Button btnIlbo;
+    BackPressEditText edtInput;
     //Button btnHelp;
     String fromDate;
     String toDate;
+    String locationName;
+    StockInCertificateAdapter adapter;
 
     private void startProgress() {
         Handler handler = new Handler();
@@ -76,11 +81,18 @@ public class ActivityStockInCertificate extends BaseActivity {
         setContentView(R.layout.activity_stock_in_certificate);
         tvDate = (TextView) findViewById(R.id.tvDate);
         btnIlbo = findViewById(R.id.btnIlbo);
+        edtInput = findViewById(R.id.edtInput);
         fromDate = getIntent().getStringExtra("fromDate");
         toDate = getIntent().getStringExtra("toDate");
+        locationName = getIntent().getStringExtra("locationName");
         tvDate.setText(fromDate+" ~ "+toDate);
-
+        edtInput.setText(locationName);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        adapter = new StockInCertificateAdapter(new ArrayList<>(),ActivityStockInCertificate.this);
+        LinearLayoutManager  layoutManager=
+                new LinearLayoutManager(ActivityStockInCertificate.this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
         tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +127,23 @@ public class ActivityStockInCertificate extends BaseActivity {
                     }
                 });
                 materialDatePicker.show(getSupportFragmentManager(), "Tag");
+            }
+        });
+
+        edtInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -208,13 +237,8 @@ public class ActivityStockInCertificate extends BaseActivity {
                     stockInCertificateArrayList.add(stockInCertificate);
 
                 }
-                LinearLayoutManager layoutManager =
-                        new LinearLayoutManager(ActivityStockInCertificate.this, LinearLayoutManager.VERTICAL, false);
-                recyclerView.setLayoutManager(layoutManager);
-
-                StockInCertificateAdapter adapter = new StockInCertificateAdapter(ActivityStockInCertificate.this);
-                adapter.setItems(stockInCertificateArrayList);
-                recyclerView.setAdapter(adapter);
+                adapter.updateAdapter(stockInCertificateArrayList);
+                adapter.getFilter().filter(edtInput.getText().toString());
 
                 // adapter = new ProgressFloorReturnViewAdapter(, R.layout.progress_floor_return_row, dongArrayList, );
                 // recyclerView.setAdapter(adapter);
@@ -293,7 +317,7 @@ public class ActivityStockInCertificate extends BaseActivity {
                     } else {//있으면
                         customer = customerHashMap.get(key);
                     }
-                    customer.addData(child.getString("LocationNo"), child.getString("LocationName"), child.getString("ContractNo"));
+                    customer.addData(child.getString("LocationNo"), child.getString("LocationName"), child.getString("ContractNo"), child.getString("LocationName2"));
                 }
                 //Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
 

@@ -125,7 +125,6 @@ public class CommonActivity extends BaseActivity {
             btnSave.setText("");
             btnSave.setClickable(false);
         }
-
         progressOFF();
     }
 

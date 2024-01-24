@@ -10,9 +10,7 @@ import androidx.core.content.ContextCompat;
 
 public class PermissionUtil {
 
-    public static final String[] permissionList = {
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_PHONE_STATE};
+    public static String[] permissionList;
 
     public static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 200;
     public static final int MY_PERMISSIONS_REQUEST_WRITE_DATA = 201;
