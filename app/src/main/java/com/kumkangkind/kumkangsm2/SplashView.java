@@ -80,27 +80,28 @@ public class SplashView extends BaseActivity {
     }
 
     private void CheckPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {//29이상, 33미만
-            PermissionUtil.permissionList = new String[]{
-                    Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.READ_PHONE_NUMBERS
-            };
-        }
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {//33이상
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {//33이상
             PermissionUtil.permissionList = new String[]{
                     Manifest.permission.READ_PHONE_STATE,
                     Manifest.permission.CAMERA,
                     Manifest.permission.READ_PHONE_NUMBERS,
-                    Manifest.permission.POST_NOTIFICATIONS
+                    Manifest.permission.POST_NOTIFICATIONS,
+                    Manifest.permission.READ_MEDIA_IMAGES
+            };
+        }
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {//29이상, 33미만
+            PermissionUtil.permissionList = new String[]{
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_PHONE_NUMBERS,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
             };
         }
         else{
             PermissionUtil.permissionList = new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.READ_PHONE_NUMBERS
+                    Manifest.permission.CAMERA
             };
         }
 
@@ -218,9 +219,8 @@ public class SplashView extends BaseActivity {
                 if (Users.DeviceOS == null)
                     Users.DeviceOS = "";
                 Users.Remark = "";
+                //PhoneNumber = "01032321179";//테스트용
                 Users.DeviceName = BluetoothAdapter.getDefaultAdapter().getName();//블루투스 권한 필요 manifest확인: 블루투스가 없으면 에러남
-                //PhoneNumber = "01067375288";//테스트용
-
             } catch (Exception ex) {
             } finally {
                 String restURL = getString(R.string.service_address) + "checkemployee/" + PhoneNumber;
@@ -276,11 +276,9 @@ public class SplashView extends BaseActivity {
 
                 //USER_ID를 받았다면, 다음으로 넘어간다.
                 if (!Users.USER_ID.equals("")) {
-
                     Intent intent = getIntent();
                     setResult(RESULT_OK, intent);
                     finish();
-
                 }
 
 

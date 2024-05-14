@@ -218,7 +218,7 @@ public class PhotoListActivity extends BaseActivity {
             //파일이름설정
             MakePhotoSettingDialog(uri);
            // UpdateImage(uri);*/
-
+            startProgress();
             ArrayList<Uri> uriList = new ArrayList<>();     // 이미지의 uri를 담을 ArrayList 객체
 
             if(data.getClipData() == null){     // 이미지를 하나만 선택한 경우

@@ -15,7 +15,6 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -495,7 +494,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 else
                     returnTransFlagName2 = "당사";
 
-                if(returnTransFlag==1 || returnTransFlag2!=1){//반출차량: 당사 && 지게차: 거래처 가 아닌경우
+                if (returnTransFlag == 1 || returnTransFlag2 != 1) {//반출차량: 당사 && 지게차: 거래처 가 아닌경우
                     txtCar.setTextColor(Color.RED);
                     txtCar.setBackgroundColor(Color.YELLOW);
                 }
@@ -509,16 +508,20 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
         }
     }
 
-
     private void setFilePath() {
         try {
-            String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-            File dir = new File(dirPath);
-            if (!dir.exists()) {
-                dir.mkdir();
+            //저장소 사용시
+            //String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+            //File dir = new File(dirPath);
+
+            //캐쉬(임시) 저장소 사용시
+            File tempDir = getCacheDir();
+
+            if (!tempDir.exists()) {
+                tempDir.mkdir();
             }
 
-            filePath = File.createTempFile("IMG", ".jpg", dir);
+            filePath = File.createTempFile("IMG", ".jpg", tempDir);
             if (!filePath.exists()) {
                 filePath.createNewFile();
             }
@@ -576,11 +579,14 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
     private void StartCamera() {
         try {
-            Uri photoUri = FileProvider.getUriForFile(getBaseContext(), getApplication().getPackageName() + ".provider", filePath);
+            /*Uri photoUri = FileProvider.getUriForFile(getBaseContext(), getApplication().getPackageName() + ".provider", filePath);
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(filePath));
-
+            resultLauncher.launch(intent);*/
+            Uri photoUri = FileProvider.getUriForFile(getBaseContext(), getApplication().getPackageName() + ".provider", filePath);
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
             resultLauncher.launch(intent);
 
         } catch (Exception e) {
@@ -1084,7 +1090,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 else
                     returnTransFlagName2 = "당사";
 
-                if(returnTransFlag==1 || returnTransFlag2!=1){//반출차량: 당사 && 지게차: 거래처 가 아닌경우
+                if (returnTransFlag == 1 || returnTransFlag2 != 1) {//반출차량: 당사 && 지게차: 거래처 가 아닌경우
                     txtCar.setTextColor(Color.RED);
                     txtCar.setBackgroundColor(Color.YELLOW);
                 }
@@ -1559,10 +1565,10 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                                         deleteStockInCertificate();
                                     }
                                 }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                }).show();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).show();
                 break;
 
         }

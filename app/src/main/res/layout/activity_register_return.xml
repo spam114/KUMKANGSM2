@@ -172,17 +172,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="일반업무     "
-                        android:textSize="15sp" />
+                        android:text="일반업무   "
+                        android:textSize="13sp" />
 
                     <RadioButton
                         android:id="@+id/radioButton2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20sp"
                         android:checked="false"
-                        android:text="보고사항     "
-                        android:textSize="15sp" />
+                        android:text="보고사항   "
+                        android:textSize="13sp" />
+
+                    <RadioButton
+                        android:id="@+id/radioButton3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="긴   급   "
+                        android:textSize="13sp" />
                 </RadioGroup>
 
             </LinearLayout>

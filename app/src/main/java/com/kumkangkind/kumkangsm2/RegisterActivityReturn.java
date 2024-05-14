@@ -101,6 +101,7 @@ public class RegisterActivityReturn extends BaseActivity {
 
     RadioButton radioButton1;
     RadioButton radioButton2;
+    RadioButton radioButton3;
     LinearLayout layoutWorkType2;
     LinearLayout totalLayout;
 
@@ -164,6 +165,7 @@ public class RegisterActivityReturn extends BaseActivity {
         this.btnNext.setClickable(false);
         radioButton1 = (RadioButton) findViewById(R.id.radioButton);
         radioButton2 = (RadioButton) findViewById(R.id.radioButton2);
+        radioButton3 = (RadioButton) findViewById(R.id.radioButton3);
         textViewCustomer = (TextView) findViewById(R.id.textViewCustomer);
         textViewRealDate = (TextView) findViewById(R.id.textViewRealDate);
         //spinnerWorkType = (Spinner) findViewById(R.id.spinnerWorkType);
@@ -177,8 +179,20 @@ public class RegisterActivityReturn extends BaseActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked)
                     layoutWorkType2.setVisibility(View.GONE);
-                else
+            }
+        });
+        radioButton2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
                     layoutWorkType2.setVisibility(View.VISIBLE);
+            }
+        });
+        radioButton3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                    layoutWorkType2.setVisibility(View.GONE);
             }
         });
         SetDate();
@@ -198,6 +212,7 @@ public class RegisterActivityReturn extends BaseActivity {
                 textViewTime2.setEnabled(false);
                 radioButton1.setEnabled(false);
                 radioButton2.setEnabled(false);
+                radioButton3.setEnabled(false);
                 spinnerWorkType2.setEnabled(false);
                 textViewWorkType2.setEnabled(false);
                 textView1.setEnabled(false);
@@ -569,13 +584,11 @@ public class RegisterActivityReturn extends BaseActivity {
 
         switch (v.getId()) {
             case R.id.btnNext:
-
                 if(textViewWorkType2.getText().toString().equals("")){
                     Toast.makeText(getBaseContext(), "작업구분을 선택하세요.", Toast.LENGTH_SHORT).show();
                     progressOFF();
                     return;
                 }
-
                 if (key.equals("생성모드")) {//작업일보 초기 생성일시
 
                     if(textView1.getText().toString().equals("")){
@@ -583,7 +596,6 @@ public class RegisterActivityReturn extends BaseActivity {
                         progressOFF();
                         return;
                     }
-
                     new AlertDialog.Builder(this)
                             .setTitle("작업일보 생성")
                             .setMessage("작업일보를 생성하시겠습니까? ")
@@ -1239,6 +1251,7 @@ public class RegisterActivityReturn extends BaseActivity {
                     textViewTime2.setClickable(false);
                     radioButton1.setClickable(false);
                     radioButton2.setClickable(false);
+                    radioButton3.setClickable(false);
                     textView1.setClickable(false);
                     textView1.setHint("");
                     textView2.setClickable(false);
@@ -1296,8 +1309,11 @@ public class RegisterActivityReturn extends BaseActivity {
         if (!suworder3.StayFlag.equals("null") && !suworder3.StayFlag.equals("")) {
             if (suworder3.StayFlag.equals("1")) {
                 this.radioButton1.setChecked(true);
-            } else {
+            } else if(suworder3.StayFlag.equals("2")){
                 this.radioButton2.setChecked(true);
+            }
+            else{
+                this.radioButton3.setChecked(true);
             }
         }
         if (!suworder3.WorkDescription1.equals("null") && !suworder3.WorkDescription1.equals("")) {
@@ -2024,7 +2040,7 @@ public class RegisterActivityReturn extends BaseActivity {
 
         suworder3.StartTime = startTime;
         suworder3.EndTime = endTime;
-        suworder3.StayFlag = radioButton1.isChecked() == true ? "1" : "2";
+        suworder3.StayFlag = radioButton1.isChecked() == true ? "1" : radioButton2.isChecked() == true ? "2" : "3";
         suworder3.WorkDescription1 = textView1.getText().toString();
         suworder3.WorkDescription2 = textView2.getText().toString();
 
