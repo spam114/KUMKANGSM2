@@ -168,7 +168,7 @@ public class LocationTreeViewActivitySearch extends BaseActivity {//+검색
             treeLayout.removeAllViews();
             treeView.setDefaultAnimation(true);
             treeView.setDefaultViewHolder(MyHolder2.class);
-            treeView.setDefaultContainerStyle(R.style.TreeNodeStyle);
+            treeView.setDefaultContainerStyle(com.unnamed.b.atv.R.style.TreeNodeStyle);
         }
         treeLayout.addView(treeView.getView());
     }

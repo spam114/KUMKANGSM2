@@ -94,13 +94,13 @@ public class FloatingNavigationView extends FloatingActionButton {
     public FloatingNavigationView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-        setImageResource(R.drawable.ic_menu_vector);
+        setImageResource(com.andremion.floatingnavigationview.R.drawable.ic_menu_vector);
 
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
         mNavigationView = new CircularRevealNavigationView(context, attrs, defStyleAttr);
         setupNavigationView(context, attrs);
-        mNavigationMenuView = mNavigationView.findViewById(R.id.design_navigation_view);
+        mNavigationMenuView = mNavigationView.findViewById(com.andremion.floatingnavigationview.R.id.design_navigation_view);
 
         mFabView = new ImageView(context, attrs, defStyleAttr);
         setupFabView(context, attrs);
@@ -119,7 +119,7 @@ public class FloatingNavigationView extends FloatingActionButton {
 
     @SuppressLint("PrivateResource")
     private void setupFabView(Context context, AttributeSet attrs) {
-        TypedArray a = context.obtainStyledAttributes(attrs, new int[]{R.attr.selectableItemBackgroundBorderless});
+        TypedArray a = context.obtainStyledAttributes(attrs, new int[]{com.andremion.floatingnavigationview.R.attr.selectableItemBackgroundBorderless});
         mFabView.setScaleType(ScaleType.CENTER);
         mFabView.setBackground(a.getDrawable(0));
         mFabView.setOnClickListener(mFabClickListener);
@@ -127,8 +127,8 @@ public class FloatingNavigationView extends FloatingActionButton {
         mFabView.bringToFront();
         a.recycle();
         mNavigationView.addView(mFabView, new FrameLayout.LayoutParams(
-                getResources().getDimensionPixelSize(R.dimen.design_fab_size_normal),
-                getResources().getDimensionPixelSize(R.dimen.design_fab_size_normal)
+                getResources().getDimensionPixelSize(com.andremion.floatingnavigationview.R.dimen.design_fab_size_normal),
+                getResources().getDimensionPixelSize(com.andremion.floatingnavigationview.R.dimen.design_fab_size_normal)
         ));
     }
 
@@ -230,7 +230,7 @@ public class FloatingNavigationView extends FloatingActionButton {
 
         // Icon
         AnimatedVectorDrawableCompat menuIcon = AnimatedVectorDrawableCompat.create(getContext(),
-                R.drawable.ic_menu_animated);
+                com.andremion.floatingnavigationview.R.drawable.ic_menu_animated);
         mFabView.setImageDrawable(menuIcon);
         menuIcon.start();
 
@@ -257,7 +257,7 @@ public class FloatingNavigationView extends FloatingActionButton {
 
         // Icon
         AnimatedVectorDrawableCompat closeIcon = AnimatedVectorDrawableCompat.create(getContext(),
-                R.drawable.ic_close_animated);
+                com.andremion.floatingnavigationview.R.drawable.ic_close_animated);
         mFabView.setImageDrawable(closeIcon);
         closeIcon.start();
 
@@ -440,7 +440,7 @@ public class FloatingNavigationView extends FloatingActionButton {
         //noinspection unchecked
         mNavigationView.restoreHierarchyState(ss.navigationViewState);
         if (ss.opened) {
-            mFabView.setImageResource(R.drawable.ic_close_vector);
+            mFabView.setImageResource(com.andremion.floatingnavigationview.R.drawable.ic_close_vector);
             // Run on post to prevent "unable to add window -- token null is not valid" error
             post(new Runnable() {
                 @Override

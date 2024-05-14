@@ -1,5 +1,6 @@
 package com.kumkangkind.kumkangsm2;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
