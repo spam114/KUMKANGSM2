@@ -77,6 +77,7 @@ public class SaleOrderAdapter extends ArrayAdapter<SaleOrder> implements BaseAct
             String worderRequestNo = item.WorderRequestNo;
             String saleOrderNo = item.SaleOrderNo;
             String remark= item.Remark;
+            String receiptFlag = item.ReceiptFlag;
             DecimalFormat myFormatter = new DecimalFormat("###,###");
             //ImageView imvRemove;
             //imvRemove= row.findViewById(R.id.imvRemove);
@@ -114,6 +115,9 @@ public class SaleOrderAdapter extends ArrayAdapter<SaleOrder> implements BaseAct
                     i.putExtra("customerName", customerName);
                     i.putExtra("locationName", locationName);
                     i.putExtra("worderRequestNo", worderRequestNo);
+                    if(receiptFlag.equals("999")){//receiptFlag가 "999"이면 출고의뢰
+
+                    }
                     context.startActivity(i);
 
                 }

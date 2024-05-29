@@ -341,7 +341,7 @@ public class RegisterActivity2 extends BaseActivity {
      */
     private void SetCreateData() {
         suworder3 = new SuWorder3();
-        suworder3.StartTime = mYear+"-"+(mMonth+1)+"-"+mDay+" "+"09:00";
+        suworder3.StartTime = mYear+"-"+(mMonth+1)+"-"+mDay+" "+"08:00";
         suworder3.EndTime = mYear+"-"+(mMonth+1)+"-"+mDay+" "+"17:00";
         suworder3.StayFlag = "0";
         suworder3.WorkDescription1 = "";
@@ -351,7 +351,7 @@ public class RegisterActivity2 extends BaseActivity {
         suworder3.WorkTypeCode = 7;
 
         textViewRealDate.setText(mYear+"-"+(mMonth+1)+"-"+mDay);
-        textViewTime1.setText("오전 9:00");
+        textViewTime1.setText("오전 8:00");
         textViewTime2.setText("오후 5:00");
 
         textViewManageNo.setText("'작업일보생성' 버튼을 눌러 일보를 생성하세요.");

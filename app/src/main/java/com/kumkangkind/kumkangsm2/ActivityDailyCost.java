@@ -1,6 +1,5 @@
 package com.kumkangkind.kumkangsm2;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -72,8 +71,8 @@ public class ActivityDailyCost extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dailycost);
 
-        textViewMonth = (TextView)findViewById(R.id.textViewMonth);
-        ((TextView)findViewById(R.id.costUser)).setText(Users.UserName);
+        textViewMonth = (TextView) findViewById(R.id.textViewMonth);
+        ((TextView) findViewById(R.id.costUser)).setText(Users.UserName);
 
 
         Calendar cal = new GregorianCalendar();
@@ -81,7 +80,7 @@ public class ActivityDailyCost extends BaseActivity {
         mMonth = cal.get(Calendar.MONTH) + 1;
         mDay = cal.get(Calendar.DATE);
 
-        if(mMonth  < 10)
+        if (mMonth < 10)
             yyyyMM = String.valueOf(mYear) + "0" + String.valueOf(mMonth);
         else
             yyyyMM = String.valueOf(mYear) + String.valueOf(mMonth);
@@ -90,7 +89,7 @@ public class ActivityDailyCost extends BaseActivity {
         textViewMonth.setText(yyyyMM);
     }
 
-    public void mOnClick(View v){
+    public void mOnClick(View v) {
 
 
         switch (v.getId()) {
@@ -104,13 +103,11 @@ public class ActivityDailyCost extends BaseActivity {
                 //2. 조회 버튼 클릭시 통신하여 데이터를 가져온다./
                 try {
                     CallDateDialog();
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 break;
-                //3. 업데이트 문?
+            //3. 업데이트 문?
         }
     }
 
@@ -155,10 +152,10 @@ public class ActivityDailyCost extends BaseActivity {
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
                     mYear = year;
-                    mMonth = monthOfYear +1;
-                    String yyyyMM= "";
+                    mMonth = monthOfYear + 1;
+                    String yyyyMM = "";
 
-                    if(mMonth  < 10)
+                    if (mMonth < 10)
                         yyyyMM = String.valueOf(mYear) + "0" + String.valueOf(mMonth);
                     else
                         yyyyMM = String.valueOf(mYear) + String.valueOf(mMonth);
@@ -183,7 +180,7 @@ public class ActivityDailyCost extends BaseActivity {
         dialog.setContentView(R.layout.dialog_dailycost);
 */
         //tableLayout
-        TableLayout t0 = (TableLayout)findViewById(R.id.t0);
+        TableLayout t0 = (TableLayout) findViewById(R.id.t0);
 
         t0.removeAllViews();
 
@@ -301,7 +298,7 @@ public class ActivityDailyCost extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85*dip);
+        tv.setWidth(85 * dip);
         tv.setText("통신비");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -313,7 +310,7 @@ public class ActivityDailyCost extends BaseActivity {
 
         tr_title = new TableRow(this);
         tv = new TextView(this);
-        tv.setWidth(85*dip);
+        tv.setWidth(85 * dip);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         tv.setText("합계");
         tv.setBackgroundResource(R.drawable.background_tableheader);
@@ -324,12 +321,11 @@ public class ActivityDailyCost extends BaseActivity {
 
 
         //tableLayout
-        TableLayout t1        = (TableLayout)findViewById(R.id.t1);
+        TableLayout t1 = (TableLayout) findViewById(R.id.t1);
         t1.removeAllViews();
 
         TableRow tr_date = new TableRow(this);
         for (int i = 0; i < monthList.size(); i++) {
-
 
 
             //일자를 넣어야함
@@ -390,7 +386,7 @@ public class ActivityDailyCost extends BaseActivity {
 
             //Cost3 시외일비
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(70 * dip);
             tvNo.setText(monthList.get(i).Cost3);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -410,7 +406,7 @@ public class ActivityDailyCost extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(70 * dip);
             tvNo.setText(monthList.get(i).Cost4);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -430,7 +426,7 @@ public class ActivityDailyCost extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(70 * dip);
             tvNo.setText(monthList.get(i).Cost5);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -449,7 +445,7 @@ public class ActivityDailyCost extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(70 * dip);
             tvNo.setText(monthList.get(i).Cost6);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -468,7 +464,7 @@ public class ActivityDailyCost extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(70 * dip);
             tvNo.setText(monthList.get(i).Cost7);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -487,7 +483,7 @@ public class ActivityDailyCost extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(70 * dip);
             tvNo.setText(monthList.get(i).Cost8);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -506,7 +502,7 @@ public class ActivityDailyCost extends BaseActivity {
 
             //일자를 넣어야함
             TextView tvNo = new TextView(this);
-            tvNo.setWidth(70*dip);
+            tvNo.setWidth(70 * dip);
             tvNo.setText(monthList.get(i).Cost9);
             tvNo.setTextColor(Color.BLACK);
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
@@ -551,22 +547,23 @@ public class ActivityDailyCost extends BaseActivity {
             tvNo.setBackgroundResource(R.drawable.background_tablecell);
             tvNo.setTag(R.id.costDate, monthList.get(i).CostDate);
             tvNo.setTag(R.id.costType, "11");
-            tvNo.setPadding(10, 25, 0, 25);;
+            tvNo.setPadding(10, 25, 0, 25);
+            ;
             tvNo.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
             tr_Cost11.addView(tvNo);
         }
         t1.addView(tr_Cost11, new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
-    private void GetDailyCost(){
+    private void GetDailyCost() {
 
-        TextView tv = (TextView)findViewById(R.id.textViewcostTitle);
+        TextView tv = (TextView) findViewById(R.id.textViewcostTitle);
         supervisorCode = Users.USER_ID;
         yyyyMM = textViewMonth.getText().toString();
 
-        tv.setText(yyyyMM.substring(0, 4) + "년 " + yyyyMM.substring(4, 6) + "월" + " 사용경비내역" );
+        tv.setText(yyyyMM.substring(0, 4) + "년 " + yyyyMM.substring(4, 6) + "월" + " 사용경비내역");
 
-        new HttpAsyncTask().execute(getString(R.string.service_address)+"getdailycost");
+        new HttpAsyncTask().execute(getString(R.string.service_address) + "getdailycost");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
@@ -589,7 +586,7 @@ public class ActivityDailyCost extends BaseActivity {
                     dailyCost = new DailyCost();
                     JSONObject child = jsonArray.getJSONObject(i);
                     dailyCost.SupervisorCode = child.getString("SupervisorCode");
-                    dailyCost.CostDate  = child.getString("CostDate");
+                    dailyCost.CostDate = child.getString("CostDate");
                     dailyCost.Cost1 = child.getString("Cost1");
                     dailyCost.Cost2 = child.getString("Cost2");
                     dailyCost.Cost3 = child.getString("Cost3");
@@ -614,7 +611,7 @@ public class ActivityDailyCost extends BaseActivity {
 
     private String toCostType(String typeCode) {
 
-        switch(typeCode) {
+        switch (typeCode) {
 
             case "1":
                 return "시내출장비";
@@ -652,14 +649,14 @@ public class ActivityDailyCost extends BaseActivity {
                     String amount = ((TextView) v).getText().toString();
 
                     //다이알로그
-                    ShowDialog(costType, type, date, amount, (TextView)v);
+                    ShowDialog(costType, type, date, amount, (TextView) v);
                 }
             };
 
 
-    private void ShowDialog(String costType, String type, String costDate, final String amount, final TextView textView){
+    private void ShowDialog(String costType, String type, String costDate, final String amount, final TextView textView) {
 
-    //Dialog 디자인 해야함
+        //Dialog 디자인 해야함
         dialog = new Dialog(ActivityDailyCost.this);
 
         dialog.setContentView(R.layout.dialog_cost);
@@ -672,9 +669,8 @@ public class ActivityDailyCost extends BaseActivity {
         textViewCostType.setText(type);
 
 
-
         textViewAmount = (EditText) dialog.findViewById(R.id.EditTextAmount);
-        if(amount.equals("0"))
+        if (amount.equals("0"))
             textViewAmount.setText("");
         else
             textViewAmount.setText(amount);
@@ -682,7 +678,7 @@ public class ActivityDailyCost extends BaseActivity {
 
         //textViewAmount.setSelectAllOnFocus(true);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInputFromInputMethod (textViewAmount .getApplicationWindowToken(),InputMethodManager.SHOW_FORCED);
+        imm.showSoftInputFromInputMethod(textViewAmount.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED);
 
 
         Button okButton = (Button) dialog.findViewById(R.id.btnItemOK);
@@ -697,7 +693,7 @@ public class ActivityDailyCost extends BaseActivity {
 
                 type2 = textViewAmount.getText().toString();
                 currentTextView = textView;
-                new HttpAsyncTask2().execute(getString(R.string.service_address)+"setdailycost");
+                new HttpAsyncTask2().execute(getString(R.string.service_address) + "setdailycost");
             }
         });
 
@@ -713,7 +709,7 @@ public class ActivityDailyCost extends BaseActivity {
     }
 
 
-    Handler mHandler = new Handler(){
+    Handler mHandler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -738,7 +734,7 @@ public class ActivityDailyCost extends BaseActivity {
             JSONObject jsonObject = new JSONObject();
 
             //Delete & Insert
-            jsonObject.put("Supervisor",supervisorCode);
+            jsonObject.put("Supervisor", supervisorCode);
             jsonObject.put("FromDate", yyyyMM);
             jsonObject.put("ToDate", "");
             jsonObject.put("Type1", "");
@@ -816,7 +812,7 @@ public class ActivityDailyCost extends BaseActivity {
             message = jsonArray.getJSONObject(0).getString("Message");
             resultCode = jsonArray.getJSONObject(0).getString("ResultCode");
 
-            result =  message + "(" + resultCode  + ")";
+            result = message + "(" + resultCode + ")";
             //Toast.makeText(getBaseContext() , message + "(" + resultCode  + ")" , Toast.LENGTH_SHORT).show();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -836,7 +832,7 @@ public class ActivityDailyCost extends BaseActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            Toast.makeText(getBaseContext() , result , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), result, Toast.LENGTH_SHORT).show();
             mHandler2.sendEmptyMessage(0);
         }
     }
@@ -854,7 +850,7 @@ public class ActivityDailyCost extends BaseActivity {
             JSONObject jsonObject = new JSONObject();
 
             //Delete & Insert
-            jsonObject.put("Supervisor",supervisorCode);
+            jsonObject.put("Supervisor", supervisorCode);
             jsonObject.put("FromDate", yyyyMMdd);
             jsonObject.put("ToDate", "");
             jsonObject.put("Type1", type1);
@@ -896,7 +892,7 @@ public class ActivityDailyCost extends BaseActivity {
         return result;
     }
 
-    Handler mHandler2 = new Handler(){
+    Handler mHandler2 = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {

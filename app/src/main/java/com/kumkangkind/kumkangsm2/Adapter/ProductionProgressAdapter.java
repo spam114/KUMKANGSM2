@@ -130,7 +130,6 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //worderRequestNo
                     getProductionDate(item.PartName, item.PartSpec, item.Mspec, WorderRequestNo, item.SeqNo);
                 }
             });

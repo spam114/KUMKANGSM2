@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.kumkangkind.kumkangsm2.Adapter.SaleOrderAdapter;
 import com.kumkangkind.kumkangsm2.Object.SaleOrder;
 
@@ -30,9 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 
@@ -50,7 +46,7 @@ public class SaleOrderActivity extends BaseActivity {
     String customerName;
     String locationNo;
     String locationName;
-    boolean firstFlag=true;
+    boolean firstFlag = true;
     int fromYear = 0;
     int fromMonth = 0;
     int fromDay = 0;
@@ -82,20 +78,20 @@ public class SaleOrderActivity extends BaseActivity {
         layoutDate = findViewById(R.id.layoutDate);
         listview = findViewById(R.id.listview);
         txtCustomerLocation = findViewById(R.id.txtCustomerLocation);
-        txtDong=findViewById(R.id.txtDong);
+        txtDong = findViewById(R.id.txtDong);
         spinnerReceiptFlag = findViewById(R.id.spinnerReceiptFlag);
         spinnerRequestType = findViewById(R.id.spinnerRequestType);
         customerName = getIntent().getStringExtra("customerName");
         locationNo = getIntent().getStringExtra("locationNo");
         locationName = getIntent().getStringExtra("locationName");
-        txtCustomerLocation.setText(customerName+"("+locationName+")");
+        txtCustomerLocation.setText(customerName + "(" + locationName + ")");
         setDate();
         setSpinnerData();
 
         spinnerRequestType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(!firstFlag){
+                if (!firstFlag) {
                     getSaleOrder();
                 }
 
@@ -111,7 +107,7 @@ public class SaleOrderActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 getSaleOrder();
-                firstFlag=false;
+                firstFlag = false;
             }
 
             @Override
@@ -124,36 +120,31 @@ public class SaleOrderActivity extends BaseActivity {
         txtDong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(SaleOrderActivity.this)
-                        .setTitle("동을 선택하세요")
-                        .setSingleChoiceItems(dongSequences, selectedIndex, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                selectedIndex = which;
-                            }
-                        })
-                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
+                new AlertDialog.Builder(SaleOrderActivity.this).setTitle("동을 선택하세요").setSingleChoiceItems(dongSequences, selectedIndex, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        selectedIndex = which;
+                    }
+                }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
 
-                                //listview.setFilterText("SPP BPE");
-                                filter = saleOrderAdapter.getFilter();//글자가 나타나는 현상때문에 해당 소스로 변경
-                                filter.filter(dongSequences[selectedIndex]);
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                        //listview.setFilterText("SPP BPE");
+                        filter = saleOrderAdapter.getFilter();//글자가 나타나는 현상때문에 해당 소스로 변경
+                        filter.filter(dongSequences[selectedIndex]);
+                        dialog.dismiss();
+                    }
+                }).setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-                                //listview.setFilterText("SPP BPE");
-                                filter = saleOrderAdapter.getFilter();//글자가 나타나는 현상때문에 해당 소스로 변경
-                                filter.filter(dongSequences[selectedIndex]);
+                        //listview.setFilterText("SPP BPE");
+                        filter = saleOrderAdapter.getFilter();//글자가 나타나는 현상때문에 해당 소스로 변경
+                        filter.filter(dongSequences[selectedIndex]);
 
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
+                        dialog.dismiss();
+                    }
+                }).show();
             }
         });
 
@@ -175,7 +166,7 @@ public class SaleOrderActivity extends BaseActivity {
         String strFromDate = fromYear + "-" + (fromMonth + 1) + "-" + fromDay;
         String strToDate = toYear + "-" + (toMonth + 1) + "-" + toDay;
 
-        String outTxt = strFromDate+" ~ "+strToDate;
+        String outTxt = strFromDate + " ~ " + strToDate;
 
         // txtLeftCircle.setTextColor(Color.parseColor("#18A266"));
         // txtLeftCircle.setTextColor(Color.parseColor("#FFFFFF"));
@@ -266,11 +257,12 @@ public class SaleOrderActivity extends BaseActivity {
     }
 
     private void setSpinnerData() {
-        this.receiptList=new ArrayList<>();
-        this.requestList=new ArrayList<>();
+        this.receiptList = new ArrayList<>();
+        this.requestList = new ArrayList<>();
         receiptList.add("전체");//data=-1, index=0
         receiptList.add("생산의뢰");//data=0, index=1
         receiptList.add("의뢰접수");//data=1, index=2
+        receiptList.add("출고의뢰");//data=999, index=3
 
         requestList.add("전체");//data="-1", index=0
         requestList.add("주문품의");//data="S", index=1
@@ -279,16 +271,14 @@ public class SaleOrderActivity extends BaseActivity {
         requestList.add("취소품의");//data="C", index=4
         requestList.add("추가품의");//data="A", index=5
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,
-                R.layout.spinner_item, receiptList);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, receiptList);
 
         spinnerReceiptFlag.setAdapter(adapter);
         //spinnerLocation.setMinimumWidth(150);
         //spinnerLocation.setDropDownWidth(150);
         spinnerReceiptFlag.setSelection(2);
 
-        ArrayAdapter adapter2 = new ArrayAdapter<String>(this,
-                R.layout.spinner_item, requestList);
+        ArrayAdapter adapter2 = new ArrayAdapter<String>(this, R.layout.spinner_item, requestList);
 
         spinnerRequestType.setAdapter(adapter2);
         //spinnerLocation.setMinimumWidth(150);
@@ -308,26 +298,17 @@ public class SaleOrderActivity extends BaseActivity {
         String receiptFlag;
         String requestType;
         int receiptPosition = spinnerReceiptFlag.getSelectedItemPosition();
-        if(receiptPosition == 0)
-            receiptFlag = "-1";
-        else if(receiptPosition == 1)
-            receiptFlag = "0";
-        else
-            receiptFlag="1";
+        if (receiptPosition == 0) receiptFlag = "-1";
+        else if (receiptPosition == 1) receiptFlag = "0";
+        else if (receiptPosition == 2) receiptFlag = "1";
+        else receiptFlag = "999";
         int requestPosition = spinnerRequestType.getSelectedItemPosition();
-        if(requestPosition==0)
-            requestType="-1";
-        else if(requestPosition==1)
-            requestType="S";
-        else if(requestPosition==2)
-            requestType="P";
-        else if(requestPosition==3)
-            requestType="R";
-        else if(requestPosition==4)
-            requestType="C";
-        else
-            requestType="A";
-
+        if (requestPosition == 0) requestType = "-1";
+        else if (requestPosition == 1) requestType = "S";
+        else if (requestPosition == 2) requestType = "P";
+        else if (requestPosition == 3) requestType = "R";
+        else if (requestPosition == 4) requestType = "C";
+        else requestType = "A";
 
 
         values.put("FromDate", fromDate);
@@ -382,7 +363,7 @@ public class SaleOrderActivity extends BaseActivity {
             double initTotalAmt = 0;
             double initTotalWeight = 0;
             try {
-                dongDic=new ArrayList<>();
+                dongDic = new ArrayList<>();
                 SaleOrder saleOrder;
                 JSONArray jsonArray = new JSONArray(result);
                 String ErrorCheck = "";
@@ -411,8 +392,7 @@ public class SaleOrderActivity extends BaseActivity {
                     //saleOrder.initState = true;
 
                     saleOrderArrayList.add(saleOrder);
-                    if (!dongDic.contains(saleOrder.Dong))
-                        dongDic.add(saleOrder.Dong);
+                    if (!dongDic.contains(saleOrder.Dong)) dongDic.add(saleOrder.Dong);
                     Collections.sort(dongDic);
                     /*if (!partNameDic.contains(stock.PartName))
                         partNameDic.add(stock.PartName);
@@ -425,8 +405,7 @@ public class SaleOrderActivity extends BaseActivity {
                 for (int i = 1; i < dongDic.size() + 1; i++) {
                     dongSequences[i] = dongDic.get(i - 1);
                 }
-                saleOrderAdapter = new SaleOrderAdapter
-                        (SaleOrderActivity.this, R.layout.listview_saleorder_row, saleOrderArrayList, listview, customerName, locationName);
+                saleOrderAdapter = new SaleOrderAdapter(SaleOrderActivity.this, R.layout.listview_saleorder_row, saleOrderArrayList, listview, customerName, locationName);
                 listview.setAdapter(saleOrderAdapter);
                 //txtTotal.setText("Why");
 
