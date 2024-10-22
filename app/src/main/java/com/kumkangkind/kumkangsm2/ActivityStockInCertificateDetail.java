@@ -195,10 +195,11 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
             this.btnDelete.setEnabled(false);
         }
 
-        String[] workTypes = new String[3];
+        String[] workTypes = new String[4];
         workTypes[0] = "음성1공장";
         workTypes[1] = "음성3공장";
         workTypes[2] = "음성1,3공장";
+        workTypes[3] = "창녕공장";
         ArrayAdapter<String> workTypeAdapter = new ArrayAdapter<String>(ActivityStockInCertificateDetail.this, android.R.layout.simple_spinner_dropdown_item, workTypes);
         spinnerDestination.setAdapter(workTypeAdapter);
 
@@ -1038,7 +1039,11 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                     locationNo = stockInCertificate.LocationNo;
                     seqNo = stockInCertificate.SeqNo;
 
-                    if (stockInCertificate.Destination.equals("1") || stockInCertificate.Destination.equals("2")) {
+                    if (stockInCertificate.Destination.equals("1")
+                            || stockInCertificate.Destination.equals("2")
+                            || stockInCertificate.Destination.equals("3")
+                            || stockInCertificate.Destination.equals("4")
+                    ) {
                         textView2.setVisibility(View.INVISIBLE);
                         imageView2.setVisibility(View.INVISIBLE);
                         maxCount = 5;
@@ -1116,6 +1121,9 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                         spinnerDestination.setSelection(1);
                     } else if (stockInCertificate.Destination.equals("3")) {
                         spinnerDestination.setSelection(2);
+                    }
+                    else if (stockInCertificate.Destination.equals("4")) {
+                        spinnerDestination.setSelection(3);
                     }
                 }
                 btnNext.setBackgroundColor(Color.TRANSPARENT);

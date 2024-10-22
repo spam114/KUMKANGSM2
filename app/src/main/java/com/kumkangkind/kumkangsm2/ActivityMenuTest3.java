@@ -2310,7 +2310,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 //Toast.makeText(getBaseContext(), output, Toast.LENGTH_LONG).show();
 
                 Intent i;
-                if (Users.BusinessClassCode == 9) {//음성
+                if (Users.BusinessClassCode == 9 || Users.LeaderType.equals("3")) {//음성
                     i = new Intent(getBaseContext(), SuListViewActivity2.class);
                     i.putExtra("data", suWorders);
                     i.putExtra("type", "작업");

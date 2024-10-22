@@ -49,13 +49,6 @@
                 android:onClick="mOnClick"
                 android:src="@drawable/menu2" />-->
 
-            <com.nightonke.boommenu.BoomMenuButton
-                android:id="@+id/bmb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                app:bmb_normalColor="@android:color/holo_blue_dark" />
-
 
         </LinearLayout>
 

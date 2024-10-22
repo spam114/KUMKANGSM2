@@ -84,8 +84,12 @@ public class ActivityDownload extends BaseActivity {
                 IntentFilter filter = new IntentFilter();
                 filter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 
-                registerReceiver(mDownComplete2, filter);
-
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+                    registerReceiver(mDownComplete2, filter, RECEIVER_EXPORTED);
+                }
+                else{
+                    registerReceiver(mDownComplete2, filter);
+                }
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -282,6 +286,5 @@ public class ActivityDownload extends BaseActivity {
         }
         //Toast.makeText(getBaseContext(), "설치 완료 후, 어플리케이션을 다시 시작하여 주십시요.", Toast.LENGTH_LONG).show();
         startActivity(open);
-
     }
 }
