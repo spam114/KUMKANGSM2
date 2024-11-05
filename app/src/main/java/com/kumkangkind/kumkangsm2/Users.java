@@ -9,6 +9,7 @@ public  class  Users {
 
     public static String UserName = "";
     public static String USER_ID = "";
+    public static int Language;
     public static String EmployeeNo="";
     public static String LeaderType = "Y";
     public static String[] supervisorList;

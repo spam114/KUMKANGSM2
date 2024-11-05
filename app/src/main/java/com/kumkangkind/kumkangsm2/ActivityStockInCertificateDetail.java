@@ -1041,7 +1041,6 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
                     if (stockInCertificate.Destination.equals("1")
                             || stockInCertificate.Destination.equals("2")
-                            || stockInCertificate.Destination.equals("3")
                             || stockInCertificate.Destination.equals("4")
                     ) {
                         textView2.setVisibility(View.INVISIBLE);

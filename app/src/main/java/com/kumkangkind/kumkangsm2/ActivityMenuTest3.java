@@ -102,8 +102,20 @@ public class ActivityMenuTest3 extends BaseActivity {
     MenuItem item20;
     
     //여기리스트들은 어플 최초 메인 버튼 셋팅을 의미한다.
-    ArrayList<String> eumSungTeam = new ArrayList<>(Arrays.asList("회수 일보", "담당자 배정", "담당자 배정현황", "나의 작업보기", "일보확인", "진행기준정보 관리", "진행층수 등록",
-            "경비등록", "현장 불만사례", "현장 지원요청", "A/S 관리", "알림 메시지", "생산내역 조회", "진행층수 등록(회수)", "반출입 현황", "반출송장 등록", "현장별 송장 조회", ""));
+    ArrayList<String> eumSungTeam = new ArrayList<>(Arrays.asList(
+            "회수 일보",
+            "담당자 배정",
+            "담당자 배정현황",
+            "나의 작업보기",
+            "일보확인",
+            "진행기준정보 관리",
+            "진행층수 등록",
+            "경비등록",
+            "현장 불만사례",
+            "현장 지원요청",
+            "A/S 관리",
+            "알림 메시지",
+            "생산내역 조회", "진행층수 등록(회수)", "반출입 현황", "반출송장 등록", "현장별 송장 조회", ""));
     ArrayList<String> eumSungSale = new ArrayList<>(Arrays.asList("알림 메시지", "생산내역 조회", "반출입 현황", ""));
     ArrayList<String> eumSungSuper = new ArrayList<>(Arrays.asList("담당자 배정", "나의 작업보기", "진행기준정보 관리", "진행층수 등록", "경비등록", "현장 불만사례",
             "현장 지원요청", "A/S 관리", "생산내역 조회", ""));
