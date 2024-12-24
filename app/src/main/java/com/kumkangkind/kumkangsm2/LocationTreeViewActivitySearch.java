@@ -122,7 +122,7 @@ public class LocationTreeViewActivitySearch extends BaseActivity {//+검색
             ViewTree(token);
         } else {//검색 할때
 
-            new GetCustomerLocationForSearchByPost().execute(getString(R.string.service_address) + "getCustomerLocationForSearch");
+            new GetCustomerLocationForSearchByPost().execute(Users.ServiceAddress + "getCustomerLocationForSearch");
             //customerHashMap = (HashMap<String, Customer>) (getIntent().getSerializableExtra("hashMap"));
         }
 
@@ -342,7 +342,7 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
             @Override
             public void onClick(View v) {
                 //contractNo 보내기
-                //new GetDongProgessFloorByPost().execute(getString(R.string.service_address)+"getDongProgressFloor");
+                //new GetDongProgessFloorByPost().execute(Users.ServiceAddress+"getDongProgressFloor");
                 if (type.equals("현장불만사례")) {
                     ComplainDialog complainDialog = new ComplainDialog(context, locationNo, customerName, locationName, leftComplainDateArr, rightcomplainDateArr, contractNo);
 
@@ -386,7 +386,7 @@ class MyHolder2 extends TreeNode.BaseNodeViewHolder<MyHolder2.IconTreeItem> {
                     context.startActivity(i);
 
                 } else {//담당자배정, 담당자배정현황
-                    new GetDongByPost(customerName, locationName).execute(context.getString(R.string.service_address) + "getDong");
+                    new GetDongByPost(customerName, locationName).execute(Users.ServiceAddress + "getDong");
                 }
             }
         });

@@ -829,7 +829,7 @@ public class DongPersonListViewActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 new DongPersonListViewActivity.setProgressInfo( tvHouseHold, tvSettingStart, tvSettingEnd, tvSettingStartStair, tvSettingEndStair, tvHouseHoldFloor,
-                        tvHighestFloor, tvMakeDate, tvGangFormDate, tvOutDate, tvSettingFloor).execute(getString(R.string.service_address)+"setProgressInfo");
+                        tvHighestFloor, tvMakeDate, tvGangFormDate, tvOutDate, tvSettingFloor).execute(Users.ServiceAddress+"setProgressInfo");
             }
         });
 
@@ -994,7 +994,7 @@ public class DongPersonListViewActivity extends Activity {
         //data를 가져온후(contractNo, Dong)-> TextView에 셋팅
         //비어 있을 경우 '입력시 클릭'
         new DongPersonListViewActivity.getProgressInfo( tvHouseHold, tvSettingStart, tvSettingEnd, tvSettingStartStair, tvSettingEndStair, tvHouseHoldFloor,
-                 tvHighestFloor, tvMakeDate, tvGangFormDate, tvOutDate, tvSettingFloor).execute(getString(R.string.service_address)+"getProgressInfo");
+                 tvHighestFloor, tvMakeDate, tvGangFormDate, tvOutDate, tvSettingFloor).execute(Users.ServiceAddress+"getProgressInfo");
     }
 
     private class getProgressInfo extends AsyncTask<String, Void, String> {//todo

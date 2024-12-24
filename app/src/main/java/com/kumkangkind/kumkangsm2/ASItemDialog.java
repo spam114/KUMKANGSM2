@@ -256,10 +256,10 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
             public void onClick(View v) {
 
                 if(editFlag==false){//등록
-                    new SetASItemByPost().execute(getContext().getString(R.string.service_address)+"setASItem");// onPost에 사진등록 첨부
+                    new SetASItemByPost().execute(Users.ServiceAddress+"setASItem");// onPost에 사진등록 첨부
                 }
                 else{//수정
-                    new UpdateASItemByPost().execute(getContext().getString(R.string.service_address)+"updateASItem");// onPost에 사진등록 첨부
+                    new UpdateASItemByPost().execute(Users.ServiceAddress+"updateASItem");// onPost에 사진등록 첨부
                 }
             }
         });
@@ -279,7 +279,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
                     getContext().startActivity(i);
                 }
                 else{
-                    new GetComplaintImageList().execute(getContext().getString(R.string.service_address)+"getComplaintImageList");
+                    new GetComplaintImageList().execute(Users.ServiceAddress+"getComplaintImageList");
                 }
 
 
@@ -305,7 +305,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
             edtRemark.setText(tempAddItemDetail.Remark);
         }*/
 
-        new GetASItemStandard().execute(getContext().getString(R.string.service_address)+"getASItemStandard");//AS 기준정보를 가져온다.-> (onPost에 구현)동정보를 가져온다.
+        new GetASItemStandard().execute(Users.ServiceAddress+"getASItemStandard");//AS 기준정보를 가져온다.-> (onPost에 구현)동정보를 가져온다.
     }
 
     private class GetComplaintImageList extends AsyncTask<String, Void, String> {
@@ -672,7 +672,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
                 onBackPressed();
                 e.printStackTrace();
             }
-            new GetDongBySupervisor().execute(getContext().getString(R.string.service_address)+"getDongBySupervisorWoNo");//동정보를 가져온다.-> (onPost에 구현)'수정'일시 셋팅
+            new GetDongBySupervisor().execute(Users.ServiceAddress+"getDongBySupervisorWoNo");//동정보를 가져온다.-> (onPost에 구현)'수정'일시 셋팅
             progressOFF();
         }
 
@@ -790,7 +790,7 @@ public class ASItemDialog extends Dialog implements BaseActivityInterface{
                     ASItemDialog.this.mDialogResult.finish(asItem);
 
                     for(int i=0;i<Temp.tempList.size();i++){
-                        new SetComplaintImageWhenInit(i).execute(getContext().getString(R.string.service_address)+"setComplaintImageWhenInit");
+                        new SetComplaintImageWhenInit(i).execute(Users.ServiceAddress+"setComplaintImageWhenInit");
                     }
 
                     ASItemDialog.this.dismiss();

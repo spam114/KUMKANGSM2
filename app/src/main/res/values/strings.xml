@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">금강공업 현장관리</string>
     <string name="gcm_send_message">토큰이 검색되어 서버로 전송되었습니다! 이제 gcmsender를 사용하여 이 응용 프로그램에 다운 스트림 메시지를 보내십시오.</string>
-    <string name="token_error_message">InstanceID 토큰을 가져 오는 동안 오류가 발생했습니다. 가져온 토큰을 서버로 보내거나 PubSub 주제에 등록하십시오. 시도해보십시오. 샘플을 다시 실행하십시오.</string>>
+    <string name="token_error_message">InstanceID 토큰을 가져 오는 동안 오류가 발생했습니다. 가져온 토큰을 서버로 보내거나 PubSub 주제에 등록하십시오. 시도해보십시오. 샘플을 다시 실행하십시오.</string>
     <string name="clear_string">입력시 클릭</string>
     <string name="default_notification_channel_id">체널 ID</string>
     <string name="default_notification_channel_name">금강</string>
     <string name="service_address">http://211.245.239.53:2221/Service/json/</string>
+    <string name="service_address_kkm">http://211.245.239.53:2237/Service/json/</string>
+    <string name="service_address_kkv">http://211.245.239.53:2238/Service/json/</string>
     <string name="app_code">2</string>
     <!--<string name="service_address">http://211.245.239.36:2222/Service/json/</string>-->
     <string name="menu_item_import">Import</string>
@@ -53,24 +55,59 @@
     <string name="text_ham_button_sub_text_normal">Ham Button Sub Text(Normal)</string>
     <string name="text_ham_button_sub_text_highlighted">Ham Button Sub Text(Highlighted)</string>
     <string name="text_ham_button_sub_text_unable">Ham Button Sub Text(Unable)</string>
+
     <string name="work_request_management">작업요청 관리</string>
+    <string name="work_request_management_eng">Manage Work Requests</string>
     <string name="work_request_search">작업요청내역 조회</string>
+    <string name="work_request_search_eng">View work request history</string>
     <string name="my_work">나의 작업보기</string>
+    <string name="my_work_eng">View my work</string>
     <string name="daily_report">일보확인</string>
+    <string name="daily_report_eng">Check daily</string>
     <string name="assignment_status">담당자 배정현황</string>
+    <string name="assignment_status_eng">Status of assigning staff</string>
     <string name="register_expense">경비등록</string>
+    <string name="register_expense_eng">Registering expenses</string>
     <string name="assignment">담당자 배정</string>
+    <string name="assignment_eng">Assign a person in charge</string>
     <string name="message">알림 메시지</string>
+    <string name="message_eng">Notification message</string>
     <string name="problem">현장 불만사례</string>
+    <string name="problem_eng">Site complaints</string>
     <string name="progress_information">진행기준정보 관리</string>
+    <string name="progress_information_eng">Progress information management</string>
     <string name="progress_floor">진행층수 등록</string>
+    <string name="progress_floor_eng">Floor registration</string>
     <string name="progress_floor_return">진행층수 등록(회수)</string>
+    <string name="progress_floor_return_eng">Floor registration(Retrieval)</string>
     <string name="location_progress">반출입 현황</string>
+    <string name="location_progress_eng">Status of Import and Export</string>
     <string name="product">생산내역 조회</string>
+    <string name="product_eng">View production history</string>
     <string name="support">현장 지원요청</string>
+    <string name="support_eng">Request for on-site support</string>
     <string name="as_management">A/S 관리</string>
+    <string name="as_management_eng">A/S Management</string>
     <string name="edit_menu">메뉴 편집</string>
+    <string name="edit_menu_eng">Edit menu</string>
     <string name="stock_in_certificate">반출송장 등록</string>
+    <string name="stock_in_certificate_eng">Export Invoice Registration</string>
     <string name="stock_in_certificate_location">현장별 송장 조회</string>
+    <string name="stock_in_certificate_location_eng">Invoice inquiry by site</string>
     <string name="daily_report_return">회수 일보</string>
+    <string name="daily_report_return_eng">Daily collection report</string>
+    <string name="language">언어(Language)</string>
+    <string name="region">지역(Region)</string>
+
+    <string name="supervisor">슈퍼바이저</string>
+    <string name="supervisor_eng">Supervisor</string>
+
+    <string name="teamleader">팀장</string>
+    <string name="teamleader_eng">Team Leader</string>
+
+    <string name="sale">영업</string>
+    <string name="sale_eng">Sale</string>
+
+    <string name="retrieval">회수</string>
+    <string name="retrieval_eng">Retrieval</string>
   </resources>

@@ -139,7 +139,7 @@ public class CommonActivity extends BaseActivity {
 
 
     private void GetData() {
-        new GetCommonProgressInfoByPost().execute(getString(R.string.service_address)+"getCommonProgressInfo");
+        new GetCommonProgressInfoByPost().execute(Users.ServiceAddress+"getCommonProgressInfo");
     }
 
 
@@ -327,7 +327,7 @@ public class CommonActivity extends BaseActivity {
 
                                 for (int i = 0; i < progressInfoArrayList.size(); i++) {
 
-                                    new SetCommonProgressInfoByPost(i).execute(getString(R.string.service_address)+"setCommonProgressInfo");
+                                    new SetCommonProgressInfoByPost(i).execute(Users.ServiceAddress+"setCommonProgressInfo");
 
                                 }
 

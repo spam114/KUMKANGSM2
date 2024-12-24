@@ -1,6 +1,7 @@
 package com.kumkangkind.kumkangsm2;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -100,31 +101,16 @@ public class ActivityMenuTest3 extends BaseActivity {
     MenuItem item18;
     MenuItem item19;
     MenuItem item20;
-    
-    //여기리스트들은 어플 최초 메인 버튼 셋팅을 의미한다.
-    ArrayList<String> eumSungTeam = new ArrayList<>(Arrays.asList(
-            "회수 일보",
-            "담당자 배정",
-            "담당자 배정현황",
-            "나의 작업보기",
-            "일보확인",
-            "진행기준정보 관리",
-            "진행층수 등록",
-            "경비등록",
-            "현장 불만사례",
-            "현장 지원요청",
-            "A/S 관리",
-            "알림 메시지",
-            "생산내역 조회", "진행층수 등록(회수)", "반출입 현황", "반출송장 등록", "현장별 송장 조회", ""));
-    ArrayList<String> eumSungSale = new ArrayList<>(Arrays.asList("알림 메시지", "생산내역 조회", "반출입 현황", ""));
-    ArrayList<String> eumSungSuper = new ArrayList<>(Arrays.asList("담당자 배정", "나의 작업보기", "진행기준정보 관리", "진행층수 등록", "경비등록", "현장 불만사례",
-            "현장 지원요청", "A/S 관리", "생산내역 조회", ""));
-    ArrayList<String> ChangTeam = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", "진행층수 등록(회수)", "반출입 현황", ""));
-    ArrayList<String> ChangSale = new ArrayList<>(Arrays.asList("담당자 배정", "담당자 배정현황", "작업요청내역 조회", "작업요청 관리", "일보확인", "경비등록", "알림 메시지", ""));
-    ArrayList<String> ChangSuper = new ArrayList<>(Arrays.asList("작업요청내역 조회", "경비등록", "알림 메시지", ""));
 
-    ArrayList<String> returnUser = new ArrayList<>(Arrays.asList("회수 일보", "진행층수 등록(회수)", "알림 메시지", "반출입 현황", "반출송장 등록", "현장별 송장 조회", ""));
-    ArrayList<String> myDefaultButtonList = new ArrayList<>();
+    //여기리스트들은 어플 최초 메인 버튼 셋팅을 의미한다.
+    ArrayList<String> eumSungTeam;
+    ArrayList<String> eumSungSale;
+    ArrayList<String> eumSungSuper;
+    ArrayList<String> ChangTeam;
+    ArrayList<String> ChangSale;
+    ArrayList<String> ChangSuper;
+    ArrayList<String> returnUser;
+    ArrayList<String> myDefaultButtonList;
 
     int fromYear = 0;
     int fromMonth = 0;
@@ -187,6 +173,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main5);
         backpressed = new BackPressControl(this);
+        setInitButton();
 
         //tvVersion = findViewById(R.id.tvVersion);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -203,13 +190,21 @@ public class ActivityMenuTest3 extends BaseActivity {
         TextView txtAuthorityName = view.findViewById(R.id.txtAuthorityName);
         txtUserName.setText(Users.UserName);
         if (Users.LeaderType.equals("0")) {
-            txtAuthorityName.setText("슈퍼바이저");
+            txtAuthorityName.setText(Users.Language == 0 ?
+                    getString(R.string.supervisor):
+                    getString(R.string.supervisor_eng));
         } else if (Users.LeaderType.equals("1")) {
-            txtAuthorityName.setText("팀장");
+            txtAuthorityName.setText(Users.Language == 0 ?
+                    getString(R.string.teamleader):
+                    getString(R.string.teamleader_eng));
         } else if (Users.LeaderType.equals("2")) {
-            txtAuthorityName.setText("영업");
+            txtAuthorityName.setText(Users.Language == 0 ?
+                    getString(R.string.sale):
+                    getString(R.string.sale_eng));
         } else {
-            txtAuthorityName.setText("회수");
+            txtAuthorityName.setText(Users.Language == 0 ?
+                    getString(R.string.retrieval):
+                    getString(R.string.retrieval_eng));
         }
 
         mFloatingNavigationView.setOnClickListener(new View.OnClickListener() {
@@ -225,49 +220,49 @@ public class ActivityMenuTest3 extends BaseActivity {
                 //Snackbar.make((View) mFloatingNavigationView.getParent(), item.getTitle() + " Selected!", Snackbar.LENGTH_SHORT).show();
                 mFloatingNavigationView.close();
                 startProgress();
-                if (item.getTitle().equals(getString(R.string.work_request_management))) {
+                if (item.getTitle().equals(getString(R.string.language))) {
+                    viewLanguage();
+                } else if (item.getTitle().equals(getString(R.string.region))) {
+                    viewRegion();
+                } else if (item.getTitle().equals(getString(R.string.work_request_management)) || item.getTitle().equals(getString(R.string.work_request_management_eng))) {
                     GoWorkRequestManagement();
-                } else if (item.getTitle().equals(getString(R.string.work_request_search))) {
+                } else if (item.getTitle().equals(getString(R.string.work_request_search)) || item.getTitle().equals(getString(R.string.work_request_search_eng))) {
                     GoWorkRequestSearch();
-                } else if (item.getTitle().equals(getString(R.string.my_work))) {
+                } else if (item.getTitle().equals(getString(R.string.my_work)) || item.getTitle().equals(getString(R.string.my_work_eng))) {
                     GoWorkRequestSearch();
-                } else if (item.getTitle().equals(getString(R.string.daily_report))) {
+                } else if (item.getTitle().equals(getString(R.string.daily_report)) || item.getTitle().equals(getString(R.string.daily_report_eng))) {
                     GoDailyReport();
-                } else if (item.getTitle().equals(getString(R.string.assignment_status))) {
+                } else if (item.getTitle().equals(getString(R.string.assignment_status)) || item.getTitle().equals(getString(R.string.assignment_status_eng))) {
                     GoAssignmentStatus();
-                } else if (item.getTitle().equals(getString(R.string.register_expense))) {
+                } else if (item.getTitle().equals(getString(R.string.register_expense)) || item.getTitle().equals(getString(R.string.register_expense_eng))) {
                     GoRegisterExpense();
-                } else if (item.getTitle().equals(getString(R.string.assignment))) {
+                } else if (item.getTitle().equals(getString(R.string.assignment)) || item.getTitle().equals(getString(R.string.assignment_eng))) {
                     GoAssignment();
-                } else if (item.getTitle().equals(getString(R.string.message))) {
+                } else if (item.getTitle().equals(getString(R.string.message)) || item.getTitle().equals(getString(R.string.message_eng))) {
                     GoMessage();
-                } else if (item.getTitle().equals(getString(R.string.problem))) {
+                } else if (item.getTitle().equals(getString(R.string.problem)) || item.getTitle().equals(getString(R.string.problem_eng))) {
                     GoProblem();
-                }
-                else if (item.getTitle().equals(getString(R.string.as_management))) {
+                } else if (item.getTitle().equals(getString(R.string.as_management)) || item.getTitle().equals(getString(R.string.as_management_eng))) {
                     GoASManagement();
-                }else if (item.getTitle().equals(getString(R.string.progress_information))) {
+                } else if (item.getTitle().equals(getString(R.string.progress_information)) || item.getTitle().equals(getString(R.string.progress_information_eng))) {
                     GoProgressInformation();
-                } else if (item.getTitle().equals(getString(R.string.progress_floor))) {
+                } else if (item.getTitle().equals(getString(R.string.progress_floor)) || item.getTitle().equals(getString(R.string.progress_floor_eng))) {
                     GoProgressFloor();
-                } else if (item.getTitle().equals(getString(R.string.progress_floor_return))) {
+                } else if (item.getTitle().equals(getString(R.string.progress_floor_return)) || item.getTitle().equals(getString(R.string.progress_floor_return_eng))) {
                     GoProgressFloorReturn();
-                } else if (item.getTitle().equals(getString(R.string.product))) {
+                } else if (item.getTitle().equals(getString(R.string.product)) || item.getTitle().equals(getString(R.string.product_eng))) {
                     GoProduct();
-                } else if (item.getTitle().equals(getString(R.string.location_progress))) {
+                } else if (item.getTitle().equals(getString(R.string.location_progress)) || item.getTitle().equals(getString(R.string.location_progress_eng))) {
                     GoLocationProgress();
-                } else if (item.getTitle().equals(getString(R.string.support))) {
+                } else if (item.getTitle().equals(getString(R.string.support)) || item.getTitle().equals(getString(R.string.support_eng))) {
                     GoSupport();
-                } else if (item.getTitle().equals(getString(R.string.stock_in_certificate))) {
+                } else if (item.getTitle().equals(getString(R.string.stock_in_certificate)) || item.getTitle().equals(getString(R.string.stock_in_certificate_eng))) {
                     GoStockInCertificate();
-                }
-                else if (item.getTitle().equals(getString(R.string.stock_in_certificate_location))) {
+                } else if (item.getTitle().equals(getString(R.string.stock_in_certificate_location)) || item.getTitle().equals(getString(R.string.stock_in_certificate_location_eng))) {
                     GoStockInCertificateLocation();
-                }
-                else if (item.getTitle().equals(getString(R.string.daily_report_return))) {
+                } else if (item.getTitle().equals(getString(R.string.daily_report_return)) || item.getTitle().equals(getString(R.string.daily_report_return_eng))) {
                     GoDailyReportReturn();
-                }
-                else if (item.getTitle().equals(getString(R.string.edit_menu))) {
+                } else if (item.getTitle().equals(getString(R.string.edit_menu)) || item.getTitle().equals(getString(R.string.edit_menu_eng))) {
                     ArrayList<String> btnList = new ArrayList<>();
                     CardView btn3 = findViewById(R.id.btn3);
                     ImageView imv3 = findViewById(R.id.imv3);
@@ -297,22 +292,19 @@ public class ActivityMenuTest3 extends BaseActivity {
                     myDefaultButtonList.remove("");
                     final AlertDialog.Builder build = new AlertDialog.Builder(ActivityMenuTest3.this);
                     build.create();
-                    build.setTitle(getString(R.string.edit_menu));
-
+                    build.setTitle(Users.Language == 0 ?
+                            getString(R.string.edit_menu):
+                            getString(R.string.edit_menu_eng));
                     final String[] items = new String[myDefaultButtonList.size()];
                     for (int i = 0; i < myDefaultButtonList.size(); i++)
                         items[i] = myDefaultButtonList.get(i).toString();
-
                     final boolean[] checkedItems = new boolean[items.length];
-
                     for (int i = 0; i < items.length; i++) {
                         if (btnList.contains(items[i]))
                             checkedItems[i] = true;
                         else
                             checkedItems[i] = false;
                     }
-
-
                     build.setMultiChoiceItems(items, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -323,7 +315,9 @@ public class ActivityMenuTest3 extends BaseActivity {
                                     cnt++;
                             }
                             if (cnt > 5) {
-                                Toast.makeText(build.getContext(), "최대 5개까지 선택 가능합니다.", Toast.LENGTH_SHORT);
+                                Toast.makeText(build.getContext(), Users.Language == 0 ?
+                                        "최대 5개까지 선택할 수 있습니다.":
+                                        "You can choose up to five.", Toast.LENGTH_SHORT);
                                 checkedItems[which] = false;
                                 ((AlertDialog) dialog).getListView().setItemChecked(which, false);
                             }
@@ -358,28 +352,30 @@ public class ActivityMenuTest3 extends BaseActivity {
 
                                 refreshCustomButton(str[0], str[1], str[2], str[3], str[4]);
                             } else {
-                                Toast.makeText(ActivityMenuTest3.this, "취소되었습니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ActivityMenuTest3.this, Users.Language == 0 ?
+                                                "취소되었습니다.":
+                                                "It has been canceled."
+                                        , Toast.LENGTH_SHORT).show();
                             }
                         }
                     };
-                    build.setPositiveButton("선택", listener);
-                    build.setNegativeButton("취소", listener);
+                    build.setPositiveButton(Users.Language == 0 ?
+                            "선택":
+                            "OK", listener);
+                    build.setNegativeButton(Users.Language == 0 ?
+                            "취소":
+                            "Cancel", listener);
                     build.create().show();
                     progressOFF();
                 }
                 return true;
             }
         });
-
-
         txtDate = findViewById(R.id.txtDate);
-
         btnFromDate = findViewById(R.id.btnFromDate);
         btnToDate = findViewById(R.id.btnToDate);
-
         SetDate();
         SetButton();
-
         getInstanceIdToken();
         BadgeControl.clearBadgeCount(this);
         noticePref = getSharedPreferences("NoticePref", MODE_PRIVATE);
@@ -394,10 +390,9 @@ public class ActivityMenuTest3 extends BaseActivity {
 
         certificateNo = getIntent().getStringExtra("certificateNo");
         if (!certificateNo.equals("")) {
-            if(!certificateNo.substring(0,2).equals("SW")){
+            if (!certificateNo.substring(0, 2).equals("SW")) {
                 getLocationInfoByCertificateNo();
-            }
-            else{//SW로 시작한다고 본다. 일보번호
+            } else {//SW로 시작한다고 본다. 일보번호
                 Intent intent = new Intent(ActivityMenuTest3.this, RegisterActivityReturn.class);
                 intent.putExtra("type", "작업");
                 intent.putExtra("key", certificateNo);
@@ -405,15 +400,269 @@ public class ActivityMenuTest3 extends BaseActivity {
                 intent.putExtra("customerLocation", customerName + "(" + locationName + ")");
                 intent.putExtra("customer", customerName);
                 intent.putExtra("location", locationName);*/
-                intent.putExtra("inputUser","-1");
+                intent.putExtra("inputUser", "-1");
                 startActivityForResult(intent, 2);
             }
         }
 
     }
 
+    private void viewLanguage() {
+        progressOFF();
+        int checkedItem = com.kumkangkind.kumkangsm2.PreferenceManager.getInt(ActivityMenuTest3.this, "language");//0:한국어, 1:영어
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final String[] items = {"한국어", "English"};
+        builder.setTitle("언어(Language)");
+        final int[] selectedIndex = {checkedItem};
+        builder.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int pos) {
+                selectedIndex[0] = pos;
+            }
+        });
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int pos) {
+                com.kumkangkind.kumkangsm2.PreferenceManager.setInt(ActivityMenuTest3.this, "language", selectedIndex[0]);
+                Users.ServiceType = com.kumkangkind.kumkangsm2.PreferenceManager.getInt(ActivityMenuTest3.this, "language");//0:한국어, 1:영어
+                restart(ActivityMenuTest3.this);
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void viewRegion() {
+        progressOFF();
+        int checkedItem = com.kumkangkind.kumkangsm2.PreferenceManager.getInt(ActivityMenuTest3.this, "company");//0:금강공업(음성,진천),1:KKM,2:KKV,-1:TEST
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final String[] items = {"대한민국(음성,진천,창녕)", "KKM", "KKV"};
+        builder.setTitle("지역(Region)");
+        final int[] selectedIndex = {checkedItem};
+        builder.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int pos) {
+                selectedIndex[0] = pos;
+            }
+        });
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int pos) {
+                com.kumkangkind.kumkangsm2.PreferenceManager.setInt(ActivityMenuTest3.this, "company", selectedIndex[0]);
+                Users.ServiceType = com.kumkangkind.kumkangsm2.PreferenceManager.getInt(ActivityMenuTest3.this, "company");//0:금강공업(음성,진천),1:KKM,2:KKV,-1:TEST
+                setServiceAddress();
+                restart(ActivityMenuTest3.this);
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    public void restart(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
+        ComponentName componentName = intent.getComponent();
+        Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+        context.startActivity(mainIntent);
+        //Runtime.getRuntime().exit(0);
+        System.exit(0);
+    }
+
+    private void setServiceAddress() {
+        if (Users.ServiceType == 0) {//금강
+            Users.ServiceAddress = getString(R.string.service_address);
+        } else if (Users.ServiceType == 1) {//KKM
+            Users.ServiceAddress = getString(R.string.service_address_kkm);
+        } else if (Users.ServiceType == 2) {//KKV
+            Users.ServiceAddress = getString(R.string.service_address_kkv);
+        }
+        Users.Language = com.kumkangkind.kumkangsm2.PreferenceManager.getInt(ActivityMenuTest3.this, "language");
+
+        /*else{//TEST
+            Users.ServiceAddress = ApplicationClass.getResourses().getString(R.string.service_address_test);
+            Users.ServiceType = -1;//0:금강공업(음성,진천),1:KKM,2:KKV,-1:TEST
+        }*/
+    }
+
+
+    private void setInitButton() {
+        eumSungTeam = new ArrayList<>(Arrays.asList(
+                Users.Language == 0 ?
+                        getString(R.string.daily_report_return):
+                        getString(R.string.daily_report_return_eng),
+                Users.Language == 0 ?
+                        getString(R.string.assignment):
+                        getString(R.string.assignment_eng),
+                Users.Language == 0 ?
+                        getString(R.string.assignment_status):
+                        getString(R.string.assignment_status_eng),
+                Users.Language == 0 ?
+                        getString(R.string.my_work):
+                        getString(R.string.my_work_eng),
+                Users.Language == 0 ?
+                        getString(R.string.daily_report):
+                        getString(R.string.daily_report_eng),
+                Users.Language == 0 ?
+                        getString(R.string.progress_information):
+                        getString(R.string.progress_information_eng),
+                Users.Language == 0 ?
+                        getString(R.string.progress_floor):
+                        getString(R.string.progress_floor_eng),
+                Users.Language == 0 ?
+                        getString(R.string.register_expense):
+                        getString(R.string.register_expense_eng),
+                Users.Language == 0 ?
+                        getString(R.string.problem):
+                        getString(R.string.problem_eng),
+                Users.Language == 0 ?
+                        getString(R.string.support):
+                        getString(R.string.support_eng),
+                Users.Language == 0 ?
+                        getString(R.string.as_management):
+                        getString(R.string.as_management_eng),
+                Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng),
+                Users.Language == 0 ?
+                        getString(R.string.product):
+                        getString(R.string.product_eng),
+                Users.Language == 0 ?
+                        getString(R.string.progress_floor_return):
+                        getString(R.string.progress_floor_return_eng),
+                Users.Language == 0 ?
+                        getString(R.string.location_progress):
+                        getString(R.string.location_progress_eng),
+                Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate):
+                        getString(R.string.stock_in_certificate_eng),
+                Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate_location):
+                        getString(R.string.stock_in_certificate_location_eng), ""));
+        eumSungSale = new ArrayList<>(Arrays.asList(
+                Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng),
+                Users.Language == 0 ?
+                        getString(R.string.product):
+                        getString(R.string.product_eng),
+                Users.Language == 0 ?
+                        getString(R.string.location_progress):
+                        getString(R.string.location_progress_eng), ""));
+        eumSungSuper = new ArrayList<>(Arrays.asList(
+                Users.Language == 0 ?
+                        getString(R.string.assignment):
+                        getString(R.string.assignment_eng),
+                Users.Language == 0 ?
+                        getString(R.string.my_work):
+                        getString(R.string.my_work_eng),
+                Users.Language == 0 ?
+                        getString(R.string.progress_information):
+                        getString(R.string.progress_information_eng),
+                Users.Language == 0 ?
+                        getString(R.string.progress_floor):
+                        getString(R.string.progress_floor_eng),
+                Users.Language == 0 ?
+                        getString(R.string.register_expense):
+                        getString(R.string.register_expense_eng),
+                Users.Language == 0 ?
+                        getString(R.string.problem):
+                        getString(R.string.problem_eng),
+                Users.Language == 0 ?
+                        getString(R.string.support):
+                        getString(R.string.support_eng),
+                Users.Language == 0 ?
+                        getString(R.string.as_management):
+                        getString(R.string.as_management_eng),
+                Users.Language == 0 ?
+                        getString(R.string.product):
+                        getString(R.string.product_eng), ""));
+        ChangTeam = new ArrayList<>(Arrays.asList(
+                Users.Language == 0 ?
+                        getString(R.string.assignment):
+                        getString(R.string.assignment_eng),
+                Users.Language == 0 ?
+                        getString(R.string.assignment_status):
+                        getString(R.string.assignment_status_eng),
+                Users.Language == 0 ?
+                        getString(R.string.work_request_search):
+                        getString(R.string.work_request_search_eng),
+                Users.Language == 0 ?
+                        getString(R.string.work_request_management):
+                        getString(R.string.work_request_management_eng),
+                Users.Language == 0 ?
+                        getString(R.string.daily_report):
+                        getString(R.string.daily_report_eng),
+                Users.Language == 0 ?
+                        getString(R.string.register_expense):
+                        getString(R.string.register_expense_eng),
+                Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng),
+                Users.Language == 0 ?
+                        getString(R.string.progress_floor_return):
+                        getString(R.string.progress_floor_return_eng),
+                Users.Language == 0 ?
+                        getString(R.string.location_progress):
+                        getString(R.string.location_progress_eng), ""));
+        ChangSale = new ArrayList<>(Arrays.asList(
+                Users.Language == 0 ?
+                        getString(R.string.assignment):
+                        getString(R.string.assignment_eng),
+                Users.Language == 0 ?
+                        getString(R.string.assignment_status):
+                        getString(R.string.assignment_status_eng),
+                Users.Language == 0 ?
+                        getString(R.string.work_request_search):
+                        getString(R.string.work_request_search_eng),
+                Users.Language == 0 ?
+                        getString(R.string.work_request_management):
+                        getString(R.string.work_request_management_eng),
+                Users.Language == 0 ?
+                        getString(R.string.daily_report):
+                        getString(R.string.daily_report_eng),
+                Users.Language == 0 ?
+                        getString(R.string.register_expense):
+                        getString(R.string.register_expense_eng),
+                Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng), ""));
+        ChangSuper = new ArrayList<>(Arrays.asList(
+                Users.Language == 0 ?
+                        getString(R.string.work_request_search):
+                        getString(R.string.work_request_search_eng),
+                Users.Language == 0 ?
+                        getString(R.string.register_expense):
+                        getString(R.string.register_expense_eng),
+                Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng), ""));
+
+        returnUser = new ArrayList<>(Arrays.asList(
+                Users.Language == 0 ?
+                        getString(R.string.daily_report_return):
+                        getString(R.string.daily_report_return_eng),
+                Users.Language == 0 ?
+                        getString(R.string.progress_floor_return):
+                        getString(R.string.progress_floor_return_eng),
+                Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng),
+                Users.Language == 0 ?
+                        getString(R.string.location_progress):
+                        getString(R.string.location_progress_eng),
+                Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate):
+                        getString(R.string.stock_in_certificate_eng),
+                Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate_location):
+                        getString(R.string.stock_in_certificate_location_eng), ""));
+        myDefaultButtonList = new ArrayList<>();
+    }
+
     private void getLocationInfoByCertificateNo() {
-        String url = getString(R.string.service_address) + "getLocationInfoByCertificateNo";
+        String url = Users.ServiceAddress + "getLocationInfoByCertificateNo";
         ContentValues values = new ContentValues();
         values.put("CertificateNo", certificateNo);
         GetLocationInfoByCertificateNo gsod = new GetLocationInfoByCertificateNo(url, values);
@@ -489,9 +738,8 @@ public class ActivityMenuTest3 extends BaseActivity {
     }
 
 
-
     private void getNoticeData() {
-        String url = getString(R.string.service_address) + "getNoticeData";
+        String url = Users.ServiceAddress + "getNoticeData";
         ContentValues values = new ContentValues();
         values.put("AppCode", getString(R.string.app_code));
         GetNoticeData gsod = new GetNoticeData(url, values);
@@ -545,7 +793,7 @@ public class ActivityMenuTest3 extends BaseActivity {
     }
 
     private void getUserImage() {
-        String url = getString(R.string.service_address) + "getUserImage";
+        String url = Users.ServiceAddress + "getUserImage";
         ContentValues values = new ContentValues();
         values.put("EmployeeNo", Users.EmployeeNo);
         GetUserImage gsod = new GetUserImage(url, values);
@@ -663,6 +911,30 @@ public class ActivityMenuTest3 extends BaseActivity {
         item18.setVisible(false);
         item19.setVisible(false);
         item20.setVisible(false);
+
+        if(Users.Language != 0){
+            item1.setTitle(getString(R.string.edit_menu_eng));
+            item2.setTitle(getString(R.string.work_request_management_eng));
+            item3.setTitle(getString(R.string.work_request_search_eng));
+            item4.setTitle(getString(R.string.my_work_eng));
+            item5.setTitle(getString(R.string.daily_report_eng));
+            item6.setTitle(getString(R.string.assignment_status_eng));
+            item7.setTitle(getString(R.string.register_expense_eng));
+            item8.setTitle(getString(R.string.assignment_eng));
+            item9.setTitle(getString(R.string.problem_eng));
+            item10.setTitle(getString(R.string.progress_information_eng));
+            item11.setTitle(getString(R.string.progress_floor_eng));
+            item12.setTitle(getString(R.string.support_eng));
+            item13.setTitle(getString(R.string.product_eng));
+            item14.setTitle(getString(R.string.message_eng));
+            item15.setTitle(getString(R.string.progress_floor_return_eng));
+            item16.setTitle(getString(R.string.location_progress_eng));
+            item17.setTitle(getString(R.string.stock_in_certificate_eng));
+            item18.setTitle(getString(R.string.as_management_eng));
+            item19.setTitle(getString(R.string.stock_in_certificate_location_eng));
+            item20.setTitle(getString(R.string.daily_report_return_eng));
+
+        }
     }
 
     //POST
@@ -691,14 +963,23 @@ public class ActivityMenuTest3 extends BaseActivity {
 
         TextView tvTitle = dialogView.findViewById(R.id.tvTitle);
         try {
-            tvTitle.setText("변경사항(version " + getBaseContext().getPackageManager().getPackageInfo(getBaseContext().getPackageName(), 0).versionName + ")");
+            tvTitle.setText(Users.Language == 0 ?
+                    "변경사항":
+                    "Changes"+"(version " + getBaseContext().getPackageManager().getPackageInfo(getBaseContext().getPackageName(), 0).versionName + ")");
         } catch (PackageManager.NameNotFoundException e) {
-            tvTitle.setText("변경사항");
+            tvTitle.setText(Users.Language == 0 ?
+                    "변경사항":
+                    "Changes");
         }
-
-
         TextView tvContent = dialogView.findViewById(R.id.tvContent);
         tvContent.setText(noticeData);
+        CheckBox chkNoView = dialogView.findViewById(R.id.chkNoView);
+        Button btnOk = dialogView.findViewById(R.id.btnOK);
+
+        if(Users.Language != 0){
+            chkNoView.setText("Don't see it again");
+            btnOk.setText("OK");
+        }
 
         final AlertDialog dialog = buider.create();
         //Dialog의 바깥쪽을 터치했을 때 Dialog를 없앨지 설정
@@ -791,16 +1072,23 @@ public class ActivityMenuTest3 extends BaseActivity {
         if (Users.BusinessClassCode == 9)//음성이면 초기값 작업일
             searchDateType = "작업일";
 
-        String strReq = searchDateType;
+        String strSearchDate = searchDateType;
         String strFromDate = fromYear + "-" + (fromMonth + 1) + "-" + fromDay;
         String strToDate = toYear + "-" + (toMonth + 1) + "-" + toDay;
 
-        String outTxt = searchDateType;
-
+        String strReq = strSearchDate;
+        if(Users.Language == 1){
+            if(strReq.equals("요청일"))
+                strReq="Request";
+            else if(strReq.equals("희망일"))
+                strReq="Hope";
+            else if(strReq.equals("작업일"))
+                strReq="Working";
+        }
         // txtLeftCircle.setTextColor(Color.parseColor("#18A266"));
         // txtLeftCircle.setTextColor(Color.parseColor("#FFFFFF"));
 
-        txtDate.setText(outTxt);
+        txtDate.setText(strReq);
         btnFromDate.setText(strFromDate);
         btnToDate.setText(strToDate);
         /*try {
@@ -848,7 +1136,9 @@ public class ActivityMenuTest3 extends BaseActivity {
                 AlertDialog.Builder buider = new AlertDialog.Builder(this); //AlertDialog.Builder 객체 생성
                 //  buider.setIcon(android.R.drawable.ic_menu_add); //제목옆의 아이콘 이미지(원하는 이미지 설정)
                 buider.setView(dialogView); //위에서 inflater가 만든 dialogView 객체 세팅 (Customize)
-                buider.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                buider.setPositiveButton(Users.Language == 0 ?
+                        "확인":
+                        "OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -870,15 +1160,25 @@ public class ActivityMenuTest3 extends BaseActivity {
                         String strReq = searchDateType;
                         String strFromDate = fromYear + "-" + (fromMonth + 1) + "-" + fromDay;
                         String strToDate = toYear + "-" + (toMonth + 1) + "-" + toDay;
-                        txtDate.setText(strReq);
 
+                        if(Users.Language == 1){
+                            if(strReq.equals("요청일"))
+                                strReq="Request";
+                            else if(strReq.equals("희망일"))
+                                strReq="Hope";
+                            else if(strReq.equals("작업일"))
+                                strReq="Working";
+                        }
+                        txtDate.setText(strReq);
                         btnFromDate.setText(strFromDate);
                         btnToDate.setText(strToDate);
                         progressOFF();
                     }
                 });
 
-                buider.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                buider.setNegativeButton(Users.Language == 0 ?
+                        "취소":
+                        "Cancel", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -903,11 +1203,17 @@ public class ActivityMenuTest3 extends BaseActivity {
 
 
                 String[] typeList = {"요청일", "희망일", "작업일"};
+                String[] typeListEng = {"Request", "Hope", "Working"};
+                String[] tList = new String[3];
+                if (Users.Language == 0)
+                    tList = typeList;
+                else
+                    tList = typeListEng;
                 int searchNum;
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                         this,
                         android.R.layout.simple_list_item_1,
-                        typeList);
+                        tList);
                 searchTypeSpinner.setAdapter(adapter);
 
                 if (searchDateType.equals("요청일")) {
@@ -949,27 +1255,27 @@ public class ActivityMenuTest3 extends BaseActivity {
 
         //FButton fbtn =findViewById(R.id.btn3);
 
-        if (strButton3 == "")
+        if (strButton3.equals(""))
             btn3.setVisibility(View.INVISIBLE);
         else
             btn3.setVisibility(View.VISIBLE);
 
-        if (strButton4 == "")
+        if (strButton4.equals(""))
             btn4.setVisibility(View.INVISIBLE);
         else
             btn4.setVisibility(View.VISIBLE);
 
-        if (strButton5 == "")
+        if (strButton5.equals(""))
             btn5.setVisibility(View.INVISIBLE);
         else
             btn5.setVisibility(View.VISIBLE);
 
-        if (strButton6 == "")
+        if (strButton6.equals(""))
             btn6.setVisibility(View.INVISIBLE);
         else
             btn6.setVisibility(View.VISIBLE);
 
-        if (strButton7 == "")
+        if (strButton7.equals(""))
             btn7.setVisibility(View.INVISIBLE);
         else
             btn7.setVisibility(View.VISIBLE);
@@ -1018,107 +1324,97 @@ public class ActivityMenuTest3 extends BaseActivity {
      * 커스텀 버튼 클릭
      * */
     public void customButtonClick(View v) {
-        switch (v.getTag().toString()) {
+        if (v.getTag().toString().equals(getString(R.string.assignment)) || v.getTag().toString().equals(getString(R.string.assignment_eng))) {//담당자 배정
+            startProgress();
+            if (Users.BusinessClassCode == 9) {//음성
+                programType = "담당자배정";
+                AssignPerson();//담당자배정
+            } else//창녕
+                ClickSearchButton2();//담당자배정
+        } else if (v.getTag().toString().equals(getString(R.string.assignment_status)) || v.getTag().toString().equals(getString(R.string.assignment_status_eng))) {
+            startProgress();
+            if (Users.BusinessClassCode == 9) {//음성
+                programType = "담당자배정현황";
+                AssignPersonStatus();//담당자배정현황
 
-            case "담당자 배정":
-                startProgress();
-                if (Users.BusinessClassCode == 9) {//음성
-                    programType = "담당자배정";
-                    AssignPerson();//담당자배정
-                } else//창녕
-                    ClickSearchButton2();//담당자배정
-                break;
-
-            case "담당자 배정현황":
-                startProgress();
-                if (Users.BusinessClassCode == 9) {//음성
-                    programType = "담당자배정현황";
-                    AssignPersonStatus();//담당자배정현황
-
-                } else//창녕
-                    ClickSearchButton3();//담당자배정현황
-                break;
-
-            case "작업요청내역 조회":
-                startProgress();
-                ClickSearchButton();
-                break;
-
-            case "나의 작업보기":
-                startProgress();
-                ClickSearchButton();
-                break;
-
-            case "작업요청 관리":
-                startProgress();
-                startActivity(new Intent(ActivityMenuTest3.this, ActivitySales.class));
-                break;
-
-            case "일보확인":
-                startProgress();
-                ClickSearchButton4();//일보확인
-                break;
-
-            case "진행기준정보 관리":
-                startProgress();
-                programType = "진행기준정보관리";
-                ClickProgressFloor();
-                break;
-
-            case "진행층수 등록":
-                startProgress();
-                programType = "진행층수등록";
-                ClickProgressFloor();
-                break;
-            case "진행층수 등록(회수)":
-                startProgress();
-                programType = "진행층수등록회수";
-                ClickProgressFloor();
-                break;
-
-            case "경비등록":
-                startProgress();
-                if (Users.BusinessClassCode == 11)//창녕
-                    startActivity(new Intent(ActivityMenuTest3.this, ActivityDailyCost2.class));
-                else//음성
-                    startActivity(new Intent(ActivityMenuTest3.this, ActivityDailyCostEumsung.class));
-                break;
-
-            case "현장 불만사례":
-                startProgress();
-                programType = "현장불만사례";
-                ClickComplain();
-                break;
-            case "현장 지원요청":
-                startProgress();
-                programType = "현장지원요청";
-                ClickProgressFloor();
-                break;
-            case "A/S 관리":
-                GoASManagement();
-                break;
-            case "생산내역 조회":
-                GoProduct();
-                break;
-            case "알림 메시지":
-                programType = "알림 메시지";
-                startActivity(new Intent(ActivityMenuTest3.this, ActivityMessageHistory.class));
-                break;
-            case "반출입 현황":
-                GoLocationProgress();
-                break;
-            case "반출송장 등록":
-                GoStockInCertificate();
-                break;
-            case "현장별 송장 조회":
-                GoStockInCertificateLocation();
-                break;
-            case "회수 일보":
-                startProgress();
-                GoDailyReportReturn();
-                break;
-
+            } else//창녕
+                ClickSearchButton3();//담당자배정현황
+        } else if (v.getTag().toString().equals(getString(R.string.work_request_search)) || v.getTag().toString().equals(getString(R.string.work_request_search_eng))) {
+            startProgress();
+            ClickSearchButton();
+        } else if (v.getTag().toString().equals(getString(R.string.my_work)) || v.getTag().toString().equals(getString(R.string.my_work_eng))) {//나의 작업보기
+            startProgress();
+            ClickSearchButton();
+        } else if (v.getTag().toString().equals(getString(R.string.work_request_management)) || v.getTag().toString().equals(getString(R.string.work_request_management_eng))) {//작업요청 관리
+            startProgress();
+            startActivity(new Intent(ActivityMenuTest3.this, ActivitySales.class));
+        } else if (v.getTag().toString().equals(getString(R.string.daily_report)) || v.getTag().toString().equals(getString(R.string.daily_report_eng))) {
+            startProgress();
+            ClickSearchButton4();//일보확인
+        } else if (v.getTag().toString().equals(getString(R.string.progress_information)) || v.getTag().toString().equals(getString(R.string.progress_information_eng))) {
+            startProgress();
+            programType = "진행기준정보관리";
+            ClickProgressFloor();
+        } else if (v.getTag().toString().equals(getString(R.string.progress_floor)) || v.getTag().toString().equals(getString(R.string.progress_floor_eng))) {
+            startProgress();
+            programType = "진행층수등록";
+            ClickProgressFloor();
+        } else if (v.getTag().toString().equals(getString(R.string.progress_floor_return)) || v.getTag().toString().equals(getString(R.string.progress_floor_return_eng))) {
+            startProgress();
+            programType = "진행층수등록회수";
+            ClickProgressFloor();
+        } else if (v.getTag().toString().equals(getString(R.string.register_expense)) || v.getTag().toString().equals(getString(R.string.register_expense_eng))) {
+            startProgress();
+            if (Users.BusinessClassCode == 11)//창녕
+                startActivity(new Intent(ActivityMenuTest3.this, ActivityDailyCost2.class));
+            else//음성
+                startActivity(new Intent(ActivityMenuTest3.this, ActivityDailyCostEumsung.class));
+        } else if (v.getTag().toString().equals(getString(R.string.problem)) || v.getTag().toString().equals(getString(R.string.problem_eng))) {
+            startProgress();
+            programType = "현장불만사례";
+            ClickComplain();
+        } else if (v.getTag().toString().equals(getString(R.string.support)) || v.getTag().toString().equals(getString(R.string.support_eng))) {
+            startProgress();
+            programType = "현장지원요청";
+            ClickProgressFloor();
+        } else if (v.getTag().toString().equals(getString(R.string.as_management)) || v.getTag().toString().equals(getString(R.string.as_management_eng))) {
+            GoASManagement();
+        } else if (v.getTag().toString().equals(getString(R.string.product)) || v.getTag().toString().equals(getString(R.string.product_eng))) {
+            GoProduct();
+        } else if (v.getTag().toString().equals(getString(R.string.message)) || v.getTag().toString().equals(getString(R.string.message_eng))) {
+            programType = "알림 메시지";
+            startActivity(new Intent(ActivityMenuTest3.this, ActivityMessageHistory.class));
+        } else if (v.getTag().toString().equals(getString(R.string.location_progress)) || v.getTag().toString().equals(getString(R.string.location_progress_eng))) {
+            GoLocationProgress();
+        } else if (v.getTag().toString().equals(getString(R.string.stock_in_certificate)) || v.getTag().toString().equals(getString(R.string.stock_in_certificate_eng))) {
+            GoStockInCertificate();
+        } else if (v.getTag().toString().equals(getString(R.string.stock_in_certificate_location)) || v.getTag().toString().equals(getString(R.string.stock_in_certificate_location_eng))) {
+            GoStockInCertificateLocation();
+        } else if (v.getTag().toString().equals(getString(R.string.daily_report_return)) || v.getTag().toString().equals(getString(R.string.daily_report_return_eng))) {
+            startProgress();
+            GoDailyReportReturn();
         }
+        /*switch (v.getTag().toString()) {
+            case "담당자 배정":
+            case "담당자 배정현황":
+            case "작업요청내역 조회":
+            case "나의 작업보기":
+            case "작업요청 관리":
+            case "일보확인":
+            case "진행기준정보 관리":
+            case "진행층수 등록":
+            case "진행층수 등록(회수)":
+            case "경비등록":
+            case "현장 불만사례":
+            case "현장 지원요청":
+            case "A/S 관리":
+            case "생산내역 조회":
+            case "알림 메시지":
+            case "반출입 현황":
+            case "반출송장 등록":
+            case "현장별 송장 조회":
+            case "회수 일보":
+        }*/
     }
 
     private void GoStockInCertificate() {
@@ -1128,7 +1424,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         i = new Intent(getBaseContext(), ActivityStockInCertificate.class);//todo
         i.putExtra("fromDate", fromDate);
         i.putExtra("toDate", toDate);
-        i.putExtra("locationName","");
+        i.putExtra("locationName", "");
 
         startActivity(i);
     }
@@ -1144,11 +1440,11 @@ public class ActivityMenuTest3 extends BaseActivity {
      */
     private void ClickComplain() {
         if (Users.LeaderType.equals("0")) {//슈퍼바이저
-            new ActivityMenuTest3.GetCustomerLocationByGet("내현장").execute(getString(R.string.service_address) + "getCustomerLocation/" + Users.USER_ID);
+            new ActivityMenuTest3.GetCustomerLocationByGet("내현장").execute(Users.ServiceAddress + "getCustomerLocation/" + Users.USER_ID);
         } else if (Users.LeaderType.equals("1")) {//팀장
-            new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(getString(R.string.service_address) + "getCustomerLocation2/" + "모든현장");
+            new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(Users.ServiceAddress + "getCustomerLocation4/" + "모든현장/" + Users.BusinessClassCode);
         } else if (Users.LeaderType.equals("2")) {//영업담당자
-            new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(getString(R.string.service_address) + "getCustomerLocation2/" + "모든현장");
+            new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(Users.ServiceAddress + "getCustomerLocation4/" + "모든현장/" + Users.BusinessClassCode);
         }
     }
 
@@ -1160,11 +1456,11 @@ public class ActivityMenuTest3 extends BaseActivity {
         programType = "A/S 관리";
         ClickProgressFloor();
         /*if (Users.LeaderType.equals("0")) {//슈퍼바이저
-            new ActivityMenuTest3.GetCustomerLocationByGet("내현장").execute(getString(R.string.service_address) + "getCustomerLocation/" + Users.USER_ID);
+            new ActivityMenuTest3.GetCustomerLocationByGet("내현장").execute(Users.ServiceAddress + "getCustomerLocation/" + Users.USER_ID);
         } else if (Users.LeaderType.equals("1")) {//팀장
-            new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(getString(R.string.service_address) + "getCustomerLocation2/" + "모든현장");
+            new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(Users.ServiceAddress + "getCustomerLocation2/" + "모든현장");
         } else if (Users.LeaderType.equals("2")) {//영업담당자
-            new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(getString(R.string.service_address) + "getCustomerLocation2/" + "모든현장");
+            new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(Users.ServiceAddress + "getCustomerLocation2/" + "모든현장");
         }*/
     }
 
@@ -1236,7 +1532,9 @@ public class ActivityMenuTest3 extends BaseActivity {
 
         if (!CheckCustomButton(strButton3, strButton4, strButton5, strButton6, strButton7) && isInitButton) { //저장되어있는 버튼의 권한을 체크한 후, 적절하지 않은 권한이 있다면-> 초기설정으로 실행한다.
             isInitButton = false;
-            Toast.makeText(getBaseContext(), "권한이 변경되어, '사용자지정 버튼'을 초기화 합니다.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), Users.Language == 0 ?
+                    "권한이 변경되어, '사용자지정 버튼'을 초기화합니다.":
+                    "The permissions have been changed, so the 'Custom Buttons' will be reset.", Toast.LENGTH_LONG).show();
         }
 
 
@@ -1245,63 +1543,113 @@ public class ActivityMenuTest3 extends BaseActivity {
             SharedPreferences.Editor customEditor = pref.edit();
 
             if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("0")) {//음성 슈퍼바이저일때,1.담당자배정 2.나의현장보기(작업요청내역조회) 3.현장불만사례 4.경비등록
-
-                txt3.setText("담당자 배정");
-                btn3.setTag("담당자 배정");
+                txt3.setText(Users.Language == 0 ?
+                        getString(R.string.assignment):
+                        getString(R.string.as_management_eng));
+                btn3.setTag(Users.Language == 0 ?
+                        getString(R.string.assignment):
+                        getString(R.string.as_management_eng));
                 btn3.setVisibility(View.VISIBLE);
 
-                txt4.setText("나의 작업보기");
-                btn4.setTag("나의 작업보기");
+                txt4.setText(Users.Language == 0 ?
+                        getString(R.string.my_work):
+                        getString(R.string.my_work_eng));
+                btn4.setTag(Users.Language == 0 ?
+                        getString(R.string.my_work):
+                        getString(R.string.my_work_eng));
                 btn4.setVisibility(View.VISIBLE);
 
-                txt5.setText("A/S 관리");
-                btn5.setTag("A/S 관리");
+                txt5.setText(Users.Language == 0 ?
+                        getString(R.string.as_management):
+                        getString(R.string.as_management_eng));
+                btn5.setTag(Users.Language == 0 ?
+                        getString(R.string.as_management):
+                        getString(R.string.as_management_eng));
                 btn5.setVisibility(View.VISIBLE);
 
-                txt6.setText("현장 불만사례");
-                btn6.setTag("현장 불만사례");
+                txt6.setText(Users.Language == 0 ?
+                        getString(R.string.problem):
+                        getString(R.string.problem_eng));
+                btn6.setTag(Users.Language == 0 ?
+                        getString(R.string.problem):
+                        getString(R.string.problem_eng));
                 btn6.setVisibility(View.VISIBLE);
 
                 /*txt6.setText("현장 지원요청");
                 btn6.setTag("현장 지원요청");
                 btn6.setVisibility(View.VISIBLE);*/
 
-                txt7.setText("경비등록");
-                btn7.setTag("경비등록");
+                txt7.setText(Users.Language == 0 ?
+                        getString(R.string.register_expense):
+                        getString(R.string.register_expense_eng));
+                btn7.setTag(Users.Language == 0 ?
+                        getString(R.string.register_expense):
+                        getString(R.string.register_expense_eng));
                 btn7.setVisibility(View.VISIBLE);
             } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("1")) {//음성 팀장일때,1.담당자배정현황 2.나의 작업보기 3.일보확인 4.현장 불만사례
-
-                txt3.setText("담당자 배정현황");
-                btn3.setTag("담당자 배정현황");
+                txt3.setText(Users.Language == 0 ?
+                        getString(R.string.assignment_status):
+                        getString(R.string.assignment_status_eng));
+                btn3.setTag(Users.Language == 0 ?
+                        getString(R.string.assignment_status):
+                        getString(R.string.assignment_status_eng));
                 btn3.setVisibility(View.VISIBLE);
 
-                txt4.setText("나의 작업보기");
-                btn4.setTag("나의 작업보기");
+                txt4.setText(Users.Language == 0 ?
+                        getString(R.string.my_work):
+                        getString(R.string.my_work_eng));
+                btn4.setTag(Users.Language == 0 ?
+                        getString(R.string.my_work):
+                        getString(R.string.my_work_eng));
                 btn4.setVisibility(View.VISIBLE);
 
-                txt5.setText("일보확인");
-                btn5.setTag("일보확인");
+                txt5.setText(Users.Language == 0 ?
+                        getString(R.string.daily_report):
+                        getString(R.string.daily_report_eng));
+                btn5.setTag(Users.Language == 0 ?
+                        getString(R.string.daily_report):
+                        getString(R.string.daily_report_eng));
                 btn5.setVisibility(View.VISIBLE);
 
-                txt6.setText("A/S 관리");
-                btn6.setTag("A/S 관리");
+                txt6.setText(Users.Language == 0 ?
+                        getString(R.string.as_management):
+                        getString(R.string.as_management_eng));
+                btn6.setTag(Users.Language == 0 ?
+                        getString(R.string.as_management):
+                        getString(R.string.as_management_eng));
                 btn6.setVisibility(View.VISIBLE);
 
-                txt7.setText("현장 불만사례");
-                btn7.setTag("현장 불만사례");
+                txt7.setText(Users.Language == 0 ?
+                        getString(R.string.problem):
+                        getString(R.string.problem_eng));
+                btn7.setTag(Users.Language == 0 ?
+                        getString(R.string.problem):
+                        getString(R.string.problem_eng));
                 btn7.setVisibility(View.VISIBLE);
             } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("2")) {//음성 영업담당자
 
-                txt3.setText("생산내역 조회");
-                btn3.setTag("생산내역 조회");
+                txt3.setText(Users.Language == 0 ?
+                        getString(R.string.product):
+                        getString(R.string.product_eng));
+                btn3.setTag(Users.Language == 0 ?
+                        getString(R.string.product):
+                        getString(R.string.product_eng));
                 btn3.setVisibility(View.VISIBLE);
 
-                txt4.setText("반출입 현황");
-                btn4.setTag("반출입 현황");
+                txt4.setText(Users.Language == 0 ?
+                        getString(R.string.location_progress):
+                        getString(R.string.location_progress_eng));
+                btn4.setTag(Users.Language == 0 ?
+                        getString(R.string.location_progress):
+                        getString(R.string.location_progress_eng));
                 btn4.setVisibility(View.VISIBLE);
 
-                txt5.setText("알림 메시지");
-                btn5.setTag("알림 메시지");
+                txt5.setText(Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng));
+                btn5.setTag(Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng));
                 btn5.setVisibility(View.VISIBLE);
 
                 txt6.setText("");
@@ -1312,37 +1660,69 @@ public class ActivityMenuTest3 extends BaseActivity {
                 btn7.setTag("");
                 btn7.setVisibility(View.INVISIBLE);
             } else if (Users.BusinessClassCode == 9 && Users.LeaderType.equals("3")) {
-                txt3.setText(getString(R.string.daily_report_return));
-                btn3.setTag(getString(R.string.daily_report_return));
+                txt3.setText(Users.Language == 0 ?
+                        getString(R.string.daily_report_return):
+                        getString(R.string.daily_report_return_eng));
+                btn3.setTag(Users.Language == 0 ?
+                        getString(R.string.daily_report_return):
+                        getString(R.string.daily_report_return_eng));
                 btn3.setVisibility(View.VISIBLE);
 
-                txt4.setText(getString(R.string.progress_floor_return));
-                btn4.setTag(getString(R.string.progress_floor_return));
+                txt4.setText(Users.Language == 0 ?
+                        getString(R.string.progress_floor_return):
+                        getString(R.string.progress_floor_return_eng));
+                btn4.setTag(Users.Language == 0 ?
+                        getString(R.string.progress_floor_return):
+                        getString(R.string.progress_floor_return_eng));
                 btn4.setVisibility(View.VISIBLE);
                 //getString(R.string.progress_floor)
-                txt5.setText(getString(R.string.location_progress));
-                btn5.setTag(getString(R.string.location_progress));
+                txt5.setText(Users.Language == 0 ?
+                        getString(R.string.location_progress):
+                        getString(R.string.location_progress_eng));
+                btn5.setTag(Users.Language == 0 ?
+                        getString(R.string.location_progress):
+                        getString(R.string.location_progress_eng));
                 btn5.setVisibility(View.VISIBLE);
 
-                txt6.setText(getString(R.string.stock_in_certificate));
-                btn6.setTag(getString(R.string.stock_in_certificate));
+                txt6.setText(Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate):
+                        getString(R.string.stock_in_certificate_eng));
+                btn6.setTag(Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate):
+                        getString(R.string.stock_in_certificate_eng));
                 btn6.setVisibility(View.VISIBLE);
 
-                txt7.setText(getString(R.string.stock_in_certificate_location));
-                btn7.setTag(getString(R.string.stock_in_certificate_location));
+                txt7.setText(Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate_location):
+                        getString(R.string.stock_in_certificate_location_eng));
+                btn7.setTag(Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate_location):
+                        getString(R.string.stock_in_certificate_location_eng));
                 btn7.setVisibility(View.VISIBLE);
             } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("0")) {//창녕 슈퍼바이저일때,1.작업요청내역 조회 2. 경비등록
 
-                txt3.setText("작업요청내역 조회");
-                btn3.setTag("작업요청내역 조회");
+                txt3.setText(Users.Language == 0 ?
+                        getString(R.string.work_request_search):
+                        getString(R.string.work_request_search_eng));
+                btn3.setTag(Users.Language == 0 ?
+                        getString(R.string.work_request_search):
+                        getString(R.string.work_request_search_eng));
                 btn3.setVisibility(View.VISIBLE);
 
-                txt4.setText("경비등록");
-                btn4.setTag("경비등록");
+                txt4.setText(Users.Language == 0 ?
+                        getString(R.string.register_expense):
+                        getString(R.string.register_expense_eng));
+                btn4.setTag(Users.Language == 0 ?
+                        getString(R.string.register_expense):
+                        getString(R.string.register_expense_eng));
                 btn4.setVisibility(View.VISIBLE);
 
-                txt5.setText("알림 메시지");
-                btn5.setTag("알림 메시지");
+                txt5.setText(Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng));
+                btn5.setTag(Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng));
                 btn5.setVisibility(View.VISIBLE);
 
                 txt6.setText("");
@@ -1355,66 +1735,126 @@ public class ActivityMenuTest3 extends BaseActivity {
 
             } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("1")) {//창녕 팀장일때,1.담당자배정 현황 2.담당자배정 3.일보확인 4.작업요청 관리
 
-                txt3.setText("담당자 배정현황");
-                btn3.setTag("담당자 배정현황");
+                txt3.setText(Users.Language == 0 ?
+                        getString(R.string.assignment_status):
+                        getString(R.string.assignment_status_eng));
+                btn3.setTag(Users.Language == 0 ?
+                        getString(R.string.assignment_status):
+                        getString(R.string.assignment_status_eng));
                 btn3.setVisibility(View.VISIBLE);
 
-                txt4.setText("담당자 배정");
-                btn4.setTag("담당자 배정");
+                txt4.setText(Users.Language == 0 ?
+                        getString(R.string.assignment):
+                        getString(R.string.assignment_eng));
+                btn4.setTag(Users.Language == 0 ?
+                        getString(R.string.assignment):
+                        getString(R.string.assignment_eng));
                 btn4.setVisibility(View.VISIBLE);
 
-                txt5.setText("일보확인");
-                btn5.setTag("일보확인");
+                txt5.setText(Users.Language == 0 ?
+                        getString(R.string.daily_report):
+                        getString(R.string.daily_report_eng));
+                btn5.setTag(Users.Language == 0 ?
+                        getString(R.string.daily_report):
+                        getString(R.string.daily_report_eng));
                 btn5.setVisibility(View.VISIBLE);
 
-                txt6.setText("작업요청 관리");
-                btn6.setTag("작업요청 관리");
+                txt6.setText(Users.Language == 0 ?
+                        getString(R.string.work_request_management):
+                        getString(R.string.work_request_management_eng));
+                btn6.setTag(Users.Language == 0 ?
+                        getString(R.string.work_request_management):
+                        getString(R.string.work_request_management_eng));
                 btn6.setVisibility(View.VISIBLE);
 
-                txt7.setText("작업요청내역 조회");
-                btn7.setTag("작업요청내역 조회");
+                txt7.setText(Users.Language == 0 ?
+                        getString(R.string.work_request_search):
+                        getString(R.string.work_request_search_eng));
+                btn7.setTag(Users.Language == 0 ?
+                        getString(R.string.work_request_search):
+                        getString(R.string.work_request_search_eng));
                 btn7.setVisibility(View.VISIBLE);
             } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("2")) {//창녕 영업담당자 일때,1.일보확인 2.작업요청 관리 3.작업요청내역 조회 4.경비등록
 
-                txt3.setText("일보확인");
-                btn3.setTag("일보확인");
+                txt3.setText(Users.Language == 0 ?
+                        getString(R.string.daily_report):
+                        getString(R.string.daily_report_eng));
+                btn3.setTag(Users.Language == 0 ?
+                        getString(R.string.daily_report):
+                        getString(R.string.daily_report_eng));
                 btn3.setVisibility(View.VISIBLE);
 
-                txt4.setText("작업요청 관리");
-                btn4.setTag("작업요청 관리");
+                txt4.setText(Users.Language == 0 ?
+                        getString(R.string.work_request_management):
+                        getString(R.string.work_request_management_eng));
+                btn4.setTag(Users.Language == 0 ?
+                        getString(R.string.work_request_management):
+                        getString(R.string.work_request_management_eng));
                 btn4.setVisibility(View.VISIBLE);
 
-                txt5.setText("작업요청내역 조회");
-                btn5.setTag("작업요청내역 조회");
+                txt5.setText(Users.Language == 0 ?
+                        getString(R.string.work_request_search):
+                        getString(R.string.work_request_search_eng));
+                btn5.setTag(Users.Language == 0 ?
+                        getString(R.string.work_request_search):
+                        getString(R.string.work_request_search_eng));
                 btn5.setVisibility(View.VISIBLE);
 
-                txt6.setText("경비등록");
-                btn6.setTag("경비등록");
+                txt6.setText(Users.Language == 0 ?
+                        getString(R.string.register_expense):
+                        getString(R.string.register_expense_eng));
+                btn6.setTag(Users.Language == 0 ?
+                        getString(R.string.register_expense):
+                        getString(R.string.register_expense_eng));
                 btn6.setVisibility(View.VISIBLE);
 
-                txt7.setText("알림 메시지");
-                btn7.setTag("알림 메시지");
+                txt7.setText(Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng));
+                btn7.setTag(Users.Language == 0 ?
+                        getString(R.string.message):
+                        getString(R.string.message_eng));
                 btn7.setVisibility(View.VISIBLE);
             } else if (Users.BusinessClassCode == 11 && Users.LeaderType.equals("3")) {
-                txt3.setText(getString(R.string.daily_report_return));
-                btn3.setTag(getString(R.string.daily_report_return));
+                txt3.setText(Users.Language == 0 ?
+                        getString(R.string.daily_report_return):
+                        getString(R.string.daily_report_return_eng));
+                btn3.setTag(Users.Language == 0 ?
+                        getString(R.string.daily_report_return):
+                        getString(R.string.daily_report_return_eng));
                 btn3.setVisibility(View.VISIBLE);
 
-                txt4.setText(getString(R.string.progress_floor_return));
-                btn4.setTag(getString(R.string.progress_floor_return));
+                txt4.setText(Users.Language == 0 ?
+                        getString(R.string.progress_floor_return):
+                        getString(R.string.progress_floor_return_eng));
+                btn4.setTag(Users.Language == 0 ?
+                        getString(R.string.progress_floor_return):
+                        getString(R.string.progress_floor_return_eng));
                 btn4.setVisibility(View.VISIBLE);
                 //getString(R.string.progress_floor)
 
-                txt5.setText(getString(R.string.location_progress));
-                btn5.setTag(getString(R.string.location_progress));
+                txt5.setText(Users.Language == 0 ?
+                        getString(R.string.location_progress):
+                        getString(R.string.location_progress_eng));
+                btn5.setTag(Users.Language == 0 ?
+                        getString(R.string.location_progress):
+                        getString(R.string.location_progress_eng));
                 btn5.setVisibility(View.VISIBLE);
 
-                txt6.setText(getString(R.string.stock_in_certificate));
-                btn6.setTag(getString(R.string.stock_in_certificate));
+                txt6.setText(Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate):
+                        getString(R.string.stock_in_certificate_eng));
+                btn6.setTag(Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate):
+                        getString(R.string.stock_in_certificate_eng));
                 btn6.setVisibility(View.VISIBLE);
 
-                txt7.setText(getString(R.string.stock_in_certificate_location));
-                btn7.setTag(getString(R.string.stock_in_certificate_location));
+                txt7.setText(Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate_location):
+                        getString(R.string.stock_in_certificate_location_eng));
+                btn7.setTag(Users.Language == 0 ?
+                        getString(R.string.stock_in_certificate_location):
+                        getString(R.string.stock_in_certificate_location_eng));
                 btn7.setVisibility(View.VISIBLE);
 
               /*  txt7.setText(getString(R.string.message));
@@ -1440,17 +1880,12 @@ public class ActivityMenuTest3 extends BaseActivity {
             Drawable img7 = FindImage(btn7.getTag().toString());
             imv7.setImageDrawable(img7);
             //btn7.setCompoundDrawablesWithIntrinsicBounds(img7, null, null, null);
-
-
             customEditor.putString("Button3", btn3.getTag().toString());
             customEditor.putString("Button4", btn4.getTag().toString());
             customEditor.putString("Button5", btn5.getTag().toString());
             customEditor.putString("Button6", btn6.getTag().toString());
             customEditor.putString("Button7", btn7.getTag().toString());
-
-
             customEditor.commit();
-
             initEditor.putBoolean("isInit", true);//초기 버튼 설정후 true로 변경
             initEditor.commit();
         } else {//초기 이후 부터
@@ -1858,49 +2293,45 @@ public class ActivityMenuTest3 extends BaseActivity {
                 return getBaseContext().getResources().getDrawable(R.drawable.round_check_circle_outline_white_48);
         }*/
 
-        if (str.equals(getString(R.string.assignment))) {//담당자 배정
+        if (str.equals(getString(R.string.assignment)) || str.equals(getString(R.string.assignment_eng))) {//담당자 배정
             return getBaseContext().getResources().getDrawable(R.drawable.round_check_circle_outline_white_48);
-        } else if (str.equals(getString(R.string.assignment_status))) {//담당자 배정현황
+        } else if (str.equals(getString(R.string.assignment_status)) || str.equals(getString(R.string.assignment_status_eng))) {//담당자 배정현황
             return getBaseContext().getResources().getDrawable(R.drawable.round_checklist_white_48);
-        } else if (str.equals(getString(R.string.work_request_search))) {//작업요청내역 조회
+        } else if (str.equals(getString(R.string.work_request_search)) || str.equals(getString(R.string.work_request_search_eng))) {//작업요청내역 조회
             return getBaseContext().getResources().getDrawable(R.drawable.round_search_white_48);
-        } else if (str.equals(getString(R.string.my_work))) {//나의 작업보기
+        } else if (str.equals(getString(R.string.my_work)) || str.equals(getString(R.string.my_work_eng))) {//나의 작업보기
             return getBaseContext().getResources().getDrawable(R.drawable.round_search_white_48);
-        } else if (str.equals(getString(R.string.work_request_management))) {//작업요청 관리
+        } else if (str.equals(getString(R.string.work_request_management)) || str.equals(getString(R.string.work_request_management_eng))) {//작업요청 관리
             return getBaseContext().getResources().getDrawable(R.drawable.round_note_alt_white_48);
-        } else if (str.equals(getString(R.string.daily_report))) {//일보확인
+        } else if (str.equals(getString(R.string.daily_report)) || str.equals(getString(R.string.daily_report_eng))) {//일보확인
             return getBaseContext().getResources().getDrawable(R.drawable.round_menu_book_white_48);
-        } else if (str.equals(getString(R.string.progress_information))) {//진행기준정보 관리
+        } else if (str.equals(getString(R.string.progress_information)) || str.equals(getString(R.string.progress_information_eng))) {//진행기준정보 관리
             return getBaseContext().getResources().getDrawable(R.drawable.round_cached_white_48);
-        } else if (str.equals(getString(R.string.progress_floor))) {//진행층수 등록
+        } else if (str.equals(getString(R.string.progress_floor)) || str.equals(getString(R.string.progress_floor_eng))) {//진행층수 등록
             return getBaseContext().getResources().getDrawable(R.drawable.round_stairs_white_48);
-        } else if (str.equals(getString(R.string.progress_floor_return))) {//진행층수 등록(회수)
+        } else if (str.equals(getString(R.string.progress_floor_return)) || str.equals(getString(R.string.progress_floor_return_eng))) {//진행층수 등록(회수)
             return getBaseContext().getResources().getDrawable(R.drawable.round_stairs_white_48);
-        } else if (str.equals(getString(R.string.register_expense))) {//경비등록
+        } else if (str.equals(getString(R.string.register_expense)) || str.equals(getString(R.string.register_expense_eng))) {//경비등록
             return getBaseContext().getResources().getDrawable(R.drawable.round_receipt_long_white_48);
-        } else if (str.equals(getString(R.string.problem))) {//현장 불만사례
+        } else if (str.equals(getString(R.string.problem)) || str.equals(getString(R.string.problem_eng))) {//현장 불만사례
             return getBaseContext().getResources().getDrawable(R.drawable.round_edit_location_alt_white_48);
-        } else if (str.equals(getString(R.string.support))) {//현장 지원요청
+        } else if (str.equals(getString(R.string.support)) || str.equals(getString(R.string.support_eng))) {//현장 지원요청
             return getBaseContext().getResources().getDrawable(R.drawable.round_support_agent_white_48);
-        } else if (str.equals(getString(R.string.product))) {//생산내역 조회
+        } else if (str.equals(getString(R.string.product)) || str.equals(getString(R.string.product_eng))) {//생산내역 조회
             return getBaseContext().getResources().getDrawable(R.drawable.round_precision_manufacturing_white_48);
-        } else if (str.equals(getString(R.string.message))) {//알림 메시지
+        } else if (str.equals(getString(R.string.message)) || str.equals(getString(R.string.message_eng))) {//알림 메시지
             return getBaseContext().getResources().getDrawable(R.drawable.round_sms_white_48);
-        } else if (str.equals(getString(R.string.location_progress))) {//반출입 현황
+        } else if (str.equals(getString(R.string.location_progress)) || str.equals(getString(R.string.location_progress_eng))) {//반출입 현황
             return getBaseContext().getResources().getDrawable(R.drawable.round_published_with_changes_white_48);
-        } else if (str.equals(getString(R.string.stock_in_certificate))) {
+        } else if (str.equals(getString(R.string.stock_in_certificate)) || str.equals(getString(R.string.stock_in_certificate_eng))) {
             return getBaseContext().getResources().getDrawable(R.drawable.receipt_48px);
-        }
-        else if (str.equals(getString(R.string.stock_in_certificate_location))) {
+        } else if (str.equals(getString(R.string.stock_in_certificate_location)) || str.equals(getString(R.string.stock_in_certificate_location_eng))) {
             return getBaseContext().getResources().getDrawable(R.drawable.receipt_48px);
-        }
-        else if (str.equals(getString(R.string.as_management))) {
+        } else if (str.equals(getString(R.string.as_management)) || str.equals(getString(R.string.as_management_eng))) {
             return getBaseContext().getResources().getDrawable(R.drawable.ic_baseline_handyman_24);
-        }
-        else if (str.equals(getString(R.string.daily_report_return))) {
+        } else if (str.equals(getString(R.string.daily_report_return)) || str.equals(getString(R.string.daily_report_return_eng))) {
             return getBaseContext().getResources().getDrawable(R.drawable.round_menu_book_white_48);
-        }
-        else {
+        } else {
             return getBaseContext().getResources().getDrawable(R.drawable.round_check_circle_outline_white_48);
         }
     }
@@ -1946,7 +2377,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         ClickSearchButton4();//일보확인
     }
 
-    private void GoDailyReportReturn(){
+    private void GoDailyReportReturn() {
         //사용자 ID 와 일자 조건을 통하여 데이터를 조회한다.
         //검색조건
         String userID = Users.USER_ID;
@@ -1962,7 +2393,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         else//작업일
             type = "2";
 
-        /*String url = getString(R.string.service_address) + "getWorders";
+        /*String url = Users.ServiceAddress + "getWorders";
         ContentValues values = new ContentValues();
         values.put("SupervisorCode", userID);
         values.put("FromDate", fromDate);
@@ -1974,7 +2405,7 @@ public class ActivityMenuTest3 extends BaseActivity {
 
         suWorders = new ArrayList<SuWorder>();
         restURL = "";
-        restURL = getString(R.string.service_address) + "getWorders2/" + userID + "/" + fromDate + "/" + toDate + "/" + type+ "/" + leaderType;
+        restURL = Users.ServiceAddress + "getWorders2/" + userID + "/" + fromDate + "/" + toDate + "/" + type + "/" + leaderType;
         new ActivityMenuTest3.ReadJSONFeedTask("회수일보작성").execute(restURL);
     }
 
@@ -2096,14 +2527,14 @@ public class ActivityMenuTest3 extends BaseActivity {
      * 담당자 배정
      * */
     private void AssignPerson() {
-        new ActivityMenuTest3.GetCustomerLocationByGet("미배정").execute(getString(R.string.service_address) + "getCustomerLocation2/" + Users.USER_ID);
+        new ActivityMenuTest3.GetCustomerLocationByGet("미배정").execute(Users.ServiceAddress + "getCustomerLocation4/" + Users.USER_ID);
     }
 
     /*
      * 담당자 배정 현황
      * */
     private void AssignPersonStatus() {
-        new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(getString(R.string.service_address) + "getCustomerLocation2/" + "모든현장");
+        new ActivityMenuTest3.GetCustomerLocationByGet("모든현장").execute(Users.ServiceAddress + "getCustomerLocation4/" + "모든현장/" + Users.BusinessClassCode);
     }
 
     /**
@@ -2129,7 +2560,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         searchStatusFlag1 = "0";//어차피 미배정이므로 뭘넣든가 영향 x
         searchStatusFlag2 = "0";//어차피 미배정이므로 뭘넣든가 영향 x
         activityType = "배정";
-        new ActivityMenuTest3.HttpAsyncTask().execute(getString(R.string.service_address) + "getassigndata2");
+        new ActivityMenuTest3.HttpAsyncTask().execute(Users.ServiceAddress + "getassigndata2");
     }
 
 
@@ -2157,14 +2588,14 @@ public class ActivityMenuTest3 extends BaseActivity {
         searchStatusFlag2 = "0";
 
         activityType = "배정";
-        new ActivityMenuTest3.HttpAsyncTask().execute(getString(R.string.service_address) + "getassigndata2");
+        new ActivityMenuTest3.HttpAsyncTask().execute(Users.ServiceAddress + "getassigndata2");
     }
 
     /*
      * 진행층수, 진행정보관리 데이터 가져오기
      * */
     private void ClickProgressFloor() {
-        new ActivityMenuTest3.GetCustomerLocationByGet("내현장").execute(getString(R.string.service_address) + "getCustomerLocation/" + Users.USER_ID);
+        new ActivityMenuTest3.GetCustomerLocationByGet("내현장").execute(Users.ServiceAddress + "getCustomerLocation/" + Users.USER_ID);
     }
 
     public class GetCustomerLocationByGet extends AsyncTask<String, Void, String> {
@@ -2187,7 +2618,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 if (this.type.equals("내현장"))//내현장만
                     jsonArray = jsonObject.optJSONArray("GetCustomerLocationResult");
                 else//내현장 + 미배정 or 모든현장
-                    jsonArray = jsonObject.optJSONArray("GetCustomerLocation2Result");
+                    jsonArray = jsonObject.optJSONArray("GetCustomerLocation4Result");
 
                 HashMap<String, Customer> customerHashMap;
                 customerHashMap = new HashMap<>();
@@ -2224,7 +2655,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                     i.putExtra("type", "담당자배정현황");
                 }
 
-                if(programType.equals("현장별송장조회")){
+                if (programType.equals("현장별송장조회")) {
                     String fromDate = fromYear + "-" + (fromMonth + 1) + "-" + fromDay;
                     String toDate = toYear + "-" + (toMonth + 1) + "-" + toDay;
                     i.putExtra("fromDate", fromDate);
@@ -2257,11 +2688,11 @@ public class ActivityMenuTest3 extends BaseActivity {
 
         restURL = "";
         if (searchDateType.equals("요청일")) {
-            restURL = getString(R.string.service_address) + "getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/1"; //요청
+            restURL = Users.ServiceAddress + "getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/1"; //요청
         } else if (searchDateType.equals("희망일")) {
-            restURL = getString(R.string.service_address) + "getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/0"; //희망
+            restURL = Users.ServiceAddress + "getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/0"; //희망
         } else {//작업일
-            restURL = getString(R.string.service_address) + "getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/2"; //작업
+            restURL = Users.ServiceAddress + "getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/2"; //작업
         }
 
         //mProgress = ProgressDialog.show(SearchActivity.this, "Wait", "Loading...");
@@ -2271,7 +2702,7 @@ public class ActivityMenuTest3 extends BaseActivity {
     private class ReadJSONFeedTask extends AsyncTask<String, Void, String> {
         String pType;
 
-        ReadJSONFeedTask(String pType){
+        ReadJSONFeedTask(String pType) {
             this.pType = pType;
         }
 
@@ -2287,11 +2718,11 @@ public class ActivityMenuTest3 extends BaseActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray;
                 String arrayName;
-                if(pType.equals("회수일보작성"))
-                    arrayName="GetWorders2Result";
+                if (pType.equals("회수일보작성"))
+                    arrayName = "GetWorders2Result";
                 else
-                    arrayName="GetSWorderListResult";
-                jsonArray= jsonObject.optJSONArray(arrayName);
+                    arrayName = "GetSWorderListResult";
+                jsonArray = jsonObject.optJSONArray(arrayName);
                 String LocationName = "";
                 String SupervisorWoNo = "";
                 String WorkDate = "";
@@ -2301,7 +2732,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 String Supervisor = "";
                 String WorkTypeName = "";
                 String Dong = "";
-                String SupervisorCode="";
+                String SupervisorCode = "";
 
                 for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -2404,13 +2835,17 @@ public class ActivityMenuTest3 extends BaseActivity {
     private void ClickSearchButton4() {
 
         if (GetMonthDiff() == -1) {
-            Toast.makeText(ActivityMenuTest3.this, "날짜 입력이 잘못 되었습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityMenuTest3.this, Users.Language == 0 ?
+                    "날짜 입력이 잘못되었습니다.":
+                    "Invalid date entry.", Toast.LENGTH_SHORT).show();
             progressOFF();
             return;
         }
 
         if (GetMonthDiff() > 2) {
-            Toast.makeText(ActivityMenuTest3.this, "일보확인은 2개월 이내에만 가능합니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ActivityMenuTest3.this, Users.Language == 0 ?
+                    "일보 확인은 2개월 이내에만 가능합니다.":
+                    "Daily report confirmation is only possible within two months.", Toast.LENGTH_SHORT).show();
             progressOFF();
             return;
         }
@@ -2434,7 +2869,7 @@ public class ActivityMenuTest3 extends BaseActivity {
         searchStatusFlag2 = "2";
         activityType = "확인";
         new ActivityMenuTest3.HttpAsyncTask().execute(
-                getString(R.string.service_address) + "getassigndataNew");
+                Users.ServiceAddress + "getassigndataNew");
     }
 
     private int GetMonthDiff() {
@@ -2481,7 +2916,7 @@ public class ActivityMenuTest3 extends BaseActivity {
                 String Supervisor = "";
                 String WorkTypeName = "";
                 String Dong = "";
-                String SupervisorCode="";
+                String SupervisorCode = "";
 
                 for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -2594,8 +3029,6 @@ public class ActivityMenuTest3 extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-
         backpressed.onBackPressed();
     }
-
 }

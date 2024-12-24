@@ -289,7 +289,7 @@ public class SaleOrderActivity extends BaseActivity {
     }
 
     private void getSaleOrder() {
-        String url = getString(R.string.service_address) + "getSaleOrder";
+        String url = Users.ServiceAddress + "getSaleOrder";
         ContentValues values = new ContentValues();
 
         String fromDate = fromYear + "-" + (fromMonth + 1) + "-" + fromDay;

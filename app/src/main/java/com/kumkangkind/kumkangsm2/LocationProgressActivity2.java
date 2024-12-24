@@ -177,7 +177,7 @@ public class LocationProgressActivity2 extends BaseActivity {
      */
     private void getDongForms() {
 
-        String url = getString(R.string.service_address) + "getDongForms";
+        String url = Users.ServiceAddress + "getDongForms";
         ContentValues values = new ContentValues();
         values.put("ContractNo", contractNo);
         values.put("LocationNo", locationNo);
@@ -312,7 +312,7 @@ public class LocationProgressActivity2 extends BaseActivity {
             requestType = "A";*/
 
 
-        String url = getString(R.string.service_address) + "getUserStockInReport2";
+        String url = Users.ServiceAddress + "getUserStockInReport2";
         ContentValues values = new ContentValues();
         values.put("SupervisorCode", Users.USER_ID);
         values.put("Type", sType);

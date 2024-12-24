@@ -113,7 +113,7 @@ public class ViewActivity2 extends Activity {
             }
         });
 
-        String restURL = getString(R.string.service_address)+"getworder2/" + key;
+        String restURL = Users.ServiceAddress+"getworder2/" + key;
         new ReadJSONFeedTask().execute(restURL);
     }
 
@@ -307,7 +307,7 @@ public class ViewActivity2 extends Activity {
         });
         images = new ArrayList<WoImage>();
 
-        String restURL = getString(R.string.service_address)+"getimagelist/" + this.key;
+        String restURL = Users.ServiceAddress+"getimagelist/" + this.key;
         new GetImageFeedTask().execute(restURL);
     }
 
@@ -335,7 +335,7 @@ public class ViewActivity2 extends Activity {
         });
         items = new ArrayList<WoItem>();
 
-        String restURL = getString(R.string.service_address)+"getitemlist/" + this.key;
+        String restURL = Users.ServiceAddress+"getitemlist/" + this.key;
         new GetItemFeedTask().execute(restURL);
     }
 

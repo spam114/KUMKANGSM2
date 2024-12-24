@@ -186,7 +186,7 @@ public class RequestHttpURLConnection {
                 imagefile = compressImage2(Base64.encodeToString(byteArray, Base64.DEFAULT));
                 //currentImage.ImageName = imgPath;
                 //currentImage.SmallImageFile = currentImage.ImageFile;
-                //new HttpAsyncTask().execute(getString(R.string.service_address)+"insertimage");
+                //new HttpAsyncTask().execute(Users.ServiceAddress+"insertimage");
 
                 JSONObject sObject = new JSONObject();//배열 내에 들어갈 json
                 sObject.put("ImageName", imageName);

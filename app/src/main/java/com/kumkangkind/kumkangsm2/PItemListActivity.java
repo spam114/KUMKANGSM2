@@ -165,7 +165,7 @@ public class PItemListActivity extends BaseActivity {
                         if (position != ListView.INVALID_POSITION) {
                             removePosition = position;
                             currentItem = itemList.get(position);
-                            new HttpAsyncTaskDelete().execute(getString(R.string.service_address)+"deleteitem");
+                            new HttpAsyncTaskDelete().execute(Users.ServiceAddress+"deleteitem");
                         }
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -238,7 +238,7 @@ public class PItemListActivity extends BaseActivity {
                     currentItem.PersonCount = editPersonCount.getText().toString();
                     currentItem.Quantity = editQuantity.getText().toString();
 
-                    new HttpAsyncTask().execute(getString(R.string.service_address)+"insertitem");
+                    new HttpAsyncTask().execute(Users.ServiceAddress+"insertitem");
 
                 }
             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

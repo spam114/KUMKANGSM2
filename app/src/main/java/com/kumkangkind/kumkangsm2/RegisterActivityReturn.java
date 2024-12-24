@@ -225,10 +225,10 @@ public class RegisterActivityReturn extends BaseActivity {
      * 여기의 onpost->mHandler2 에서 버튼 데이터들을 각 테스트뷰, 스피너리스트 등등에 넣어줌
      */
     private void MakeSpinnerWorkTypeAndData() {
-        /*String restURL = getString(R.string.service_address) + "worktypelistByBusinessClassCode";
+        /*String restURL = Users.ServiceAddress + "worktypelistByBusinessClassCode";
         new GetWorkTypeList().execute(restURL);*/
 
-        String url = getString(R.string.service_address) + "getSupervisorWorkType2";
+        String url = Users.ServiceAddress + "getSupervisorWorkType2";
         ContentValues values = new ContentValues();
         values.put("Parent", "-1");
         values.put("Type", "2");
@@ -361,7 +361,7 @@ public class RegisterActivityReturn extends BaseActivity {
             ArrayAdapter<String> workTypeAdapter = new ArrayAdapter<String>(RegisterActivityReturn.this, android.R.layout.simple_spinner_dropdown_item, workTypes);
             spinnerWorkType.setAdapter(workTypeAdapter);
 
-            String url = getString(R.string.service_address) + "getSupervisorWorkType2";
+            String url = Users.ServiceAddress + "getSupervisorWorkType2";
             ContentValues values = new ContentValues();
             values.put("Parent", "2");
             values.put("Type", "");
@@ -429,7 +429,7 @@ public class RegisterActivityReturn extends BaseActivity {
                 ArrayAdapter<String> workTypeAdapter = new ArrayAdapter<String>(RegisterActivityReturn.this, android.R.layout.simple_spinner_dropdown_item, workTypes);
                 //spinnerWorkType.setAdapter(workTypeAdapter);
 
-                String url = getString(R.string.service_address) + "getSupervisorWorkType2";
+                String url = Users.ServiceAddress + "getSupervisorWorkType2";
                 ContentValues values = new ContentValues();
                 values.put("Parent", "2");
                 values.put("Type", "");
@@ -604,7 +604,7 @@ public class RegisterActivityReturn extends BaseActivity {
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             SaveDataFromControl();
-                                            new SetSupervisorWorderEumsungByPost().execute(getString(R.string.service_address) + "setSupervisorWorderEumsung");
+                                            new SetSupervisorWorderEumsungByPost().execute(Users.ServiceAddress + "setSupervisorWorderEumsung");
                                         }
                                     })
                             .setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -622,7 +622,7 @@ public class RegisterActivityReturn extends BaseActivity {
                             //POST 명령어 호출(업데이트를 적용한다)
                             //progressDialog = ProgressDialog.show(RegisterActivityReturn.this, "Wait", "Loading...");
                             SaveDataFromControl();
-                            new HttpAsyncTask().execute(getString(R.string.service_address) + "setworderEumsung");
+                            new HttpAsyncTask().execute(Users.ServiceAddress + "setworderEumsung");
                         }
                     }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
@@ -696,7 +696,7 @@ public class RegisterActivityReturn extends BaseActivity {
                     progressOFF();
                     return;
                 }
-                new GetASItemByPost().execute(getString(R.string.service_address) + "getASItem");
+                new GetASItemByPost().execute(Users.ServiceAddress + "getASItem");
                 break;*/
 
 
@@ -724,7 +724,7 @@ public class RegisterActivityReturn extends BaseActivity {
 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        new DeleteSupervisorWorderInfoByPost().execute(getString(R.string.service_address) + "deleteSupervisorWorderInfo");
+                                        new DeleteSupervisorWorderInfoByPost().execute(Users.ServiceAddress + "deleteSupervisorWorderInfo");
                                     }
                                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
@@ -1196,7 +1196,7 @@ public class RegisterActivityReturn extends BaseActivity {
      * 서버와 통신하여 데이터를 가져온다.
      */
     private void SetData(String key) {
-        String restURL = getString(R.string.service_address) + "getworder2/" + key;
+        String restURL = Users.ServiceAddress + "getworder2/" + key;
         new ReadJSONFeedTask().execute(restURL);
     }
 
@@ -1456,7 +1456,7 @@ public class RegisterActivityReturn extends BaseActivity {
      */
     private void ViewPhotoControlActivity() {
         images = new ArrayList<WoImage>();
-        String restURL = getString(R.string.service_address) + "getimagelist/" + this.key;
+        String restURL = Users.ServiceAddress + "getimagelist/" + this.key;
         new GetImageFeedTask().execute(restURL);
     }
 

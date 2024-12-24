@@ -1,11 +1,14 @@
 package com.kumkangkind.kumkangsm2;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 
 /**
@@ -15,7 +18,8 @@ public class MainActivity extends BaseActivity {
 
     SharedPreferences _pref;
     Boolean isShortcut = false;//아이콘의 생성
-    String certificateNo="";
+    String certificateNo = "";
+
     private void startProgress() {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -31,13 +35,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i("로그", "메인의 호출");
         //startProgress();
 
         Object cNo = getIntent().getStringExtra("certificateNo");
-        certificateNo="";
-        if(cNo!=null)
-            certificateNo=cNo.toString();
+        certificateNo = "";
+        if (cNo != null)
+            certificateNo = cNo.toString();
 
         _pref = getSharedPreferences("kumkang", MODE_PRIVATE);//sharedPreferences 이름: "kumkang"에 저장
         isShortcut = _pref.getBoolean("isShortcut", false);//"isShortcut"에 들어있는값을 가져온다.
@@ -48,10 +51,68 @@ public class MainActivity extends BaseActivity {
             addShortcut(this);
         }
         setContentView(R.layout.activity_main);
-        VersionCheckActivity();
+        viewRegion();
         //progressOFF();
     }
 
+    public void viewRegion() {
+        boolean isFirst = PreferenceManager.getBoolean(this, "isFirst");
+        if (isFirst) {//최초 실행 회사 & 언어 셋팅
+            CharSequence[] companyCharSequences = new CharSequence[3];
+            companyCharSequences[0] = "대한민국(음성,진천,창녕)";
+            companyCharSequences[1] = "KKM";
+            companyCharSequences[2] = "KKV";
+            final int[] clickedButton = {0};
+            //다이얼로그 출력
+            new MaterialAlertDialogBuilder(MainActivity.this).setTitle((CharSequence) "지역(Region)").setCancelable(false)
+                    .setSingleChoiceItems(companyCharSequences, 0, new DialogInterface.OnClickListener() {
+                        @Override // android.content.DialogInterface.OnClickListener
+                        public void onClick(DialogInterface dialogInterface, int i3) {
+                            clickedButton[0] = i3;
+                        }
+                    }).setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override // android.content.DialogInterface.OnDismissListener
+                        public void onDismiss(DialogInterface dialogInterface) {
+                        }
+                    }).setPositiveButton((CharSequence) "확인(OK)", new DialogInterface.OnClickListener() {
+                        @Override // android.content.DialogInterface.OnClickListener
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            PreferenceManager.setInt(MainActivity.this, "company", clickedButton[0]);
+                            PreferenceManager.setBoolean(MainActivity.this, "isFirst", false);
+                            Users.ServiceType = PreferenceManager.getInt(MainActivity.this, "company");//0:금강공업(음성,진천),1:KKM,2:KKV,-1:TEST
+                            if (Users.ServiceType == 0) {//한국이면 한국어로 초기셋팅
+                                PreferenceManager.setInt(MainActivity.this, "language", 0);
+                                Users.Language = 0;
+                            } else {//그 외는 영어
+                                PreferenceManager.setInt(MainActivity.this, "language", 1);
+                                Users.Language = 1;
+                            }
+                            setServiceAddress();
+                            VersionCheckActivity();
+                        }
+                    }).show();
+        } else {
+            Users.ServiceType = PreferenceManager.getInt(MainActivity.this, "company");//0:금강공업(음성,진천),1:KKM,2:KKV,-1:TEST
+            setServiceAddress();
+            VersionCheckActivity();
+        }
+    }
+
+    private void setServiceAddress() {
+        if (Users.ServiceType == 0) {//금강
+            Users.ServiceAddress = getString(R.string.service_address);
+        } else if (Users.ServiceType == 1) {//KKM
+            Users.ServiceAddress = getString(R.string.service_address_kkm);
+        } else if (Users.ServiceType == 2) {//KKV
+            Users.ServiceAddress = getString(R.string.service_address_kkv);
+        }
+        Users.Language = PreferenceManager.getInt(MainActivity.this, "language");
+
+        /*else{//TEST
+            Users.ServiceAddress = ApplicationClass.getResourses().getString(R.string.service_address_test);
+            Users.ServiceType = -1;//0:금강공업(음성,진천),1:KKM,2:KKV,-1:TEST
+        }*/
+    }
 
     /**
      * 업데이트 체크
@@ -71,13 +132,13 @@ public class MainActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 0 && resultCode == RESULT_OK && null != data) {//초기 화면 불러온다.
-           // Intent i = new Intent(this, SearchActivity.class);
+            // Intent i = new Intent(this, SearchActivity.class);
             Intent i = new Intent(this, ActivityMenuTest3.class);
             i.putExtra("certificateNo", certificateNo);
             startActivityForResult(i, 0);
             finish();
         }
-        if(requestCode == 0 && resultCode == RESULT_CANCELED && null != data){
+        if (requestCode == 0 && resultCode == RESULT_CANCELED && null != data) {
             finish();
         }
 

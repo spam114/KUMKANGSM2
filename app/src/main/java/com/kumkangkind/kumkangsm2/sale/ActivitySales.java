@@ -189,7 +189,7 @@ public class ActivitySales extends BaseActivity {
         searchToDate = textViewDate2.getText().toString();
         searchStatusFlag1 = "-1";
         searchStatusFlag2 = "2";
-        new HttpAsyncTask().execute(getString(R.string.service_address)+"getassigndata3");
+        new HttpAsyncTask().execute(Users.ServiceAddress+"getassigndata3");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {

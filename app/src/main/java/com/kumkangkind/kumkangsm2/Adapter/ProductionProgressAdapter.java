@@ -24,10 +24,10 @@ import com.kumkangkind.kumkangsm2.Object.ProductionProgress;
 import com.kumkangkind.kumkangsm2.ProductionProgressActivity;
 import com.kumkangkind.kumkangsm2.R;
 import com.kumkangkind.kumkangsm2.RequestHttpURLConnection;
+import com.kumkangkind.kumkangsm2.Users;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
         this.layoutRsourceId = layoutResourceID;
         this.data = data;
         this.listView = listView;
-        this.WorderRequestNo=WorderRequestNo;
+        this.WorderRequestNo = WorderRequestNo;
     }
 
     @Override
@@ -95,8 +95,8 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
             txtProductionQty = row.findViewById(R.id.txtProductionQty);
             txtPackingQty = row.findViewById(R.id.txtPackingQty);
             txtOutQty = row.findViewById(R.id.txtOutQty);
-            txtPartName=row.findViewById(R.id.txtPartName);
-            txtPartSpec=row.findViewById(R.id.txtPartSpec);
+            txtPartName = row.findViewById(R.id.txtPartName);
+            txtPartSpec = row.findViewById(R.id.txtPartSpec);
             txtMspec = row.findViewById(R.id.txtMspec);
 
             String strOrderQty = myFormatter.format(Double.parseDouble(item.OrderQty));
@@ -138,7 +138,7 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
     }
 
     private void getProductionDate(String PartName, String PartSpec, String Mspec, String WorderRequestNo, String SeqNo) {
-        String url = context.getString(R.string.service_address) + "getProductionDate";
+        String url = Users.ServiceAddress + "getProductionDate";
         ContentValues values = new ContentValues();
         values.put("WorderRequestNo", WorderRequestNo);
         values.put("SeqNo", SeqNo);
@@ -156,9 +156,9 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
         GetProductionDate(String url, ContentValues values, String PartName, String PartSpec, String Mspec) {
             this.url = url;
             this.values = values;
-            this.PartName=PartName;
-            this.PartSpec=PartSpec;
-            this.Mspec=Mspec;
+            this.PartName = PartName;
+            this.PartSpec = PartSpec;
+            this.Mspec = Mspec;
         }
 
         @Override
@@ -207,12 +207,12 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
                     CustomerName3 = child.getString("CustomerName3");
                 }
 
-                if(jsonArray.length()>0){
+                if (jsonArray.length() > 0) {
                     Dialog productionDateDialog = new Dialog(context);
                     productionDateDialog.setContentView(R.layout.dialog_production_date);
-                    productionDateDialog.setTitle("거래처 검색");
+                    productionDateDialog.setTitle(Users.Language == 0 ? "거래처 검색" : "Search customers");
 
-                    Display display = ((ProductionProgressActivity)(context)).getWindowManager().getDefaultDisplay();
+                    Display display = ((ProductionProgressActivity) (context)).getWindowManager().getDefaultDisplay();
                     Point size = new Point();
                     display.getSize(size);
 
@@ -229,9 +229,9 @@ public class ProductionProgressAdapter extends ArrayAdapter<ProductionProgress> 
                     TextView txtCustomerName1 = productionDateDialog.findViewById(R.id.txtCustomerName1);
                     TextView txtCustomerName2 = productionDateDialog.findViewById(R.id.txtCustomerName2);
                     TextView txtCustomerName3 = productionDateDialog.findViewById(R.id.txtCustomerName3);
-                    Part=this.PartName+"("+this.PartSpec+")";
-                    if(!this.Mspec.equals("")){
-                        Part+="-"+this.Mspec;
+                    Part = this.PartName + "(" + this.PartSpec + ")";
+                    if (!this.Mspec.equals("")) {
+                        Part += "-" + this.Mspec;
                     }
                     txtPart.setText(Part);
                     txtOriginalStartDate.setText(OriginalStartDate);

@@ -194,7 +194,7 @@ public class SaleOrderAdapter extends ArrayAdapter<SaleOrder> implements BaseAct
                 ArrayList<SaleOrder> itemList = new ArrayList<SaleOrder>() ;
 
                 for (SaleOrder item : listViewItemList) {
-                    if(constraint.toString().equals("전체")){
+                    if(constraint.toString().equals("전체") || constraint.toString().equals("All")){
                         itemList.add(item) ;
                     }
                     else{

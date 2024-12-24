@@ -106,7 +106,7 @@ public class SearchEmployeeDialog extends Dialog implements TextWatcher {
         }
         else{
             stringArrayList= new ArrayList<>();
-            //new GetEmployeeName(act.getText().toString()).execute(getString(R.string.service_address)+"getEmployeeInfo");
+            //new GetEmployeeName(act.getText().toString()).execute(Users.ServiceAddress+"getEmployeeInfo");
 
             AutoCompleteAdapter adapter= new AutoCompleteAdapter (getContext(),
                     android.R.layout.simple_dropdown_item_1line,act,this, addItemNo);
@@ -146,7 +146,7 @@ class AutoCompleteAdapter extends ArrayAdapter<String> implements Filterable {
     AutoCompleteTextView act;
     SearchEmployeeDialog searchEmployeeDialog;
     private ArrayList<String> data;
-    private final String server = getContext().getString(R.string.service_address)+"getEmployeeSuggestions/";
+    private final String server = Users.ServiceAddress + "getEmployeeSuggestions/";
 
     AutoCompleteAdapter(@NonNull Context context, @LayoutRes int resource, AutoCompleteTextView act, SearchEmployeeDialog searchEmployeeDialog, String addItemNo) {
         super(context, resource);
@@ -189,7 +189,7 @@ class AutoCompleteAdapter extends ArrayAdapter<String> implements Filterable {
                 String dept=array[1];
                 String employeeNo=array[2];
 
-                new UpdateAddItemMasterEmployeeByPost(employeeNo,name).execute(getContext().getString(R.string.service_address)+"updateAddItemMasterEmployee");
+                new UpdateAddItemMasterEmployeeByPost(employeeNo,name).execute(Users.ServiceAddress+"updateAddItemMasterEmployee");
 
             }
         });

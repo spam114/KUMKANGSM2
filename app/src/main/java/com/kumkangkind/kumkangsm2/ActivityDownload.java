@@ -63,12 +63,12 @@ public class ActivityDownload extends BaseActivity {
     }
 
     private void newVersionDownload() {
-        new AlertDialog.Builder(ActivityDownload.this).setMessage("새로운 버전이 있습니다. 다운로드 할까요?")
+        new AlertDialog.Builder(ActivityDownload.this).setMessage("새로운 버전이 있습니다. 다운로드하시겠습니까?\nThere is a new version. Do you want to download it?")
                 .setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                mProgressDialog = ProgressDialog.show(ActivityDownload.this, "다운로드", "잠시만 기다려주세요");
+                mProgressDialog = ProgressDialog.show(ActivityDownload.this, "다운로드(Download)", "잠시만 기다려주세요.\nPlease wait a moment.");
 
                 Uri uri = Uri.parse(downloadUrl);
                 DownloadManager.Request req = new DownloadManager.Request(uri);
@@ -78,7 +78,7 @@ public class ActivityDownload extends BaseActivity {
                 //req.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, pathSegments.get(pathSegments.size() - 1));
                 //Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).mkdirs();
 
-                req.setDescription("어플리케이션 설치파일을 다운로드 합니다.");
+                req.setDescription("어플리케이션 설치파일을 다운로드 합니다.\nDownload the application installation file.");
                 req.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
                 mId = mDm.enqueue(req);
                 IntentFilter filter = new IntentFilter();
@@ -94,7 +94,7 @@ public class ActivityDownload extends BaseActivity {
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(ActivityDownload.this, "최신버전으로 업데이트 하시기 바랍니다.", Toast.LENGTH_LONG).show();
+                Toast.makeText(ActivityDownload.this, "최신버전으로 업데이트 하시기 바랍니다.\nPlease update to the latest version.", Toast.LENGTH_LONG).show();
                 ActivityCompat.finishAffinity(ActivityDownload.this);
             }
         }).show();
@@ -130,7 +130,7 @@ public class ActivityDownload extends BaseActivity {
             public void run() {
 
                 mProgressDialog = ProgressDialog.show(ActivityDownload.this, "",
-                        "잠시만 기다려 주세요.", true);
+                        "잠시만 기다려주세요.\nPlease wait a moment.", true);
                 mHandler.postDelayed(new Runnable() {//Handler 를 사용하는 이유 그림을 그리는 행위는 메인스레드에서만 가능, 하지만 Handler객체를 사용하면 이관 가능
                     //postDelayed: 현재시간을 기준으로 지연시간 후에 실행 한다.
                     @Override
@@ -146,7 +146,7 @@ public class ActivityDownload extends BaseActivity {
                 }, 5000);// 일정시간뒤 Dialog가 꺼져있는지 켜져 있는지 검사하고 켜져있으면, Dialog 끈다.
             }
         });
-        new HttpAsyncTask().execute(getString(R.string.service_address)+"checkappversion");
+        new HttpAsyncTask().execute(Users.ServiceAddress+"checkappversion");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {//인자 세개: (params): ex) doInBackground의 매개변수, progress: , result
@@ -244,7 +244,7 @@ public class ActivityDownload extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
 
 
-            Toast.makeText(context, "다운로드 완료", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "다운로드 완료(Download complete)", Toast.LENGTH_SHORT).show();
 
             DownloadManager.Query query = new DownloadManager.Query();
             query.setFilterById(mId);

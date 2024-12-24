@@ -182,9 +182,9 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
             public void onClick(View v) {//현장 클릭시, 이벤트
                 //contractNo 보내기
                 if (programType.equals("진행층수등록"))
-                    new GetDongProgessFloorByPost().execute(context.getString(R.string.service_address) + "getDongProgressFloor");
+                    new GetDongProgessFloorByPost().execute(Users.ServiceAddress + "getDongProgressFloor");
                 else if (programType.equals("진행기준정보관리"))
-                    new GetDongByPost(customerName, locationName).execute(context.getString(R.string.service_address) + "getDong");
+                    new GetDongByPost(customerName, locationName).execute(Users.ServiceAddress + "getDong");
                 else if (programType.equals("일보작성"))
                     ShowRequestDailyReport();
                 else if (programType.equals("회수일보작성"))
@@ -237,7 +237,7 @@ class MyHolder extends TreeNode.BaseNodeViewHolder<MyHolder.IconTreeItem> {
                     context.startActivity(i);*/
                 }
                 else if (programType.equals("A/S 관리")){
-                    new GetASItemByPost().execute(context.getString(R.string.service_address) + "getASItem2");
+                    new GetASItemByPost().execute(Users.ServiceAddress + "getASItem2");
                     /*Intent i;
                     i = new Intent(context, ActivityStockInCertificateDetail.class);
                     i.putExtra("certificateNo", "");

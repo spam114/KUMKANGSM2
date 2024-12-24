@@ -121,7 +121,7 @@ public class AddItemListActivity extends BaseActivity {//추가분 리스트 액
         listView1.setOnItemClickListener(mItemClickListener);
         listView1.setFocusable(false);
 
-        new GetDongBySupervisor().execute(getString(R.string.service_address)+"getDongBySupervisorWoNo");//현장별 동정보를 가져온다
+        new GetDongBySupervisor().execute(Users.ServiceAddress+"getDongBySupervisorWoNo");//현장별 동정보를 가져온다
 
 
         progressOFF();
@@ -156,7 +156,7 @@ public class AddItemListActivity extends BaseActivity {//추가분 리스트 액
                 if(type.equals("현장별")) {
                     if(!Users.UserName.equals(currentItem.SupervisorName))//나의 추가분이 아니면 확인용으로 수정이 불가능하게 설정
                         type="확인";//=수정용
-                    new GetAddItemDetail().execute(getString(R.string.service_address)+"getAddItemDetail");
+                    new GetAddItemDetail().execute(Users.ServiceAddress+"getAddItemDetail");
                 }
                 progressOFF();
 
@@ -243,7 +243,7 @@ public class AddItemListActivity extends BaseActivity {//추가분 리스트 액
                     public void onClick(DialogInterface dialog, int which) {
 
                         currentItem = null;
-                        new SetAddItemByPost(dongSpinner.getSelectedItem().toString()).execute(getString(R.string.service_address)+"setAddItem");
+                        new SetAddItemByPost(dongSpinner.getSelectedItem().toString()).execute(Users.ServiceAddress+"setAddItem");
                     }
                 });
 
@@ -544,10 +544,10 @@ public class AddItemListActivity extends BaseActivity {//추가분 리스트 액
 
             if(type.equals("현장별")){//현장별(=현장불만사례)이면 클릭했을때 동리스트를 가져온후-> 디테일 가져온다.
                 supervisorWoNo=currentItem.SupervisorWoNo;
-                new GetDongBySupervisor().execute(getString(R.string.service_address)+"getDongBySupervisorWoNo");//현장별 동정보 (다시)를 가져온다-> 다음 디테일 가져오기
+                new GetDongBySupervisor().execute(Users.ServiceAddress+"getDongBySupervisorWoNo");//현장별 동정보 (다시)를 가져온다-> 다음 디테일 가져오기
             }
             else{//나머지는 onCreate 에서 이미 동리스트 가져옴: 디테일만 가져오면됨
-                new GetAddItemDetail().execute(getString(R.string.service_address)+"getAddItemDetail");
+                new GetAddItemDetail().execute(Users.ServiceAddress+"getAddItemDetail");
             }
         }
     };

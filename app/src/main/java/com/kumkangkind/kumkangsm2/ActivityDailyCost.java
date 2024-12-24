@@ -70,7 +70,6 @@ public class ActivityDailyCost extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dailycost);
-
         textViewMonth = (TextView) findViewById(R.id.textViewMonth);
         ((TextView) findViewById(R.id.costUser)).setText(Users.UserName);
 
@@ -90,7 +89,6 @@ public class ActivityDailyCost extends BaseActivity {
     }
 
     public void mOnClick(View v) {
-
 
         switch (v.getId()) {
 
@@ -563,7 +561,7 @@ public class ActivityDailyCost extends BaseActivity {
 
         tv.setText(yyyyMM.substring(0, 4) + "년 " + yyyyMM.substring(4, 6) + "월" + " 사용경비내역");
 
-        new HttpAsyncTask().execute(getString(R.string.service_address) + "getdailycost");
+        new HttpAsyncTask().execute(Users.ServiceAddress + "getdailycost");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
@@ -693,7 +691,7 @@ public class ActivityDailyCost extends BaseActivity {
 
                 type2 = textViewAmount.getText().toString();
                 currentTextView = textView;
-                new HttpAsyncTask2().execute(getString(R.string.service_address) + "setdailycost");
+                new HttpAsyncTask2().execute(Users.ServiceAddress + "setdailycost");
             }
         });
 

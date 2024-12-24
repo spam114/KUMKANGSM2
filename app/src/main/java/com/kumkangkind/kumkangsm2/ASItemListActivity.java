@@ -141,7 +141,7 @@ public class ASItemListActivity extends BaseActivity {
                 if (clickPosition == -1)
                     Toast.makeText(getBaseContext(), "복사할 항목을 선택하여 주세요.", Toast.LENGTH_SHORT).show();
                 else {
-                    new GetASItemStandard().execute(getString(R.string.service_address) + "getASItemStandard");//AS 기준정보를 가져온 후에, 복사 다이얼로그를 실행한다.
+                    new GetASItemStandard().execute(Users.ServiceAddress + "getASItemStandard");//AS 기준정보를 가져온 후에, 복사 다이얼로그를 실행한다.
                 }
             }
         });
@@ -341,7 +341,7 @@ public class ASItemListActivity extends BaseActivity {
 
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    new DeleteASItem(asItem.SupervisorASNo, clickPosition).execute(getString(R.string.service_address) + "deleteASItem");
+                                    new DeleteASItem(asItem.SupervisorASNo, clickPosition).execute(Users.ServiceAddress + "deleteASItem");
                                 }
                             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
@@ -384,7 +384,7 @@ public class ASItemListActivity extends BaseActivity {
 
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    new SetASItemByPost(asItem).execute(getString(R.string.service_address) + "setASItem");
+                                    new SetASItemByPost(asItem).execute(Users.ServiceAddress + "setASItem");
                                 }
                             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override

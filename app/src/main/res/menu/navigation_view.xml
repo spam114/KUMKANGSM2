@@ -5,6 +5,14 @@
         android:id="@+id/group"
         >
         <item
+            android:id="@+id/language"
+            android:icon="@drawable/language_48px"
+            android:title="@string/language" />
+        <item
+            android:id="@+id/region"
+            android:icon="@drawable/travel_explore_48px"
+            android:title="@string/region"/>
+        <item
             android:id="@+id/edit_menu"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/edit_menu" />

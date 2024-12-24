@@ -9,7 +9,7 @@ public  class  Users {
 
     public static String UserName = "";
     public static String USER_ID = "";
-    public static int Language;
+    public static int Language;//0:한국어, 1:영어
     public static String EmployeeNo="";
     public static String LeaderType = "Y";
     public static String[] supervisorList;
@@ -28,5 +28,6 @@ public  class  Users {
     public static String DeviceOS = "";
     //Appversion은 build에서
     public static String Remark = "";
-
+    public static int ServiceType;//0:금강공업(음성,진천),1:KKM,2:KKV,-1:TEST
+    public static String ServiceAddress="";
 }

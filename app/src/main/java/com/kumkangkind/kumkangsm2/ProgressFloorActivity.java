@@ -216,7 +216,7 @@ public class ProgressFloorActivity extends BaseActivity {
                 return;
             }
             inputFloor = msg.getData().getString("floor");
-            new SetDongProgressFloorByPost().execute(getString(R.string.service_address) + "setDongProgressFloor");
+            new SetDongProgressFloorByPost().execute(Users.ServiceAddress + "setDongProgressFloor");
 
         }
     };
@@ -258,7 +258,7 @@ public class ProgressFloorActivity extends BaseActivity {
 
             Toast.makeText(ProgressFloorActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            new GetDongProgessFloorByPost().execute(getString(R.string.service_address) + "getDongProgressFloor");
+            new GetDongProgessFloorByPost().execute(Users.ServiceAddress + "getDongProgressFloor");
 
         }
     }
@@ -415,7 +415,7 @@ public class ProgressFloorActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 1) {//확인
                 inputYearMonth = yearMonth;
-                new DeleteDongProgressFloorByPost().execute(getString(R.string.service_address) + "deleteDongProgressFloor");
+                new DeleteDongProgressFloorByPost().execute(Users.ServiceAddress + "deleteDongProgressFloor");
 
             } else {//취소
                 Toast.makeText(ProgressFloorActivity.this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -459,7 +459,7 @@ public class ProgressFloorActivity extends BaseActivity {
                 return;
             } else {
                 Toast.makeText(ProgressFloorActivity.this, "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
-                new GetDongProgessFloorByPost().execute(getString(R.string.service_address) + "getDongProgressFloor");
+                new GetDongProgessFloorByPost().execute(Users.ServiceAddress + "getDongProgressFloor");
             }
 
 

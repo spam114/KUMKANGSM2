@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatDialog;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.kumkangkind.kumkangsm2.R;
+import com.kumkangkind.kumkangsm2.Users;
 
 /**
  * 공통으로 쓰는 메소드들이 담겨져있다.
@@ -153,14 +154,14 @@ public class ApplicationClass extends Application {
     public void showErrorDialog(Context context, String message, int type) {
         MaterialAlertDialogBuilder alertBuilder = new MaterialAlertDialogBuilder(context, R.style.Body_ThemeOverlay_MaterialComponents_MaterialAlertDialog);
         if (type == 1) {
-            alertBuilder.setTitle("작업 성공");
+            alertBuilder.setTitle(Users.Language == 0 ? "작업 성공" : "Success");
         } else {
-            alertBuilder.setTitle("에러 발생");
+            alertBuilder.setTitle(Users.Language == 0 ? "에러 발생" : "Error");
         }
 
 
         alertBuilder.setMessage(message);
-        alertBuilder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+        alertBuilder.setPositiveButton(Users.Language == 0 ? "확인" : "OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

@@ -108,7 +108,7 @@ public class SuListViewActivity2 extends BaseActivity {//음성 용
     }
 
     private void MakeDailyReport() {
-        new GetCustomerLocationByGet("내현장").execute(getString(R.string.service_address) + "getCustomerLocation/" + Users.USER_ID);
+        new GetCustomerLocationByGet("내현장").execute(Users.ServiceAddress + "getCustomerLocation/" + Users.USER_ID);
     }
 
 

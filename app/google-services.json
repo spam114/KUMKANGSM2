@@ -1,39 +1,26 @@
 {
   "project_info": {
-    "project_number": "553578283518",
-    "firebase_url": "https://kumkangsupervisor.firebaseio.com",
-    "project_id": "kumkangsupervisor",
-    "storage_bucket": "kumkangsupervisor.appspot.com"
+    "project_number": "753949470971",
+    "project_id": "sendmessageproject-67021",
+    "storage_bucket": "sendmessageproject-67021.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:553578283518:android:ceec3f2e2ab3f59f",
+        "mobilesdk_app_id": "1:753949470971:android:6a17c0ea7c40d94a95805e",
         "android_client_info": {
           "package_name": "com.kumkangkind.kumkangsm2"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "553578283518-n2ivhhf8b9iacsq21haknorar1ife9qh.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAXFFpBdAJaAb2VAxS39F2sNABH__glgUA"
+          "current_key": "AIzaSyCjcHH60V7AC3X5VZ4yUBJPo2pmGsTUhY0"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
           "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

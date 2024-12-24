@@ -66,7 +66,7 @@ public class ProductionProgressActivity extends BaseActivity {
 
 
     private void getProductionProgress() {
-        String url = getString(R.string.service_address) + "getProductionProgress";
+        String url = Users.ServiceAddress + "getProductionProgress";
         ContentValues values = new ContentValues();
         values.put("WorderRequestNo", worderRequestNo);
         GetProductionProgress gsod = new GetProductionProgress(url, values);

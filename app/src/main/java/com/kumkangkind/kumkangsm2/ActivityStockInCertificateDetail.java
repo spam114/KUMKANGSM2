@@ -139,6 +139,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_in_certificate_detail);
+        setView();
         setFilePath();
 
         this.certificateNo = getIntent().getStringExtra("certificateNo");
@@ -196,10 +197,10 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
         }
 
         String[] workTypes = new String[4];
-        workTypes[0] = "음성1공장";
-        workTypes[1] = "음성3공장";
-        workTypes[2] = "음성1,3공장";
-        workTypes[3] = "창녕공장";
+        workTypes[0] = Users.Language == 0 ? "음성1공장" : "FAC1";
+        workTypes[1] = Users.Language == 0 ? "음성3공장" : "FAC2";
+        workTypes[2] = Users.Language == 0 ? "음성1,3공장" : "FAC1,2";
+        workTypes[3] = Users.Language == 0 ? "창녕공장" : "FAC3";
         ArrayAdapter<String> workTypeAdapter = new ArrayAdapter<String>(ActivityStockInCertificateDetail.this, android.R.layout.simple_spinner_dropdown_item, workTypes);
         spinnerDestination.setAdapter(workTypeAdapter);
 
@@ -220,8 +221,8 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
             this.tvStartTime.setText(mYear + "-" + (mMonth + 1) + "-" + mDay);
             this.tvEndTime.setText(mYear2 + "-" + (mMonth2 + 1) + "-" + mDay2);
-            this.btnNext.setText("송장생성");
-            textViewManageNo.setText("'송장생성' 버튼을 눌러 송장을 생성하세요.");
+            this.btnNext.setText(Users.Language == 0 ? "송장생성" : "Create");
+            textViewManageNo.setText(Users.Language == 0 ? "'송장생성' 버튼을 눌러 송장을 생성하세요." : "Create an invoice by pressing the 'Create' button.");
             /*LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             textViewManageNo.setLayoutParams(layoutParams);*/
             textViewManageNo.setTextColor(Color.YELLOW);
@@ -233,7 +234,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
             GetReturnTransData();
         } else {
             getStockInCertificateDetail();
-            this.btnNext.setText("저장하기");
+            this.btnNext.setText(Users.Language == 0 ? "저장하기" : "SAVE");
         }
 
         //액티비티 콜백 함수
@@ -298,7 +299,8 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 if (imageView1.getTag().toString().equals("")) {
                     //카메라열기
                     if (certificateNo.equals("")) {
-                        Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityStockInCertificateDetail.this,
+                                Users.Language == 0 ? "'송장생성' 버튼을 눌러 송장을 생성하세요." : "Create an invoice by pressing the 'Create' button.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
@@ -317,7 +319,8 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 if (imageView2.getTag().toString().equals("")) {
                     //카메라열기
                     if (certificateNo.equals("")) {
-                        Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityStockInCertificateDetail.this,
+                                Users.Language == 0 ? "'송장생성' 버튼을 눌러 송장을 생성하세요." : "Create an invoice by pressing the 'Create' button.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
@@ -336,7 +339,8 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 if (imageView3.getTag().toString().equals("")) {
                     //카메라열기
                     if (certificateNo.equals("")) {
-                        Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityStockInCertificateDetail.this,
+                                Users.Language == 0 ? "'송장생성' 버튼을 눌러 송장을 생성하세요." : "Create an invoice by pressing the 'Create' button.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
@@ -354,7 +358,8 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 if (imageView4.getTag().toString().equals("")) {
                     //카메라열기
                     if (certificateNo.equals("")) {
-                        Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityStockInCertificateDetail.this,
+                                Users.Language == 0 ? "'송장생성' 버튼을 눌러 송장을 생성하세요." : "Create an invoice by pressing the 'Create' button.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
@@ -372,7 +377,8 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 if (imageView5.getTag().toString().equals("")) {
                     //카메라열기
                     if (certificateNo.equals("")) {
-                        Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityStockInCertificateDetail.this,
+                                Users.Language == 0 ? "'송장생성' 버튼을 눌러 송장을 생성하세요." : "Create an invoice by pressing the 'Create' button.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
@@ -390,7 +396,8 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 if (imageView6.getTag().toString().equals("")) {
                     //카메라열기
                     if (certificateNo.equals("")) {
-                        Toast.makeText(ActivityStockInCertificateDetail.this, "'송장생성' 버튼을 눌러 송장을 생성하세요.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityStockInCertificateDetail.this,
+                                Users.Language == 0 ? "'송장생성' 버튼을 눌러 송장을 생성하세요." : "Create an invoice by pressing the 'Create' button.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     if (supervisorCode.equals(Users.USER_ID)) {//본인이 작성한 송장만 사진 추가가능
@@ -430,11 +437,62 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
         //SetDate();
         //SetTime();
         //MakeSpinnerWorkTypeAndData();
+    }
 
+    private void setView() {
+        if (Users.Language != 0) {
+            TextView textViewManageNo = findViewById(R.id.textViewManageNo);
+            textViewManageNo.setText("Site No");
+            TextView textViewManageNo4 = findViewById(R.id.textViewManageNo4);
+            textViewManageNo4.setText("Doc No");
+            TextView textViewCustomer = findViewById(R.id.textViewCustomer);
+            textViewCustomer.setText("Customer(site)");
+            TextView textView1 = findViewById(R.id.textView1);
+            textView1.setText("Out/Arr");
+            TextView tvStartTime = findViewById(R.id.tvStartTime);
+            tvStartTime.setText("OutDate");
+            TextView tvEndTime = findViewById(R.id.tvEndTime);
+            tvEndTime.setText("ArrDate");
+            TextView textView2 = findViewById(R.id.textView2);
+            textView2.setText("CarNo");
+            EditText edtCarNo = findViewById(R.id.edtCarNo);
+            edtCarNo.setHint("CarNo");
+            TextView textView3 = findViewById(R.id.textView3);
+            textView3.setText("BDQty");
+            EditText edtBundleQty = findViewById(R.id.edtBundleQty);
+            edtBundleQty.setHint("BDQty");
+            TextView textView4 = findViewById(R.id.textView4);
+            textView4.setText("Floor");
+            EditText edtFloor = findViewById(R.id.edtFloor);
+            edtFloor.setHint("Floor");
+            TextView textView5 = findViewById(R.id.textView5);
+            textView5.setText("Dest");
+            TextView txtCar = findViewById(R.id.txtCar);
+            txtCar.setText("Delivert vehicle, Forklift");
+            TextView textView29 = findViewById(R.id.textView29);
+            textView29.setText("INV1");
+            TextView textView30 = findViewById(R.id.textView30);
+            textView30.setText("CAR1");
+            TextView textView28 = findViewById(R.id.textView28);
+            textView28.setText("CAR3");
+            TextView textView21 = findViewById(R.id.textView21);
+            textView21.setText("INV2");
+            TextView textView31 = findViewById(R.id.textView31);
+            textView31.setText("CAR2");
+            TextView textView32 = findViewById(R.id.textView32);
+            textView32.setText("CAR4");
+            Button btnDelete = findViewById(R.id.btnDelete);
+            btnDelete.setText("Del INV");
+            Button btnImageAll = findViewById(R.id.btnImageAll);
+            btnImageAll.setText("UP PIC");
+            Button btnNext = findViewById(R.id.btnNext);
+            btnNext.setText("SAVE");
+
+        }
     }
 
     private void GetReturnTransData() {
-        String url = getString(R.string.service_address) + "getReturnTransData";
+        String url = Users.ServiceAddress + "getReturnTransData";
         ContentValues values = new ContentValues();
         values.put("LocationNo", locationNo);
         GetReturnTransData gsod = new GetReturnTransData(url, values);
@@ -487,19 +545,20 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 String returnTransFlagName2;
 
                 if (returnTransFlag == 1)
-                    returnTransFlagName = "거래처";
+                    returnTransFlagName = Users.Language == 0 ? "거래처" : "Customer";
                 else
-                    returnTransFlagName = "당사";
+                    returnTransFlagName = Users.Language == 0 ? "당사" : "HQ";
                 if (returnTransFlag2 == 1)
-                    returnTransFlagName2 = "거래처";
+                    returnTransFlagName2 = Users.Language == 0 ? "거래처" : "Customer";
                 else
-                    returnTransFlagName2 = "당사";
+                    returnTransFlagName2 = Users.Language == 0 ? "당사" : "HQ";
 
                 if (returnTransFlag == 1 || returnTransFlag2 != 1) {//반출차량: 당사 && 지게차: 거래처 가 아닌경우
                     txtCar.setTextColor(Color.RED);
                     txtCar.setBackgroundColor(Color.YELLOW);
                 }
-                txtCar.setText("반출차량: " + returnTransFlagName + " / 지게차: " + returnTransFlagName2);
+                txtCar.setText(Users.Language == 0 ? ("반출차량: " + returnTransFlagName + " / 지게차: " + returnTransFlagName2)
+                        : "CAR: " + returnTransFlagName + " / Forklift: " + returnTransFlagName2);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -618,7 +677,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
     }
 
     private void deleteStockInCertificateImage(String locationNo, String seqNo, String imageNo) {
-        String url = getString(R.string.service_address) + "deleteStockInCertificateImage";
+        String url = Users.ServiceAddress + "deleteStockInCertificateImage";
         ContentValues values = new ContentValues();
 
         values.put("LocationNo", locationNo);
@@ -673,7 +732,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                     //stockInCertificateArrayList.add(stockInCertificate);
                 }
 
-                Toast.makeText(ActivityStockInCertificateDetail.this, "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityStockInCertificateDetail.this, Users.Language == 0 ? "삭제 되었습니다." : "Deleted.", Toast.LENGTH_SHORT).show();
                 getStockInCertificateDetail();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -686,7 +745,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
 
     private void insertStockInCertificate() {
-        String url = getString(R.string.service_address) + "insertStockInCertificate";
+        String url = Users.ServiceAddress + "insertStockInCertificate";
         ContentValues values = new ContentValues();
 
         values.put("LocationNo", locationNo);
@@ -749,7 +808,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                     certificateNo = child.getString("CertificateNo");
                     //stockInCertificateArrayList.add(stockInCertificate);
                 }
-                Toast.makeText(ActivityStockInCertificateDetail.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityStockInCertificateDetail.this, Users.Language == 0 ? "저장 되었습니다." : "Saved.", Toast.LENGTH_SHORT).show();
                 getStockInCertificateDetail();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -762,7 +821,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
 
     private void deleteStockInCertificate() {
-        String url = getString(R.string.service_address) + "deleteStockInCertificate";
+        String url = Users.ServiceAddress + "deleteStockInCertificate";
         ContentValues values = new ContentValues();
 
         values.put("LocationNo", locationNo);
@@ -815,7 +874,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                     }
                     //stockInCertificateArrayList.add(stockInCertificate);
                 }
-                Toast.makeText(ActivityStockInCertificateDetail.this, "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityStockInCertificateDetail.this, Users.Language == 0 ? "삭제 되었습니다." : "Deleted.", Toast.LENGTH_SHORT).show();
                 progressOFF2(this.getClass().getName());
                 ActivityStockInCertificateDetail.this.finish();
             } catch (Exception e) {
@@ -829,7 +888,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
 
     private void updateStockInCertificate() {
-        String url = getString(R.string.service_address) + "updateStockInCertificate";
+        String url = Users.ServiceAddress + "updateStockInCertificate";
         ContentValues values = new ContentValues();
 
         values.put("LocationNo", locationNo);
@@ -891,7 +950,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                     }
                     //stockInCertificateArrayList.add(stockInCertificate);
                 }
-                Toast.makeText(ActivityStockInCertificateDetail.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityStockInCertificateDetail.this, Users.Language == 0 ? "저장 되었습니다." : "Saved.", Toast.LENGTH_SHORT).show();
                 getStockInCertificateDetail();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -904,7 +963,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
 
     private void InsertOrUpdateStockInCertificateImage(StockInCertificateImage currentImage) {
-        String url = getString(R.string.service_address) + "insertOrUpdateStockInCertificateImage";
+        String url = Users.ServiceAddress + "insertOrUpdateStockInCertificateImage";
         ContentValues values = new ContentValues();
 
         values.put("LocationNo", currentImage.LocationNo);
@@ -959,7 +1018,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                     }
                     //stockInCertificateArrayList.add(stockInCertificate);
                 }
-                Toast.makeText(ActivityStockInCertificateDetail.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityStockInCertificateDetail.this, Users.Language == 0 ? "저장 되었습니다." : "Saved.", Toast.LENGTH_SHORT).show();
                 getStockInCertificateDetail();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -972,7 +1031,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
 
     private void getStockInCertificateDetail() {
-        String url = getString(R.string.service_address) + "getStockInCertificateDetail";
+        String url = Users.ServiceAddress + "getStockInCertificateDetail";
         ContentValues values = new ContentValues();
         values.put("CertificateNo", certificateNo);
         GetStockInCertificateDetail gsod = new GetStockInCertificateDetail(url, values);
@@ -1068,8 +1127,8 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                     mDay2 = Integer.parseInt(stockInCertificate.EndTime.split("-")[2]);
                 }
 
-                btnNext.setText("저장하기");
-                textViewManageNo.setText("현장 No: ");
+                btnNext.setText(Users.Language == 0 ? "저장하기" : "SAVE");
+                textViewManageNo.setText(Users.Language == 0 ? "현장 NO: " : "Site No: ");
                 textViewManageNo2.setText(stockInCertificate.cust_code);
                 textViewManageNo5.setText(stockInCertificate.LocationNo + "-" + stockInCertificate.SeqNo);
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -1086,20 +1145,20 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 String returnTransFlagName2;
 
                 if (returnTransFlag == 1)
-                    returnTransFlagName = "거래처";
+                    returnTransFlagName = Users.Language == 0 ? "거래처" : "Customer";
                 else
-                    returnTransFlagName = "당사";
+                    returnTransFlagName = Users.Language == 0 ? "당사" : "HQ";
                 if (returnTransFlag2 == 1)
-                    returnTransFlagName2 = "거래처";
+                    returnTransFlagName2 = Users.Language == 0 ? "거래처" : "Customer";
                 else
-                    returnTransFlagName2 = "당사";
+                    returnTransFlagName2 = Users.Language == 0 ? "당사" : "HQ";
 
                 if (returnTransFlag == 1 || returnTransFlag2 != 1) {//반출차량: 당사 && 지게차: 거래처 가 아닌경우
                     txtCar.setTextColor(Color.RED);
                     txtCar.setBackgroundColor(Color.YELLOW);
                 }
-
-                txtCar.setText("반출차량: " + returnTransFlagName + " / 지게차: " + returnTransFlagName2);
+                txtCar.setText(Users.Language == 0 ? ("반출차량: " + returnTransFlagName + " / 지게차: " + returnTransFlagName2)
+                        : "CAR: " + returnTransFlagName + " / Forklift: " + returnTransFlagName2);
 
                 if (!stockInCertificate.BundleQty.equals("null") && !stockInCertificate.BundleQty.equals("")) {
                     edtBundleQty.setText(stockInCertificate.BundleQty);
@@ -1120,8 +1179,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                         spinnerDestination.setSelection(1);
                     } else if (stockInCertificate.Destination.equals("3")) {
                         spinnerDestination.setSelection(2);
-                    }
-                    else if (stockInCertificate.Destination.equals("4")) {
+                    } else if (stockInCertificate.Destination.equals("4")) {
                         spinnerDestination.setSelection(3);
                     }
                 }
@@ -1139,7 +1197,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
     }
 
     private void getStockInCertificateImage(String locationNo, String seqNo) {
-        String url = getString(R.string.service_address) + "getStockInCertificateImage";
+        String url = Users.ServiceAddress + "getStockInCertificateImage";
         ContentValues values = new ContentValues();
         values.put("LocationNo", locationNo);
         values.put("SeqNo", seqNo);
@@ -1257,18 +1315,21 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
             tvDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new AlertDialog.Builder(ActivityStockInCertificateDetail.this).setMessage("사진을 삭제하시겠습니까?").setCancelable(false).setPositiveButton("예", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog2, int which) {
-                            deleteStockInCertificateImage(locationNo, seqNo, imageNo);
-                            dialog.cancel();
-                        }
-                    }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                    new AlertDialog.Builder(ActivityStockInCertificateDetail.this)
+                            .setMessage(Users.Language == 0 ? "사진을 삭제하시겠습니까?" : "Are you sure you want to delete the picture?")
+                            .setCancelable(false)
+                            .setPositiveButton(Users.Language == 0 ? "예" : "Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog2, int which) {
+                                    deleteStockInCertificateImage(locationNo, seqNo, imageNo);
+                                    dialog.cancel();
+                                }
+                            }).setNegativeButton(Users.Language == 0 ? "아니오" : "No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    }).show();
+                                }
+                            }).show();
                 }
             });
 
@@ -1325,7 +1386,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
         } catch (Exception ex) {
 
-            Log.e("에러", "비트맵 에러 " + ex.getMessage().toString());
+            Log.e(Users.Language == 0 ? "에러" : "Error", Users.Language == 0 ? "비트맵 에러" : "Bitmap Error " + ex.getMessage().toString());
         }
     }
 
@@ -1340,10 +1401,10 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
     private void RegisterPicture() {
         MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(ActivityStockInCertificateDetail.this);
-        materialAlertDialogBuilder.setTitle("사진 등록");
+        materialAlertDialogBuilder.setTitle(Users.Language == 0 ? "사진 등록" : "Register photos");
         CharSequence[] sequences = new CharSequence[2];
-        sequences[0] = "사진 촬영";
-        sequences[1] = "앨범에서 찾기";
+        sequences[0] = Users.Language == 0 ? "사진 촬영" : "Shoot photo";
+        sequences[1] = Users.Language == 0 ? "앨범에서 찾기" : "Find in the album";
         materialAlertDialogBuilder.setItems(sequences, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -1479,33 +1540,34 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                 if (certificateNo.equals("")) {//송장 초기 생성일시
 
                     new AlertDialog.Builder(this)
-                            .setTitle("반출송장 생성")
-                            .setMessage("반출송장을 생성하시겠습니까? ")
+                            .setTitle(Users.Language == 0 ? "반출송장 생성" : "Create Invoice")
+                            .setMessage(Users.Language == 0 ? "반출송장을 생성하시겠습니까?" : "Are you sure you want to create an invoice?")
                             //.setIcon(R.drawable.ninja)
-                            .setPositiveButton("확인",
+                            .setPositiveButton(Users.Language == 0 ? "확인" : "OK",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             insertStockInCertificate();
                                         }
                                     })
-                            .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(Users.Language == 0 ? "취소" : "Cancel", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
                                 }
                             }).show();
                 } else {//Update 그냥 저장
 
-                    new AlertDialog.Builder(this).setMessage("저장하시겠습니까?").setCancelable(true).setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            updateStockInCertificate();
-                        }
-                    }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                    new AlertDialog.Builder(this).setMessage(Users.Language == 0 ? "저장 하시겠습니까?" : "Do you want to save it?").
+                            setCancelable(true).setPositiveButton(Users.Language == 0 ? "확인" : "OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    updateStockInCertificate();
+                                }
+                            }).setNegativeButton(Users.Language == 0 ? "취소" : "Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    }).show();
+                                }
+                            }).show();
 
                 }
 
@@ -1530,13 +1592,14 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
             case R.id.btnImageAll:
                 if (certificateNo.equals("")) {
-                    Toast.makeText(getBaseContext(), "반출송장을 먼저 생성하시기 바랍니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), Users.Language == 0 ? "반출송장을 먼저 생성하시기 바랍니다."
+                            : "Please create an invoice first.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 TedImagePicker.with(this)
-                        .max(maxCount, "최대 " + maxCount + "개의 사진을 올릴 수 있습니다.")
-                        .min(1, "1개 이상의 사진을 올려야 합니다.")
+                        .max(maxCount, Users.Language == 0 ? "최대 " + maxCount + "개의 사진을 올릴 수 있습니다." : "You can post up to "+ maxCount +" photos.")
+                        .min(1, Users.Language == 0 ? "1개 이상의 사진을 올려야 합니다." : "You must post at least one picture.")
                         .dropDownAlbum()
                         .startMultiImage(new OnMultiSelectedListener() {
                             @Override
@@ -1549,7 +1612,8 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
             case R.id.btnDelete://삭제버튼: 작업일보, 추가분정보, A/S정보, 사진정보를 삭제한다. 공통작성란 변경사항은 유지된다.
                 if (certificateNo.equals("")) {
-                    Toast.makeText(getBaseContext(), "반출송장을 먼저 생성하시기 바랍니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), Users.Language == 0 ? "반출송장을 먼저 생성하시기 바랍니다."
+                            : "Please create an invoice first.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 /*if (Integer.parseInt(suworder3.StatusFlag) >= 2) {
@@ -1557,21 +1621,22 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                     return;
                 }*/
 
-                String message = "반출송장을 삭제하시겠습니까? \n" +
-                        "(주의: 등록한 사진 정보도 함께 삭제됩니다.)";
+                String message = Users.Language == 0 ? "반출송장을 삭제하시겠습니까? \n" +
+                        "(주의: 등록한 사진 정보도 함께 삭제됩니다.)" : "Are you sure you want to delete the export invoice?\n" +
+                        "Note: Your registered photo information will also be deleted.)";
 
                 new android.app.AlertDialog.Builder(this)
-                        .setTitle("반출송장 삭제")
+                        .setTitle(Users.Language == 0 ? "반출송장 삭제" : "Delete invoice")
                         .setMessage(message)
                         .setCancelable(true)
                         .setPositiveButton
-                                ("확인", new DialogInterface.OnClickListener() {
+                                (Users.Language == 0 ? "확인" : "OK", new DialogInterface.OnClickListener() {
 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         deleteStockInCertificate();
                                     }
-                                }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                }).setNegativeButton(Users.Language == 0 ? "취소" : "Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
@@ -1583,7 +1648,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
     private void InsertStockInCertificateImageMulti(ArrayList<Uri> uriList) {
 
-        String url = getString(R.string.service_address) + "insertStockInCertificateImageMulti";
+        String url = Users.ServiceAddress + "insertStockInCertificateImageMulti";
         ContentValues values = new ContentValues();
         values.put("LocationNo", locationNo);
         values.put("SeqNo", seqNo);
@@ -1639,7 +1704,7 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
                     }
                     //stockInCertificateArrayList.add(stockInCertificate);
                 }
-                Toast.makeText(ActivityStockInCertificateDetail.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityStockInCertificateDetail.this, Users.Language == 0 ? "저장 되었습니다." : "Saved.", Toast.LENGTH_SHORT).show();
                 getStockInCertificateDetail();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -1653,15 +1718,15 @@ public class ActivityStockInCertificateDetail extends BaseActivity {
 
     private boolean CheckInputData() {
         if (edtCarNo.getText().toString().equals("") || edtCarNo.getText().toString().equals("0")) {
-            Toast.makeText(getBaseContext(), "차량번호를 입력하세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), Users.Language == 0 ? "차량번호를 입력하세요." : "Please enter your vehicle number.", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (edtBundleQty.getText().toString().equals("") || edtBundleQty.getText().toString().equals("0")) {
-            Toast.makeText(getBaseContext(), "밴딩수량을 입력하세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), Users.Language == 0 ? "밴딩수량을 입력하세요." : "Enter the Quantity of bending.", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (edtFloor.getText().toString().equals("") || edtFloor.getText().toString().equals("0")) {
-            Toast.makeText(getBaseContext(), "단수를 입력하세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), Users.Language == 0 ? "단수를 입력하세요." : "Please enter floor", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;

@@ -195,7 +195,7 @@ public class ComplaintImageActivity extends BaseActivity {
 
                 if (Temp.tempList.get(position - 1).ImageFile.equals("") || Temp.tempList.get(position - 1).ImageFile.equals("null")) {
                     //서버통신: 그림 하나 가져와서 확대
-                    String restURL = getString(R.string.service_address)+"getComplaintImage";
+                    String restURL = Users.ServiceAddress+"getComplaintImage";
                     new GetComplaintImage().execute(restURL);
                 } else {
                     ViewData(currentImage.ImageFile, currentImage.ImageName);
@@ -206,7 +206,7 @@ public class ComplaintImageActivity extends BaseActivity {
 
                 if (imageList.get(position - 1).ImageFile.equals("") || imageList.get(position - 1).ImageFile.equals("null")) {
                     //서버통신: 그림 하나 가져와서 확대
-                    String restURL = getString(R.string.service_address)+"getComplaintImage";
+                    String restURL = Users.ServiceAddress+"getComplaintImage";
                     new GetComplaintImage().execute(restURL);
                 } else {
                     ViewData(currentImage.ImageFile, currentImage.ImageName);
@@ -431,7 +431,7 @@ public class ComplaintImageActivity extends BaseActivity {
             }
             else{
                 currentImage.ItemNo =ItemNo;
-                new HttpAsyncTask().execute(getString(R.string.service_address)+"setComplaintImage");
+                new HttpAsyncTask().execute(Users.ServiceAddress+"setComplaintImage");
             }
 
         } catch (Exception ex) {
@@ -659,7 +659,7 @@ public class ComplaintImageActivity extends BaseActivity {
         else{
             removePosition=position;
             currentImage = imageList.get(removePosition);
-            new HttpAsyncTaskDelete().execute(getString(R.string.service_address)+"deleteComplaintImage");
+            new HttpAsyncTaskDelete().execute(Users.ServiceAddress+"deleteComplaintImage");
         }
     }
 }

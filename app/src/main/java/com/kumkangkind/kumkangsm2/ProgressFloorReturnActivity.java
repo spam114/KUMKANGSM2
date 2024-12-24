@@ -136,7 +136,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
     }
 
     public void getDongProgressFloorReturn2(String fromDate) {
-        String url = getString(R.string.service_address) + "getDongProgressFloorReturn2";
+        String url = Users.ServiceAddress + "getDongProgressFloorReturn2";
         ContentValues values = new ContentValues();
         values.put("ContractNo", contractNo);
         values.put("FromDate", fromDate);
@@ -343,7 +343,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
                 return;
             }
             inputFloor = msg.getData().getString("floor");
-            new SetDongProgressFloorByPost().execute(getString(R.string.service_address) + "setDongProgressFloor");
+            new SetDongProgressFloorByPost().execute(Users.ServiceAddress + "setDongProgressFloor");
 
         }
     };*/
@@ -385,7 +385,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
 
             Toast.makeText(ProgressFloorReturnActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            new GetDongProgessFloorByPost().execute(getString(R.string.service_address) + "getDongProgressFloor");
+            new GetDongProgessFloorByPost().execute(Users.ServiceAddress + "getDongProgressFloor");
 
         }
     }
@@ -542,7 +542,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             if (msg.what == 1) {//확인
                 inputYearMonth = yearMonth;
-                new DeleteDongProgressFloorByPost().execute(getString(R.string.service_address) + "deleteDongProgressFloor");
+                new DeleteDongProgressFloorByPost().execute(Users.ServiceAddress + "deleteDongProgressFloor");
 
             } else {//취소
                 Toast.makeText(ProgressFloorReturnActivity.this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -586,7 +586,7 @@ public class ProgressFloorReturnActivity extends BaseActivity {
                 return;
             } else {
                 Toast.makeText(ProgressFloorReturnActivity.this, "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
-                new GetDongProgessFloorByPost().execute(getString(R.string.service_address) + "getDongProgressFloor");
+                new GetDongProgessFloorByPost().execute(Users.ServiceAddress + "getDongProgressFloor");
             }
 
 

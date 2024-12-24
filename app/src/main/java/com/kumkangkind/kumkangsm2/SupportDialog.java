@@ -142,7 +142,7 @@ public class SupportDialog extends Dialog implements BaseActivityInterface{
             @Override
             public void onClick(View v) {
                 String restURL = "";
-                restURL = context.getString(R.string.service_address)+"insertsupervisorworder";
+                restURL = Users.ServiceAddress + "insertsupervisorworder";
                 new SetRequestWorder().execute(restURL);
                 SupportDialog.this.dismiss();
             }
@@ -281,7 +281,7 @@ public class SupportDialog extends Dialog implements BaseActivityInterface{
     }
 
     private void GetSupervisorWorkTypeAndSupervisorList(){
-        String restURL = context.getString(R.string.service_address)+"worktypelistByBusinessClassCode";
+        String restURL = Users.ServiceAddress+"worktypelistByBusinessClassCode";
         new GetWorkTypeList().execute(restURL);
     }
 

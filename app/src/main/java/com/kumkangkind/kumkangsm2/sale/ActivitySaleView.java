@@ -90,7 +90,7 @@ public class ActivitySaleView extends BaseActivity {
 
         String key = getIntent().getStringExtra("key");
         seqNo = getIntent().getIntExtra("seqNo", 0);
-        String restURL = getString(R.string.service_address)+"getworderconfirm/" + key + "/" + Users.USER_ID;
+        String restURL = Users.ServiceAddress+"getworderconfirm/" + key + "/" + Users.USER_ID;
         new ReadJSONFeedTask().execute(restURL);
     }
 
@@ -258,7 +258,7 @@ public class ActivitySaleView extends BaseActivity {
                     }
                 });
 
-                String restURL = getString(R.string.service_address)+"deletesupervisorworder";
+                String restURL = Users.ServiceAddress+"deletesupervisorworder";
                 new HttpAsyncTask().execute(restURL);
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

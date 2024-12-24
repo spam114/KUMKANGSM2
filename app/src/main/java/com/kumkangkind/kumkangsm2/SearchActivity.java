@@ -392,7 +392,7 @@ public class SearchActivity extends Activity {
         searchStatusFlag1 = "0";//어차피 미배정이므로 뭘넣든가 영향 x
         searchStatusFlag2 = "0";//어차피 미배정이므로 뭘넣든가 영향 x
         activityType = "배정";
-        new HttpAsyncTask().execute(getString(R.string.service_address)+"getassigndata2");
+        new HttpAsyncTask().execute(Users.ServiceAddress + "getassigndata2");
     }
 
     /**
@@ -419,7 +419,7 @@ public class SearchActivity extends Activity {
         searchStatusFlag2 = "0";
 
         activityType = "배정";
-        new HttpAsyncTask().execute(getString(R.string.service_address)+"getassigndata2");
+        new HttpAsyncTask().execute(Users.ServiceAddress+"getassigndata2");
     }
 
     /**
@@ -467,7 +467,7 @@ public class SearchActivity extends Activity {
         searchStatusFlag1 = "1";
         searchStatusFlag2 = "2";
         activityType = "확인";
-        new HttpAsyncTask().execute(getString(R.string.service_address)+"getassigndata");
+        new HttpAsyncTask().execute(Users.ServiceAddress+"getassigndata");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
@@ -622,11 +622,11 @@ public class SearchActivity extends Activity {
 
         restURL = "";
         if (radio1.isChecked()) {
-            restURL = getString(R.string.service_address)+"getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/1"; //요청
+            restURL = Users.ServiceAddress+"getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/1"; //요청
         } else if (radio2.isChecked()) {
-            restURL = getString(R.string.service_address)+"getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/0"; //희망
+            restURL = Users.ServiceAddress+"getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/0"; //희망
         } else {
-            restURL = getString(R.string.service_address)+"getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/2"; //작업
+            restURL = Users.ServiceAddress+"getsimpledata/" + Users.USER_ID.toString() + "/" + fromDate + "/" + toDate + "/2"; //작업
         }
 
         //mProgress = ProgressDialog.show(SearchActivity.this, "Wait", "Loading...");

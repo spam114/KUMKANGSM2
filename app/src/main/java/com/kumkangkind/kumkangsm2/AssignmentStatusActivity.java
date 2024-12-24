@@ -246,9 +246,9 @@ public class AssignmentStatusActivity extends BaseActivity{
         public void handleMessage(Message msg) {
             if(msg.what == 1){//담당자등록->확인
                 if(!chkAll.isChecked())//체크 안되있음
-                    new AssignmentStatusActivity.SetConstructionEmployeeByPost().execute(getString(R.string.service_address)+"setConstructionEmployee");
+                    new AssignmentStatusActivity.SetConstructionEmployeeByPost().execute(Users.ServiceAddress+"setConstructionEmployee");
                 else//체크되있음: 일괄
-                    new AssignmentStatusActivity.SetConstructionEmployeeByPost().execute(getString(R.string.service_address)+"setConstructionEmployeeDesignated");
+                    new AssignmentStatusActivity.SetConstructionEmployeeByPost().execute(Users.ServiceAddress+"setConstructionEmployeeDesignated");
                 return;
             }
             else{
@@ -296,7 +296,7 @@ public class AssignmentStatusActivity extends BaseActivity{
 
             //   Toast.makeText(AssignmentActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            // new AssignmentActivity.GetDongProgessFloorByPost().execute(getString(R.string.service_address)+"getDongProgressFloor");
+            // new AssignmentActivity.GetDongProgessFloorByPost().execute(Users.ServiceAddress+"getDongProgressFloor");
             if(!chkAll.isChecked()) {//체크 안되있음
                 dongArrayList.get(clickPosition).ConstructionEmployee=supervisorUserName;
                 listView1.setAdapter(adapter);
@@ -398,7 +398,7 @@ public class AssignmentStatusActivity extends BaseActivity{
         public void handleMessage(Message msg) {
             if (msg.what == 1) {//확인
                 inputYearMonth=yearMonth;
-                new AssignmentStatusActivity.DeleteConstructionEmployeeByPost().execute(getString(R.string.service_address)+"deleteConstructionEmployee");
+                new AssignmentStatusActivity.DeleteConstructionEmployeeByPost().execute(Users.ServiceAddress+"deleteConstructionEmployee");
 
             } else {//취소
                 Toast.makeText(AssignmentStatusActivity.this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -447,7 +447,7 @@ public class AssignmentStatusActivity extends BaseActivity{
 
             Toast.makeText(AssignmentStatusActivity.this, "담당자 삭제가 완료 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            //new AssignmentActivity.GetDongProgessFloorByPost().execute(getString(R.string.service_address)+"getDongProgressFloor");
+            //new AssignmentActivity.GetDongProgessFloorByPost().execute(Users.ServiceAddress+"getDongProgressFloor");
 
         }
     }

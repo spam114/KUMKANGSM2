@@ -5,27 +5,22 @@ import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.text.InputType;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -126,7 +121,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
             edtProgressFloor.setText(item.ProgressFloor);
             String exProgressDate = item.ExProgressDate;
             String inPlanDate = item.InPlanData;
-            textFloorInfo.setText(item.BaseFloor+"\n"+item.TotalFloor);
+            textFloorInfo.setText(item.BaseFloor + "\n" + item.TotalFloor);
             //String progressDate = item.ProgressDate;
 
 
@@ -135,33 +130,31 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
             else
                 textViewExYearMonth.setText("");
             textViewExProgressFloor.setText(item.ExProgressFloor);
-            if (!inPlanDate.equals("")){
+            if (!inPlanDate.equals("")) {
                 textViewYearMonth.setText(inPlanDate.substring(0, 4) + "\n" + inPlanDate.substring(5));
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 // params.height = XX;
                 // params.width = XX;
                 textViewYearMonth.setLayoutParams(params);
                 //textViewYearMonth.setWidth(70*dip);
                 textViewYearMonth.setBackgroundResource(0);
-            }
-            else {
+            } else {
                 textViewYearMonth.setText("");
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(30*dip, LinearLayout.LayoutParams.WRAP_CONTENT);
-               // params.height = XX;
-               // params.width = XX;
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(30 * dip, LinearLayout.LayoutParams.WRAP_CONTENT);
+                // params.height = XX;
+                // params.width = XX;
                 textViewYearMonth.setLayoutParams(params);
                 //textViewYearMonth.setWidth(70*dip);
                 textViewYearMonth.setBackgroundResource(R.drawable.outline_more_horiz_24);
             }
 
-            if(item.EndFlag.equals("Y")) { // 진행이 종료된 층은 배경색 설정
+            if (item.EndFlag.equals("Y")) { // 진행이 종료된 층은 배경색 설정
                 row.setBackgroundResource(R.drawable.borderline3);
 //                edtProgressFloor.setInputType(InputType.TYPE_TEXT_VARIATION_NORMAL);
 //                edtProgressFloor.setText("종료");
                 edtProgressFloor.setInputType(InputType.TYPE_CLASS_NUMBER);
                 edtProgressFloor.setText(item.ProgressFloor);
-            }
-            else {
+            } else {
                 row.setBackgroundResource(R.drawable.borderline);
                 edtProgressFloor.setInputType(InputType.TYPE_CLASS_NUMBER);
                 edtProgressFloor.setText(item.ProgressFloor);
@@ -175,12 +168,11 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                     int month;
                     int day;
 
-                    if(item.InPlanData.equals("")){//반출예정일이 등록되어 있지 않다면
-                        year=tyear;
-                        month=tmonth+1;
-                        day=tdate;
-                    }
-                    else{
+                    if (item.InPlanData.equals("")) {//반출예정일이 등록되어 있지 않다면
+                        year = tyear;
+                        month = tmonth + 1;
+                        day = tdate;
+                    } else {
                         String date[] = item.InPlanData.split("-");
                         year = Integer.parseInt(date[0]);
                         month = Integer.parseInt(date[1]);
@@ -202,25 +194,26 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                     if (textViewYearMonth.getText().toString().equals("")) {
                         return false;
                     }
-
                     v.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                     new MaterialAlertDialogBuilder(context)
-                            .setTitle("반출예정일 삭제")
-                            .setMessage("동: " + item.Dong + "\n" +
-                                    "반출예정일: " + item.InPlanData + "\n" + "반출예정일을 삭제하시겠습니까?")
+                            .setTitle(Users.Language == 0 ? "반출 예정일 삭제" : "Deleted scheduled export date")
+                            .setMessage(Users.Language == 0 ? "동: " + item.Dong + "\n" +
+                                    "반출 예정일: " + item.InPlanData + "\n" + "반출 예정일을 삭제하시겠습니까?" :
+                                    "Block: " + item.Dong + "\n" +
+                                            "Expected date of export: " + item.InPlanData + "\n" + "Are you sure you want to delete the scheduled export date?")
                             .setCancelable(true)
                             .setPositiveButton
-                                    ("확인", new DialogInterface.OnClickListener() {
+                                    (Users.Language == 0 ? "확인" : "OK", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             updateInplanData(-1, -1, -1, textViewYearMonth, item);
                                         }
-                                    }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                                    }).setNegativeButton(Users.Language == 0 ? "취소" : "Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    }).show();
+                                }
+                            }).show();
                     return false;
                 }
             });
@@ -242,8 +235,8 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
 
                         if (!v.getText().toString().equals("0") && !v.getText().toString().equals("")) {
                             //총층수보다 높게 입력 불가능
-                            if(!item.TotalFloor.equals("")){
-                                int totalFloor= Integer.parseInt(item.TotalFloor);
+                            if (!item.TotalFloor.equals("")) {
+                                int totalFloor = Integer.parseInt(item.TotalFloor);
                                 int cFloor = Integer.parseInt(v.getText().toString());
 
                                 /*if(totalFloor<cFloor){
@@ -254,32 +247,30 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                             }
 
                             setDongProgressFloorReturn(item.Dong, v, item, v.getText().toString());
-                        } 
-                        
+                        }
+
                         // 0 or 빈칸 입력 시 진행 층 삭제
-                        else if(v.getText().toString().equals("0") || v.getText().toString().trim().equals("")) {
+                        else if (v.getText().toString().equals("0") || v.getText().toString().trim().equals("")) {
                             new MaterialAlertDialogBuilder(context)
-                                    .setTitle("진행층 삭제")
-                                    .setMessage("동: " + item.Dong + "\n" +
-                                            "진행일: " + item.ProgressDate + "\n" + "진행층을 삭제하시겠습니까?")
+                                    .setTitle(Users.Language == 0 ? "진행층 삭제" : "Delete Floor")
+                                    .setMessage(Users.Language == 0 ? "동: " + item.Dong + "\n" +"진행일: " + item.ProgressDate + "\n" + "진행층을 삭제하시겠습니까?" :
+                                            "Block: " + item.Dong + "\n" +"Date: " + item.ProgressDate + "\n" + "Are you sure you want to delete floor?" )
                                     .setCancelable(true)
                                     .setPositiveButton
-                                            ("확인", new DialogInterface.OnClickListener() {
+                                            (Users.Language == 0 ? "확인" : "OK", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     deleteDongProgressFloorReturn(item.Dong, item); // 진행층 삭제
                                                 }
-                                            }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                                            }).setNegativeButton(Users.Language == 0 ? "취소" : "Cancel", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
 
-                                }
-                            }).show();
+                                        }
+                                    }).show();
+                        } else {
+                            Toast.makeText(context, Users.Language == 0 ? "진행층을 입력하시기 바랍니다." : "Please enter the progress level.", Toast.LENGTH_SHORT).show();
                         }
-                        
-                        else {
-                            Toast.makeText(context, "진행층을 입력하시기 바랍니다.", Toast.LENGTH_SHORT).show();    
-                        }                            
                     }
                     return false;
                 }
@@ -292,7 +283,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                    /* if(!item.UserCode.equals(Users.UserID)){
                         return false;
                     }*/
-                    
+
                     // 진행층 종료시 필요 없는 코드 -> 진행층 삭제 시 필요
 //                    if (edtProgressFloor.getText().toString().equals("")) {
 //                        return false;
@@ -300,13 +291,14 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
 
                     view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
 
-                    if(item.EndFlag.equals("N")) { // 진행중인 층이라면
+                    if (item.EndFlag.equals("N")) { // 진행중인 층이라면
                         new MaterialAlertDialogBuilder(context)
 //                            .setTitle("진행층 삭제")
 //                            .setMessage("동: " + item.Dong + "\n" +
 //                                    "진행일: " + item.ProgressDate + "\n" + "진행층을 삭제하시겠습니까?")
-                                .setTitle("동 진행 종료")
-                                .setMessage("동: " + item.Dong + "\n" + "해당 동의 진행을 종료하시겠습니까?")
+                                .setTitle(Users.Language == 0 ? "동 진행 종료" : "Date")
+                                .setMessage(Users.Language == 0 ? "동: " + item.Dong + "\n" + "해당 동의 진행을 종료하시겠습니까?" :
+                                        "Block: " + item.Dong + "\n" + "Are you sure you want to end the process of this agreement?")
                                 .setCancelable(true)
                                 .setPositiveButton
                                         ("확인", new DialogInterface.OnClickListener() {
@@ -317,14 +309,12 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                                                 item.EndFlag = "Y";
                                             }
                                         }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        }).show();
-                    }
-                    
-                    else { // 종료된 층이라면
+                                    }
+                                }).show();
+                    } else { // 종료된 층이라면
                         new MaterialAlertDialogBuilder(context)
                                 .setTitle("동 진행 변경")
                                 .setMessage("동: " + item.Dong + "\n" + "진행중인 동으로 변경하시겠습니까?")
@@ -337,12 +327,12 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                                                 item.EndFlag = "N";
                                             }
                                         }).setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        }).show();
-                    }                    
+                                    }
+                                }).show();
+                    }
                     return false;
                 }
             });
@@ -361,7 +351,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
             edtProgressFloor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    if(!hasFocus){
+                    if (!hasFocus) {
                         notifyItemChanged(position);
                         //edtProgressFloor.setGravity(Gravity.START | Gravity.CENTER_VERTICAL);
                         //layoutTop.requestFocus();
@@ -384,7 +374,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                             }
                             , // 사용자가 날짜설정 후 다이얼로그 빠져나올때
                             //    호출할 리스너 등록
-                            year, month-1, date); // 기본값 연월일
+                            year, month - 1, date); // 기본값 연월일
             dpd.show();
         }
     }
@@ -407,12 +397,11 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
 
 
     public void updateInplanData(int year, int month, int day, TextView textViewYearMonth, Dong item) {
-        String url = context.getString(R.string.service_address) + "updateInplanData";
+        String url = Users.ServiceAddress + "updateInplanData";
         String fromDate;
-        if(year==-1){
-            fromDate="";
-        }
-        else{
+        if (year == -1) {
+            fromDate = "";
+        } else {
             fromDate = year + "-" + (month + 1) + "-" + day;
         }
 
@@ -439,10 +428,10 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
             this.url = url;
             this.values = values;
             this.item = item;
-            this.textViewYearMonth=textViewYearMonth;
-            this.year=year;
-            this.month=month;
-            this.day=day;
+            this.textViewYearMonth = textViewYearMonth;
+            this.year = year;
+            this.month = month;
+            this.day = day;
         }
 
         @Override
@@ -476,18 +465,17 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
                         Toast.makeText(context, ErrorCheck, Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    item.InPlanData=child.getString("InPlanData");
+                    item.InPlanData = child.getString("InPlanData");
                 }
 
                 layoutTop.requestFocus();
 
-                if(year==-1){//반출예정일 삭제
+                if (year == -1) {//반출예정일 삭제
                     textViewYearMonth.setText("");
                     notifyDataSetChanged();
                     HideKeyBoard(context);
                     Toast.makeText(context, "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
-                }
-                else{//반출예정일 등록
+                } else {//반출예정일 등록
                     tyear = year;
                     tmonth = month;
                     tdate = day;
@@ -507,7 +495,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
 
 
     public void deleteDongProgressFloorReturn(String dong, Dong item) {
-        String url = context.getString(R.string.service_address) + "deleteDongProgressFloorReturn";
+        String url = Users.ServiceAddress + "deleteDongProgressFloorReturn";
         ContentValues values = new ContentValues();
         values.put("ContractNo", contractNo);
         values.put("Dong", dong);
@@ -517,7 +505,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
     }
 
     public void setDongProgressFloorReturn(String dong, TextView v, Dong item, String progressFloor) {
-        String url = context.getString(R.string.service_address) + "setDongProgressFloorReturn";
+        String url = Users.ServiceAddress + "setDongProgressFloorReturn";
         ContentValues values = new ContentValues();
         values.put("ContractNo", contractNo);
         values.put("Dong", dong);
@@ -654,7 +642,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
     }
 
     public void finishDongProgressFloorReturn(String dong, Dong item) {
-        String url = context.getString(R.string.service_address) + "finishDongProgressFloorReturn";
+        String url = Users.ServiceAddress + "finishDongProgressFloorReturn";
         ContentValues values = new ContentValues();
         values.put("ContractNo", contractNo);
         values.put("Dong", dong);
@@ -726,7 +714,7 @@ public class ProgressFloorReturnViewAdapter extends RecyclerView.Adapter<Progres
     }
 
     public void startDongProgressFloorReturn(String dong, Dong item) {
-        String url = context.getString(R.string.service_address) + "startDongProgressFloorReturn";
+        String url = Users.ServiceAddress + "startDongProgressFloorReturn";
         ContentValues values = new ContentValues();
         values.put("ContractNo", contractNo);
         values.put("Dong", dong);

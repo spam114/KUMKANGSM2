@@ -23,6 +23,7 @@ import com.kumkangkind.kumkangsm2.BaseActivity;
 import com.kumkangkind.kumkangsm2.R;
 import com.kumkangkind.kumkangsm2.RegisterActivityReturn;
 import com.kumkangkind.kumkangsm2.RequestHttpURLConnection;
+import com.kumkangkind.kumkangsm2.Users;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -172,7 +173,7 @@ public class ActivityMessageHistory extends BaseActivity {
             };
 
     private void getLocationInfoByCertificateNo(String certificateNo) {
-        String url = getString(R.string.service_address) + "getLocationInfoByCertificateNo";
+        String url = Users.ServiceAddress + "getLocationInfoByCertificateNo";
         ContentValues values = new ContentValues();
         values.put("CertificateNo", certificateNo);
         GetLocationInfoByCertificateNo gsod = new GetLocationInfoByCertificateNo(url, values);

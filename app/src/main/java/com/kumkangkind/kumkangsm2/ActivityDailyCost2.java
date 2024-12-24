@@ -86,7 +86,6 @@ public class ActivityDailyCost2 extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dailycost);
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);//소프트키 생성시, 화면 가리는것을 해결한다.
 
         textViewMonth = (TextView)findViewById(R.id.textViewMonth);
@@ -105,7 +104,24 @@ public class ActivityDailyCost2 extends BaseActivity {
 
         textViewMonth = (TextView) findViewById(R.id.textViewMonth);
         textViewMonth.setText(yyyyMM);
+        setView();
         progressOFF();
+    }
+
+    private void setView() {
+        if(Users.Language != 0){
+            TextView textViewcostTitle = findViewById(R.id.textViewcostTitle);
+            TextView textView1 = findViewById(R.id.textView1);
+            TextView textView2 = findViewById(R.id.textView2);
+            Button btnSearchCost = findViewById(R.id.btnSearchCost);
+            Button btnSearchBudget = findViewById(R.id.btnSearchBudget);
+
+            textViewcostTitle.setText("Details of on-site use expenses");
+            textView1.setText("Supervisor");
+            textView2.setText("Year/Month");
+            btnSearchCost.setText("Search");
+            btnSearchBudget.setText("Budget");
+        }
     }
 
     public void mOnClick(View v){
@@ -210,7 +226,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         TableRow tr_title = new TableRow(this);
         TextView tv = new TextView(this);
         tv.setWidth(95 * dip);
-        tv.setText("일자");
+        tv.setText(Users.Language == 0 ? "일자" : "Date");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setTextColor(Color.BLUE);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
@@ -223,7 +239,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         tv = new TextView(this);
         tv.setWidth(95 * dip);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-        tv.setText("시내출장");
+        tv.setText(Users.Language == 0 ? "시내출장" : "business trip to the city");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setTextColor(Color.BLUE);
         tv.setPadding(10, 25, 0, 25);
@@ -233,18 +249,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         tr_title = new TableRow(this);
         tv = new TextView(this);
         tv.setWidth(95 * dip);
-        tv.setText("시외숙박");
-        tv.setBackgroundResource(R.drawable.background_tableheader);
-        tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-        tv.setTextColor(Color.BLUE);
-        tv.setPadding(10, 25, 0, 25);
-        tr_title.addView(tv);
-        t0.addView(tr_title, new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        tr_title = new TableRow(this);
-        tv = new TextView(this);
-        tv.setWidth(95 * dip);
-        tv.setText("시외일비");
+        tv.setText(Users.Language == 0 ? "시외숙박" : "out-of-town accommodation");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         tv.setTextColor(Color.BLUE);
@@ -255,7 +260,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         tr_title = new TableRow(this);
         tv = new TextView(this);
         tv.setWidth(95 * dip);
-        tv.setText("시외주차");
+        tv.setText(Users.Language == 0 ? "시외일비" : "out-of-town daily expenses");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         tv.setTextColor(Color.BLUE);
@@ -266,7 +271,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         tr_title = new TableRow(this);
         tv = new TextView(this);
         tv.setWidth(95 * dip);
-        tv.setText("시외통행");
+        tv.setText(Users.Language == 0 ? "시외주차" : "out-of-town parking");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         tv.setTextColor(Color.BLUE);
@@ -277,7 +282,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         tr_title = new TableRow(this);
         tv = new TextView(this);
         tv.setWidth(95 * dip);
-        tv.setText("유류대");
+        tv.setText(Users.Language == 0 ? "시외통행" : "an out-of-town traffic");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         tv.setTextColor(Color.BLUE);
@@ -288,7 +293,18 @@ public class ActivityDailyCost2 extends BaseActivity {
         tr_title = new TableRow(this);
         tv = new TextView(this);
         tv.setWidth(95 * dip);
-        tv.setText("차량유지");
+        tv.setText(Users.Language == 0 ? "유류대" : "oil field");
+        tv.setBackgroundResource(R.drawable.background_tableheader);
+        tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+        tv.setTextColor(Color.BLUE);
+        tv.setPadding(10, 25, 0, 25);
+        tr_title.addView(tv);
+        t0.addView(tr_title, new TableLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        tr_title = new TableRow(this);
+        tv = new TextView(this);
+        tv.setWidth(95 * dip);
+        tv.setText(Users.Language == 0 ? "차량유지" : "vehicle maintenance");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         tv.setTextColor(Color.BLUE);
@@ -300,7 +316,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         tr_title = new TableRow(this);
         tv = new TextView(this);
         tv.setWidth(95 * dip);
-        tv.setText("회식대");
+        tv.setText(Users.Language == 0 ? "회식대" : "get-together party");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         tv.setTextColor(Color.BLUE);
@@ -311,7 +327,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         tr_title = new TableRow(this);
         tv = new TextView(this);
         tv.setWidth(95 * dip);
-        tv.setText("소모품");
+        tv.setText(Users.Language == 0 ? "소모품" : "consumables");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         tv.setTextColor(Color.BLUE);
@@ -322,7 +338,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         tr_title = new TableRow(this);
         tv = new TextView(this);
         tv.setWidth(95*dip);
-        tv.setText("통신비");
+        tv.setText(Users.Language == 0 ? "통신비" : "communication costs");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
         tv.setTextColor(Color.BLUE);
@@ -335,7 +351,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         tv = new TextView(this);
         tv.setWidth(95*dip);
         tv.setGravity(Gravity.RIGHT | Gravity.CENTER_VERTICAL);
-        tv.setText("합계");
+        tv.setText(Users.Language == 0 ? "합계" : "Total");
         tv.setBackgroundResource(R.drawable.background_tableheader);
         tv.setTextColor(Color.BLUE);
         tv.setPadding(10, 25, 0, 25);
@@ -583,10 +599,11 @@ public class ActivityDailyCost2 extends BaseActivity {
         supervisorCode = Users.USER_ID;
         yyyyMM = textViewMonth.getText().toString();
 
-        tv.setText(yyyyMM.substring(0, 4) + "년 " + yyyyMM.substring(4, 6) + "월" + " 사용경비내역");
+        tv.setText(yyyyMM.substring(0, 4) + (Users.Language == 0 ? "년 " : "year ") + yyyyMM.substring(4, 6)
+                + (Users.Language == 0 ? "월" : "month") + (Users.Language == 0 ? " 사용경비내역" : " Details of use"));
 
-        //new HttpAsyncTask().execute(getString(R.string.service_address)+"getdailycost");
-        new HttpAsyncTask().execute(getString(R.string.service_address)+"getdaycost");
+        //new HttpAsyncTask().execute(Users.ServiceAddress+"getdailycost");
+        new HttpAsyncTask().execute(Users.ServiceAddress + "getdaycost");
     }
 
     private void GetBudget(){
@@ -595,10 +612,11 @@ public class ActivityDailyCost2 extends BaseActivity {
         supervisorCode = Users.USER_ID;
         yyyyMM = textViewMonth.getText().toString();
 
-        tv.setText(yyyyMM.substring(0, 4) + "년 " + yyyyMM.substring(4, 6) + "월" + " 사용경비내역");
+        tv.setText(yyyyMM.substring(0, 4) + (Users.Language == 0 ? "년 " : "year ") + yyyyMM.substring(4, 6)
+                + (Users.Language == 0 ? "월" : "month") + (Users.Language == 0 ? " 사용경비내역" : " Details of use"));
 
-        //new HttpAsyncTask().execute(getString(R.string.service_address)+"getdailycost");
-        new HttpAsyncTask3().execute(getString(R.string.service_address)+"getBudget");
+        //new HttpAsyncTask().execute(Users.ServiceAddress+"getdailycost");
+        new HttpAsyncTask3().execute(Users.ServiceAddress+"getBudget");
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
@@ -762,7 +780,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         //Dialog 디자인 해야함
         dialog = new Dialog(ActivityDailyCost2.this);
         dialog.setContentView(R.layout.dialog_budget);
-        dialog.setTitle(Users.DeptName +" 예산현황");
+        dialog.setTitle(Users.DeptName +(Users.Language == 0 ? " 예산현황" : " Budget status"));
 
         int dip = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) 1, getResources().getDisplayMetrics());
 
@@ -783,7 +801,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         //예산
         TextView row_Header2 = new TextView(this);
         row_Header2.setWidth(95 * dip);
-        row_Header2.setText("예산");
+        row_Header2.setText(Users.Language == 0 ? "예산" : "budget");
         row_Header2.setTextColor(Color.BLUE);
         row_Header2.setBackgroundResource(R.drawable.background_tableheader);
         row_Header2.setPadding(10, 25, 0, 25);
@@ -793,7 +811,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         //사용
         TextView row_Header3 = new TextView(this);
         row_Header3.setWidth(95 * dip);
-        row_Header3.setText("사용");
+        row_Header3.setText(Users.Language == 0 ? "사용" : "use");
         row_Header3.setTextColor(Color.BLUE);
         row_Header3.setBackgroundResource(R.drawable.background_tableheader);
         row_Header3.setPadding(10, 25, 0, 25);
@@ -803,7 +821,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         //잔고
         TextView row_Header4 = new TextView(this);
         row_Header4.setWidth(95 * dip);
-        row_Header4.setText("잔고");
+        row_Header4.setText(Users.Language == 0 ? "잔고" : "balance");
         row_Header4.setTextColor(Color.BLUE);
         row_Header4.setBackgroundResource(R.drawable.background_tableheader);
         row_Header4.setPadding(10, 25, 0, 25);
@@ -867,25 +885,25 @@ public class ActivityDailyCost2 extends BaseActivity {
         switch(typeCode) {
 
             case "1":
-                return "시내출장비";
+                return Users.Language == 0 ? "시내출장비" : "business trip to the city";
             case "2":
-                return "시외숙박비";
+                return Users.Language == 0 ? "시외숙박비" : "out-of-town accommodation costs";
             case "3":
-                return "시외일비";
+                return Users.Language == 0 ? "시외일비" : "out-of-town daily expenses";
             case "4":
-                return "시외주차료";
+                return Users.Language == 0 ? "시외주차료" : "out-of-town parking fee";
             case "5":
-                return "시외통행료";
+                return Users.Language == 0 ? "시외통행료" : "out-of-town charge";
             case "6":
-                return "유류대";
+                return Users.Language == 0 ? "유류대" : "oil field";
             case "7":
-                return "차량유지보조금";
+                return Users.Language == 0 ? "차량유지보조금" : "vehicle maintenance";
             case "8":
-                return "회식대";
+                return Users.Language == 0 ? "회식대" : "get-together party";
             case "9":
-                return "소모품비";
+                return Users.Language == 0 ? "소모품비" : "consumable";
             case "10":
-                return "통신비";
+                return Users.Language == 0 ? "통신비" : "communication costs";
             default:
                 return "";
         }
@@ -1023,7 +1041,7 @@ public class ActivityDailyCost2 extends BaseActivity {
         dialog = new Dialog(ActivityDailyCost2.this);
 
         dialog.setContentView(R.layout.dialog_cost2);
-        dialog.setTitle("경비등록");
+        dialog.setTitle(Users.Language == 0 ? "경비등록" : "Cost registration");
 
         textViewCostDate = (TextView) dialog.findViewById(R.id.textViewCostDate);
         textViewCostDate.setText(costDate);
@@ -1098,7 +1116,7 @@ public class ActivityDailyCost2 extends BaseActivity {
                 remarkC = spinner3.getSelectedItem().toString().split("[*]")[0];
 
                 currentTextView = textView;
-                new HttpAsyncTask2().execute(getString(R.string.service_address)+"setdaycost");
+                new HttpAsyncTask2().execute(Users.ServiceAddress+"setdaycost");
             }
         });
 

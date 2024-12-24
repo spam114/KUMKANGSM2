@@ -84,7 +84,7 @@ public class RegistrationIntentService extends IntentService { //RegistrationInt
 
         //내 서버에 폰에서 읽어온 토큰을 전송한다(token을 관리하기 위해서)
         mToken = token;
-        String address = getString(R.string.service_address) + "setfcm";
+        String address = Users.ServiceAddress + "setfcm";
         new HttpAsyncTask().execute(address);
     }
 

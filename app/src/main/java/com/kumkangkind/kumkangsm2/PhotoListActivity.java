@@ -173,7 +173,7 @@ public class PhotoListActivity extends BaseActivity {
 
             if (imageList.get(position - 1).ImageFile.equals("") || imageList.get(position - 1).ImageFile.equals("null")) {
                 //서버통신
-                String restURL = getString(R.string.service_address)+"getimage/" + items[position - 1].WoNo + "/" + items[position - 1].SeqNo;
+                String restURL = Users.ServiceAddress+"getimage/" + items[position - 1].WoNo + "/" + items[position - 1].SeqNo;
                 new GetImageFeedTask().execute(restURL);
             } else {
                 ViewData(currentImage.ImageFile, currentImage.ImageName);
@@ -253,7 +253,7 @@ public class PhotoListActivity extends BaseActivity {
 
     private void updateImageMulti(ArrayList<Uri> uriList) {
 
-        String url = getString(R.string.service_address) + "updateImageMulti";
+        String url = Users.ServiceAddress + "updateImageMulti";
         ContentValues values = new ContentValues();
         values.put("SupervisorWoNo", key);
 
@@ -411,7 +411,7 @@ public class PhotoListActivity extends BaseActivity {
             currentImage.WoNo = key;
             currentImage.SeqNo = "0";
             currentImage.SmallImageFile = currentImage.ImageFile;
-            new HttpAsyncTask().execute(getString(R.string.service_address)+"insertimage");
+            new HttpAsyncTask().execute(Users.ServiceAddress+"insertimage");
 
         } catch (Exception ex) {
 

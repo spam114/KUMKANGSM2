@@ -146,7 +146,11 @@ public class SplashView extends BaseActivity {
             //거부 ,재거부
             else {
                 //거부 눌렀을 때 로직
-                Toast.makeText(this, "앱에 로그인하기 위해 반드시 필요합니다.", Toast.LENGTH_LONG).show();
+
+                Toast.makeText(this, Users.Language == 0 ?
+                        "앱 이용을 위해 필요한 권한을 허용해주세요.":
+                        "Please allow the necessary permissions to use the app.",
+                        Toast.LENGTH_LONG).show();
                 Intent intent = getIntent();
                 setResult(RESULT_CANCELED, intent);
                 finish();
@@ -176,11 +180,10 @@ public class SplashView extends BaseActivity {
     private void CheckUser() {
 
         try {
-            Log.i("ReadJSONFeedTask", "통신");
+            //Log.i("ReadJSONFeedTask", "통신");
             TelephonyManager systemService = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             String PhoneNumber = "";
             try {
-
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     //    ActivityCompat#requestPermissions
@@ -227,9 +230,8 @@ public class SplashView extends BaseActivity {
                 Users.DeviceName = BluetoothAdapter.getDefaultAdapter().getName();//블루투스 권한 필요 manifest확인: 블루투스가 없으면 에러남
             } catch (Exception ex) {
             } finally {
-                getBusinessClass(Users.PhoneNumber);
-                //String restURL = getString(R.string.service_address) + "checkemployee/" + PhoneNumber;
-                //String restURL = getString(R.string.service_address)+"checkemployeebyInput";
+                getBusinessClass(Users.PhoneNumber, Users.AndroidID);
+                //String restURL = Users.ServiceAddress + "checkemployee/" + PhoneNumber;
                 //new ReadJSONFeedTask().execute(restURL);
                 InsertAppLoginHistory();
                 Log.i("사용자전화번호", PhoneNumber);
@@ -239,22 +241,25 @@ public class SplashView extends BaseActivity {
         }
     }
 
-    private void getBusinessClass(String str) {
-        String str2 = getString(R.string.service_address) + "getBusinessClass";
+    private void getBusinessClass(String phoneNumber, String androidID) {
+        String str2 = Users.ServiceAddress + "getBusinessClass";
         ContentValues contentValues = new ContentValues();
-        contentValues.put("PhoneNumber", str);
-        new GetBusinessClass(str2, contentValues, str).execute(new Void[0]);
+        contentValues.put("PhoneNumber", phoneNumber);
+        contentValues.put("AndroidID", androidID);
+        new GetBusinessClass(str2, contentValues, phoneNumber, androidID).execute(new Void[0]);
     }
 
     public class GetBusinessClass extends AsyncTask<Void, Void, String> {
         String phoneNumber;
+        String androidID;
         String url;
         ContentValues values;
 
-        GetBusinessClass(String str, ContentValues contentValues, String str2) {
+        GetBusinessClass(String str, ContentValues contentValues, String str2, String androidID) {
             this.url = str;
             this.values = contentValues;
             this.phoneNumber = str2;
+            this.androidID = androidID;
         }
 
         @Override // android.os.AsyncTask
@@ -287,18 +292,24 @@ public class SplashView extends BaseActivity {
                         businessClass.BusinessClassName = jSONObject.getString("BusinessClassName");
                         arrayList.add(businessClass);
                     }
-                    if (arrayList.size() == 0) {
-                        Toast.makeText(SplashView.this, "등록되어 있지 않은 사용자입니다.", Toast.LENGTH_SHORT).show();
-                        finish();
+                    if (arrayList.isEmpty()) {
+                        Toast.makeText(SplashView.this, Users.Language == 0 ?
+                                "등록되어 있지 않은 사용자입니다.":
+                                "This is an unregistered user.", Toast.LENGTH_LONG).show();
+                        PreferenceManager.setBoolean(SplashView.this, "isFirst", true);
+                        finishAffinity();
                     } else if (arrayList.size() == 1) {
-                        checkEmployeeBusinessClassCode(-1, phoneNumber);
+                        checkEmployeeBusinessClassCode(-1, phoneNumber, androidID);
                     } else {
                         CharSequence[] charSequenceArr = new CharSequence[jSONArray.length()];
                         for (int i2 = 0; i2 < arrayList.size(); i2++) {
                             charSequenceArr[i2] = ((BusinessClass) arrayList.get(i2)).BusinessClassCode + "-" + ((BusinessClass) arrayList.get(i2)).BusinessClassName;
                         }
                         final int[] iArr = {0};
-                        new MaterialAlertDialogBuilder(SplashView.this).setTitle((CharSequence) "사업장을 선택하세요").setCancelable(false).setSingleChoiceItems(charSequenceArr, 0, new DialogInterface.OnClickListener() { // from class: com.kumkangkind.kumkangsm2.SplashView.GetBusinessClass.3
+                        String title = Users.Language == 0 ?
+                                "사업장을 선택하세요.":
+                                "Please select a place of business.";
+                        new MaterialAlertDialogBuilder(SplashView.this).setTitle((CharSequence) title).setCancelable(false).setSingleChoiceItems(charSequenceArr, 0, new DialogInterface.OnClickListener() { // from class: com.kumkangkind.kumkangsm2.SplashView.GetBusinessClass.3
                             @Override // android.content.DialogInterface.OnClickListener
                             public void onClick(DialogInterface dialogInterface, int i3) {
                                 iArr[0] = i3;
@@ -307,10 +318,12 @@ public class SplashView extends BaseActivity {
                             @Override // android.content.DialogInterface.OnDismissListener
                             public void onDismiss(DialogInterface dialogInterface) {
                             }
-                        }).setPositiveButton((CharSequence) "확인", new DialogInterface.OnClickListener() { // from class: com.kumkangkind.kumkangsm2.SplashView.GetBusinessClass.1
+                        }).setPositiveButton(Users.Language == 0 ?
+                                "확인":
+                                "OK", new DialogInterface.OnClickListener() { // from class: com.kumkangkind.kumkangsm2.SplashView.GetBusinessClass.1
                             @Override // android.content.DialogInterface.OnClickListener
                             public void onClick(DialogInterface dialogInterface, int i3) {
-                                checkEmployeeBusinessClassCode(Integer.parseInt(((BusinessClass) arrayList.get(iArr[0])).BusinessClassCode), GetBusinessClass.this.phoneNumber);
+                                checkEmployeeBusinessClassCode(Integer.parseInt(((BusinessClass) arrayList.get(iArr[0])).BusinessClassCode), GetBusinessClass.this.phoneNumber, androidID);
                             }
                         }).show();
                     }
@@ -323,10 +336,11 @@ public class SplashView extends BaseActivity {
         }
     }
 
-    public void checkEmployeeBusinessClassCode(int i, String str) {
-        String str2 = getString(R.string.service_address) + "checkEmployeeBusinessClassCode";
+    public void checkEmployeeBusinessClassCode(int i, String str, String androidID) {
+        String str2 = Users.ServiceAddress + "checkEmployeeBusinessClassCode";
         ContentValues contentValues = new ContentValues();
         contentValues.put("PhoneNumber", str);
+        contentValues.put("AndroidID", androidID);
         contentValues.put("InputBusinessClassCode", i);
         new CheckEmployeeBusinessClassCode(str2, contentValues).execute(new Void[0]);
     }
@@ -374,10 +388,10 @@ public class SplashView extends BaseActivity {
                     }
                     //Object[] objArr = 0;
                     if (Users.LeaderType.equals("1") || Users.LeaderType.equals("2") || Users.BusinessClassCode == 9) {
-                        new ReadJSONFeedTask2().execute(SplashView.this.getString(R.string.service_address) + "getsupervisorlist/" + Users.USER_ID);
+                        new ReadJSONFeedTask2().execute(Users.ServiceAddress + "getsupervisorlist/" + Users.USER_ID);
                     }
                     if (!Users.USER_ID.equals("")) {
-                        new ReadJSONFeedTask3().execute(SplashView.this.getString(R.string.service_address) + "getcardlist/" + Users.USER_ID);
+                        new ReadJSONFeedTask3().execute(Users.ServiceAddress + "getcardlist/" + Users.USER_ID);
                     }
                     if (!Users.USER_ID.equals("")) {
                         SplashView.this.setResult(-1, SplashView.this.getIntent());
@@ -417,12 +431,12 @@ public class SplashView extends BaseActivity {
                 }
 
                 if (Users.LeaderType.equals("1") || Users.LeaderType.equals("2") || Users.BusinessClassCode == 9) {//음성은 슈퍼바이저 리스트 구분상관없이 받음
-                    String restURL = getString(R.string.service_address) + "getsupervisorlist/" + Users.USER_ID;
+                    String restURL = Users.ServiceAddress + "getsupervisorlist/" + Users.USER_ID;
                     new ReadJSONFeedTask2().execute(restURL);
                 }
 
                 if (!Users.USER_ID.equals("")) {
-                    String restURL = getString(R.string.service_address) + "getcardlist/" + Users.USER_ID;
+                    String restURL = Users.ServiceAddress + "getcardlist/" + Users.USER_ID;
                     new ReadJSONFeedTask3().execute(restURL);
                 }
 
@@ -435,7 +449,9 @@ public class SplashView extends BaseActivity {
 
 
             } catch (JSONException e) {
-                Toast.makeText(SplashView.this, "등록되어 있는 휴대폰 정보가 없습니다. 관리자에게 문의 하세요. ", Toast.LENGTH_LONG).show();
+                Toast.makeText(SplashView.this, Users.Language == 0 ?
+                        "등록되어 있지 않은 사용자입니다.":
+                        "This is an unregistered user.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -533,7 +549,7 @@ public class SplashView extends BaseActivity {
     }
 
     private void InsertAppLoginHistory() {
-        new InsertAppLoginHistory().execute(getString(R.string.service_address) + "insertAppLoginHistory");
+        new InsertAppLoginHistory().execute(Users.ServiceAddress + "insertAppLoginHistory");
     }
 
     public class InsertAppLoginHistory extends AsyncTask<String, Void, String> {
@@ -591,7 +607,9 @@ public class SplashView extends BaseActivity {
                 if (inputStream != null)
                     result = convertInputStreamToString(inputStream);
                 else
-                    result = "통신오류: 인터넷 혹은 스캐너의 연결 상태를 확인하시기 바랍니다.";
+                    result = Users.Language == 0 ?
+                            "통신오류: 인터넷 혹은 스캐너의 연결 상태를 확인하시기 바랍니다.":
+                            "Communication error: Please check the connection status of your Internet or scanner.";
 
             } catch (Exception e) {
                 //Log.d("InputStream", e.getLocalizedMessage());

@@ -126,7 +126,7 @@ public class LocationTreeViewActivitySearchForAll extends BaseActivity {//+ê²€ìƒ
     }
 
     private void getCustomerLocationForAll(String searchString) {
-        String url = getString(R.string.service_address) + "getCustomerLocationForAll";
+        String url = Users.ServiceAddress + "getCustomerLocationForAll";
         ContentValues values = new ContentValues();
         values.put("SearchString", searchString);
         GetCustomerLocationForAll gsod = new GetCustomerLocationForAll(url, values);

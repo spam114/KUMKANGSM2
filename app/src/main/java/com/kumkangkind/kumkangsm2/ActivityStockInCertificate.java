@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.textfield.TextInputLayout;
 import com.kumkangkind.kumkangsm2.Adapter.StockInCertificateAdapter;
 import com.kumkangkind.kumkangsm2.CustomerLocation.Customer;
 import com.kumkangkind.kumkangsm2.Object.StockInCertificate;
@@ -76,7 +77,6 @@ public class ActivityStockInCertificate extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_in_certificate);
         tvDate = (TextView) findViewById(R.id.tvDate);
@@ -85,11 +85,11 @@ public class ActivityStockInCertificate extends BaseActivity {
         fromDate = getIntent().getStringExtra("fromDate");
         toDate = getIntent().getStringExtra("toDate");
         locationName = getIntent().getStringExtra("locationName");
-        tvDate.setText(fromDate+" ~ "+toDate);
+        tvDate.setText(fromDate + " ~ " + toDate);
         edtInput.setText(locationName);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        adapter = new StockInCertificateAdapter(new ArrayList<>(),ActivityStockInCertificate.this);
-        LinearLayoutManager  layoutManager=
+        adapter = new StockInCertificateAdapter(new ArrayList<>(), ActivityStockInCertificate.this);
+        LinearLayoutManager layoutManager =
                 new LinearLayoutManager(ActivityStockInCertificate.this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -100,13 +100,13 @@ public class ActivityStockInCertificate extends BaseActivity {
 
                 Calendar calendar = new GregorianCalendar();
                 Calendar calendar2 = new GregorianCalendar();
-                calendar.set(Integer.parseInt(fromDate.split("-")[0]),Integer.parseInt(fromDate.split("-")[1])-1,
+                calendar.set(Integer.parseInt(fromDate.split("-")[0]), Integer.parseInt(fromDate.split("-")[1]) - 1,
                         Integer.parseInt(fromDate.split("-")[2]));
-                calendar2.set(Integer.parseInt(toDate.split("-")[0]),Integer.parseInt(toDate.split("-")[1])-1,
+                calendar2.set(Integer.parseInt(toDate.split("-")[0]), Integer.parseInt(toDate.split("-")[1]) - 1,
                         Integer.parseInt(toDate.split("-")[2]));
 
                 MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.dateRangePicker();
-                builder.setSelection(new Pair(calendar.getTimeInMillis(),calendar2.getTimeInMillis()));
+                builder.setSelection(new Pair(calendar.getTimeInMillis(), calendar2.getTimeInMillis()));
                 MaterialDatePicker materialDatePicker = builder.build();
                 materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
 
@@ -122,7 +122,7 @@ public class ActivityStockInCertificate extends BaseActivity {
                         fromDate = new SimpleDateFormat("yyyy-MM-dd").format(startDate);
                         toDate = new SimpleDateFormat("yyyy-MM-dd").format(endDate);
 
-                        tvDate.setText(fromDate+" ~ "+toDate);
+                        tvDate.setText(fromDate + " ~ " + toDate);
                         getStockInCertificateMain2();
                     }
                 });
@@ -146,27 +146,43 @@ public class ActivityStockInCertificate extends BaseActivity {
 
             }
         });
+        setView();
 
         getStockInCertificateMain2();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //progressOFF2();
     }
+    private void setView() {
+        if(Users.Language != 0){
+            TextView textViewWorkDate = findViewById(R.id.textViewWorkDate);
+            TextView textViewLocation = findViewById(R.id.textViewLocation);
+            TextView textViewStatus = findViewById(R.id.textViewStatus);
+            Button btnIlbo = findViewById(R.id.btnIlbo);
+            TextInputLayout textInputLayout = findViewById(R.id.textInputLayout);
+
+            textViewWorkDate.setText("User\nDate/No");
+            textViewLocation.setText("Customer/Site");
+            textViewStatus.setText("Car\nWeight");
+            btnIlbo.setText("Create");
+            textInputLayout.setHint("Site");
+        }
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
-        firstToken=false;
+        firstToken = false;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(!firstToken)
+        if (!firstToken)
             getStockInCertificateMain2();
     }
 
     private void getStockInCertificateMain2() {
-        String url = getString(R.string.service_address) + "getStockInCertificateMain2";
+        String url = Users.ServiceAddress + "getStockInCertificateMain2";
         ContentValues values = new ContentValues();
 
         //검색조건
@@ -264,8 +280,9 @@ public class ActivityStockInCertificate extends BaseActivity {
                 break;
 
             case R.id.btnHelp:
-                new AlertDialog.Builder(this).setMessage("송장이 보이지 않을시, \n메인화면의 날짜를 확인한 후,\n변경하시기 바랍니다.").setCancelable(true).
-                        setNegativeButton("닫기", new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(this).setMessage(Users.Language == 0 ? "송장이 보이지 않을시, \n메인화면의 날짜를 확인한 후,\n변경하시기 바랍니다." :
+                                "If you do not see the invoice, please check the date on the main screen and change it.").setCancelable(true).
+                        setNegativeButton(Users.Language == 0 ? "닫기" : "Close", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                             }
@@ -276,7 +293,7 @@ public class ActivityStockInCertificate extends BaseActivity {
     }
 
     private void MakeStockInCertificate() {
-        new GetCustomerLocationByGet("내현장").execute(getString(R.string.service_address) + "getCustomerLocation/" + Users.USER_ID);
+        new GetCustomerLocationByGet("내현장").execute(Users.ServiceAddress + "getCustomerLocation/" + Users.USER_ID);
     }
 
     private class GetCustomerLocationByGet extends AsyncTask<String, Void, String> {

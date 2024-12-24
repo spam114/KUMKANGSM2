@@ -106,7 +106,7 @@ public class AddItemAdapter extends ArrayAdapter<AddItem> {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
 
-                                                new AddItemDelete(((AddItem) data.get(position)).AddItemNo,position).execute(context.getString(R.string.service_address)+"deleteAddItem");
+                                                new AddItemDelete(((AddItem) data.get(position)).AddItemNo,position).execute(Users.ServiceAddress+"deleteAddItem");
 
                                             }
                                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

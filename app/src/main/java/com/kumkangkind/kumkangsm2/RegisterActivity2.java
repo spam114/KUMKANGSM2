@@ -189,7 +189,7 @@ public class RegisterActivity2 extends BaseActivity {
      * 여기의 onpost->mHandler2 에서 버튼 데이터들을 각 테스트뷰, 스피너리스트 등등에 넣어줌
      */
     private void MakeSpinnerWorkTypeAndData() {
-        String restURL = getString(R.string.service_address) + "worktypelistByBusinessClassCode";
+        String restURL = Users.ServiceAddress + "worktypelistByBusinessClassCode";
         new GetWorkTypeList().execute(restURL);
     }
 
@@ -424,7 +424,7 @@ public class RegisterActivity2 extends BaseActivity {
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             SaveDataFromControl();
-                                            new SetSupervisorWorderEumsungByPost().execute(getString(R.string.service_address) + "setSupervisorWorderEumsung");
+                                            new SetSupervisorWorderEumsungByPost().execute(Users.ServiceAddress + "setSupervisorWorderEumsung");
                                         }
                                     })
                             .setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -443,7 +443,7 @@ public class RegisterActivity2 extends BaseActivity {
                             //POST 명령어 호출(업데이트를 적용한다)
                             //progressDialog = ProgressDialog.show(RegisterActivity2.this, "Wait", "Loading...");
                             SaveDataFromControl();
-                            new HttpAsyncTask().execute(getString(R.string.service_address) + "setworderEumsung");
+                            new HttpAsyncTask().execute(Users.ServiceAddress + "setworderEumsung");
                         }
                     }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
@@ -527,9 +527,9 @@ public class RegisterActivity2 extends BaseActivity {
             case R.id.textViewDong://동 정보 클릭
 
                 if (key.equals("생성모드"))
-                    new GetDongByContractNo().execute(getString(R.string.service_address) + "getDongByContractNo");
+                    new GetDongByContractNo().execute(Users.ServiceAddress + "getDongByContractNo");
                 else
-                    new GetDongBySupervisor().execute(getString(R.string.service_address) + "getDongBySupervisorWoNo");
+                    new GetDongBySupervisor().execute(Users.ServiceAddress + "getDongBySupervisorWoNo");
 
                 break;
 
@@ -539,7 +539,7 @@ public class RegisterActivity2 extends BaseActivity {
                     progressOFF();
                     return;
                 }
-                new GetASItemByPost().execute(getString(R.string.service_address) + "getASItem");
+                new GetASItemByPost().execute(Users.ServiceAddress + "getASItem");
                 break;
 
 
@@ -567,7 +567,7 @@ public class RegisterActivity2 extends BaseActivity {
 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        new DeleteSupervisorWorderInfoByPost().execute(getString(R.string.service_address) + "deleteSupervisorWorderInfo");
+                                        new DeleteSupervisorWorderInfoByPost().execute(Users.ServiceAddress + "deleteSupervisorWorderInfo");
                                     }
                                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -1164,7 +1164,7 @@ public class RegisterActivity2 extends BaseActivity {
      */
     private void SetData(String key) {
 
-        String restURL = getString(R.string.service_address) + "getworder2/" + key;
+        String restURL = Users.ServiceAddress + "getworder2/" + key;
         new ReadJSONFeedTask().execute(restURL);
     }
 
@@ -1413,7 +1413,7 @@ public class RegisterActivity2 extends BaseActivity {
         images = new ArrayList<WoImage>();
 
 
-        String restURL = getString(R.string.service_address) + "getimagelist/" + this.key;
+        String restURL = Users.ServiceAddress + "getimagelist/" + this.key;
         new GetImageFeedTask().execute(restURL);
     }
 
@@ -1422,7 +1422,7 @@ public class RegisterActivity2 extends BaseActivity {
      * 추가분 관리
      * */
     private void ViewItemControlActivity() {
-        new GetAddItemByPost().execute(getString(R.string.service_address) + "getAddItem");
+        new GetAddItemByPost().execute(Users.ServiceAddress + "getAddItem");
     }
 
 

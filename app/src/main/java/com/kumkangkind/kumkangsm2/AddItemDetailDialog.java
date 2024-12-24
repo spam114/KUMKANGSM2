@@ -191,10 +191,10 @@ public class AddItemDetailDialog extends Dialog implements BaseActivityInterface
                     return;
                 }
                 if(editFlag==false){//등록
-                    new SetAddItemDetailByPost().execute(getContext().getString(R.string.service_address)+"setAddItemDetail");
+                    new SetAddItemDetailByPost().execute(Users.ServiceAddress+"setAddItemDetail");
                 }
                 else{//수정
-                    new UpdateAddItemDetailByPost().execute(getContext().getString(R.string.service_address)+"updateAddItemDetail");
+                    new UpdateAddItemDetailByPost().execute(Users.ServiceAddress+"updateAddItemDetail");
                 }
 
 
@@ -222,7 +222,7 @@ public class AddItemDetailDialog extends Dialog implements BaseActivityInterface
 
                 }
                 else{
-                    new GetComplaintImageList().execute(getContext().getString(R.string.service_address)+"getComplaintImageList");
+                    new GetComplaintImageList().execute(Users.ServiceAddress+"getComplaintImageList");
                 }
 
 
@@ -425,7 +425,7 @@ public class AddItemDetailDialog extends Dialog implements BaseActivityInterface
                     AddItemDetailDialog.this.dismiss();
 
                     for(int i=0;i<Temp.tempList.size();i++){
-                        new SetComplaintImageWhenInit(i).execute(getContext().getString(R.string.service_address)+"setComplaintImageWhenInit");
+                        new SetComplaintImageWhenInit(i).execute(Users.ServiceAddress+"setComplaintImageWhenInit");
                     }
 
                 }

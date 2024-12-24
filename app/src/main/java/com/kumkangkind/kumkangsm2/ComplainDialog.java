@@ -166,10 +166,10 @@ public class ComplainDialog extends Dialog implements BaseActivityInterface{
             @Override
             public void onClick(View v) {
                 if(radioLeft.isChecked()){//추가분
-                    new GetAddItemToLocationNoAndDate().execute(context.getString(R.string.service_address)+"getAddItemToLocationNoAndDate");
+                    new GetAddItemToLocationNoAndDate().execute(Users.ServiceAddress+"getAddItemToLocationNoAndDate");
                 }
                 else if(radioRight.isChecked()){//A/S
-                    new GetASItemToLocationNoAndDate().execute(context.getString(R.string.service_address)+"getASItemToLocationNoAndDate");
+                    new GetASItemToLocationNoAndDate().execute(Users.ServiceAddress+"getASItemToLocationNoAndDate");
                 }
                 else{
                     Toast.makeText(getContext(), "추가분 또는 A/S를 선택하여 주세요", Toast.LENGTH_SHORT).show();

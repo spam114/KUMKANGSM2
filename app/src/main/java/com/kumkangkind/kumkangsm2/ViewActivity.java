@@ -69,7 +69,7 @@ public class ViewActivity extends BaseActivity {
 
         String key = getIntent().getStringExtra("key");
 
-        String restURL = getString(R.string.service_address)+"getworderconfirm/" + key + "/" + Users.USER_ID;
+        String restURL = Users.ServiceAddress+"getworderconfirm/" + key + "/" + Users.USER_ID;
         new ReadJSONFeedTask().execute(restURL);
 
         progressOFF();

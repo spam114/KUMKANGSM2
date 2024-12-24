@@ -188,7 +188,7 @@ public class AssignmentActivity extends BaseActivity{
         @Override
         public void handleMessage(Message msg) {
             if(msg.what == 1){//담당자등록->확인
-                new AssignmentActivity.SetConstructionEmployeeByPost().execute(getString(R.string.service_address)+"setConstructionEmployee");
+                new AssignmentActivity.SetConstructionEmployeeByPost().execute(Users.ServiceAddress+"setConstructionEmployee");
                 return;
             }
             else{
@@ -237,7 +237,7 @@ public class AssignmentActivity extends BaseActivity{
 
          //   Toast.makeText(AssignmentActivity.this, "저장 되었습니다.", Toast.LENGTH_SHORT).show();
 
-           // new AssignmentActivity.GetDongProgessFloorByPost().execute(getString(R.string.service_address)+"getDongProgressFloor");
+           // new AssignmentActivity.GetDongProgessFloorByPost().execute(Users.ServiceAddress+"getDongProgressFloor");
             dongArrayList.get(clickPosition).ConstructionEmployee=Users.UserName;
             listView1.setAdapter(adapter);
             Toast.makeText(AssignmentActivity.this, "담당자 등록이 완료 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -329,7 +329,7 @@ public class AssignmentActivity extends BaseActivity{
         public void handleMessage(Message msg) {
             if (msg.what == 1) {//확인
                 inputYearMonth=yearMonth;
-                new AssignmentActivity.DeleteConstructionEmployeeByPost().execute(getString(R.string.service_address)+"deleteConstructionEmployee");
+                new AssignmentActivity.DeleteConstructionEmployeeByPost().execute(Users.ServiceAddress+"deleteConstructionEmployee");
 
             } else {//취소
                 Toast.makeText(AssignmentActivity.this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
@@ -379,7 +379,7 @@ public class AssignmentActivity extends BaseActivity{
 
             Toast.makeText(AssignmentActivity.this, "담당자 삭제가 완료 되었습니다.", Toast.LENGTH_SHORT).show();
 
-            //new AssignmentActivity.GetDongProgessFloorByPost().execute(getString(R.string.service_address)+"getDongProgressFloor");
+            //new AssignmentActivity.GetDongProgessFloorByPost().execute(Users.ServiceAddress+"getDongProgressFloor");
 
         }
     }

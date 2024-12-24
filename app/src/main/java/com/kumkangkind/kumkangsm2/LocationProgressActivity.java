@@ -317,7 +317,7 @@ public class LocationProgressActivity extends BaseActivity {
             requestType = "A";*/
 
 
-        String url = getString(R.string.service_address) + "getUserStockInReport";
+        String url = Users.ServiceAddress + "getUserStockInReport";
         ContentValues values = new ContentValues();
         values.put("SupervisorCode", Users.USER_ID);
         values.put("Type", sType);

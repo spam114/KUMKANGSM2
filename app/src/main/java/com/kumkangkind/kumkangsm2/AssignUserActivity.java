@@ -84,7 +84,7 @@ public class AssignUserActivity extends BaseActivity {
         key = getIntent().getStringExtra("key");
         seqNo = getIntent().getIntExtra("seqNo", -1);
 
-        String restURL = getString(R.string.service_address)+"getworder/" + key;
+        String restURL = Users.ServiceAddress+"getworder/" + key;
         new ReadJSONFeedTask().execute(restURL);
 
         MakeSpinnerSupervisor();
@@ -257,7 +257,7 @@ public class AssignUserActivity extends BaseActivity {
                 //progressDialog = ProgressDialog.show(RegisterActivity.this, "Wait", "Loading...");
 
 
-                new HttpAsyncTask().execute(getString(R.string.service_address)+"setassign");
+                new HttpAsyncTask().execute(Users.ServiceAddress+"setassign");
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override

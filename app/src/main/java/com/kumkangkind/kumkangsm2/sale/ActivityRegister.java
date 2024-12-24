@@ -112,7 +112,7 @@ public class ActivityRegister extends BaseActivity {
 
 
     private void MakeSpinnerWorkType(){
-        String restURL = getString(R.string.service_address)+"worktypelistByBusinessClassCode";
+        String restURL = Users.ServiceAddress+"worktypelistByBusinessClassCode";
         new GetWorkTypeList().execute(restURL);
     }
 
@@ -331,9 +331,9 @@ public class ActivityRegister extends BaseActivity {
         String restURL = "";
 
         if(textViewWoNo.getText().toString().equals(""))
-            restURL = getString(R.string.service_address)+"insertsupervisorworder";
+            restURL = Users.ServiceAddress+"insertsupervisorworder";
         else
-            restURL = getString(R.string.service_address)+"updatesupervisorworder";
+            restURL = Users.ServiceAddress+"updatesupervisorworder";
         new HttpAsyncTask().execute(restURL);
     }
 
@@ -475,7 +475,7 @@ public class ActivityRegister extends BaseActivity {
                 //거래처 검색
                 customerDialog.dismiss();
 
-                String restURL = getString(R.string.service_address)+"customerlist/" + textViewSearch.getText().toString();
+                String restURL = Users.ServiceAddress+"customerlist/" + textViewSearch.getText().toString();
                 new ReadJSONFeedTask().execute(restURL);
 
 

@@ -186,7 +186,7 @@ public class AddItemDetailListActivity extends BaseActivity {
         });
 
         listView1 = (ListView) findViewById(R.id.listView1);
-        new GetAddItemStandard().execute(getString(R.string.service_address)+"getAddItemStandard");//추가분 세부분류 가져옴
+        new GetAddItemStandard().execute(Users.ServiceAddress+"getAddItemStandard");//추가분 세부분류 가져옴
         adapter = new AddItemDetailAdapter(AddItemDetailListActivity.this, R.layout.listview_additem_detail_row, addItemDetailArrayList);
         listView1.setAdapter(adapter);
         listView1.setOnItemClickListener(mItemClickListener);
@@ -294,14 +294,14 @@ public class AddItemDetailListActivity extends BaseActivity {
     DatePickerDialog.OnDateSetListener mDateSetListener1 =
             new DatePickerDialog.OnDateSetListener() {//requestDate: 요청일
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    new UpdateAddItemMasterRequestDateByPost(year,monthOfYear+1,dayOfMonth).execute(getString(R.string.service_address)+"updateAddItemMasterRequestDate");
+                    new UpdateAddItemMasterRequestDateByPost(year,monthOfYear+1,dayOfMonth).execute(Users.ServiceAddress+"updateAddItemMasterRequestDate");
                 }
             };
 
     DatePickerDialog.OnDateSetListener mDateSetListener2 =
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    new UpdateAddItemMasterHoppingDateByPost(year,monthOfYear+1,dayOfMonth).execute(getString(R.string.service_address)+"updateAddItemMasterHoppingDate");
+                    new UpdateAddItemMasterHoppingDateByPost(year,monthOfYear+1,dayOfMonth).execute(Users.ServiceAddress+"updateAddItemMasterHoppingDate");
                 }
             };
 
@@ -574,7 +574,7 @@ public class AddItemDetailListActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(!initDongFlag)
-                    new UpdateAddItemMasterDongByPost(dongSpinner.getSelectedItem().toString()).execute(getString(R.string.service_address)+"updateAddItemMasterDong");
+                    new UpdateAddItemMasterDongByPost(dongSpinner.getSelectedItem().toString()).execute(Users.ServiceAddress+"updateAddItemMasterDong");
                 else
                     initDongFlag=false;
             }
@@ -720,7 +720,7 @@ public class AddItemDetailListActivity extends BaseActivity {
 
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    new DeleteAddItemDetail(addItemDetail.AddItemNo, addItemDetail.SeqNo, clickPosition).execute(getString(R.string.service_address)+"deleteAddItemDetail");
+                                    new DeleteAddItemDetail(addItemDetail.AddItemNo, addItemDetail.SeqNo, clickPosition).execute(Users.ServiceAddress+"deleteAddItemDetail");
                                 }
                             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
@@ -839,7 +839,7 @@ public class AddItemDetailListActivity extends BaseActivity {
 
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    new SetAddItemDetailByPost(addItemDetail).execute(getString(R.string.service_address)+"setAddItemDetail");
+                                    new SetAddItemDetailByPost(addItemDetail).execute(Users.ServiceAddress+"setAddItemDetail");
                                 }
                             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override

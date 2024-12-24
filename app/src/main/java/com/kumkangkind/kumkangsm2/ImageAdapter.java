@@ -121,7 +121,7 @@ public class ImageAdapter extends ArrayAdapter<WoImage> implements BaseActivityI
     }
 
     private void deleteImage2(String SupervisorWoNo, String SeqNo, int position) {
-        String url = context.getString(R.string.service_address) + "deleteImage2";
+        String url = Users.ServiceAddress + "deleteImage2";
         ContentValues values = new ContentValues();
         values.put("SupervisorWoNo", SupervisorWoNo);
         values.put("SeqNo", SeqNo);
