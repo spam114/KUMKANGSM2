@@ -612,7 +612,7 @@ public class SplashView extends BaseActivity {
                             "Communication error: Please check the connection status of your Internet or scanner.";
 
             } catch (Exception e) {
-                //Log.d("InputStream", e.getLocalizedMessage());
+                Log.d("InputStream", e.getLocalizedMessage());
             }
             // 11. return result
             //Log.i("result", result.toString());

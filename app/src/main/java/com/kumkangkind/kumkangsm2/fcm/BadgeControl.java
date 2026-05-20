@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 
-/**
- * Hoo sik Kim
- */
 public class BadgeControl {
     public static int badgeCnt = 0;
 

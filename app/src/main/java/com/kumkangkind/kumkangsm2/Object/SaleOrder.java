@@ -12,7 +12,7 @@ public class SaleOrder implements Serializable {
     public String ReceiptFlagName="";
     public String Dong="";
     public String WorderRequestNo="";
-
+    public String AddSalesOrderTypeName="";
     public SaleOrder() {
         super();
     }

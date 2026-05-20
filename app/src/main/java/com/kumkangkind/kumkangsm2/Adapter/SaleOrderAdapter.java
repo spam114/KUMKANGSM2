@@ -38,6 +38,7 @@ public class SaleOrderAdapter extends ArrayAdapter<SaleOrder> implements BaseAct
     TextView txtRequestTypeName;
     TextView txtReceiptFlagName;
     TextView txtRemark;
+    TextView txtAddSalesOrderTypeName;
     String customerName;
     String locationName;
 
@@ -87,11 +88,13 @@ public class SaleOrderAdapter extends ArrayAdapter<SaleOrder> implements BaseAct
             txtRequestTypeName = row.findViewById(R.id.txtRequestTypeName);
             txtReceiptFlagName = row.findViewById(R.id.txtReceiptFlagName);
             txtRemark = row.findViewById(R.id.txtRemark);
+            txtAddSalesOrderTypeName = row.findViewById(R.id.txtAddSalesOrderTypeName);
             txtSaleOrderNo.setText(saleOrderNo);
             txtDong.setText(item.Dong);
             txtRequestTypeName.setText(item.RequestTypeName);
             txtReceiptFlagName.setText(item.ReceiptFlagName);
             txtRemark.setText(item.Remark);
+            txtAddSalesOrderTypeName.setText(item.AddSalesOrderTypeName);
 
             /*edtDiscountRate.setTag(item);
             edtOrderQty.setTag(item);

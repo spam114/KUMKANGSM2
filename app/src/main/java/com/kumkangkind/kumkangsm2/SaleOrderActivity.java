@@ -388,6 +388,7 @@ public class SaleOrderActivity extends BaseActivity {
                     saleOrder.ReceiptFlagName = child.getString("ReceiptFlagName");
                     saleOrder.WorderRequestNo = child.getString("WorderRequestNo");
                     saleOrder.Remark = child.getString("Remark");
+                    saleOrder.AddSalesOrderTypeName = child.getString("AddSalesOrderTypeName");
                     //saleOrder.orderQty = child.getString("OrderQty");
                     //saleOrder.initState = true;
 
